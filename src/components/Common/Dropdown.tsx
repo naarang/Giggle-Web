@@ -1,22 +1,24 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import ArrowIcon from '@/assets/icons/ArrowUp.tsx';
+import DatePicker from './DatePicker';
 
 type DropDownProps = {
   title?: string;
   value: string;
   placeholder: string;
   options: Array<string>;
+  isCalendar?: boolean;
   setValue: Dispatch<SetStateAction<string>>;
 };
 
 const DropdownModal = ({
   options,
   value,
-  setValue,
+  onSelect,
 }: {
   options: string[];
   value: string;
-  setValue: Dispatch<SetStateAction<string>>;
+  onSelect: (option: string) => void;
 }) => {
   return (
     <div className="w-full relative shadow rounded-2xl bg-white border border-[#dcdcdc] flex flex-row items-start justify-start p-2 text-left text-sm text-[#656565] font-['Pretendard']">
@@ -24,7 +26,7 @@ const DropdownModal = ({
         {options.map((option) => (
           <div
             className={`self-stretch overflow-hidden ${value == option && 'bg-[#f4f4f9] text-[#1e1926]'} rounded-lg flex flex-row items-center justify-start p-2.5`}
-            onClick={() => setValue(option)}
+            onClick={() => onSelect(option)}
           >
             {option}
           </div>
@@ -39,9 +41,14 @@ const Dropdown = ({
   value,
   placeholder,
   options,
+  isCalendar,
   setValue,
 }: DropDownProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const handleSelect = (option: string) => {
+    setValue(option);
+    setIsOpen(false);
+  };
   return (
     <div className="w-full flex flex-col">
       {/* dropdown 제목 */}
@@ -79,9 +86,17 @@ const Dropdown = ({
           </div>
         </div>
         {/* dropdown 선택지 모달 */}
-        {isOpen && (
-          <DropdownModal value={value} options={options} setValue={setValue} />
-        )}
+        {isOpen ? (
+          isCalendar ? (
+            <DatePicker setSelectedDate={handleSelect} />
+          ) : (
+            <DropdownModal
+              value={value}
+              options={options}
+              onSelect={handleSelect}
+            />
+          )
+        ) : null}
       </div>
     </div>
   );
