@@ -5,7 +5,7 @@ enum Gender {
   NONE = 'NONE',
 }
 
-enum Nationality {
+export enum Nationality {
   SOUTH_KOREA = 'SOUTH_KOREA',
   JAPAN = 'JAPAN',
   CHINA = 'CHINA',
@@ -43,7 +43,7 @@ export type UserInfo = {
   last_name: string | undefined;
   gender: Gender | undefined;
   birth: string | undefined; // Format: yyyy/mm/dd
-  nationality: Nationality | undefined;
+  nationality: string | undefined;
   visa: Visa | undefined;
   phone_number: string | undefined;
 }
