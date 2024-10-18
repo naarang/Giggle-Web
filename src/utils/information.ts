@@ -15,3 +15,24 @@ export const isValidFirstName = (name: string): boolean => {
 export const isValidLastName = (name: string): boolean => {
   return lastNameRegex.test(name);
 };
+
+// 이름 유효성 검사 함수
+export const isValidName = (name: string) =>
+  name.trim() !== '' && (isValidFirstName(name) || isValidLastName(name));
+
+// 전화번호 유효성 검사 함수
+export const isValidPhoneNumber = (phone: {
+  start: string;
+  middle: string;
+  end: string;
+}) =>
+  phone.start !== '' &&
+  /^[0-9]{4}$/.test(phone.middle) &&
+  /^[0-9]{4}$/.test(phone.end);
+
+// 3개의 dropdown, input으로 나눠 받고 있는 state 통합하는 함수
+export const formatPhoneNumber = (phone: {
+  start: string;
+  middle: string;
+  end: string;
+}) => `${phone.start}-${phone.middle}-${phone.end}`;
