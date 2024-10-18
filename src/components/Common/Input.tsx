@@ -56,7 +56,7 @@ const Input = ({
 
   // isInvalid prop이 변경될 때 상태를 업데이트합니다.
   useEffect(() => {
-    setCurrentStatus(isInvalid ? INPUT_STATUS.INVALID : INPUT_STATUS.DISABLED);
+    if (isInvalid) setCurrentStatus(INPUT_STATUS.INVALID);
   }, [isInvalid]);
 
   // 입력값 변경 핸들러

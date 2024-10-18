@@ -18,13 +18,13 @@ const InformationStep = ({
   });
 
   const checkFirstNameInvalid = () => {
-    if (newUserInfo.first_name)
-      if (
-        (newUserInfo.first_name !== null && newUserInfo.first_name == '') ||
-        !isValidFirstName(newUserInfo.first_name)
-      ) {
-        setInvalidList({ ...invalidList, firstName: true });
-      }
+    if (
+      newUserInfo.first_name === undefined ||
+      newUserInfo.first_name == '' ||
+      !isValidFirstName(newUserInfo.first_name)
+    ) {
+      setInvalidList({ ...invalidList, firstName: true });
+    }
   };
 
   const checkInvalidAll = () => {
