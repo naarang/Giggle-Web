@@ -61,6 +61,7 @@ const Input = ({
 
   // 입력값 변경 핸들러
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (clearInvalid) clearInvalid();
     onChange(e.target.value);
   };
 
