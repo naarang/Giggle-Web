@@ -3,6 +3,14 @@ import SearchIcon from '@/assets/icons/MagnifyGlassIcon.svg?react';
 import CloseIcon from '@/assets/icons/CloseIcon.svg?react';
 import VisibleIcon from '@/assets/icons/Hide.svg?react';
 
+const INPUT_STATUS = {
+  DISABLED: 'DISABLED',
+  TYPING: 'TYPING',
+  INVALID: 'INVALID',
+} as const;
+
+type InputStatus = (typeof INPUT_STATUS)[keyof typeof INPUT_STATUS];
+
 // InputProps 타입 정의: Input 컴포넌트의 props 타입을 지정합니다.
 type InputProps = {
   inputType: 'INPUT' | 'PASSWORD' | 'SEARCH'; // 입력 필드의 타입
@@ -15,13 +23,13 @@ type InputProps = {
 };
 
 // inputStyler 함수: 입력 필드의 상태에 따른 스타일을 반환합니다.
-const inputStyler = (status: string) => {
+const inputStyler = (status: InputStatus) => {
   switch (status) {
-    case 'DISABLED':
+    case INPUT_STATUS.DISABLED:
       return 'shadow-sm border-[#eae9f6] [--input-color:#bdbdbd]';
-    case 'TYPING':
+    case INPUT_STATUS.TYPING:
       return 'shadow-sm border-black text-black';
-    case 'INVALID':
+    case INPUT_STATUS.INVALID:
       return 'shadow-sm border-[#FF6F61] text-[#FF6F61] [--input-color:#FF6F61]';
   }
 };
@@ -37,16 +45,16 @@ const Input = ({
   value,
 }: InputProps) => {
   // 현재 입력 필드의 상태를 관리합니다.
-  const [currentStatus, setCurrentStatus] = useState<
-    'DISABLED' | 'TYPING' | 'INVALID'
-  >(isInvalid ? 'INVALID' : 'DISABLED');
+  const [currentStatus, setCurrentStatus] = useState<InputStatus>(
+    isInvalid ? INPUT_STATUS.INVALID : INPUT_STATUS.DISABLED,
+  );
 
   // 비밀번호 표시/숨김 상태를 관리합니다.
   const [showPassword, setShowPassword] = useState(false);
 
   // isInvalid prop이 변경될 때 상태를 업데이트합니다.
   useEffect(() => {
-    setCurrentStatus(isInvalid ? 'INVALID' : 'DISABLED');
+    setCurrentStatus(isInvalid ? INPUT_STATUS.INVALID : INPUT_STATUS.DISABLED);
   }, [isInvalid]);
 
   // 입력값 변경 핸들러
@@ -64,8 +72,8 @@ const Input = ({
         placeholder={placeholder}
         value={value}
         className={'w-full outline-none placeholder:text-[var(--input-color)]'}
-        onClick={() => setCurrentStatus('TYPING')}
-        onBlur={() => setCurrentStatus('DISABLED')}
+        onClick={() => setCurrentStatus(INPUT_STATUS.TYPING)}
+        onBlur={() => setCurrentStatus(INPUT_STATUS.DISABLED)}
         onChange={handleInputChange}
         type={
           inputType === 'PASSWORD'
