@@ -1,5 +1,5 @@
 // Enum types
-enum Gender {
+export enum Gender {
   MALE = 'MALE',
   FEMALE = 'FEMALE',
   NONE = 'NONE',
@@ -13,7 +13,7 @@ export enum Nationality {
   UZBEKISTAN = 'UZBEKISTAN',
 }
 
-enum Visa {
+export enum Visa {
   'D-2-1' = 'D-2-1',
   'D-2-2' = 'D-2-2',
   'D-2-3' = 'D-2-3',
@@ -41,10 +41,10 @@ export type UserInfo = {
   marketing_allow: boolean | undefined;
   first_name: string | undefined;
   last_name: string | undefined;
-  gender: Gender | undefined;
+  gender: string | undefined;
   birth: string | undefined; // Format: yyyy/mm/dd
   nationality: string | undefined;
-  visa: Visa | undefined;
+  visa: string | undefined;
   phone_number: string | undefined;
 }
 
@@ -73,13 +73,13 @@ export const initialUserInfo: UserInfo = {
   id: undefined,
   email: undefined,
   marketing_allow: undefined,
-  first_name: undefined,
-  last_name: undefined,
-  gender: undefined,
-  birth: undefined,
-  nationality: undefined,
-  visa: undefined,
-  phone_number: undefined,
+  first_name: "",
+  last_name: "",
+  gender: 'MALE',
+  birth: "",
+  nationality: "",
+  visa: "",
+  phone_number: "",
 }
 
 // Initial state for Address
