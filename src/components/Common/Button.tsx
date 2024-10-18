@@ -1,47 +1,49 @@
+import ApplyBtnImg from '@/assets/images/applyButton.jpeg';
 /*
  *
  * type
- * - SignIn
- * - SmallRound
- * - SmallSquare
- * - ApplyNow
- * - Back
- * - Continue
+ * - signIn
+ * - smallRound
+ * - smallSquare
+ * - applyNow
+ * - back
+ * - continue
  *
  * button color - css 코드로 전달받음
- * - bgYellow
- * - bgGgray
- * - bgBlack
- * - bgWhite
- *
  * font color - css 코드로 전달받음
- * - textYellow
- * - textGray
- * - testBlack
- * - textWhite
+ *
+ * TODO : ApplyNow 버튼 이미지 적용
  *
  */
 
 type buttonType = {
   type: string;
-  bgColor: string;
-  fontColor: string;
+  bgColor: string | null;
+  fontColor: string | null;
+  borderColor: string | null;
+  title: string;
 };
 
-const Button = ({ type, bgColor, fontColor }: buttonType) => {
+const Button = ({
+  type,
+  bgColor,
+  fontColor,
+  borderColor,
+  title,
+}: buttonType) => {
   const getButtonStyle = () => {
     switch (type) {
-      case 'SignIn':
+      case 'signIn':
         return 'w-[327px] h-[52px] flex justify-center items-center rounded-[32px] text-[16px]';
-      case 'SmallRound':
-        return 'w-[89px0 h-[40px] flex justify-center items-center rounded-[20px] text-[12px]';
-      case 'SmallSquare':
-        return 'w-[89px0 h-[36px] flex justify-center items-center rounded-[8px] text-[12px]';
-      case 'ApplyNow':
-        return 'w-[327px] h-[52px] flex justify-center items-center rounded-[32px] bg-blue text-[16px] text-SecondaryGrey';
-      case 'Back':
+      case 'smallRound':
+        return 'w-[89px] h-[40px] flex justify-center items-center rounded-[20px] text-[12px]';
+      case 'smallSquare':
+        return 'w-[89px] h-[36px] flex justify-center items-center rounded-[8px] text-[12px]';
+      case 'applyNow':
+        return `w-[327px] h-[52px] flex justify-center items-center rounded-[32px] bg-applyBtn bg-cover bg-center text-[16px] text-[#F4F4F9]`;
+      case 'back':
         return 'w-[119px] h-[52px] flex justify-center items-center rounded-[32px] text-[16px]';
-      case 'Continue':
+      case 'continue':
         return 'w-[200px] h-[52px] flex justify-center items-center rounded-[32px] text-[16px]';
       default:
         return 'w-[327px] h-[52px] flex justify-center items-center rounded-[32px] text-[16px]';
@@ -49,8 +51,10 @@ const Button = ({ type, bgColor, fontColor }: buttonType) => {
   };
 
   return (
-    <button className={`${getButtonStyle()} ${bgColor} ${fontColor}`}>
-      Button
+    <button
+      className={`${getButtonStyle()} ${bgColor} ${fontColor} border-solid border-[0.5px] ${borderColor}`}
+    >
+      {title}
     </button>
   );
 };
