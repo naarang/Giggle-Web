@@ -10,6 +10,7 @@ import {
 import Dropdown from '../Common/Dropdown';
 import { country, gender, phone, visa } from '@/constants/information';
 import RadioButton from './RadioButton';
+import { InputType } from '../../types/common/input';
 
 const InformationStep = ({
   userInfo,
@@ -60,7 +61,7 @@ const InformationStep = ({
             First Name
           </div>
           <Input
-            inputType="INPUT"
+            inputType={InputType.TEXT}
             placeholder="First Name"
             value={newUserInfo.first_name}
             onChange={(value) =>
@@ -75,7 +76,7 @@ const InformationStep = ({
             Last Name
           </div>
           <Input
-            inputType="INPUT"
+            inputType={InputType.TEXT}
             placeholder="Last Name"
             value={newUserInfo.last_name}
             onChange={(value) =>
@@ -161,14 +162,14 @@ const InformationStep = ({
               />
             </div>
             <Input
-              inputType="INPUT"
+              inputType={InputType.TEXT}
               placeholder="0000"
               value={phoneNum.middle}
               onChange={(value) => setPhoneNum({ ...phoneNum, middle: value })}
               canDelete={false}
             />
             <Input
-              inputType="INPUT"
+              inputType={InputType.TEXT}
               placeholder="0000"
               value={phoneNum.end}
               onChange={(value) => setPhoneNum({ ...phoneNum, end: value })}
