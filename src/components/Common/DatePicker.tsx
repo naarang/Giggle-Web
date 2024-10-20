@@ -51,11 +51,11 @@ const DatePicker = ({ setSelectedDate }: Props) => {
             setSelectedDate(moment(value).format('YYYY/MM/DD'))
           } // 날짜 클릭 시 상위 컴포넌트에 선택된 날짜 전달
           value={value}
-          formatDay={(locale, date) => date.getDate().toString()} // 일 표시 형식 커스터마이징
-          formatShortWeekday={(locale, date) =>
+          formatDay={(_, date: Date) => date.getDate().toString()} // 일 표시 형식 커스터마이징
+          formatShortWeekday={(_, date: Date) =>
             ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][date.getDay()]
           } // 요일 표시 형식 커스터마이징
-          formatMonth={(locale, date) => (date.getMonth() + 1).toString()} // 월 표시 형식 커스터마이징
+          formatMonth={(_, date: Date) => (date.getMonth() + 1).toString()} // 월 표시 형식 커스터마이징
           className={styles.reactCalendar}
           nextLabel={<NextMonthIcon />} // 월 이동 아이콘 커스텀
           prevLabel={<PrevMonthIcon />} // 월 이동 아이콘 커스텀
