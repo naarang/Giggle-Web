@@ -3,6 +3,10 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      fontFamily: {
+        pretendard: ['"Pretendard"', 'sans-serif'],
+      },
+    
       backgroundImage:{
         navbarGradient : 'linear-gradient(270deg, #FEFEFE 0.35%, #F4F4F9 175.32%)',
         applyBtn: "url('/applyButton.jpeg')",
@@ -10,5 +14,5 @@ export default {
       }
     },
   },
-  plugins: [],
+  plugins: [require('tailwind-scrollbar-hide')],
 };
