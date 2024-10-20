@@ -1,4 +1,3 @@
-import ApplyBtnImg from '@/assets/images/applyButton.jpeg';
 /*
  *
  * type
@@ -11,8 +10,7 @@ import ApplyBtnImg from '@/assets/images/applyButton.jpeg';
  *
  * button color - css 코드로 전달받음
  * font color - css 코드로 전달받음
- *
- * TODO : ApplyNow 버튼 이미지 적용
+ * border color - css 코드로 전달 받음
  *
  */
 
