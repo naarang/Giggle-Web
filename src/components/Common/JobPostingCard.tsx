@@ -7,12 +7,17 @@ import CalendarIcon from '@/assets/icons/CalendarIcon.svg?react';
 import { JobPostingItemType } from '@/types/common/jobPostingItem';
 import { calculateTimeAgo } from '@/utils/calculateTimeAgo';
 import { calculateDDay } from '@/utils/calculateDDay';
+import { useState } from 'react';
 
 interface JobPostingCardProps {
   jobPostingData: JobPostingItemType;
 }
 
 const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
+  const [isBookmarked, setIsBookmarked] = useState<boolean>(
+    jobPostingData?.is_book_marked ?? false,
+  );
+
   return (
     <article className="flex flex-col gap-[1rem] w-full px-[1.125rem] pt-[1.125rem] pb-[0.75rem] border-[0.5px] border-solid border-[#1E19263D] rounded-[1.125rem]">
       <div className="w-full flex justify-between items-start">
@@ -54,10 +59,10 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
             color="#1E1926"
             fontStyle="button-2"
           />
-          {jobPostingData.is_book_marked ? (
-            <BookmarkCheckedIcon />
+          {isBookmarked ? (
+            <BookmarkCheckedIcon onClick={() => setIsBookmarked(false)} />
           ) : (
-            <BookmarkIcon />
+            <BookmarkIcon onClick={() => setIsBookmarked(true)} />
           )}
         </div>
       </div>

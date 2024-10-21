@@ -1,5 +1,22 @@
 import MessageIcon from '@/assets/icons/Home/MessageIcon.svg?react';
 import HomeRecommendPostCard from '@/components/Home/HomeRecommendPostCard';
+import { RecommendJobPostingItemType } from '@/types/home/recommendJobPostingItem';
+
+// 추천 공고 목록 더미데이터
+const RECOMMEND_JOB_POSTING_LIST: RecommendJobPostingItemType[] = [
+  {
+    id: 1,
+    title: '공고 제목1',
+    recruitment_dead_line: '2024.11.01',
+    job_category: 'GENERAL_INTERPRETATION_TRANSLATION',
+  },
+  {
+    id: 2,
+    title: '공고 제목 222 어쩌구 저쩌구',
+    recruitment_dead_line: '2024.10.25',
+    job_category: 'GENERAL_CAFE',
+  },
+];
 
 const HomeRecommendPost = () => {
   const hasProfile = true; // 이력서 등록여부
@@ -8,9 +25,11 @@ const HomeRecommendPost = () => {
       {hasProfile ? (
         // 이력서 등록 -> 추천 공고 보여주기
         <>
-          <HomeRecommendPostCard />
-          <HomeRecommendPostCard />
-          <HomeRecommendPostCard />
+          {RECOMMEND_JOB_POSTING_LIST.map(
+            (value: RecommendJobPostingItemType) => (
+              <HomeRecommendPostCard key={value.id} jobPostingData={value} />
+            ),
+          )}
         </>
       ) : (
         // 이력서 미등록 -> 추가 메뉴 보여주기
