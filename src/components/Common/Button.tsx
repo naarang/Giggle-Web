@@ -27,7 +27,7 @@ const Button = ({
       case buttonTypeKeys.SMALL:
         return 'w-[5.5rem] py-3 flex justify-center items-center rounded-[1.25rem] text-[0.75rem]';
       case buttonTypeKeys.APPLY:
-        return `w-[20.5rem] py-4 flex justify-center items-center rounded-[2rem] bg-applyBtn bg-cover bg-center text-[1rem] text-[#F4F4F9]`;
+        return `w-[20.5rem] py-4 flex justify-center items-center rounded-[2rem] bg-[url("/src/assets/images/applyButton.jpeg")] bg-cover bg-center text-[1rem] text-[#F4F4F9]`;
       case buttonTypeKeys.BACK:
         return 'w-[7.5rem] py-4 flex justify-center items-center rounded-[2rem] text-[1rem]';
       case buttonTypeKeys.CONTINUE:
