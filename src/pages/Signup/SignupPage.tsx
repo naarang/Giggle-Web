@@ -3,11 +3,14 @@ import FindJourney from '@/components/Signup/FindJourney';
 import Stroke from '@/assets/icons/SignupStroke.svg?react';
 import SignupInput from '@/components/Signup/SignupInput';
 import { UserType } from '@/constants/user';
+import EmailInput from '@/components/Signup/EmailInput';
+import SignupVerification from '@/components/Signup/SignupVerification';
 
 const SignupPage = () => {
+  const [currentStep, setCurrentStep] = useState<number>(1);
   const [id, setId] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [email, setEmail] = useState<string>('');
   const [accountType, setCurrentType] = useState<UserType | null>(null);
 
   const handleSignUpClick = () => {
@@ -24,6 +27,43 @@ const SignupPage = () => {
 
   const handlePasswordChange = (value: string) => {
     setPassword(value);
+  };
+
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+  };
+
+  // ====== Sign up API =======
+  // API - 2.4 임시 회원가입 API 호출
+  const handleSignUp = async () => {
+    // 임의 로직
+    handleSignUpClick();
+
+    /*
+    try {
+      const response = await fetch('/api/v1/auth/sign-up', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: id,
+          password: password,
+          email: email,
+          account_type: accountType, // accountType 추가
+        }),
+      });
+
+      if (response.ok) {
+        // 이메일 인증 요청 성공 시 인증 단계로 이동
+        handleSignUpClick();
+      } else {
+        console.error('이메일 인증 실패:', response.statusText);
+      }
+    } catch (error) {
+      console.error('이메일 인증 중 오류 발생:', error);
+    }
+      */
   };
 
   return (
@@ -53,6 +93,15 @@ const SignupPage = () => {
             onPasswordChange={handlePasswordChange}
           />
         )}
+        {currentStep === 3 && (
+          <EmailInput
+            onSignUpClick={handleSignUpClick}
+            email={email}
+            onEmailChange={handleEmailChange}
+            onSubmit={handleSignUp} // 이메일을 입력하고 제출하면 회원가입 API 호출
+          />
+        )}
+        {currentStep === 4 && <SignupVerification />}
       </div>
     </div>
   );

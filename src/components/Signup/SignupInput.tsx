@@ -6,11 +6,11 @@ import { validateId, validatePassword } from '@/utils/signin';
 import SigninSocialButtons from '../Signin/SigninSocialButtons';
 
 type signupInputProps = {
-  onSignUpClick: () => void;
   id: string;
   password: string;
   onIdChange: (value: string) => void;
   onPasswordChange: (value: string) => void;
+  onSignUpClick: () => void;
 };
 
 const SignupInput = ({
@@ -33,18 +33,19 @@ const SignupInput = ({
   // ===== handler =====
   const handleIdChange = async (value: string) => {
     onIdChange(value);
-
     // ID 중복 검사 API 호출 - 유효성 검사
-    try {
-      const response = await fetch(`/api/v1/auth/validations/id?id=${value}`);
-      const data = await response.json();
-      if (data.is_valid) {
-        setIdError(null); // 중복되지 않은 경우 오류 초기화
-      } else {
-        setIdError('This email already exists'); // 중복된 경우 오류 메시지 설정
+    if (validateId(value, setIdError)) {
+      try {
+        const response = await fetch(`/api/v1/auth/validations/id?id=${value}`);
+        const data = await response.json();
+        if (data.is_valid) {
+          setIdError(null); // 중복되지 않은 경우 오류 초기화
+        } else {
+          setIdError('This email already exists'); // 중복된 경우 오류 메시지 설정
+        }
+      } catch (error) {
+        console.error('ID 중복 확인 오류:', error);
       }
-    } catch (error) {
-      console.error('ID 중복 확인 오류:', error);
     }
   };
 
