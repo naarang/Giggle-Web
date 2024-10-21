@@ -92,6 +92,10 @@ const AddressStep = ({ userInfo, onNext }: AddressStepProps) => {
       latitude: Number(addressData.y),
     });
     setAddressInput(selectedAddress.address_name);
+    setCurrentGeoInfo({
+      lon: Number(selectedAddress.x),
+      lat: Number(selectedAddress.y),
+    });
     setAddressSearchResult([]);
   };
   return (
