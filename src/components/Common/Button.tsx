@@ -1,17 +1,8 @@
 import CallIcon from '@/assets/icons/CallIcon.svg?react';
-/*
- *
- * [ type ]
- * - large
- * - small
- * - applyNow
- * - back
- * - continue
- *
- */
+import { buttonTypeKeys, buttonTypeUnion } from '@/constants/components';
 
 type buttonProps = {
-  type: string; // 정의된 버튼을 5가지 타입으로 나누었습니다.
+  type: buttonTypeUnion; // 정의된 버튼을 5가지 타입으로 나누었습니다.
   bgColor: string; // 버튼의 배경색
   fontColor: string; // 버튼 글자색
   isCallIcon?: boolean; // 전화기 아이콘 여부 (optional)
@@ -31,15 +22,15 @@ const Button = ({
 }: buttonProps) => {
   const getButtonStyle = () => {
     switch (type) {
-      case 'large':
+      case buttonTypeKeys.LARGE:
         return 'w-[327px] h-[52px] flex justify-center items-center rounded-[32px] text-[16px]';
-      case 'small':
+      case buttonTypeKeys.SMALL:
         return 'w-[89px] h-[40px] flex justify-center items-center rounded-[20px] text-[12px]';
-      case 'applyNow':
+      case buttonTypeKeys.APPLY:
         return `w-[327px] h-[52px] flex justify-center items-center rounded-[32px] bg-applyBtn bg-cover bg-center text-[16px] text-[#F4F4F9]`;
-      case 'back':
+      case buttonTypeKeys.BACK:
         return 'w-[119px] h-[52px] flex justify-center items-center rounded-[32px] text-[16px]';
-      case 'continue':
+      case buttonTypeKeys.CONTINUE:
         return 'w-[200px] h-[52px] flex justify-center items-center rounded-[32px] text-[16px]';
       default: // 기본값으로 large type 적용
         return 'w-[327px] h-[52px] flex justify-center items-center rounded-[32px] text-[16px]';
