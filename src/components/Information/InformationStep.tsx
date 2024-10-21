@@ -11,6 +11,7 @@ import Dropdown from '../Common/Dropdown';
 import { country, gender, phone, visa } from '@/constants/information';
 import RadioButton from './RadioButton';
 import { InputType } from '../../types/common/input';
+import BottomButtonPanel from '../Common/BottomButtonPanel';
 
 const InformationStep = ({
   userInfo,
@@ -179,29 +180,26 @@ const InformationStep = ({
         </div>
       </div>
       {/* 정보 입력 시마다 유효성을 검사해 모든 값이 유효하면 버튼이 활성화 */}
-      <div className="w-full fixed bottom-0 left-0 bg-gradient-to-b from-white/80 to-white flex flex-row items-start justify-start px-6 pb-[3.125rem] pt-3 box-border text-center text-base text-[#1e1926] font-[Pretendard]">
-        <div className="w-full flex items-center justify-center">
-          {/* TODO : 버튼 컴포넌트 들어오면 변경 */}
-          {isInvalid ? (
-            <button className="w-[15rem] bg-[#F4F4F9]">Next</button>
-          ) : (
-            <button
-              className="w-[15rem] bg-[#fef387]"
-              onClick={() =>
-                onNext({
-                  ...userInfo,
-                  user_info: {
-                    ...newUserInfo,
-                    nationality: newUserInfo.nationality?.toUpperCase(),
-                  },
-                })
-              }
-            >
-              Next
-            </button>
-          )}
-        </div>
-      </div>
+      <BottomButtonPanel>
+        {isInvalid ? (
+          <button className="w-[15rem] bg-[#F4F4F9]">Next</button>
+        ) : (
+          <button
+            className="w-[15rem] bg-[#fef387]"
+            onClick={() =>
+              onNext({
+                ...userInfo,
+                user_info: {
+                  ...newUserInfo,
+                  nationality: newUserInfo.nationality?.toUpperCase(),
+                },
+              })
+            }
+          >
+            Next
+          </button>
+        )}
+      </BottomButtonPanel>
     </div>
   );
 };
