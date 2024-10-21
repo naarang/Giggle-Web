@@ -57,7 +57,7 @@ const SubHeader = ({
   return (
     <>
       {/* SEARCH case는 input 컴포넌트 리렌더링 방지를 위해 컴포넌트화 하지 않았습니다.  */}
-      {type === subHeaderTypeKeys.SEARCH ? (
+      {type === subHeaderTypeKeys.SEARCH && (
         <div className="h-fit w-[90%]">
           <div className="flex justify-between items-center pt-2.5 pr-3 pb-2 pl-5">
             <div className="h-9 w-full flex items-end">
@@ -85,13 +85,9 @@ const SubHeader = ({
             </div>
           </div>
         </div>
-      ) : type === subHeaderTypeKeys.STATIC ? (
-        <NormalHeader />
-      ) : type === subHeaderTypeKeys.DETAIL ? (
-        <InfoHeader />
-      ) : (
-        <div>옳지 않은 타입의 Type 입니다.</div>
       )}
+      {type === subHeaderTypeKeys.STATIC && <NormalHeader />}
+      {type === subHeaderTypeKeys.DETAIL && <InfoHeader />}
     </>
   );
 };
