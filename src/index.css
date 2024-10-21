@@ -93,3 +93,14 @@ body {
     line-height: 0.625rem;
   }
 }
+
+@layer utilities {
+  .no-scrollbar {
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+}
