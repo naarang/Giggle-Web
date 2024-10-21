@@ -2,6 +2,7 @@ import NoSearchResultImg from '@/assets/images/NoSearchResultImg.png';
 import { JobPostingItemType } from '@/types/common/jobPostingItem';
 import JobPostingCard from '@/components/Common/JobPostingCard';
 import { useState } from 'react';
+import PostSearchSortDropdown from '@/components/PostSearch/PostSearchSortDropdown';
 
 // 공고 목록 더미데이터
 const JOB_POSTING_LIST: JobPostingItemType[] = [
@@ -51,12 +52,18 @@ enum SORT_TYPE {
 
 const PostSearchResult = () => {
   // TODO: 홈에서 See more 버튼 클릭 시 해당 메뉴로 정렬하기
-  const [,] = useState<SORT_TYPE>(SORT_TYPE.POPULAR);
+  const [selectedSort, setSelectedSort] = useState<SORT_TYPE>(
+    SORT_TYPE.POPULAR,
+  );
   return (
     <section className="flex flex-col items-center gap-[1rem] w-full mt-[1rem] px-[1.5rem]">
       <div className="w-full flex justify-between items-center">
         <h3 className="head-3 text-black">Search Result</h3>
-        <button>dropdown 만들기</button>
+        <PostSearchSortDropdown
+          options={Object.values(SORT_TYPE)}
+          value={selectedSort}
+          onSelect={(sort) => setSelectedSort(sort as SORT_TYPE)}
+        />
       </div>
       {JOB_POSTING_LIST?.length ? (
         JOB_POSTING_LIST.map((value: JobPostingItemType) => (

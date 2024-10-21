@@ -3,6 +3,7 @@ import PostSearchFilterList from '@/components/PostSearch/PostSearchFilterList';
 import PostSearchResult from '@/components/PostSearch/PostSearchResult';
 
 const PostSearchPage = () => {
+  // TODO: 여기서 검색어, 검색 필터 모두 전역변수로 관리하기
   return (
     <>
       <TextFieldHeader
