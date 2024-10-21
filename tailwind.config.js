@@ -6,11 +6,16 @@ export default {
       fontFamily: {
         pretendard: ['"Pretendard"', 'sans-serif'],
       },
-    
-      backgroundImage:{
-        navbarGradient : 'linear-gradient(270deg, #FEFEFE 0.35%, #F4F4F9 175.32%)',
-        grayGradient : 'linear-gradient(180deg, rgba(255, 255, 255, 0.80) 36.54%, #FFF 94.71%)'
-      }
+
+      backgroundImage: {
+        navbarGradient:
+          'linear-gradient(270deg, #FEFEFE 0.35%, #F4F4F9 175.32%)',
+        grayGradient:
+          'linear-gradient(180deg, rgba(255, 255, 255, 0.80) 36.54%, #FFF 94.71%)',
+      },
+      boxShadow: {
+        cardShadow: '0px 0px 1px rgba(0, 0, 0, 0.08)',
+      },
     },
   },
   plugins: [require('tailwind-scrollbar-hide')],
