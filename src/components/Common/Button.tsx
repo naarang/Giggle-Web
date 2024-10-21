@@ -45,10 +45,10 @@ const Button = ({
       {isCallIcon ? (
         <div className="flex justify-center items-center gap-1.5">
           <CallIcon />
-          <div className="text-semibold">{title}</div>
+          <div className="font-semibold">{title}</div>
         </div>
       ) : (
-        <div className="text-semibold">{title}</div>
+        <div className="font-semibold">{title}</div>
       )}
     </button>
   );
