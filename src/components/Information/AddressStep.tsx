@@ -13,6 +13,7 @@ import { Document } from '@/types/api/map';
 import { DropdownModal } from '../Common/Dropdown';
 import { AddressType } from '@/types/api/map';
 import { pick } from '../../utils/map';
+import Button from '../Common/Button';
 
 type AddressStepProps = {
   userInfo: UserInfoRequestBody;
@@ -161,17 +162,19 @@ const AddressStep = ({ userInfo, onNext }: AddressStepProps) => {
         {newAddress.region_1depth_name === '' ? (
           <button className="w-[15rem] bg-[#F4F4F9]">Next</button>
         ) : (
-          <button
-            className="w-[15rem] bg-[#fef387]"
+          <Button
+            type="large"
+            bgColor="bg-[#fef387]"
+            fontColor=""
+            isBorder={false}
+            title="Next"
             onClick={() =>
               onNext({
                 ...userInfo,
                 address: newAddress,
               })
             }
-          >
-            Next
-          </button>
+          />
         )}
       </BottomButtonPanel>
     </div>

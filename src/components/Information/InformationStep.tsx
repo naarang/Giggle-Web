@@ -12,6 +12,7 @@ import { country, gender, phone, visa } from '@/constants/information';
 import RadioButton from './RadioButton';
 import { InputType } from '../../types/common/input';
 import BottomButtonPanel from '../Common/BottomButtonPanel';
+import Button from '../Common/Button';
 
 const InformationStep = ({
   userInfo,
@@ -184,8 +185,12 @@ const InformationStep = ({
         {isInvalid ? (
           <button className="w-[15rem] bg-[#F4F4F9]">Next</button>
         ) : (
-          <button
-            className="w-[15rem] bg-[#fef387]"
+          <Button
+            type="large"
+            bgColor="bg-[#fef387]"
+            fontColor=""
+            isBorder={false}
+            title="Next"
             onClick={() =>
               onNext({
                 ...userInfo,
@@ -195,9 +200,7 @@ const InformationStep = ({
                 },
               })
             }
-          >
-            Next
-          </button>
+          />
         )}
       </BottomButtonPanel>
     </div>
