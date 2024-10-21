@@ -23,17 +23,17 @@ const Button = ({
   const getButtonStyle = () => {
     switch (type) {
       case buttonTypeKeys.LARGE:
-        return 'w-[327px] h-[52px] flex justify-center items-center rounded-[32px] text-[16px]';
+        return 'w-[20.5rem] py-4 flex justify-center items-center rounded-[2rem] text-[1rem]';
       case buttonTypeKeys.SMALL:
-        return 'w-[89px] h-[40px] flex justify-center items-center rounded-[20px] text-[12px]';
+        return 'w-[5.5rem] py-3 flex justify-center items-center rounded-[1.25rem] text-[0.75rem]';
       case buttonTypeKeys.APPLY:
-        return `w-[327px] h-[52px] flex justify-center items-center rounded-[32px] bg-applyBtn bg-cover bg-center text-[16px] text-[#F4F4F9]`;
+        return `w-[20.5rem] py-4 flex justify-center items-center rounded-[2rem] bg-applyBtn bg-cover bg-center text-[1rem] text-[#F4F4F9]`;
       case buttonTypeKeys.BACK:
-        return 'w-[119px] h-[52px] flex justify-center items-center rounded-[32px] text-[16px]';
+        return 'w-[7.5rem] py-4 flex justify-center items-center rounded-[2rem] text-[1rem]';
       case buttonTypeKeys.CONTINUE:
-        return 'w-[200px] h-[52px] flex justify-center items-center rounded-[32px] text-[16px]';
+        return 'w-[12.5rem] py-4 flex justify-center items-center rounded-[2rem] text-[1rem]';
       default: // 기본값으로 large type 적용
-        return 'w-[327px] h-[52px] flex justify-center items-center rounded-[32px] text-[16px]';
+        return 'w-[20.5rem] py-4 flex justify-center items-center rounded-[2rem] text-[1rem]';
     }
   };
 
