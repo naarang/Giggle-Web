@@ -1,7 +1,7 @@
-export const subHeaderStatusKeys = {
+export const subHeaderTypeKeys = {
   SEARCH: 'search',
   STATIC: 'static',
   DETAIL: 'detail',
 } as const
 
-export type SubHeaderStatusUnion = typeof subHeaderStatusKeys[keyof typeof subHeaderStatusKeys]
+export type SubHeaderTypeUnion = typeof subHeaderTypeKeys[keyof typeof subHeaderTypeKeys]

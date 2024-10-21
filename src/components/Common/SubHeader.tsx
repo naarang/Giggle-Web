@@ -1,23 +1,20 @@
 import SearchIcon from '@/assets/icons/SubHeaderSearchIcon.svg?react';
 import MoreInfoIcon from '@/assets/icons/MoreInfoIcon.svg?react';
-import {
-  subHeaderStatusKeys,
-  SubHeaderStatusUnion,
-} from '@/constants/components';
+import { subHeaderTypeKeys, SubHeaderTypeUnion } from '@/constants/components';
 
 type SubHeaderProps = {
-  status: SubHeaderStatusUnion;
-  title?: string;
-  body?: string;
-  placeHolder?: string;
-  value?: string;
-  onChange?: (value: string) => void;
-  onSearch?: () => void;
-  onClickMenu?: () => void;
+  type: SubHeaderTypeUnion; // sub header의 타입
+  title?: string; // 검색 기능이 없을 경우 타이틀
+  body?: string; // 검색 기능이 없을 경우 상세 글
+  placeHolder?: string; // 검색 기능이 있을 경우 placeHolder 값
+  value?: string; // 검색 기능이 있을 경우 value 값
+  onChange?: (value: string) => void; // 검색 기능이 있을 경우 onChange
+  onSearch?: () => void; // 검색 기능이 있을 경우 '검색 버튼' 클릭 트리거
+  onClickMenu?: () => void; // 검색 기능이 있을 경우 '메뉴 버튼' 클릭 트리거
 };
 
 const SubHeader = ({
-  status,
+  type,
   title,
   body,
   placeHolder,
@@ -30,38 +27,6 @@ const SubHeader = ({
     if (onChange) {
       onChange(e.target.value);
     }
-  };
-
-  const SearchHeader = () => {
-    return (
-      <div className="h-fit w-[90%]">
-        <div className="flex justify-between items-center pt-2.5 pr-3 pb-2 pl-5">
-          <div className="h-9 w-full flex items-end">
-            <input
-              type="text"
-              placeholder={placeHolder}
-              value={value}
-              onChange={handleInputChange}
-              className="w-[90%] outline-none font-semibold text-base"
-            />
-          </div>
-          <div className="flex justify-center items-center gap-[0.125rem]">
-            <button
-              onClick={onSearch}
-              className="flex justify-center items-center w-9 h-9"
-            >
-              <SearchIcon />
-            </button>
-            <button
-              onClick={onClickMenu}
-              className="flex justify-center items-center w-9 h-9"
-            >
-              <MoreInfoIcon />
-            </button>
-          </div>
-        </div>
-      </div>
-    );
   };
 
   const NormalHeader = () => {
@@ -77,7 +42,13 @@ const SubHeader = ({
   };
 
   const InfoHeader = () => (
-    <div className="w-full px-8 pt-6 pb-7 rounded-b-lg shadow-sm">
+    <div
+      className="w-full px-8 pt-6 pb-7 rounded-b-lg"
+      style={{
+        boxShadow:
+          '0px 1px 2px 0px rgba(0, 0, 0, 0.12), 0px 0px 1px 0px rgba(0, 0, 0, 0.08), 0px 0px 1px 0px rgba(0, 0, 0, 0.08)',
+      }}
+    >
       <h1 className="w-[70%] text-[1.25rem] font-semibold">{title}</h1>
       <p className="w-[70%] text-[0.625rem] font-normal">{body}</p>
     </div>
@@ -85,9 +56,42 @@ const SubHeader = ({
 
   return (
     <>
-      {status === subHeaderStatusKeys.SEARCH && <SearchHeader />}
-      {status === subHeaderStatusKeys.STATIC && <NormalHeader />}
-      {status === subHeaderStatusKeys.DETAIL && <InfoHeader />}
+      {/* SEARCH case는 input 컴포넌트 리렌더링 방지를 위해 컴포넌트화 하지 않았습니다.  */}
+      {type === subHeaderTypeKeys.SEARCH ? (
+        <div className="h-fit w-[90%]">
+          <div className="flex justify-between items-center pt-2.5 pr-3 pb-2 pl-5">
+            <div className="h-9 w-full flex items-end">
+              <input
+                type="text"
+                placeholder={placeHolder}
+                value={value}
+                onChange={handleInputChange}
+                className="w-[90%] outline-none font-semibold text-base"
+              />
+            </div>
+            <div className="flex justify-center items-center gap-[0.125rem]">
+              <button
+                onClick={onSearch}
+                className="flex justify-center items-center w-9 h-9"
+              >
+                <SearchIcon />
+              </button>
+              <button
+                onClick={onClickMenu}
+                className="flex justify-center items-center w-9 h-9"
+              >
+                <MoreInfoIcon />
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : type === subHeaderTypeKeys.STATIC ? (
+        <NormalHeader />
+      ) : type === subHeaderTypeKeys.DETAIL ? (
+        <InfoHeader />
+      ) : (
+        <div>옳지 않은 타입의 Type 입니다.</div>
+      )}
     </>
   );
 };
