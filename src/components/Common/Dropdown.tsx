@@ -13,7 +13,7 @@ type DropDownProps = {
 };
 
 // DropdownModal 컴포넌트: 드롭다운 옵션을 표시하는 모달
-const DropdownModal = ({
+export const DropdownModal = ({
   options,
   value,
   onSelect,
