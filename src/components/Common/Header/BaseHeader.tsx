@@ -26,7 +26,7 @@ const BaseHeader = ({
           <BackButtonIcon />
         </button>
       ) : (
-        <div></div>
+        <div className="w-[2.5rem] h-[2.5rem]"></div>
       )}
       {title ? <span className="head-3">title</span> : <div></div>}
       {hasMenuButton ? (
@@ -37,7 +37,7 @@ const BaseHeader = ({
           <RowMenuIcon />
         </button>
       ) : (
-        <div></div>
+        <div className="w-[2.5rem] h-[2.5rem]"></div>
       )}
     </section>
   );
