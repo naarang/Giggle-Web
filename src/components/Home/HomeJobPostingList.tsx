@@ -1,5 +1,8 @@
 import JobPostingCard from '@/components/Common/JobPostingCard';
 import { JobPostingItemType } from '@/types/common/jobPostingItem';
+import RightArrowIcon from '@/assets/icons/Home/RightArrowIcon.svg?react';
+import Tag from '@/components/Common/Tag';
+import { useState } from 'react';
 
 // 공고 목록 더미데이터
 const JOB_POSTING_LIST: JobPostingItemType[] = [
@@ -39,33 +42,95 @@ const JOB_POSTING_LIST: JobPostingItemType[] = [
     recruitment_dead_line: '2024-10-21T18:00:00',
     created_at: '2024-10-15T09:00:00',
   },
-  {
-    id: 1122334455,
-    icon_img_url: 'https://example.com/images/icon3.png',
-    title: 'Tour Guide',
-    summaries: {
-      address: 'Jeju Island, South Korea',
-      work_period: 'MORE_THAN_1_YEAR',
-      work_days_per_week: 5,
-    },
-    tags: {
-      is_recruiting: true,
-      visa: 'F-2',
-      job_category: 'TOUR_GUIDE_AND_DUTY_FREE_ASSISTANT',
-    },
-    hourly_rate: 18000,
-    recruitment_dead_line: '2024-12-31T23:59:59',
-    created_at: '2024-09-20T14:45:00',
-  },
 ];
 
+const enum Menu {
+  POPULAR = 'POPULAR',
+  RECENT = 'RECENT',
+  BOOKMARKS = 'BOOKMARKS',
+}
+
 const HomeJobPostingList = () => {
+  const [selectedMenu, setSelectedMenu] = useState<Menu>(Menu.POPULAR);
+
   return (
-    <>
-      {JOB_POSTING_LIST.map((value: JobPostingItemType) => (
-        <JobPostingCard key={value.id} jobPostingData={value} />
-      ))}
-    </>
+    <section className="w-full bg-[#FEF387]">
+      <nav className="flex gap-[0.5rem] w-full py-[1rem] px-[2rem] rounded-t-[1rem] bg-white">
+        <button onClick={() => setSelectedMenu(Menu.POPULAR)}>
+          <Tag
+            value={'🔥 Popular'}
+            padding="0.5rem 1rem"
+            isRounded={true}
+            hasCheckIcon={false}
+            backgroundColor={
+              selectedMenu === Menu.POPULAR ? '#FEF387' : 'white'
+            }
+            color="#1E1926A6"
+            fontStyle="button-2"
+          />
+        </button>
+        <button onClick={() => setSelectedMenu(Menu.RECENT)}>
+          <Tag
+            value={'🌟 Recent'}
+            padding="0.5rem 1rem"
+            isRounded={true}
+            hasCheckIcon={false}
+            backgroundColor={selectedMenu === Menu.RECENT ? '#FEF387' : 'white'}
+            color="#1E1926A6"
+            fontStyle="button-2"
+          />
+        </button>
+        {/* 로그인 시에만 존재하는 메뉴 */}
+        <button onClick={() => setSelectedMenu(Menu.BOOKMARKS)}>
+          <Tag
+            value={'🌟 Bookmarks'}
+            padding="0.5rem 1rem"
+            isRounded={true}
+            hasCheckIcon={false}
+            backgroundColor={
+              selectedMenu === Menu.BOOKMARKS ? '#FEF387' : 'white'
+            }
+            color="#1E1926A6"
+            fontStyle="button-2"
+          />
+        </button>
+      </nav>
+      <div className="flex flex-col gap-[3.125rem] pt-[0.75rem] pb-[6.25rem] px-[1.5rem] bg-white">
+        <div className="flex flex-col gap-[1rem]">
+          <div className="flex justify-between items-end">
+            <h3 className="head-3 text-black">🔥 Popular Job Lists for You</h3>
+            <button className="flex items-center gap-[0.625rem] button-2 text-[#1E1926]">
+              See more <RightArrowIcon />
+            </button>
+          </div>
+          {JOB_POSTING_LIST.map((value: JobPostingItemType) => (
+            <JobPostingCard key={value.id} jobPostingData={value} />
+          ))}
+        </div>
+        <div className="flex flex-col gap-[1rem]">
+          <div className="flex justify-between items-end">
+            <h3 className="head-3 text-black">🌟 Recently Added Job</h3>
+            <button className="flex items-center gap-[0.625rem] button-2 text-[#1E1926]">
+              See more <RightArrowIcon />
+            </button>
+          </div>
+          {JOB_POSTING_LIST.map((value: JobPostingItemType) => (
+            <JobPostingCard key={value.id} jobPostingData={value} />
+          ))}
+        </div>
+        <div className="flex flex-col gap-[1rem]">
+          <div className="flex justify-between items-end">
+            <h3 className="head-3 text-black">🌟 My Bookmarks</h3>
+            <button className="flex items-center gap-[0.625rem] button-2 text-[#1E1926]">
+              See more <RightArrowIcon />
+            </button>
+          </div>
+          {JOB_POSTING_LIST.map((value: JobPostingItemType) => (
+            <JobPostingCard key={value.id} jobPostingData={value} />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
 
