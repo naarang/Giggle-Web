@@ -24,7 +24,7 @@ const InformationPage = () => {
     <div className="m-auto max-w-[500px] relative h-screen flex flex-col items-center justify-start border border-black overflow-y-scroll scrollbar-hide">
       <div className="w-full flex flex-row py-6 items-center justify-between">
         <div
-          className="relative w-full flex items-center justify-center text-[1.75rem] tracking-[-0.01em] leading-9 font-semibold font-[Pretendard] text-[#1e1926] text-left"
+          className="relative w-full flex items-center justify-center title-1 text-[#1e1926] text-left"
           onClick={() => setCurrentStep(currentStep + 1)}
         >
           Information

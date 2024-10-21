@@ -104,7 +104,7 @@ const AddressStep = ({ userInfo, onNext }: AddressStepProps) => {
       <div className="w-full flex flex-col gap-[1.125rem]">
         {/* 주소 검색 입력 input */}
         <div className="w-full">
-          <div className="w-full flex items-center justify-start text-xs font-[Pretendard] color-[#222] px-[0.25rem] py-[0.375rem]">
+          <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
             Main Address
           </div>
           <Input
@@ -143,7 +143,7 @@ const AddressStep = ({ userInfo, onNext }: AddressStepProps) => {
           </Map>
         </div>
         <div className="w-full">
-          <div className="w-full flex items-center justify-start text-xs font-[Pretendard] color-[#222] px-[0.25rem] py-[0.375rem]">
+          <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
             Detailed Address
           </div>
           <Input

@@ -36,7 +36,7 @@ const LanguageStep = ({ userInfo, onNext }: LanguageStepProps) => {
           <Button
             type="large"
             bgColor="bg-[#fef387]"
-            fontColor=""
+            fontColor="text-[#222]"
             isBorder={false}
             title="Next"
             onClick={() =>
