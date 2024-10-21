@@ -2,23 +2,36 @@ export const calculateTimeAgo = (date: string): string => {
   const startTime = new Date(date).getTime();
   const currentTime = new Date().getTime();
 
+  const MILLISECONDS_IN_MINUTE = 1000 * 60;
+  const MINUTES_IN_HOUR = 60;
+  const HOURS_IN_DAY = 24;
+  const DAYS_IN_WEEK = 7;
+  const DAYS_IN_MONTH = 30;
+  const DAYS_IN_YEAR = 365;
+  const WEEKS_IN_MONTH = 4;
+  const MONTHS_IN_YEAR = 12;
+
   const differenceMilliseconds = currentTime - startTime;
-  const differenceMinutes = differenceMilliseconds / (1000 * 60);
-  if (differenceMinutes < 60)
+  const differenceMinutes = differenceMilliseconds / MILLISECONDS_IN_MINUTE;
+  if (differenceMinutes < MINUTES_IN_HOUR)
     return `${Math.floor(differenceMinutes)} mins ago`;
 
-  const differenceHours = differenceMinutes / 60;
-  if (differenceHours < 24) return `${Math.floor(differenceHours)} hours ago`;
+  const differenceHours = differenceMinutes / MINUTES_IN_HOUR;
+  if (differenceHours < HOURS_IN_DAY)
+    return `${Math.floor(differenceHours)} hours ago`;
 
-  const differenceDays = differenceHours / 24;
-  if (differenceDays < 7) return `${Math.floor(differenceDays)} days ago`;
+  const differenceDays = differenceHours / HOURS_IN_DAY;
+  if (differenceDays < DAYS_IN_WEEK)
+    return `${Math.floor(differenceDays)} days ago`;
 
-  const differenceWeeks = differenceHours / 7;
-  if (differenceWeeks < 4) return `${Math.floor(differenceWeeks)} weeks ago`;
+  const differenceWeeks = differenceHours / DAYS_IN_WEEK;
+  if (differenceWeeks < WEEKS_IN_MONTH)
+    return `${Math.floor(differenceWeeks)} weeks ago`;
 
-  const differenceMonths = differenceDays / 30;
-  if (differenceMonths < 4) return `${Math.floor(differenceMonths)} months ago`;
+  const differenceMonths = differenceDays / DAYS_IN_MONTH;
+  if (differenceMonths < MONTHS_IN_YEAR)
+    return `${Math.floor(differenceMonths)} months ago`;
 
-  const differenceYears = differenceDays / 365;
+  const differenceYears = differenceDays / DAYS_IN_YEAR;
   return `${Math.floor(differenceYears)} years ago`;
 };
