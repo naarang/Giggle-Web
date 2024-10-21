@@ -26,14 +26,14 @@ const Tag = ({
 }: TagProps) => {
   return (
     <div
-      className={`w-fit flex items-center gap-[0.5rem] ${fontStyle} ${isRounded ? 'rounded-[1.125rem]' : 'rounded-[0.375rem]'}`}
+      className={`w-fit h-fit flex items-center gap-[0.5rem] ${fontStyle} ${isRounded ? 'rounded-[1.125rem]' : 'rounded-[0.375rem]'}`}
       style={{
         padding: padding,
         backgroundColor: backgroundColor,
         color: color,
         borderColor: borderColor,
         borderStyle: borderColor ? 'solid' : 'none',
-        borderWidth: '1px',
+        borderWidth: '0.5px',
       }}
     >
       {hasCheckIcon && <TagCheckIcon color={color} />}
