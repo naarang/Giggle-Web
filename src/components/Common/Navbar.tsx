@@ -32,7 +32,7 @@ const Navbar = () => {
   ];
 
   return (
-    <section className="w-[377px] py-6 px-12 bg-navbarGradient rounded-[32px]">
+    <section className="w-full py-6 px-12 bg-navbarGradient rounded-[2rem]">
       <div className="flex justify-between items-center">
         {routes.map((route, index) => {
           const IconComponent = route.svg;
