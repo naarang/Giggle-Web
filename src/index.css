@@ -14,66 +14,93 @@ body {
 
 @layer components {
   /* 폰트 설정하기 */
+  .title-1 {
+    font-weight: 600;
+    font-size: 1.75rem;
+    line-height: 2.25rem;
+  }
+
+  .title-2 {
+    font-weight: 600;
+    font-size: 1.625rem;
+    line-height: 2rem;
+  }
+
   .head-1 {
     font-weight: 600;
     font-size: 1.5rem;
     line-height: 2rem;
-    letter-spacing: -0.0625rem;
   }
 
   .head-2 {
     font-weight: 600;
     font-size: 1.25rem;
     line-height: 1.5rem;
-    letter-spacing: -0.5%;
   }
 
   .head-3 {
     font-weight: 600;
     font-size: 1rem;
     line-height: 1.25rem;
-    letter-spacing: -1%;
   }
 
   .body-1 {
-    font-weight: 500;
+    font-weight: 400;
     font-size: 1rem;
     line-height: 1.5rem;
-    letter-spacing: -0.015625rem;
   }
 
   .body-2 {
-    font-weight: 500;
+    font-weight: 400;
     font-size: 0.875rem;
     line-height: 1.25rem;
-    letter-spacing: -0.015625rem;
   }
 
   .body-3 {
-    font-weight: 500;
+    font-weight: 400;
     font-size: 0.75rem;
     line-height: 1rem;
     letter-spacing: 0rem;
   }
 
-  .button {
-    font-weight: 700;
+  .button-1 {
+    font-weight: 600;
     font-size: 1rem;
     line-height: 1.25rem;
-    letter-spacing: -0.0125rem;
   }
 
-  .chips {
-    font-weight: 700;
+  .button-2 {
+    font-weight: 600;
     font-size: 0.75rem;
     line-height: 1rem;
-    letter-spacing: -0.03125rem;
   }
 
-  .caption {
-    font-weight: 500;
+  .caption-1 {
+    font-weight: 400;
     font-size: 0.625rem;
     line-height: 0.75rem;
-    letter-spacing: 2%;
+  }
+
+  .caption-1-sb {
+    font-weight: 600;
+    font-size: 0.625rem;
+    line-height: 0.75rem;
+  }
+
+  .caption-2 {
+    font-weight: 400;
+    font-size: 0.5rem;
+    line-height: 0.625rem;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar {
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
   }
 }

@@ -49,7 +49,7 @@ export type UserInfo = {
 }
 
 // Type for address with undefinedable fields
-type Address = {
+export type Address = {
   address_name: string | undefined;
   region_1depth_name: string | undefined;
   region_2depth_name: string | undefined;
@@ -84,12 +84,12 @@ export const initialUserInfo: UserInfo = {
 
 // Initial state for Address
 export const initialAddress: Address = {
-  address_name: undefined,
-  region_1depth_name: undefined,
-  region_2depth_name: undefined,
-  region_3depth_name: undefined,
-  region_4depth_name: undefined,
-  address_detail: undefined,
+  address_name: "",
+  region_1depth_name: "",
+  region_2depth_name: "",
+  region_3depth_name: "",
+  region_4depth_name: "",
+  address_detail: "",
   longitude: undefined,
   latitude: undefined,
 }

@@ -1,3 +1,4 @@
+import AddressStep from '@/components/Information/AddressStep';
 import InformationStep from '@/components/Information/InformationStep';
 import StepIndicator from '@/components/Information/StepIndicator';
 import {
@@ -8,7 +9,7 @@ import { useState } from 'react';
 
 // funnel 패턴으로 구현한 추가정보 입력 페이지. 총 3 step으로 구성
 const InformationPage = () => {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(2);
   const [userInfo, setUserInfo] = useState<UserInfoRequestBody>(
     initialUserInfoRequestBody,
   );
@@ -32,6 +33,9 @@ const InformationPage = () => {
       <div className="w-full flex justify-center px-6">
         {currentStep === 1 && (
           <InformationStep userInfo={userInfo} onNext={handleNext} />
+        )}
+        {currentStep === 2 && (
+          <AddressStep userInfo={userInfo} onNext={handleNext} />
         )}
       </div>
     </div>
