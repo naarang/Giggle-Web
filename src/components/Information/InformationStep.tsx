@@ -183,7 +183,13 @@ const InformationStep = ({
       {/* 정보 입력 시마다 유효성을 검사해 모든 값이 유효하면 버튼이 활성화 */}
       <BottomButtonPanel>
         {isInvalid ? (
-          <button className="w-[15rem] bg-[#F4F4F9]">Next</button>
+          <Button
+            type="large"
+            bgColor="bg-[#F4F4F9]"
+            fontColor=""
+            isBorder={false}
+            title="Next"
+          />
         ) : (
           <Button
             type="large"

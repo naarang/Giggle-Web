@@ -160,7 +160,13 @@ const AddressStep = ({ userInfo, onNext }: AddressStepProps) => {
       {/* 다음 step 이동 버튼 포함한 Bottom Panel */}
       <BottomButtonPanel>
         {newAddress.region_1depth_name === '' ? (
-          <button className="w-[15rem] bg-[#F4F4F9]">Next</button>
+          <Button
+            type="large"
+            bgColor="bg-[#F4F4F9]"
+            fontColor=""
+            isBorder={false}
+            title="Next"
+          />
         ) : (
           <Button
             type="large"
