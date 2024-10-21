@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Input from '../Common/Input';
 import Button from '../Common/Button';
 import { useNavigate } from 'react-router-dom';
+import { validateId, validatePassword } from '@/utils/signin';
 
 const SigninInputSection = () => {
   const navigate = useNavigate();
@@ -12,51 +13,27 @@ const SigninInputSection = () => {
   const [idError, setIdError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
-  // ===== function =====
-  // ID 유효성 검사 함수
-  const validateId = (id: string): boolean => {
-    const idRegex = /^[A-Za-z0-9]{1,320}$/;
-    if (!idRegex.test(id)) {
-      setIdError('Invalid id format');
-      return false;
-    }
-    setIdError(null);
-    return true;
-  };
-
-  // 비밀번호 유효성 검사 함수
-  const validatePassword = (password: string): boolean => {
-    const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!passwordRegex.test(password)) {
-      setPasswordError(
-        'Values of 8 or more digits, including numbers, alphabets, and symbols.',
-      );
-      return false;
-    }
-    setPasswordError(null);
-    return true;
-  };
-
   // ===== handler =====
   const handleIdChange = (value: string) => {
     setIdValue(value);
-    validateId(value); // ID 입력 시 유효성 검사
+    validateId(value, setIdError); // ID 입력 시 유효성 검사
   };
 
   const handlePasswordChange = (value: string) => {
     setPasswordValue(value);
-    validatePassword(value); // 비밀번호 입력 시 유효성 검사
+    validatePassword(value, setPasswordError); // 비밀번호 입력 시 유효성 검사
   };
 
   // ====== Sign in API =======
   const handleSubmit = async () => {
-    const serial_id = validateId(idValue);
-    const password = validatePassword(passwordValue);
+    const serial_id = validateId(idValue, setIdError);
+    const password = validatePassword(passwordValue, setPasswordError);
 
     // temp code
-    alert('id: ' + idValue + ' password: ' + passwordValue);
-    navigate('/');
+    if (serial_id && password) {
+      alert('id: ' + idValue + ' password: ' + passwordValue);
+      navigate('/');
+    }
 
     /*
     if (serial_id && password) {
