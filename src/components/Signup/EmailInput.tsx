@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Input from '../Common/Input';
 import Button from '../Common/Button';
 import SigninSocialButtons from '../Signin/SigninSocialButtons';
@@ -27,7 +27,7 @@ const EmailInput = ({
     onEmailChange(value);
 
     // 이메일 형식 유효성 검사
-    if (!validateEmail(value, setEmailError)) {
+    if (!validateEmail(value)) {
       setEmailError('Invalid email format');
       setIsValid(false); // 유효성 검사 실패 시 버튼 비활성화
       return;
@@ -36,6 +36,10 @@ const EmailInput = ({
     }
 
     // 이메일 중복 검사 API - 유효성 검사
+    // 테스트 코드
+    setEmailError(null);
+    setIsValid(true);
+    /*
     try {
       const response = await fetch(
         `/api/v1/auth/validations/email?email=${value}`,
@@ -43,15 +47,16 @@ const EmailInput = ({
       const data = await response.json();
       if (data.is_valid) {
         setEmailError(null); // 중복되지 않은 경우 오류 초기화
-        setIsValid(true);
+        setIsValid(true); // 이메일이 중복되지 않으면 버튼 활성화
       } else {
         setEmailError('This email already exists'); // 중복된 경우 오류 메시지 설정
-        setIsValid(false);
+        setIsValid(false); // 중복된 경우 버튼 비활성화
       }
     } catch (error) {
       console.error('이메일 중복 확인 오류:', error);
-      setIsValid(false);
+      setIsValid(false); // 오류 발생 시 버튼 비활성화
     }
+    */
   };
 
   const handleSignupClick = () => {
@@ -61,7 +66,7 @@ const EmailInput = ({
 
   // 이메일과 유효성 검사 상태에 따라 버튼 비활성화 상태를 관리
   useEffect(() => {
-    setIsValid(email !== '' && !emailError);
+    setIsValid(email !== '' && !emailError); // 이메일 값이 있고 오류가 없으면 유효
   }, [email, emailError]);
 
   return (

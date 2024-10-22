@@ -24,12 +24,10 @@ export const validatePassword = (password: string, setPasswordError: (error: str
 };
 
 // 이메일 유효성 검사 함수
-export const validateEmail = (email: string, setEmailError: (error: string | null) => void): boolean => {
+export const validateEmail = (email: string): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)){
-    setEmailError('Invalid email format')
     return false;
   };
-  setEmailError(null)
   return true;
 };

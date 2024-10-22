@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Input from '../Common/Input';
 import Button from '../Common/Button';
 import { useNavigate } from 'react-router-dom';

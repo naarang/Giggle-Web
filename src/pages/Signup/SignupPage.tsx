@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import FindJourney from '@/components/Signup/FindJourney';
 import Stroke from '@/assets/icons/SignupStroke.svg?react';
 import SignupInput from '@/components/Signup/SignupInput';
