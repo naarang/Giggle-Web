@@ -11,20 +11,22 @@ import { PostSearchFilterItemType } from '@/types/PostSearchFilter/PostSearchFil
 import PostSearchFilterArea from '@/components/PostSearchFilter/PostSearchFilterArea';
 import { useNavigate } from 'react-router-dom';
 
-const excludedCategories = [
-  FILTER_CATEGORY.REGION_1DEPTH,
-  FILTER_CATEGORY.REGION_2DEPTH,
-  FILTER_CATEGORY.REGION_3DEPTH,
-];
-
-const showCategories = Object.entries(FILTER_CATEGORY_OPTIONS).filter(
-  ([category]) => !excludedCategories.includes(category as FILTER_CATEGORY),
-);
-
 const PostSearchFilterPage = () => {
   const navigate = useNavigate();
   // TODO: 여기서 검색어, 검색 필터 모두 전역변수로 관리하기
-  const [filterList, setFilterList] = useState<PostSearchFilterItemType[]>([]);
+  const [filterList, setFilterList] = useState<PostSearchFilterItemType>({
+    [FILTER_CATEGORY.REGION_1DEPTH]: [],
+    [FILTER_CATEGORY.REGION_2DEPTH]: [],
+    [FILTER_CATEGORY.REGION_3DEPTH]: [],
+    [FILTER_CATEGORY.INDUSTRY]: [],
+    [FILTER_CATEGORY.WORK_PERIOD]: [],
+    [FILTER_CATEGORY.WORK_DAYS_PER_WEEK]: [],
+    [FILTER_CATEGORY.WORKING_DAY]: [],
+    [FILTER_CATEGORY.WORKING_HOURS]: [],
+    [FILTER_CATEGORY.RECRUITMENT_PERIOD]: [],
+    [FILTER_CATEGORY.EMPLOYMENT_TYPE]: [],
+    [FILTER_CATEGORY.VISA]: [],
+  });
   const [isOpenAreaFilter, setIsOpenAreaFilter] = useState<boolean>(false);
 
   return (
@@ -52,7 +54,7 @@ const PostSearchFilterPage = () => {
               setFilterList={setFilterList}
             />
             <PostSearchFilterList
-              showCategories={showCategories}
+              showCategories={Object.entries(FILTER_CATEGORY_OPTIONS)}
               filterList={filterList}
               setFilterList={setFilterList}
             />

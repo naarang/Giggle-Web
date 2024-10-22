@@ -12,15 +12,17 @@ export const enum FILTER_CATEGORY {
   VISA = 'Visa',
 }
 
-type FilterOptionsType = {
-  [key in FILTER_CATEGORY]: string[];
+export type FilterOptionsType = {
+  [key in Exclude<
+    FILTER_CATEGORY,
+    | FILTER_CATEGORY.REGION_1DEPTH
+    | FILTER_CATEGORY.REGION_2DEPTH
+    | FILTER_CATEGORY.REGION_3DEPTH
+  >]: string[];
 };
 
 // 카테고리 별로 문자열 배열을 가지는 객체
 export const FILTER_CATEGORY_OPTIONS: FilterOptionsType = {
-  [FILTER_CATEGORY.REGION_1DEPTH]: ['서울시', '부산시', '인천시'], // 시, 도 예시
-  [FILTER_CATEGORY.REGION_2DEPTH]: ['강북구', '강남구', '종로구'], // 구 예시
-  [FILTER_CATEGORY.REGION_3DEPTH]: ['미아동', '삼성동', '서초동'], // 동 예시
   [FILTER_CATEGORY.INDUSTRY]: [
     'Translation',
     'Food Service Assistant',

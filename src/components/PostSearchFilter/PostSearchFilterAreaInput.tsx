@@ -7,10 +7,8 @@ import { FILTER_CATEGORY } from '@/constants/postSearch';
 
 type PostSearchFilterAreaInputProps = {
   setIsOpenAreaFilter: React.Dispatch<React.SetStateAction<boolean>>;
-  filterList: PostSearchFilterItemType[];
-  setFilterList: React.Dispatch<
-    React.SetStateAction<PostSearchFilterItemType[]>
-  >;
+  filterList: PostSearchFilterItemType;
+  setFilterList: React.Dispatch<React.SetStateAction<PostSearchFilterItemType>>;
 };
 
 const PostSearchFilterAreaInput = ({
@@ -18,41 +16,38 @@ const PostSearchFilterAreaInput = ({
   filterList,
   setFilterList,
 }: PostSearchFilterAreaInputProps) => {
-  const [currentRegion, setCurrentRegion] = useState<(string | null)[]>([
-    null,
-    null,
-    null,
-  ]);
+  const [region1Depth, setRegion1Depth] = useState<string[]>([]);
+  const [region2Depth, setRegion2Depth] = useState<string[]>([]);
+  const [region3Depth, setRegion3Depth] = useState<string[]>([]);
 
   useEffect(() => {
-    const region1Depth = filterList.find(
-      (value) => value.category === FILTER_CATEGORY.REGION_1DEPTH,
-    );
+    const region1Depth = filterList[FILTER_CATEGORY.REGION_1DEPTH];
+    const region2Depth = filterList[FILTER_CATEGORY.REGION_2DEPTH];
+    const region3Depth = filterList[FILTER_CATEGORY.REGION_3DEPTH];
 
-    const region2Depth = filterList.find(
-      (value) => value.category === FILTER_CATEGORY.REGION_2DEPTH,
-    );
-    const region3Depth = filterList.find(
-      (value) => value.category === FILTER_CATEGORY.REGION_3DEPTH,
-    );
-
-    setCurrentRegion([
-      region1Depth?.value ?? null,
-      region2Depth?.value ?? null,
-      region3Depth?.value ?? null,
-    ]);
+    setRegion1Depth(region1Depth ?? []);
+    setRegion2Depth(region2Depth ?? []);
+    setRegion3Depth(region3Depth ?? []);
   }, [filterList]);
 
-  const formatRegionArrayToString = (region: (string | null)[]) => {
-    return `${region[0] ?? ''} ${region[1] ?? ''} ${region[2] ?? ''}`;
+  const formatRegionArrayToString = (index: number) => {
+    return `${region1Depth[index]} ${region2Depth[index]} ${region3Depth[index]}`;
   };
 
-  const onClickDelete = () => {
-    setCurrentRegion([null, null, null]);
-    const resetRegionFilterList = filterList.filter(
-      (value) => !value.category.includes('Region'),
-    );
-    setFilterList([...resetRegionFilterList]);
+  const onClickDelete = (regionIndex: number) => {
+    const updatedFilterList = {
+      ...filterList,
+      [FILTER_CATEGORY.REGION_1DEPTH]: region1Depth.filter(
+        (_value, index) => index !== regionIndex,
+      ),
+      [FILTER_CATEGORY.REGION_2DEPTH]: region2Depth.filter(
+        (_value, index) => index !== regionIndex,
+      ),
+      [FILTER_CATEGORY.REGION_3DEPTH]: region3Depth.filter(
+        (_value, index) => index !== regionIndex,
+      ),
+    };
+    setFilterList(updatedFilterList);
   };
 
   return (
@@ -71,18 +66,19 @@ const PostSearchFilterAreaInput = ({
         />
       </div>
       <div className="flex flex-wrap gap-[0.5rem] px-[0.5rem] w-full">
-        {currentRegion[0] && (
+        {region1Depth.map((region, index) => (
           <Tag
-            value={formatRegionArrayToString(currentRegion)}
+            key={`${region}_${index}`}
+            value={formatRegionArrayToString(index)}
             padding="0.313rem 0.625rem 0.313rem 0.75rem"
             isRounded={true}
             hasCheckIcon={false}
             backgroundColor={'#FEF387'}
             color="#1E1926"
             fontStyle="body-3"
-            onDelete={onClickDelete}
+            onDelete={() => onClickDelete(index)}
           />
-        )}
+        ))}
       </div>
     </PostSearchFilterToggle>
   );

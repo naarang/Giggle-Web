@@ -5,10 +5,8 @@ import { PostSearchFilterItemType } from '@/types/PostSearchFilter/PostSearchFil
 
 type PostSearchFilterListProps = {
   showCategories: [string, string[]][];
-  filterList: PostSearchFilterItemType[];
-  setFilterList: React.Dispatch<
-    React.SetStateAction<PostSearchFilterItemType[]>
-  >;
+  filterList: PostSearchFilterItemType;
+  setFilterList: React.Dispatch<React.SetStateAction<PostSearchFilterItemType>>;
 };
 
 const PostSearchFilterList = ({
@@ -17,9 +15,7 @@ const PostSearchFilterList = ({
   setFilterList,
 }: PostSearchFilterListProps) => {
   const isSelectedFilter = (category: FILTER_CATEGORY, value: string) => {
-    const foundFilter = filterList.find(
-      (tag) => tag.category === category && tag.value === value,
-    );
+    const foundFilter = filterList[category].find((filter) => filter === value);
 
     if (foundFilter) return true;
     return false;
@@ -27,16 +23,17 @@ const PostSearchFilterList = ({
 
   const onClickSearchFilter = (category: FILTER_CATEGORY, value: string) => {
     if (isSelectedFilter(category, value)) {
-      const newFilterList = filterList.filter(
-        (tag) => tag.category !== category || tag.value !== value,
-      );
-      setFilterList(newFilterList);
-    } else {
-      const newFilter = {
-        category,
-        value,
+      const updatedFilterList = {
+        ...filterList,
+        [category]: filterList[category].filter((filter) => filter !== value),
       };
-      setFilterList([...filterList, newFilter]);
+      setFilterList(updatedFilterList);
+    } else {
+      const updatedFilterList = {
+        ...filterList,
+        [category]: [...filterList[category], value],
+      };
+      setFilterList(updatedFilterList);
     }
   };
 
