@@ -25,7 +25,7 @@ export const validatePassword = (password: string, setPasswordError: (error: str
 
 // 이메일 유효성 검사 함수
 export const validateEmail = (email: string): boolean => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
   if (!emailRegex.test(email)){
     return false;
   };

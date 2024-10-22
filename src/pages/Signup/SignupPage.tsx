@@ -95,10 +95,9 @@ const SignupPage = () => {
         )}
         {currentStep === 3 && (
           <EmailInput
-            onSignUpClick={handleSignUpClick}
             email={email}
             onEmailChange={handleEmailChange}
-            onSubmit={handleSignUp} // 이메일을 입력하고 제출하면 회원가입 API 호출
+            onSubmit={handleSignUp} // 이메일을 입력하고 제출하면 임시 회원가입 API 호출
           />
         )}
         {currentStep === 4 && <SignupVerification />}

@@ -8,16 +8,10 @@ import { validateEmail } from '@/utils/signin';
 type EmailInputProps = {
   email: string;
   onEmailChange: (value: string) => void;
-  onSignUpClick: () => void;
   onSubmit: () => void;
 };
 
-const EmailInput = ({
-  email,
-  onEmailChange,
-  onSignUpClick,
-  onSubmit,
-}: EmailInputProps) => {
+const EmailInput = ({ email, onEmailChange, onSubmit }: EmailInputProps) => {
   const navigate = useNavigate();
   const [emailError, setEmailError] = useState<string | null>(null);
   const [isValid, setIsValid] = useState<boolean>(false);
