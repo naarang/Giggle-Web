@@ -88,6 +88,7 @@ const SignupVerification = ({
   const handleResendClick = async () => {
     // 임시 코드 - API 연결 후 삭제
     onAuthCodeChange('');
+    setIsValid(false);
     setResendMessage('Verification code has been resent.');
     console.log(id, email);
 
@@ -112,6 +113,7 @@ const SignupVerification = ({
 
       if (response.status === 200 && response.data.success) {
         onAuthCodeChange('');
+        setIsValid(false);
         const { try_cnt } = response.data.data;
 
         if (try_cnt >= 5) {
