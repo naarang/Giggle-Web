@@ -1,7 +1,20 @@
 import { buttonTypeKeys } from '@/constants/components';
 import Button from '@/components/Common/Button';
+import { PostSearchFilterItemType } from '@/types/PostSearchFilter/PostSearchFilterItem';
 
-const PostSearchFilterButtons = () => {
+type PostSearchFilterButtonsType = {
+  setFilterList: React.Dispatch<
+    React.SetStateAction<PostSearchFilterItemType[]>
+  >;
+};
+
+const PostSearchFilterButtons = ({
+  setFilterList,
+}: PostSearchFilterButtonsType) => {
+  const onClickReset = () => {
+    setFilterList([]);
+  };
+
   return (
     <section className="w-full flex justify-center items-center gap-[0.5rem] pt-[0.75rem] pb-[2.5rem] px-[1.5rem]">
       <Button
@@ -10,6 +23,7 @@ const PostSearchFilterButtons = () => {
         fontColor="text-[#BDBDBD] button-1"
         title="Reset"
         isBorder={false}
+        onClick={onClickReset}
       />
       <Button
         type={buttonTypeKeys.CONTINUE}

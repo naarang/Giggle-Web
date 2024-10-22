@@ -1,14 +1,60 @@
 import PostSearchFilterToggle from '@/components/PostSearchFilter/PostSearchFilterToggle';
 import Tag from '@/components/Common/Tag';
 import SearchIcon from '@/assets/icons/MagnifyGlassIcon.svg?react';
+import { PostSearchFilterItemType } from '@/types/PostSearchFilter/PostSearchFilterItem';
+import { useEffect, useState } from 'react';
+import { FILTER_CATEGORY } from '@/constants/postSearch';
 
 type PostSearchFilterAreaInputProps = {
   setIsOpenAreaFilter: React.Dispatch<React.SetStateAction<boolean>>;
+  filterList: PostSearchFilterItemType[];
+  setFilterList: React.Dispatch<
+    React.SetStateAction<PostSearchFilterItemType[]>
+  >;
 };
 
 const PostSearchFilterAreaInput = ({
   setIsOpenAreaFilter,
+  filterList,
+  setFilterList,
 }: PostSearchFilterAreaInputProps) => {
+  const [currentRegion, setCurrentRegion] = useState<(string | null)[]>([
+    null,
+    null,
+    null,
+  ]);
+
+  useEffect(() => {
+    const region1Depth = filterList.find(
+      (value) => value.category === FILTER_CATEGORY.REGION_1DEPTH,
+    );
+
+    const region2Depth = filterList.find(
+      (value) => value.category === FILTER_CATEGORY.REGION_2DEPTH,
+    );
+    const region3Depth = filterList.find(
+      (value) => value.category === FILTER_CATEGORY.REGION_3DEPTH,
+    );
+
+    setCurrentRegion([
+      region1Depth?.value ?? null,
+      region2Depth?.value ?? null,
+      region3Depth?.value ?? null,
+    ]);
+  }, [filterList]);
+
+  const formatRegionArrayToString = (region: (string | null)[]) => {
+    return `${region[0] ?? ''} ${region[1] ?? ''} ${region[2] ?? ''}`;
+  };
+
+  const onClickDelete = () => {
+    setCurrentRegion([null, null, null]);
+    const resetRegionFilterList = filterList.filter(
+      (value) => !value.category.includes('Region'),
+    );
+    setFilterList([...resetRegionFilterList]);
+  };
+
   return (
     <PostSearchFilterToggle title={'Select Areas'}>
       <div
@@ -24,22 +70,20 @@ const PostSearchFilterAreaInput = ({
           readOnly
         />
       </div>
-      <div className="flex flex-wrap gap-[0.5rem] mb-[0.5rem] px-[0.5rem] w-full">
-        <Tag
-          value={'Tag'}
-          padding="0.375rem 0.875rem"
-          isRounded={true}
-          hasCheckIcon={false}
-          backgroundColor="#FEF387"
-          color="#1E1926"
-          borderWidth="1px"
-          fontStyle="body-3"
-          onDelete={(value) => console.log(value)}
-        />
+      <div className="flex flex-wrap gap-[0.5rem] px-[0.5rem] w-full">
+        {currentRegion[0] && (
+          <Tag
+            value={formatRegionArrayToString(currentRegion)}
+            padding="0.313rem 0.625rem 0.313rem 0.75rem"
+            isRounded={true}
+            hasCheckIcon={false}
+            backgroundColor={'#FEF387'}
+            color="#1E1926"
+            fontStyle="body-3"
+            onDelete={onClickDelete}
+          />
+        )}
       </div>
-      <p className="caption-1 text-[#BDBDBD]">
-        Multiple selection is available.
-      </p>
     </PostSearchFilterToggle>
   );
 };

@@ -5,7 +5,7 @@ type TagProps = {
   value: string; // 내용
   padding: string; // padding style
   isRounded: boolean; // 둥근 버튼 여부
-  onDelete?: (value: string) => void; // 삭제 버튼 클릭 시 호출될 함수
+  onDelete?: (value?: string) => void; // 삭제 버튼 클릭 시 호출될 함수
   hasCheckIcon: boolean; // 왼쪽에 체크 아이콘 표시 여부
   borderColor?: string;
   borderWidth?: string;

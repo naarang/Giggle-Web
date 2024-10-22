@@ -31,7 +31,11 @@ const PostSearchFilterPage = () => {
     <>
       {isOpenAreaFilter ? (
         // 지역 선택 페이지
-        <PostSearchFilterArea setIsOpenAreaFilter={setIsOpenAreaFilter} />
+        <PostSearchFilterArea
+          setIsOpenAreaFilter={setIsOpenAreaFilter}
+          filterList={filterList}
+          setFilterList={setFilterList}
+        />
       ) : (
         // 정렬 선택 페이지
         <>
@@ -44,6 +48,8 @@ const PostSearchFilterPage = () => {
           <section className="flex flex-col gap-[3.125rem] w-full p-[1.5rem]">
             <PostSearchFilterAreaInput
               setIsOpenAreaFilter={setIsOpenAreaFilter}
+              filterList={filterList}
+              setFilterList={setFilterList}
             />
             <PostSearchFilterList
               showCategories={showCategories}
@@ -51,7 +57,7 @@ const PostSearchFilterPage = () => {
               setFilterList={setFilterList}
             />
           </section>
-          <PostSearchFilterButtons />
+          <PostSearchFilterButtons setFilterList={setFilterList} />
         </>
       )}
     </>
