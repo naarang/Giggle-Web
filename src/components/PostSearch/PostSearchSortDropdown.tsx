@@ -32,6 +32,12 @@ const PostSearchSortDropdown = ({
   onSelect,
 }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const onSelectOption = (option: string) => {
+    onSelect(option);
+    setIsOpen(false);
+  };
+
   return (
     <div className="relative">
       <button
@@ -48,7 +54,11 @@ const PostSearchSortDropdown = ({
         </div>
       </button>
       {isOpen && (
-        <DropdownModal value={value} options={options} onSelect={onSelect} />
+        <DropdownModal
+          value={value}
+          options={options}
+          onSelect={onSelectOption}
+        />
       )}
     </div>
   );
