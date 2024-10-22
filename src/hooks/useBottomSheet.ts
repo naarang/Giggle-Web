@@ -2,7 +2,7 @@ import { PanInfo, useAnimation } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import usePreviousValue from '@/hooks/usePreviousValue';
 
-const BOTTOM_SHEET_HEIGHT = window.innerHeight;
+const VIEW_HEIGHT = window.innerHeight;
 
 const useBottomSheet = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,7 +13,7 @@ const useBottomSheet = () => {
     _event: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo,
   ) => {
-    const shouldClose = info.offset.y > BOTTOM_SHEET_HEIGHT / 4;
+    const shouldClose = info.offset.y > VIEW_HEIGHT / 4;
 
     if (shouldClose) {
       controls.start('hidden');

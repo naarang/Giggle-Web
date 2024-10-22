@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import useBottomSheet from '@/hooks/useBottomSheet';
 
@@ -9,17 +9,31 @@ type BottomSheetLayoutProps = {
   children: ReactNode;
 };
 
+const VIEW_HEIGHT = window.innerHeight;
+const LAYOUT_MARGIN = 64;
+
 const BottomSheetLayout = ({
   hasHandlebar,
   isAvailableHidden,
   isShowBottomsheet,
   children,
 }: BottomSheetLayoutProps) => {
+  const contentRef = useRef<HTMLDivElement>(null);
+
   const { setIsOpen, onDragEnd, controls } = useBottomSheet();
+  const [contentHeight, setContentHeight] = useState<number>(0);
 
   useEffect(() => {
     setIsOpen(isShowBottomsheet);
   }, [isShowBottomsheet, setIsOpen]);
+
+  // children의 height를 계산
+  useEffect(() => {
+    if (contentRef.current) {
+      const height = contentRef.current.offsetHeight;
+      setContentHeight(height);
+    }
+  }, [contentRef]);
 
   return (
     <motion.div
@@ -36,14 +50,20 @@ const BottomSheetLayout = ({
         visible: { y: 0 },
         hidden: { y: '100%' },
       }}
-      dragConstraints={{ top: -100, bottom: 200 }} // 상단과 하단 드래그 제한 설정
+      dragConstraints={{
+        top: 0,
+        bottom: contentHeight,
+      }} // 상단과 하단 드래그 제한 설정
       dragElastic={0.2}
-      className="fixed top-[60vh] left-0 bottom-0 w-full h-[90vh] p-[1.5rem] pb-[2.5rem] rounded-t-[2.5rem] bg-white shadow-bottomSheetShadow"
+      className={`fixed left-0 bottom-0 w-full h-[90vh] p-[1.5rem] pb-[2.5rem] rounded-t-[2.5rem] bg-white shadow-bottomSheetShadow`}
+      style={{
+        top: `${VIEW_HEIGHT - contentHeight - LAYOUT_MARGIN}px`,
+      }}
     >
       {hasHandlebar && (
         <div className="mx-auto mt-[-0.5rem] mb-[1.5rem] w-[4rem] border-[0.125rem] border-[#F1F2F6]"></div>
       )}
-      <div>{children}</div>
+      <div ref={contentRef}>{children}</div>
     </motion.div>
   );
 };
