@@ -1,6 +1,7 @@
 import Tag from '@/components/Common/Tag';
 import FilterIcon from '@/assets/icons/FilterIcon.svg?react';
 import { FILTER_CATEGORY } from '@/constants/postSearch';
+import { useNavigate } from 'react-router-dom';
 
 // tag 더미데이터
 const TAG_LIST = [
@@ -23,6 +24,12 @@ const TAG_LIST = [
 ];
 
 const PostSearchFilterList = () => {
+  const navigate = useNavigate();
+
+  const goToPostSearchFilterPage = () => {
+    navigate('/search/filter');
+  };
+
   return (
     <section className="relative w-full pt-[0.75rem] pb-[0.5rem] pr-[2.5rem]">
       <div className="w-full pl-[1.5rem] flex items-center gap-[0.5rem] overflow-x-scroll whitespace-nowrap no-scrollbar">
@@ -40,7 +47,10 @@ const PostSearchFilterList = () => {
           />
         ))}
       </div>
-      <button className="absolute top-0 right-0 px-[0.5rem] py-[0.75rem]">
+      <button
+        className="absolute top-0 right-0 px-[0.5rem] py-[0.75rem]"
+        onClick={goToPostSearchFilterPage}
+      >
         <FilterIcon />
       </button>
     </section>

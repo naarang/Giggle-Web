@@ -1,40 +1,105 @@
-import PostSearchFilterToggle from '@/components/PostSearchFilter/PostSearchFilterToggle';
-import Tag from '@/components/Common/Tag';
-import SearchIcon from '@/assets/icons/MagnifyGlassIcon.svg?react';
+import BaseHeader from '@/components/Common/Header/BaseHeader';
+import PostSearchFilterSelect from '@/components/PostSearchFilter/PostSearchFilterAreaSelect';
+import { useState } from 'react';
 
-const PostSearchFilterArea = () => {
+type RegionDataType = {
+  [key: string]: {
+    [key: string]: string[];
+  };
+};
+
+// 더미데이터
+const REGION_DATA: RegionDataType = {
+  Seoul: {
+    Gyeonggi: ['성남', '분당', '강남'],
+    Inchon: ['연수구', '계양구'],
+  },
+  Busan: {
+    Dong: ['동래구', '해운대구'],
+    Suyeong: ['수영구', '광안리'],
+  },
+  Daegu: {
+    Suseong: ['수성구', '달서구'],
+    Dalseo: ['달성군', '달서군'],
+  },
+};
+
+type PostSearchFilterAreaType = {
+  setIsOpenAreaFilter: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const PostSearchFilterArea = ({
+  setIsOpenAreaFilter,
+}: PostSearchFilterAreaType) => {
+  const [region1Depth, setRegion1Depth] = useState<string | null>(null);
+  const [region2Depth, setRegion2Depth] = useState<string | null>(null);
+  const [region3Depth, setRegion3Depth] = useState<string | null>(null);
+
+  const [region2DepthData, setRegion2DepthData] = useState<string[]>([]);
+  const [region3DepthData, setRegion3DepthData] = useState<string[]>([]);
+
+  const onClickBackButton = () => {
+    setIsOpenAreaFilter(false);
+  };
+
+  const onSelectRegion1Depth = (region: string) => {
+    setRegion1Depth(region);
+    setRegion2Depth(null);
+    setRegion3Depth(null);
+
+    const isValidRegionData = REGION_DATA[region];
+    if (isValidRegionData) {
+      setRegion2DepthData(Object.keys(isValidRegionData));
+    } else {
+      setRegion2DepthData([]);
+    }
+    setRegion3DepthData([]);
+  };
+
+  const onSelectRegion2Depth = (region: string) => {
+    if (!region1Depth) return;
+    setRegion2Depth(region);
+    setRegion3Depth(null);
+
+    const isValidRegionData = REGION_DATA[region1Depth];
+    if (isValidRegionData && isValidRegionData[region]) {
+      setRegion3DepthData(isValidRegionData[region]);
+    } else {
+      setRegion3DepthData([]);
+    }
+  };
+
+  const onSelectRegion3Depth = (region: string) => {
+    if (!region1Depth || !region2Depth) return;
+    setRegion3Depth(region);
+  };
+
   return (
-    <PostSearchFilterToggle title={'Select Areas'}>
-      <div
-        className={`w-full flex gap-2 items-center justify-between text-left text-sm font-[Pretendard] border rounded-xl border-[#BDBDBD] bg-white py-[0.625rem] pl-4 pr-[14px] mb-[0.5rem]`}
-        onClick={() => console.log('이동')}
-      >
-        <SearchIcon />
-        <input
-          placeholder={'Select Area'}
-          className={
-            'w-full outline-none placeholder:text-[var(--input-color)]'
-          }
-          readOnly
+    <div className="min-h-screen flex flex-col">
+      <BaseHeader
+        hasBackButton={true}
+        onClickBackButton={onClickBackButton}
+        hasMenuButton={false}
+        title="Area"
+      />
+      <section className="flex-1 flex w-full">
+        <PostSearchFilterSelect
+          selectedRegion={region1Depth}
+          onSelect={onSelectRegion1Depth}
+          regionData={Object.keys(REGION_DATA)}
         />
-      </div>
-      <div className="flex flex-wrap gap-[0.5rem] mb-[0.5rem] px-[0.5rem] w-full">
-        <Tag
-          value={'Tag'}
-          padding="0.375rem 0.875rem"
-          isRounded={true}
-          hasCheckIcon={false}
-          backgroundColor="#FEF387"
-          color="#1E1926"
-          borderWidth="1px"
-          fontStyle="body-3"
-          onDelete={(value) => console.log(value)}
+        <PostSearchFilterSelect
+          selectedRegion={region2Depth}
+          onSelect={onSelectRegion2Depth}
+          regionData={region2DepthData}
         />
-      </div>
-      <p className="caption-1 text-[#BDBDBD]">
-        Multiple selection is available.
-      </p>
-    </PostSearchFilterToggle>
+        <PostSearchFilterSelect
+          selectedRegion={region3Depth}
+          onSelect={onSelectRegion3Depth}
+          regionData={region3DepthData}
+        />
+      </section>
+    </div>
   );
 };
 
