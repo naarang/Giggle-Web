@@ -10,16 +10,21 @@ const mockDocumentsSummaryResponse: DocumentsSummaryResponse = {
       pdf_url: "https://example.com/permits/part_time_1001.pdf",
       hwp_url: "https://example.com/permits/part_time_1001.hwp",
       word_url: "https://example.com/permits/part_time_1001.docx",
-      status: "SUBMITTED"
+      status: "TEMPORARY_SAVE"
     },
     standard_labor_contract: {
       id: 2001,
       pdf_url: "https://example.com/contracts/standard_2001.pdf",
       hwp_url: "https://example.com/contracts/standard_2001.hwp",
       word_url: "https://example.com/contracts/standard_2001.docx",
-      status: "CONFIRMATION"
+      status: "BEFORE_CONFIRMATION"
     },
-
+    integrated_application: {
+      id: 3001,
+      pdf_url: "https://example.com/applications/integrated_3001.pdf",
+      hwp_url: "https://example.com/applications/integrated_3001.hwp",
+      word_url: "https://example.com/applications/integrated_3001.docx"
+    }
 };
 
 const ApplicationDocumentsPage = () => {
