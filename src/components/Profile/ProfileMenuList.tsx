@@ -1,7 +1,11 @@
 import { IconType } from '@/constants/profile';
 import ProfileMenu from './ProfileMenu';
 
-const ProfileMenuList = () => {
+type ProfileMenuListProps = {
+  isNotificationAllowed: boolean;
+};
+
+const ProfileMenuList = ({ isNotificationAllowed }: ProfileMenuListProps) => {
   const handleEditProfileClick = () => {};
   const handleManageClick = () => {};
   const handleScrappedClick = () => {};
@@ -36,7 +40,7 @@ const ProfileMenuList = () => {
           title="Notifications"
           iconType={IconType.NOTIFICATION}
           onClick={handleNotificationClick}
-          isToggle={true}
+          isToggle={isNotificationAllowed}
         />
         <ProfileMenu
           title="Language"

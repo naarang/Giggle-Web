@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ApplicationStatus from '@/components/Profile/ApplicationStatus';
 import DeleteAccount from '@/components/Profile/DeleteAccount';
 import DeleteModal from '@/components/Profile/DeleteModal';
@@ -5,10 +7,34 @@ import LicenseCard from '@/components/Profile/LicenseCard';
 import ProfileCard from '@/components/Profile/ProfileCard';
 import ProfileHeader from '@/components/Profile/ProfileHeader';
 import ProfileMenuList from '@/components/Profile/ProfileMenuList';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { UserProfileData } from '@/types/api/profile';
 
 const ProfilePage = () => {
+  const [userData, setUserData] = useState<UserProfileData>({
+    user_information: {
+      profile_img_url:
+        'https://images.pexels.com/photos/1458926/pexels-photo-1458926.jpeg?cs=srgb&dl=pexels-poodles2doodles-1458926.jpg&fm=jpg',
+      first_name: 'Hyeona',
+      last_name: 'Seol',
+      birth: '0000.00.00',
+      school_name: 'Dongguk University',
+      grade: 3,
+      gpa: 3.5,
+      is_notification_allowed: true,
+    },
+    language_level: {
+      topik_level: 1,
+      kiip_level: 1,
+      sejong_level: 1,
+    },
+    meta_data: {
+      weekend_work_hour: 20,
+      weekday_work_hour: 30,
+      is_topik_4_or_more: true,
+      is_metropolitan_area: true,
+    },
+  });
+
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
@@ -54,10 +80,17 @@ const ProfilePage = () => {
       >
         <ProfileHeader />
         <div className="flex flex-col px-6 gap-9 pb-24">
-          <ProfileCard />
+          <ProfileCard data={userData.user_information} />
           <ApplicationStatus />
-          <LicenseCard />
-          <ProfileMenuList />
+          <LicenseCard
+            languageData={userData.language_level}
+            metaData={userData.meta_data}
+          />
+          <ProfileMenuList
+            isNotificationAllowed={
+              userData.user_information.is_notification_allowed
+            }
+          />
         </div>
         <DeleteAccount handleDeleteButton={handleDeleteButton} />
       </div>

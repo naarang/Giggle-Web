@@ -1,6 +1,12 @@
 import LevelIcon from '@/assets/icons/Profile/LevelIcon.svg?react';
+import { LanguageLevelType, MetaDataType } from '@/types/api/profile';
 
-const LicenseCard = () => {
+type LicenseCardProps = {
+  languageData: LanguageLevelType;
+  metaData: MetaDataType;
+};
+
+const LicenseCard = ({ languageData, metaData }: LicenseCardProps) => {
   const LevelSection = ({ title, level }: { title: string; level: number }) => {
     return (
       <div className="flex flex-col gap-4">
@@ -23,36 +29,44 @@ const LicenseCard = () => {
 
   return (
     <div
-      className="p-8 flex flex-col gap-4 bg-[#FEF387] rounded-2xl"
+      className="w-[327px] p-8 flex flex-col gap-4 bg-[#FEF387] rounded-2xl"
       style={{
         boxShadow:
           '0px 218px 61px 0px rgba(152, 147, 81, 0.00), 0px 139px 56px 0px rgba(152, 147, 81, 0.01), 0px 78px 47px 0px rgba(152, 147, 81, 0.05), 0px 35px 35px 0px rgba(152, 147, 81, 0.09), 0px 9px 19px 0px rgba(152, 147, 81, 0.10)',
       }}
     >
       <div className="flex gap-6 justify-center items-center">
-        <LevelSection title="TOPIK" level={1} />
-        <LevelSection title="KIIP" level={1} />
-        <LevelSection title="Sejong" level={1} />
+        <LevelSection title="TOPIK" level={languageData.topik_level} />
+        <LevelSection title="KIIP" level={languageData.kiip_level} />
+        <LevelSection title="Sejong" level={languageData.sejong_level} />
       </div>
       <div>
-        <div className="flex items-center gap-2">
-          <div className="button-2 text-[#464646]">Industries</div>
-          <div className="caption-1 text-[#656565]">
-            All except manufacturing and English kids cafes
+        {/* 토픽 레벨 4 이상 */}
+        {metaData.is_topik_4_or_more && (
+          <div className="flex items-center gap-2">
+            <div className="button-2 text-[#464646]">Industries</div>
+            <div className="caption-1 text-[#656565]">
+              All except manufacturing and English kids cafes
+            </div>
           </div>
-        </div>
+        )}
+        {/* 근무 시간 */}
         <div className="flex items-center gap-2">
           <div className="button-2 text-[#464646]">Hours</div>
           <div className="caption-1 text-[#656565]">
-            20 hrs on weekdays, 30 hrs on weekends
+            {metaData.weekday_work_hour} hrs on weekdays,{' '}
+            {metaData.weekend_work_hour} hrs on weekends
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="button-2 text-[#464646]">Location</div>
-          <div className="caption-1 text-[#656565]">
-            Within 90 mins from home (Seoul metro area)
+        {/* 서울 지역 */}
+        {metaData.is_metropolitan_area && (
+          <div className="flex items-center gap-2">
+            <div className="button-2 text-[#464646]">Location</div>
+            <div className="caption-1 text-[#656565]">
+              Within 90 mins from home (Seoul metro area)
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
