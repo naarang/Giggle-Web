@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Input from '../Common/Input';
 import Button from '../Common/Button';
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +12,7 @@ const SigninInputSection = () => {
   const [passwordValue, setPasswordValue] = useState<string>('');
   const [idError, setIdError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [isValid, setIsValid] = useState(false);
 
   // ===== handler =====
   const handleIdChange = (value: string) => {
@@ -64,6 +65,16 @@ const SigninInputSection = () => {
       */
   };
 
+  // 모든 필드의 유효성 검사 후, Sign In 버튼 활성화
+  useEffect(() => {
+    if (
+      validateId(idValue, setIdError) &&
+      validatePassword(passwordValue, setPasswordError)
+    ) {
+      setIsValid(true);
+    }
+  }, [idValue, passwordValue]);
+
   return (
     <div className="flex flex-col gap-2">
       <div className="w-[20.5rem] flex flex-col gap-4">
@@ -103,11 +114,11 @@ const SigninInputSection = () => {
       <div className="py-6 flex flex-col items-center gap-2">
         <Button
           type="large"
-          bgColor="bg-[#FEF387]"
-          fontColor="text-[#1E1926]"
+          bgColor={isValid ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'}
+          fontColor={isValid ? 'text-[#1E1926]' : 'text-[#BDBDBD]'}
           isBorder={false}
           title="Sign In"
-          onClick={handleSubmit}
+          onClick={isValid ? handleSubmit : undefined}
         />
         <div className="flex items-center justify-center gap-2">
           <p className="text-[#7D8A95] text-sm font-normal">

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Input from '../Common/Input';
 import Button from '../Common/Button';
 import { useNavigate } from 'react-router-dom';
@@ -29,6 +29,7 @@ const SignupInput = ({
   const [confirmPasswordError, setConfirmPasswordError] = useState<
     string | null
   >(null);
+  const [isValid, setIsValid] = useState(false);
 
   // ===== handler =====
   const handleIdChange = async (value: string) => {
@@ -63,6 +64,17 @@ const SignupInput = ({
       setConfirmPasswordError(null);
     }
   };
+
+  // 모든 필드의 유효성 검사 후, Continue 버튼 활성화
+  useEffect(() => {
+    if (
+      validateId(id, setIdError) &&
+      validatePassword(password, setPasswordError) &&
+      confirmPasswordValue == password
+    ) {
+      setIsValid(true);
+    }
+  }, [id, password, confirmPasswordValue]);
 
   return (
     <>
@@ -119,11 +131,11 @@ const SignupInput = ({
         <div className="py-6 flex flex-col items-center gap-2">
           <Button
             type="large"
-            bgColor="bg-[#FEF387]"
-            fontColor="text-[#1E1926]"
+            bgColor={isValid ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'}
+            fontColor={isValid ? 'text-[#1E1926]' : 'text-[#BDBDBD]'}
             isBorder={false}
             title="Continue"
-            onClick={onSignUpClick}
+            onClick={isValid ? onSignUpClick : undefined}
           />
           <div className="flex items-center justify-center gap-2">
             <p className="text-[#7D8A95] text-sm font-normal">
