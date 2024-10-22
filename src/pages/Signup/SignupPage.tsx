@@ -9,7 +9,7 @@ import VerificationSuccessful from '@/components/Signup/VerificationSuccessful';
 
 const SignupPage = () => {
   // sign up 단계(총 5단계)
-  const [currentStep, setCurrentStep] = useState<number>(4);
+  const [currentStep, setCurrentStep] = useState<number>(1);
 
   // sign-up Field 상태 관리
   const [id, setId] = useState<string>('');
