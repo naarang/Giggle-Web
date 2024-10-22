@@ -1,11 +1,11 @@
 // Enum types
-export enum Gender {
+export const enum Gender {
   MALE = 'MALE',
   FEMALE = 'FEMALE',
   NONE = 'NONE',
 }
 
-export enum Nationality {
+export const enum Nationality {
   SOUTH_KOREA = 'SOUTH_KOREA',
   JAPAN = 'JAPAN',
   CHINA = 'CHINA',
@@ -13,7 +13,7 @@ export enum Nationality {
   UZBEKISTAN = 'UZBEKISTAN',
 }
 
-export enum Visa {
+export const enum Visa {
   'D-2-1' = 'D-2-1',
   'D-2-2' = 'D-2-2',
   'D-2-3' = 'D-2-3',
@@ -26,7 +26,7 @@ export enum Visa {
   'F-2' = 'F-2',
 }
 
-export enum Language {
+export const enum Language {
   KOREAN = 'KOREAN',
   VIETNAMESE = 'VIETNAMESE',
   UZBEK = 'UZBEK',
