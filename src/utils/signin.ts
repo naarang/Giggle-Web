@@ -31,3 +31,12 @@ export const validateEmail = (email: string): boolean => {
   };
   return true;
 };
+
+// 인증 코드 유횽성 검사 함수
+export const validateCode = (code: string): boolean =>{
+  const codeRegex =  /^\d$/;
+  if(!codeRegex.test(code)){
+    return false;
+  }
+  return true;
+}
