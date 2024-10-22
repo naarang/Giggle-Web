@@ -1,6 +1,7 @@
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import PostSearchFilterSelect from '@/components/PostSearchFilter/PostSearchFilterAreaSelect';
 import { useState } from 'react';
+import BottomSheetLayout from '@/components/Common/BottomSheetLayout';
 
 type RegionDataType = {
   [key: string]: {
@@ -75,31 +76,41 @@ const PostSearchFilterArea = ({
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <BaseHeader
-        hasBackButton={true}
-        onClickBackButton={onClickBackButton}
-        hasMenuButton={false}
-        title="Area"
-      />
-      <section className="flex-1 flex w-full">
-        <PostSearchFilterSelect
-          selectedRegion={region1Depth}
-          onSelect={onSelectRegion1Depth}
-          regionData={Object.keys(REGION_DATA)}
+    <>
+      <div className="min-h-screen flex flex-col">
+        <BaseHeader
+          hasBackButton={true}
+          onClickBackButton={onClickBackButton}
+          hasMenuButton={false}
+          title="Area"
         />
-        <PostSearchFilterSelect
-          selectedRegion={region2Depth}
-          onSelect={onSelectRegion2Depth}
-          regionData={region2DepthData}
-        />
-        <PostSearchFilterSelect
-          selectedRegion={region3Depth}
-          onSelect={onSelectRegion3Depth}
-          regionData={region3DepthData}
-        />
-      </section>
-    </div>
+        <section className="flex-1 flex w-full">
+          <PostSearchFilterSelect
+            selectedRegion={region1Depth}
+            onSelect={onSelectRegion1Depth}
+            regionData={Object.keys(REGION_DATA)}
+          />
+          <PostSearchFilterSelect
+            selectedRegion={region2Depth}
+            onSelect={onSelectRegion2Depth}
+            regionData={region2DepthData}
+          />
+          <PostSearchFilterSelect
+            selectedRegion={region3Depth}
+            onSelect={onSelectRegion3Depth}
+            regionData={region3DepthData}
+          />
+        </section>
+      </div>
+      <BottomSheetLayout
+        hasHandlebar={false}
+        isAvailableHidden={false}
+        isShowBottomsheet={true}
+      >
+        <div>앙야야ㅑ양</div>
+        <div>앙야야ㅑ양</div>
+      </BottomSheetLayout>
+    </>
   );
 };
 
