@@ -13,7 +13,7 @@ const ProfilePage = () => {
       }}
     >
       <ProfileHeader />
-      <div className="flex flex-col px-6 gap-9">
+      <div className="flex flex-col px-6 gap-9 pb-24">
         <ProfileCard />
         <ApplicationStatus />
         <LicenseCard />
