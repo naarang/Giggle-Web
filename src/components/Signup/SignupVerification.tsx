@@ -89,6 +89,16 @@ const SignupVerification = ({
     // 임시 코드 - API 연결 후 삭제
     onAuthCodeChange('');
     setResendMessage('Verification code has been resent.');
+    console.log(id, email);
+
+    // 추후 이메일 재요청 횟수 API 적용
+    const try_cnt = 0;
+    if (try_cnt >= 5) {
+      setResendMessage(
+        'You have reached the limit. Please try again in 24 hours.',
+      ); // 5회 이상인 경우 메시지
+      setResendDisabled(true); // 재전송 버튼 비활성화
+    }
 
     /*
     try {
