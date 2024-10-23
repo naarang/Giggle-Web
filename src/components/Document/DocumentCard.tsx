@@ -72,7 +72,7 @@ const TemporarySaveCard = ({
           fontColor="text-[#222]"
           isBorder={false}
           title="Edit"
-          onClick={() => onNext}
+          onClick={onNext}
         />
         <Button
           type="large"
@@ -80,7 +80,7 @@ const TemporarySaveCard = ({
           fontColor="text-[#222]"
           isBorder={false}
           title="Submit"
-          onClick={() => onNext}
+          onClick={onNext}
         />
       </div>
     </div>
@@ -138,7 +138,7 @@ const BeforeConfirmationCard = ({
           fontColor="text-white"
           isBorder={false}
           title="Request"
-          onClick={() => onNext}
+          onClick={onNext}
         />
         <Button
           type="large"
@@ -146,7 +146,7 @@ const BeforeConfirmationCard = ({
           fontColor="text-[#222]"
           isBorder={false}
           title="Confirm"
-          onClick={() => onNext}
+          onClick={onNext}
         />
       </div>
     </div>
