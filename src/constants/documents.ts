@@ -1,4 +1,4 @@
-import { DocumentType } from '@/types/api/document';
+import { DocumentType, PartTimePermitFormRequest } from '@/types/api/document';
 
 // 문서 타입별 정보를 담은 객체
 export const DocumentTypeInfo = {
@@ -36,3 +36,13 @@ export const DocumentSubTitleContent = {
       'The Application Form is a required document that international students must submit to legally work part-time in Korea. This form reports the workplace and working conditions, allowing the student to obtain employment approval.',
   },
 } as const;
+
+// 시간제근무 허가 신청서 초기 state
+export const initialPartTimePermitForm: PartTimePermitFormRequest = {
+  first_name: '',
+  last_name: '',
+  major: '',
+  term_of_completion: 0,
+  phone_number: '',
+  email: '',
+};
