@@ -8,6 +8,7 @@ import PostSearchPage from '@/pages/PostSearch/PostSearchPage';
 import PostSearchFilterPage from '@/pages/PostSearchFilter/PostSearchFilterPage';
 import ProfilePage from '@/pages/Profile/ProfilePage';
 import LanguageSettingPage from '@/pages/Profile/LanguageSettingPage';
+import EditProfilePage from '@/pages/Profile/EditProfilePage';
 
 const Router = () => {
   return (
@@ -25,6 +26,7 @@ const Router = () => {
         <Route path="/search/filter" element={<PostSearchFilterPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/profile/language" element={<LanguageSettingPage />} />
+        <Route path="/profile/edit" element={<EditProfilePage />} />
       </Routes>
     </BrowserRouter>
   );

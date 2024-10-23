@@ -36,3 +36,14 @@ export type ApplicationCountType = {
   application_counts: number;
   successful_hire_counts: number;
 }
+
+export type UserEditProfileDataType ={
+  profile_img_url: string;
+  first_name: string;
+  last_name: string;
+  birth: string;
+  gender: string;
+  nationality: string;
+  visa_satus: string;
+  telephone_number: string;
+}
