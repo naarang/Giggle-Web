@@ -75,7 +75,6 @@ const SignupPage = () => {
   const handleVerify = async () => {
     // 임의 로직 API 연동 후 삭제
     handleSignUpClick();
-    alert('인증 코드 : ' + authenticationCode);
 
     /*
     try {
