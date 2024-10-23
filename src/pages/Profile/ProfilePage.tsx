@@ -26,17 +26,18 @@ const ProfilePage = () => {
     setBottomSheetOpen(true);
   };
 
-  // API - 계정 삭제
+  // API - 2.9 탈퇴하기
   const handleAccountDelete = () => {
     // TODO: account 로직 추가
     navigate('/');
   };
 
-  // API - logout
+  // API - 1.2 사용자 로그아웃
   const handleLogout = () => {
     // TODO: logout 로직 추가
     navigate('/');
   };
+
   const handleLogoutCancel = () => {
     setBottomSheetOpen(false);
   };
@@ -48,7 +49,7 @@ const ProfilePage = () => {
     } else {
       document.body.style.overflow = 'auto';
     }
-    // API 연결 - user data
+    // API 연결 - 3.3 (유학생) 유저 요약 정보 조회하기
     setUserData({
       user_information: {
         profile_img_url:

@@ -9,12 +9,14 @@ const DeleteModal = ({ onDeleteButton, onAccountDelete }: DeleteModalProps) => {
       <div className="w-[90%] max-w-[22rem] flex flex-col gap-8 bg-white rounded-[1.125rem] overflow-hidden">
         <div>
           <h1 className="pt-[1.125rem] pb-4 border-b-[0.5px] border-solid border-[#DCDCDC] text-center head-3 text-[#464646]">
-            계정을 삭제할까요?
+            Do you want me to delete the account?
           </h1>
           <p className="pt-7 body-3 text-[#656565] text-center">
-            계정을 삭제하면 복구할 수 없습니다.
+            If you delete your account, you will not be able to
             <br />
-            그래도 삭제하시겠습니까?
+            recover it again.
+            <br />
+            Do you still want to delete it?
           </p>
         </div>
         <div className="flex items-center justify-center">
@@ -22,13 +24,13 @@ const DeleteModal = ({ onDeleteButton, onAccountDelete }: DeleteModalProps) => {
             className="bg=[#F4F4F9] py-[1.125rem] w-[50%] flex justify-center items-center button-1 text-[#656565]"
             onClick={() => onDeleteButton(false)}
           >
-            취소
+            Cancel
           </button>
           <button
             className="bg-[#FEF387] py-[1.125rem] w-[50%] flex justify-center items-center button-1 text-[#1E1926]"
             onClick={onAccountDelete}
           >
-            확인
+            Delete
           </button>
         </div>
       </div>
