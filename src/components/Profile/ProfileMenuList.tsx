@@ -1,20 +1,26 @@
 import { IconType } from '@/constants/profile';
 import ProfileMenu from './ProfileMenu';
+import { useNavigate } from 'react-router-dom';
 
 type ProfileMenuListProps = {
   isNotificationAllowed: boolean;
-  handleLogoutClick: () => void;
+  onLogoutClick: () => void;
 };
 
 const ProfileMenuList = ({
   isNotificationAllowed,
-  handleLogoutClick,
+  onLogoutClick,
 }: ProfileMenuListProps) => {
+  const navigate = useNavigate();
+
   const handleEditProfileClick = () => {};
   const handleManageClick = () => {};
   const handleScrappedClick = () => {};
   const handleNotificationClick = () => {};
-  const handleLanguageClick = () => {};
+  const handleLanguageClick = () => {
+    // API - 언어 설정(추후 적용 예정)
+    navigate('/profile/language');
+  };
 
   return (
     <div className="flex flex-col gap-12">
@@ -55,7 +61,7 @@ const ProfileMenuList = ({
       <ProfileMenu
         title="Log out"
         iconType={IconType.LOGOUT}
-        onClick={handleLogoutClick}
+        onClick={onLogoutClick}
         isToggle={false}
       />
     </div>

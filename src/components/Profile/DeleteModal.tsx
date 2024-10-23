@@ -1,12 +1,9 @@
 type DeleteModalProps = {
-  handleDeleteButton: (value: boolean) => void;
-  handleAccountDelete: () => void;
+  onDeleteButton: (value: boolean) => void;
+  onAccountDelete: () => void;
 };
 
-const DeleteModal = ({
-  handleDeleteButton,
-  handleAccountDelete,
-}: DeleteModalProps) => {
+const DeleteModal = ({ onDeleteButton, onAccountDelete }: DeleteModalProps) => {
   return (
     <div className="w-[100vw] h-[100vh] fixed top-0 left-0 flex items-center justify-center bg-[rgba(70,70,70,0.6)] z-50">
       <div className="w-[90%] max-w-[22rem] flex flex-col gap-8 bg-white rounded-[1.125rem] overflow-hidden">
@@ -23,13 +20,13 @@ const DeleteModal = ({
         <div className="flex items-center justify-center">
           <button
             className="bg=[#F4F4F9] py-[1.125rem] w-[50%] flex justify-center items-center button-1 text-[#656565]"
-            onClick={() => handleDeleteButton(false)}
+            onClick={() => onDeleteButton(false)}
           >
             취소
           </button>
           <button
             className="bg-[#FEF387] py-[1.125rem] w-[50%] flex justify-center items-center button-1 text-[#1E1926]"
-            onClick={handleAccountDelete}
+            onClick={onAccountDelete}
           >
             확인
           </button>

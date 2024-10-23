@@ -88,8 +88,8 @@ const ProfilePage = () => {
           {/* 계정 삭제 modal */}
           {modalOpen && (
             <DeleteModal
-              handleDeleteButton={handleDeleteButton}
-              handleAccountDelete={handleAccountDelete}
+              onDeleteButton={handleDeleteButton}
+              onAccountDelete={handleAccountDelete}
             />
           )}
           {/* bottom sheet */}
@@ -140,13 +140,13 @@ const ProfilePage = () => {
                 metaData={userData.meta_data}
               />
               <ProfileMenuList
-                handleLogoutClick={handleLogoutClick}
+                onLogoutClick={handleLogoutClick}
                 isNotificationAllowed={
                   userData.user_information.is_notification_allowed
                 }
               />
             </div>
-            <DeleteAccount handleDeleteButton={handleDeleteButton} />
+            <DeleteAccount onDeleteButton={handleDeleteButton} />
           </div>
         </>
       )}
