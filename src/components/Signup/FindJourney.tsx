@@ -25,11 +25,7 @@ const FindJourney = ({
       <div className="flex gap-2.5 py-6">
         {/* 유학생 카드 */}
         <div
-          className="flex flex-col justify-end gap-1.5 h-[12.5rem] w-[10rem] p-[1.125rem] bg-yellow-100 border-[0.5px] border-[#f2f2f2] rounded-[1.25rem]"
-          style={{
-            boxShadow:
-              '0px 218px 61px 0px rgba(152, 147, 81, 0.00), 0px 139px 56px 0px rgba(152, 147, 81, 0.01), 0px 78px 47px 0px rgba(152, 147, 81, 0.05), 0px 35px 35px 0px rgba(152, 147, 81, 0.09), 0px 9px 19px 0px rgba(152, 147, 81, 0.10)',
-          }}
+          className="flex flex-col justify-end gap-1.5 h-[12.5rem] w-[10rem] p-[1.125rem] bg-yellow-100 border-[0.5px] border-[#f2f2f2] rounded-[1.25rem] shadow-yellowShadow"
           onClick={() => handleClick(UserType.USER)}
         >
           <p className="text-[#464646] head-3">유학생</p>
@@ -39,11 +35,7 @@ const FindJourney = ({
         </div>
         {/* 고용주 카드 */}
         <div
-          className="flex flex-col justify-end gap-1.5 h-[12.5rem] w-[10rem] p-[1.125rem] bg-yellow-100 border-[0.5px] border-[#f2f2f2] rounded-[1.25rem]"
-          style={{
-            boxShadow:
-              '0px 218px 61px 0px rgba(152, 147, 81, 0.00), 0px 139px 56px 0px rgba(152, 147, 81, 0.01), 0px 78px 47px 0px rgba(152, 147, 81, 0.05), 0px 35px 35px 0px rgba(152, 147, 81, 0.09), 0px 9px 19px 0px rgba(152, 147, 81, 0.10)',
-          }}
+          className="flex flex-col justify-end gap-1.5 h-[12.5rem] w-[10rem] p-[1.125rem] bg-yellow-100 border-[0.5px] border-[#f2f2f2] rounded-[1.25rem] shadow-yellowShadow"
           onClick={() => handleClick(UserType.OWNER)}
         >
           <p className="text-[#464646] head-3">고용주</p>
