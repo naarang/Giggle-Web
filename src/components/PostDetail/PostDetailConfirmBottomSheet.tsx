@@ -2,6 +2,7 @@ import BottomSheetLayout from '@/components/Common/BottomSheetLayout';
 import SmallCheckIcon from '@/assets/icons/SmallCheckIcon.svg?react';
 import Button from '@/components/Common/Button';
 import { buttonTypeKeys } from '@/constants/components';
+import { useNavigate, useParams } from 'react-router-dom';
 
 type PostDetailConfirmBottomSheetType = {
   isShowBottomsheet: boolean;
@@ -12,6 +13,9 @@ const PostDetailConfirmBottomSheet = ({
   isShowBottomsheet,
   setIsShowBottomSheet,
 }: PostDetailConfirmBottomSheetType) => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+
   return (
     <BottomSheetLayout
       hasHandlebar={true}
@@ -47,7 +51,8 @@ const PostDetailConfirmBottomSheet = ({
           bgColor="bg-[#FEF387]"
           fontColor="text-[#1E1926]"
           isBorder={false}
-          title="Continue"
+          title="Check other announcements"
+          onClick={() => navigate('/search')}
         />
         <Button
           type={buttonTypeKeys.LARGE}
@@ -55,6 +60,7 @@ const PostDetailConfirmBottomSheet = ({
           fontColor="text-[#1E1926]"
           isBorder={false}
           title="Proceed with Application"
+          onClick={() => navigate(`/post/apply/${id}`)}
         />
       </div>
     </BottomSheetLayout>

@@ -2,6 +2,7 @@ import BottomSheetLayout from '@/components/Common/BottomSheetLayout';
 import SmallCheckIcon from '@/assets/icons/SmallCheckIcon.svg?react';
 import Button from '@/components/Common/Button';
 import { buttonTypeKeys } from '@/constants/components';
+import { useNavigate } from 'react-router-dom';
 
 type PostDetailConfirmBottomSheetType = {
   isShowBottomsheet: boolean;
@@ -12,6 +13,8 @@ const PostDetailLoginBottomSheet = ({
   isShowBottomsheet,
   setIsShowBottomSheet,
 }: PostDetailConfirmBottomSheetType) => {
+  const navigate = useNavigate();
+
   return (
     <BottomSheetLayout
       hasHandlebar={true}
@@ -53,10 +56,14 @@ const PostDetailLoginBottomSheet = ({
           fontColor="text-[#1E1926]"
           isBorder={false}
           title="Continue"
+          onClick={() => navigate('/signin')}
         />
         <div className="flex justify-center gap-[0.5rem]">
           <p className="caption-1 text-[#7D8A95]">Don't have an account?</p>
-          <button className="caption-1-sb text-[#7872ED]">
+          <button
+            className="caption-1-sb text-[#7872ED]"
+            onClick={() => navigate('/signup')}
+          >
             Create Account
           </button>
         </div>

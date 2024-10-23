@@ -28,7 +28,7 @@ const PostDetailApplyButton = () => {
           fontColor="text-white"
           isBorder={false}
           title="Apply Now"
-          onClick={() => setIsOpenLoginBottomSheet(true)}
+          onClick={() => setIsOpenConfirmBottomSheet(true)}
         />
       </footer>
       <PostDetailConfirmBottomSheet
