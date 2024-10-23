@@ -24,6 +24,28 @@ const ProfileMenu = ({
 }: ProfileMenuProps) => {
   const [toggleOn, setToggleOn] = useState<boolean>(true);
 
+  const handleToggleChange = async () => {
+    // 임시 코드로 아래 API 코드로 변경 예정
+    setToggleOn(!toggleOn);
+
+    /*
+    try {
+      // PATCH API 호출
+      const response = await axios.patch('/api/v1/notification-allowed', {
+        is_notification_allowed: toggleOn,
+      });
+
+      if (response.data.success) {
+        setToggleOn(response.data.is_notification_allowed);
+      } else {
+        console.error('Error:', response.data.error);
+      }
+    } catch (error) {
+      console.error('API 호출 중 오류 발생:', error);
+    }
+      */
+  };
+
   const iconMapping = (iconType: IconType) => {
     switch (iconType) {
       case IconType.PROFILE:
@@ -65,7 +87,7 @@ const ProfileMenu = ({
             className={`absolute transform transition-transform duration-300 ease-in-out ${
               toggleOn ? 'translate-x-4' : 'translate-x-0'
             }`}
-            onClick={() => setToggleOn((prev) => !prev)}
+            onClick={handleToggleChange}
           />
         </div>
       )}
