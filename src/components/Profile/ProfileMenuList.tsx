@@ -3,15 +3,18 @@ import ProfileMenu from './ProfileMenu';
 
 type ProfileMenuListProps = {
   isNotificationAllowed: boolean;
+  handleLogoutClick: () => void;
 };
 
-const ProfileMenuList = ({ isNotificationAllowed }: ProfileMenuListProps) => {
+const ProfileMenuList = ({
+  isNotificationAllowed,
+  handleLogoutClick,
+}: ProfileMenuListProps) => {
   const handleEditProfileClick = () => {};
   const handleManageClick = () => {};
   const handleScrappedClick = () => {};
   const handleNotificationClick = () => {};
   const handleLanguageClick = () => {};
-  const handleLogoutClick = () => {};
 
   return (
     <div className="flex flex-col gap-12">
