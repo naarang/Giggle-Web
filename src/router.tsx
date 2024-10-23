@@ -3,6 +3,8 @@ import HomePage from '@/pages/Home/HomePage';
 import InformationPage from '@/pages/Information/InformationPage';
 import ApplicationDocumentsPage from '@/pages/ApplicationDocuments/ApplicationDocumentsPage';
 import WriteDocumentsPage from './pages/WriteDocuments/WriteDocumentsPage';
+import PostSearchPage from '@/pages/PostSearch/PostSearchPage';
+import PostSearchFilterPage from '@/pages/PostSearchFilter/PostSearchFilterPage';
 
 const Router = () => {
   return (
@@ -15,6 +17,8 @@ const Router = () => {
           element={<ApplicationDocumentsPage />}
         />
         <Route path="/write-documents" element={<WriteDocumentsPage />} />
+        <Route path="/search" element={<PostSearchPage />} />
+        <Route path="/search/filter" element={<PostSearchFilterPage />} />
       </Routes>
     </BrowserRouter>
   );
