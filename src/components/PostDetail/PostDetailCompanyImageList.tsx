@@ -33,7 +33,7 @@ const PostDetailCompanyImageList = ({
         onClick={() => setIsOpen(true)}
       ></section>
       {isOpen && (
-        <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center  bg-black bg-opacity-90 z-10 overflow-x-scroll no-scrollbar whitespace-nowrap">
+        <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center  bg-black bg-opacity-90 z-30 overflow-x-scroll no-scrollbar whitespace-nowrap">
           <button
             className="fixed right-[1rem] top-[1rem] title-1 text-white"
             onClick={() => setIsOpen(false)}
