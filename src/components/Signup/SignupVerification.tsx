@@ -86,6 +86,10 @@ const SignupVerification = ({
 
   // 이메일 인증코드 재전송 API 호출
   const handleResendClick = async () => {
+    if (id === '' && email === '') {
+      return;
+    }
+
     // 임시 코드 - API 연결 후 삭제
     onAuthCodeChange('');
     setIsValid(false);
