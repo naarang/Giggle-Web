@@ -44,17 +44,17 @@ const JOB_POSTING_LIST: JobPostingItemType[] = [
   },
 ];
 
-enum SORT_TYPE {
-  POPULAR = 'Popular',
-  RECOMMENDED = 'Recommended',
-  RECENT = 'Recent',
-}
+const SORT_TYPE = {
+  POPULAR: 'Popular',
+  RECOMMENDED: 'Recommended',
+  RECENT: 'Recent',
+} as const;
+
+type SortType = (typeof SORT_TYPE)[keyof typeof SORT_TYPE];
 
 const PostSearchResult = () => {
   // TODO: 홈에서 See more 버튼 클릭 시 해당 메뉴로 정렬하기
-  const [selectedSort, setSelectedSort] = useState<SORT_TYPE>(
-    SORT_TYPE.POPULAR,
-  );
+  const [selectedSort, setSelectedSort] = useState<SortType>(SORT_TYPE.POPULAR);
   return (
     <section className="flex flex-col items-center gap-[1rem] w-full mt-[1rem] px-[1.5rem]">
       <div className="w-full flex justify-between items-center">
@@ -62,7 +62,7 @@ const PostSearchResult = () => {
         <PostSearchSortDropdown
           options={Object.values(SORT_TYPE)}
           value={selectedSort}
-          onSelect={(sort) => setSelectedSort(sort as SORT_TYPE)}
+          onSelect={(sort) => setSelectedSort(sort as SortType)}
         />
       </div>
       {JOB_POSTING_LIST?.length ? (
