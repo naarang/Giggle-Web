@@ -1,5 +1,3 @@
-import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
-import Button from '@/components/Common/Button';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import DocumentSubHeader from '@/components/Document/write/DocumentSubHeader';
 import DocumentFormDispenser from '@/components/WriteDocuments/DocumentFormDispenser';
