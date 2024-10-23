@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import Input from '../Common/Input';
-import Button from '../Common/Button';
+import Input from '@/components/Common/Input';
+import Button from '@/components/Common/Button';
 import { useNavigate } from 'react-router-dom';
 import { validateId, validatePassword } from '@/utils/signin';
 
@@ -32,7 +32,6 @@ const SigninInputSection = () => {
 
     // temp code
     if (serial_id && password) {
-      alert('id: ' + idValue + ' password: ' + passwordValue);
       navigate('/');
     }
 

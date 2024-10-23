@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import Input from '../Common/Input';
-import Button from '../Common/Button';
+import Input from '@/components/Common/Input';
+import Button from '@/components/Common/Button';
 import { useNavigate } from 'react-router-dom';
 import { validateId, validatePassword } from '@/utils/signin';
-import SigninSocialButtons from '../Signin/SigninSocialButtons';
+import SigninSocialButtons from '@/components/Signin/SigninSocialButtons';
 
 type signupInputProps = {
   id: string;

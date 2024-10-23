@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Button from '../Common/Button';
+import Button from '@/components/Common/Button';
 import { validateCode } from '@/utils/signin';
 
 type SignupVerificationProps = {
@@ -90,7 +90,6 @@ const SignupVerification = ({
     onAuthCodeChange('');
     setIsValid(false);
     setResendMessage('Verification code has been resent.');
-    console.log(id, email);
 
     // 추후 이메일 재요청 횟수 API 적용
     const try_cnt = 0;

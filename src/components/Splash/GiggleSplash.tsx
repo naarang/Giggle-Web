@@ -1,5 +1,5 @@
 import GiggleIcon from '@/assets/icons/GiggleSplash.svg?react';
-import Button from '../Common/Button';
+import Button from '@/components/Common/Button';
 
 const GiggleSplash = () => {
   return (
