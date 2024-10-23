@@ -23,17 +23,17 @@ const Button = ({
   const getButtonStyle = () => {
     switch (type) {
       case buttonTypeKeys.LARGE:
-        return 'w-[20.5rem] py-4 flex justify-center items-center rounded-[2rem] text-[1rem]';
+        return 'w-[20.5rem] py-4 flex justify-center items-center rounded-[2rem] button-1';
       case buttonTypeKeys.SMALL:
-        return 'w-[5.5rem] py-3 flex justify-center items-center rounded-[1.25rem] text-[0.75rem]';
+        return 'w-[5.5rem] py-3 flex justify-center items-center rounded-[1.25rem] button-2';
       case buttonTypeKeys.APPLY:
-        return `w-[20.5rem] py-4 flex justify-center items-center rounded-[2rem] bg-[url("/src/assets/images/applyButton.jpeg")] bg-cover bg-center text-[1rem] text-[#F4F4F9]`;
+        return `w-[20.5rem] py-4 flex justify-center items-center rounded-[2rem] bg-[url("/src/assets/images/applyButton.jpeg")] bg-cover bg-center button-1 text-[#F4F4F9]`;
       case buttonTypeKeys.BACK:
-        return 'w-[7.5rem] py-4 flex justify-center items-center rounded-[2rem] text-[1rem]';
+        return 'w-[7.5rem] py-4 flex justify-center items-center rounded-[2rem] button-1';
       case buttonTypeKeys.CONTINUE:
-        return 'w-[12.5rem] py-4 flex justify-center items-center rounded-[2rem] text-[1rem]';
+        return 'w-[12.5rem] py-4 flex justify-center items-center rounded-[2rem] button-1';
       default: // 기본값으로 large type 적용
-        return 'w-[20.5rem] py-4 flex justify-center items-center rounded-[2rem] text-[1rem]';
+        return 'w-[20.5rem] py-4 flex justify-center items-center rounded-[2rem] button-1';
     }
   };
 
@@ -45,10 +45,10 @@ const Button = ({
       {isCallIcon ? (
         <div className="flex justify-center items-center gap-1.5">
           <CallIcon />
-          <div className="text-semibold">{title}</div>
+          <div>{title}</div>
         </div>
       ) : (
-        <div className="text-semibold">{title}</div>
+        <div>{title}</div>
       )}
     </button>
   );
