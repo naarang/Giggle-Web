@@ -1,11 +1,11 @@
 // Enum types
-export enum Gender {
+export const enum Gender {
   MALE = 'MALE',
   FEMALE = 'FEMALE',
   NONE = 'NONE',
 }
 
-export enum Nationality {
+export const enum Nationality {
   SOUTH_KOREA = 'SOUTH_KOREA',
   JAPAN = 'JAPAN',
   CHINA = 'CHINA',
@@ -13,7 +13,7 @@ export enum Nationality {
   UZBEKISTAN = 'UZBEKISTAN',
 }
 
-export enum Visa {
+export const enum Visa {
   'D-2-1' = 'D-2-1',
   'D-2-2' = 'D-2-2',
   'D-2-3' = 'D-2-3',
@@ -26,7 +26,7 @@ export enum Visa {
   'F-2' = 'F-2',
 }
 
-enum Language {
+export const enum Language {
   KOREAN = 'KOREAN',
   VIETNAMESE = 'VIETNAMESE',
   UZBEK = 'UZBEK',
@@ -49,7 +49,7 @@ export type UserInfo = {
 }
 
 // Type for address with undefinedable fields
-type Address = {
+export type Address = {
   address_name: string | undefined;
   region_1depth_name: string | undefined;
   region_2depth_name: string | undefined;
@@ -84,12 +84,12 @@ export const initialUserInfo: UserInfo = {
 
 // Initial state for Address
 export const initialAddress: Address = {
-  address_name: undefined,
-  region_1depth_name: undefined,
-  region_2depth_name: undefined,
-  region_3depth_name: undefined,
-  region_4depth_name: undefined,
-  address_detail: undefined,
+  address_name: "",
+  region_1depth_name: "",
+  region_2depth_name: "",
+  region_3depth_name: "",
+  region_4depth_name: "",
+  address_detail: "",
   longitude: undefined,
   latitude: undefined,
 }
