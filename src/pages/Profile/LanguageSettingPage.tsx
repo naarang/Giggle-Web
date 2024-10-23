@@ -5,7 +5,7 @@ import Dropdown from '@/components/Common/Dropdown';
 import { languageList } from '@/constants/information';
 import { useState } from 'react';
 
-const LanguageSetting = () => {
+const LanguageSettingPage = () => {
   const [language, setLanguage] = useState<string>('English');
   const navigate = useNavigate();
 
@@ -19,7 +19,10 @@ const LanguageSetting = () => {
     }
   };
 
-  const handleSaveButton = () => {};
+  const handleSaveButton = () => {
+    // API - 3.8 (유학생) 앱 내 언어 수정
+    navigate('/profile');
+  };
 
   return (
     <div className="w-full h-[100vh] flex flex-col">
@@ -52,4 +55,4 @@ const LanguageSetting = () => {
   );
 };
 
-export default LanguageSetting;
+export default LanguageSettingPage;
