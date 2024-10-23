@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from '@/pages/Home/HomePage';
 import InformationPage from '@/pages/Information/InformationPage';
 import ApplicationDocumentsPage from '@/pages/ApplicationDocuments/ApplicationDocumentsPage';
+import PostSearchPage from '@/pages/PostSearch/PostSearchPage';
+import PostSearchFilterPage from '@/pages/PostSearchFilter/PostSearchFilterPage';
 
 const Router = () => {
   return (
@@ -13,6 +15,8 @@ const Router = () => {
           path="/application-documents"
           element={<ApplicationDocumentsPage />}
         />
+        <Route path="/search" element={<PostSearchPage />} />
+        <Route path="/search/filter" element={<PostSearchFilterPage />} />
       </Routes>
     </BrowserRouter>
   );
