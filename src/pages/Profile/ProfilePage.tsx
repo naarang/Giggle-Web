@@ -62,9 +62,9 @@ const ProfilePage = () => {
         is_notification_allowed: true,
       },
       language_level: {
-        topik_level: 1,
-        kiip_level: 1,
-        sejong_level: 1,
+        topik_level: 4,
+        kiip_level: 4,
+        sejong_level: 4,
       },
       meta_data: {
         weekend_work_hour: 20,

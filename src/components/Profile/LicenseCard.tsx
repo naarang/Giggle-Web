@@ -1,5 +1,6 @@
 import LevelIcon from '@/assets/icons/Profile/LevelIcon.svg?react';
 import { LanguageLevelType, MetaDataType } from '@/types/api/profile';
+import { useNavigate } from 'react-router-dom';
 
 type LicenseCardProps = {
   languageData: LanguageLevelType;
@@ -7,6 +8,18 @@ type LicenseCardProps = {
 };
 
 const LicenseCard = ({ languageData, metaData }: LicenseCardProps) => {
+  const navigate = useNavigate();
+  const handleEnterButton = () => {
+    navigate('/profile/language');
+  };
+  const emptyLevel = (): boolean => {
+    return (
+      languageData.kiip_level === 0 &&
+      languageData.sejong_level === 0 &&
+      languageData.topik_level === 0
+    );
+  };
+
   const LevelSection = ({ title, level }: { title: string; level: number }) => {
     return (
       <div className="flex flex-col gap-4">
@@ -40,34 +53,47 @@ const LicenseCard = ({ languageData, metaData }: LicenseCardProps) => {
         <LevelSection title="KIIP" level={languageData.kiip_level} />
         <LevelSection title="Sejong" level={languageData.sejong_level} />
       </div>
-      <div>
-        {/* 토픽 레벨 4 이상 */}
-        {metaData.is_topik_4_or_more && (
+      {/* 모든 언어 레벨이 0인 경우 */}
+      {emptyLevel() ? (
+        <button
+          className="text-center py-2 bg-[#F4F4F9] rounded-md text-[#656565] caption-1"
+          onClick={handleEnterButton}
+        >
+          Please enter your language level
+        </button>
+      ) : (
+        // ------- 입력 레벨별 문장 -------
+        <div>
           <div className="flex items-center gap-2">
             <div className="button-2 text-[#464646]">Industries</div>
             <div className="caption-1 text-[#656565]">
-              All except manufacturing and English kids cafes
+              {metaData.is_topik_4_or_more
+                ? // 토픽 4급 이상
+                  'Everywhere possible'
+                : // 토픽 4급 이하
+                  'All except manufacturing'}
             </div>
           </div>
-        )}
-        {/* 근무 시간 */}
-        <div className="flex items-center gap-2">
-          <div className="button-2 text-[#464646]">Hours</div>
-          <div className="caption-1 text-[#656565]">
-            {metaData.weekday_work_hour} hrs on weekdays,{' '}
-            {metaData.weekend_work_hour} hrs on weekends
+          {/* 근무 시간 */}
+          <div className="flex items-center gap-2">
+            <div className="button-2 text-[#464646]">Hours</div>
+            <div className="caption-1 text-[#656565]">
+              {metaData.weekday_work_hour} hrs on weekdays,{' '}
+              {metaData.weekend_work_hour} hrs on weekends
+            </div>
           </div>
-        </div>
-        {/* 서울 지역 */}
-        {metaData.is_metropolitan_area && (
           <div className="flex items-center gap-2">
             <div className="button-2 text-[#464646]">Location</div>
             <div className="caption-1 text-[#656565]">
-              Within 90 mins from home (Seoul metro area)
+              {metaData.is_metropolitan_area
+                ? // 수도권
+                  'Within 90 mins from home (Seoul metro area)'
+                : // 비수도권
+                  'Within 60 mins from university location (non-metropolitan area)'}
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
