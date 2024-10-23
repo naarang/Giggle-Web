@@ -24,7 +24,7 @@ const DocumentCardList = ({
             onNext={handleOnNext}
           />
         ) : (
-          <MakeDocumentButton title={DocumentTypeInfo[property].name} />
+          <MakeDocumentButton type={property} />
         ),
       )}
     </div>
