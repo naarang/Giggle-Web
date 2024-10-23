@@ -1,6 +1,8 @@
+import Button from '@/components/Common/Button';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import Input from '@/components/Common/Input';
 import EditProfilePicture from '@/components/Profile/EditProfilePicture';
+import { buttonTypeKeys } from '@/constants/components';
 import { UserEditProfileDataType } from '@/types/api/profile';
 import { InputType } from '@/types/common/input';
 import { useEffect, useState } from 'react';
@@ -36,6 +38,11 @@ const EditProfilePage = () => {
     }
   };
 
+  const handleSubmit = () => {
+    // API - 3.5 (유학생) 프로필 수정
+    navigate('/profile');
+  };
+
   useEffect(() => {
     setUserData({
       profile_img_url:
@@ -53,7 +60,7 @@ const EditProfilePage = () => {
   return (
     <>
       {userData ? (
-        <div>
+        <div className="w-full h-full">
           <BaseHeader
             hasBackButton={true}
             onClickBackButton={handleBackButtonClick}
@@ -117,6 +124,16 @@ const EditProfilePage = () => {
               onChange={handleInputChange('telephone_number')}
               canDelete={false}
             />
+            <div className="pt-3 pb-[3.125rem] flex justify-center items-center">
+              <Button
+                type={buttonTypeKeys.LARGE}
+                title="Save"
+                bgColor="bg-[#FEF387]"
+                fontColor="text-[#1E1926]"
+                onClick={handleSubmit}
+                isBorder={false}
+              />
+            </div>
           </div>
         </div>
       ) : (
