@@ -1,4 +1,4 @@
-import BackButtonIcon from '@/assets/icons/BackButtonIcon.svg?react';
+import LeftArrowIcon from '@/assets/icons/LeftArrowIcon.svg?react';
 import SearchIcon from '@/assets/icons/SearchIcon.svg?react';
 import FilterIcon from '@/assets/icons/FilterIcon.svg?react';
 import CircleDeleteIcon from '@/assets/icons/CircleDeleteIcon.svg?react';
@@ -24,16 +24,13 @@ const TextFieldHeader = ({
   };
 
   return (
-    <section className="w-full h-[3.5rem] px-[0.5rem] flex justify-between items-center bg-white border-b border-solid border-[#1E1926]">
-      <button
-        className="p-[0.5rem] rounded-[0.75rem] border border-solid border-[#ECECEC]"
-        onClick={onClickBackButton}
-      >
-        <BackButtonIcon />
+    <section className="w-full h-[3.5rem] my-[0.5rem] px-[0.5rem] flex justify-between items-center bg-white border-b border-solid border-[#1E1926]">
+      <button className="p-[0.5rem]" onClick={onClickBackButton}>
+        <LeftArrowIcon />
       </button>
       <div className="flex-1 flex items-center">
         <input
-          className="flex-1 p-[0.5rem] body-3 text-[#1E1926]"
+          className="flex-1 p-[0.5rem] body-2 text-[#1E1926]"
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder={placeholder}

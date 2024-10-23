@@ -15,6 +15,7 @@ export default {
       },
       boxShadow: {
         cardShadow: '0px 0px 1px rgba(0, 0, 0, 0.08)',
+        bottomSheetShadow: '0px -4px 24px rgba(3.67, 21.75, 48.87, 0.25)',
       },
     },
   },
