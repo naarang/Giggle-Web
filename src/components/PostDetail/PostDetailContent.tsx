@@ -3,13 +3,19 @@ import PostDetailContentMenuBar from '@/components/PostDetail/PostDetailContentM
 import { PostDetailContentMenu } from '@/constants/postDetail';
 import Tag from '@/components/Common/Tag';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import { PostDetailItemType } from '@/types/postDetail/postDetailItem';
 
-const PostDetailContent = () => {
+type PostDetailContentProps = {
+  postDetailData: PostDetailItemType;
+};
+
+const PostDetailContent = ({ postDetailData }: PostDetailContentProps) => {
   const scrollRef = useRef<(HTMLDivElement | null)[]>([]);
 
   const [selectedMenu, setSelectedMenu] = useState<PostDetailContentMenu>(
     PostDetailContentMenu.RECUITMENT,
   );
+  const [showDetailOverview, setShowDetailOverview] = useState<boolean>(false);
 
   const scrollToSelectedMenu = (menu: PostDetailContentMenu) => {
     const scrollIndex: { [key: string]: number } = {
@@ -40,31 +46,46 @@ const PostDetailContent = () => {
               <h5 className="pb-[0.5rem] text-[#656565] button-2">
                 Recruitment Period
               </h5>
-              <p className="text-[#656565] caption-1">Open recruitment</p>
+              <p className="text-[#656565] caption-1">
+                {postDetailData.recruitment_conditions?.recruitment_dead_line ??
+                  'Open recruitment'}
+              </p>
             </div>
             <div>
               <h5 className="pb-[0.5rem] text-[#656565] button-2">Education</h5>
-              <p className="text-[#656565] caption-1">No requirement</p>
+              <p className="text-[#656565] caption-1">
+                {postDetailData.recruitment_conditions.education.toLowerCase()}{' '}
+                requirement
+              </p>
             </div>
             <div>
               <h5 className="pb-[0.5rem] text-[#656565] button-2">
                 Number of recruits
               </h5>
-              <p className="text-[#656565] caption-1">5 people</p>
+              <p className="text-[#656565] caption-1">
+                {postDetailData.recruitment_conditions.number_of_recruits}{' '}
+                people
+              </p>
             </div>
             <div>
               <h5 className="pb-[0.5rem] text-[#656565] button-2">Visa</h5>
-              <p className="text-[#656565] caption-1">D-2</p>
+              <p className="text-[#656565] caption-1">
+                {postDetailData.recruitment_conditions.visa}
+              </p>
             </div>
             <div>
               <h5 className="pb-[0.5rem] text-[#656565] button-2">Gender</h5>
-              <p className="text-[#656565] caption-1">Female</p>
+              <p className="text-[#656565] caption-1">
+                {postDetailData.recruitment_conditions.gender.toLowerCase()}
+              </p>
             </div>
             <div>
               <h5 className="pb-[0.5rem] text-[#656565] button-2">
                 Preferred Conditions
               </h5>
-              <p className="text-[#656565] caption-1">Experienced candidates</p>
+              <p className="text-[#656565] caption-1">
+                {postDetailData.recruitment_conditions.preferred_conditions}
+              </p>
             </div>
           </div>
         </div>
@@ -73,23 +94,32 @@ const PostDetailContent = () => {
             Detailed Overview
           </h3>
           <div className="flex flex-col gap-[1rem] w-full p-[1rem] rounded-[0.563rem] bg-[#F4F4F9]">
-            <p className="text-[#656565] body-3">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-              quae ab illo inventore veritatis et quasi architecto beatae vitae
-              dicta sunt explicabo. Nemo enim ipsam voluptatem ...
-            </p>
-            <button>
-              <Tag
-                value={'Read more'}
-                padding="0.375rem 0.875rem"
-                isRounded={true}
-                hasCheckIcon={false}
-                backgroundColor="#FEF387"
-                color="#1E1926"
-                fontStyle="body-3"
-              />
-            </button>
+            {postDetailData.detailed_overview.length > 255 ? (
+              <>
+                <p className="text-[#656565] body-3">
+                  {showDetailOverview
+                    ? postDetailData.detailed_overview
+                    : postDetailData.detailed_overview.slice(0, 255) + '...'}
+                </p>
+                {!showDetailOverview && (
+                  <button onClick={() => setShowDetailOverview(true)}>
+                    <Tag
+                      value={'Read more'}
+                      padding="0.375rem 0.875rem"
+                      isRounded={true}
+                      hasCheckIcon={false}
+                      backgroundColor="#FEF387"
+                      color="#1E1926"
+                      fontStyle="body-3"
+                    />
+                  </button>
+                )}
+              </>
+            ) : (
+              <p className="text-[#656565] body-3">
+                {postDetailData.detailed_overview}
+              </p>
+            )}
           </div>
         </div>
         <div ref={(e) => (scrollRef.current[1] = e)}>
@@ -99,11 +129,19 @@ const PostDetailContent = () => {
             <p className="text-[#656565] caption-1">Open recruitment</p>
           </div>
           <Map
-            center={{ lat: 37.5665, lng: 126.978 }}
+            center={{
+              lat: postDetailData.workplace_information.latitude,
+              lng: postDetailData.workplace_information.longitude,
+            }}
             style={{ width: '100%', height: '151px' }}
             className="rounded-xl"
           >
-            <MapMarker position={{ lat: 37.5665, lng: 126.978 }}></MapMarker>
+            <MapMarker
+              position={{
+                lat: postDetailData.workplace_information.latitude,
+                lng: postDetailData.workplace_information.longitude,
+              }}
+            ></MapMarker>
           </Map>
         </div>
         <div>
@@ -113,37 +151,60 @@ const PostDetailContent = () => {
           <div className="flex flex-col gap-[1rem] w-full p-[1rem] rounded-[0.563rem] bg-[#F4F4F9]">
             <div>
               <h5 className="pb-[0.5rem] text-[#656565] button-2">Salary</h5>
-              <p className="text-[#656565] caption-1">10,000 KRW</p>
+              <p className="text-[#656565] caption-1">
+                {postDetailData.working_conditions.houlry_rate} KRW
+              </p>
             </div>
             <div>
               <h5 className="pb-[0.5rem] text-[#656565] button-2">
                 Work Period
               </h5>
-              <p className="text-[#656565] caption-1">6 months</p>
+              <p className="text-[#656565] caption-1">
+                {postDetailData.working_conditions.job_category
+                  .replace(/_/g, ' ')
+                  .toLowerCase()}
+              </p>
             </div>
             <div>
               <h5 className="pb-[0.5rem] text-[#656565] button-2">
                 Working Days
               </h5>
-              <p className="text-[#656565] caption-1">Monday, Tuesday</p>
+              <p className="text-[#656565] caption-1">
+                {postDetailData.working_conditions.work_day_times
+                  .map((value) => value.day_of_week.toLowerCase())
+                  .join(', ')}
+              </p>
             </div>
             <div>
               <h5 className="pb-[0.5rem] text-[#656565] button-2">
                 Working Hours
               </h5>
-              <p className="text-[#656565] caption-1">09:00 - 17:00</p>
+              <p className="text-[#656565] caption-1">
+                {postDetailData.working_conditions.work_day_times
+                  .map(
+                    (value) =>
+                      `${value.work_start_time} - ${value.work_end_time}`,
+                  )
+                  .join(', ')}
+              </p>
             </div>
             <div>
               <h5 className="pb-[0.5rem] text-[#656565] button-2">
                 Job Category
               </h5>
-              <p className="text-[#656565] caption-1">Restaurant</p>
+              <p className="text-[#656565] caption-1">
+                {postDetailData.working_conditions.job_category
+                  .replace(/_/g, ' ')
+                  .toLowerCase()}
+              </p>
             </div>
             <div>
               <h5 className="pb-[0.5rem] text-[#656565] button-2">
                 Employment Type
               </h5>
-              <p className="text-[#656565] caption-1">Part-time</p>
+              <p className="text-[#656565] caption-1">
+                {postDetailData.working_conditions.employment_type.toLowerCase()}
+              </p>
             </div>
           </div>
         </div>
@@ -156,25 +217,35 @@ const PostDetailContent = () => {
               <h5 className="pb-[0.5rem] text-[#656565] button-2">
                 Company Address
               </h5>
-              <p className="text-[#656565] caption-1">Blahblah</p>
+              <p className="text-[#656565] caption-1">
+                {postDetailData.company_information.company_address}
+              </p>
             </div>
             <div>
               <h5 className="pb-[0.5rem] text-[#656565] button-2">
                 Representative Name
               </h5>
-              <p className="text-[#656565] caption-1">Name</p>
+              <p className="text-[#656565] caption-1">
+                {postDetailData.company_information.representative_name}
+              </p>
             </div>
             <div>
               <h5 className="pb-[0.5rem] text-[#656565] button-2">Recruiter</h5>
-              <p className="text-[#656565] caption-1">Name</p>
+              <p className="text-[#656565] caption-1">
+                {postDetailData.company_information.recruiter}
+              </p>
             </div>
             <div>
               <h5 className="pb-[0.5rem] text-[#656565] button-2">Contact</h5>
-              <p className="text-[#656565] caption-1">010-0000-0000</p>
+              <p className="text-[#656565] caption-1">
+                {postDetailData.company_information.contact}
+              </p>
             </div>
             <div>
               <h5 className="pb-[0.5rem] text-[#656565] button-2">Email</h5>
-              <p className="text-[#656565] caption-1">email@gmail.com</p>
+              <p className="text-[#656565] caption-1">
+                {postDetailData.company_information.email}
+              </p>
             </div>
           </div>
         </div>

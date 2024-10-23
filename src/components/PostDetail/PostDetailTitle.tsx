@@ -2,18 +2,25 @@ import Tag from '@/components/Common/Tag';
 import LocationIcon from '@/assets/icons/LocationIcon.svg?react';
 import ClockIcon from '@/assets/icons/ClockIcon.svg?react';
 import MoneyIcon from '@/assets/icons/MoneyIcon.svg?react';
+import { PostDetailItemType } from '@/types/postDetail/postDetailItem';
 
-const PostDetailTitle = () => {
+type PostDetailTitleProps = {
+  postDetailData: PostDetailItemType;
+};
+
+const PostDetailTitle = ({ postDetailData }: PostDetailTitleProps) => {
   return (
-    <section className="flex flex-col items-center gap-[1rem] w-full mt-[-2.5rem] pt-[2.5rem] pb-[2rem] px-[1.5rem] rounded-[2.5rem] shadow-bottomSheetShadow bg-white">
+    <section className="flex flex-col items-center gap-[1rem] w-full mt-[-2.5rem] pt-[2.5rem] pb-[2rem] px-[1.5rem] rounded-t-[2.5rem] shadow-bottomSheetShadow bg-white">
       <div className='w-[5.125rem] h-[5.125rem] rounded-full bg-cover bg-center bg-[url("/src/assets/images/JobIconExample.jpeg")]'></div>
       <div className="flex flex-col gap-[0.5rem]">
-        <p className="button-2 text-[#656565]">Job name</p>
-        <h2 className="text-[#33384B] font-bold text-lg">공고 제목</h2>
+        <p className="button-2 text-[#656565]">{postDetailData.company_name}</p>
+        <h2 className="text-[#33384B] font-bold text-lg">
+          {postDetailData.title}
+        </h2>
       </div>
       <div className="flex gap-[0.25rem]">
         <Tag
-          value={'Tag'}
+          value={postDetailData.tags.is_recruiting ? 'Opening' : 'Closed'}
           padding="0.375rem 0.75rem"
           isRounded={true}
           hasCheckIcon={false}
@@ -22,7 +29,9 @@ const PostDetailTitle = () => {
           fontStyle="caption-1"
         />
         <Tag
-          value={'Tag'}
+          value={postDetailData.tags.job_category
+            .replace(/_/g, ' ')
+            .toLowerCase()}
           padding="0.375rem 0.75rem"
           isRounded={true}
           hasCheckIcon={false}
@@ -31,7 +40,7 @@ const PostDetailTitle = () => {
           fontStyle="caption-1"
         />
         <Tag
-          value={'Tag'}
+          value={postDetailData.tags.visa}
           padding="0.375rem 0.75rem"
           isRounded={true}
           hasCheckIcon={false}
@@ -43,19 +52,29 @@ const PostDetailTitle = () => {
       <div className="grid grid-cols-2 gap-[0.5rem] py-[0.375rem]">
         <div className="flex gap-[0.5rem] px-[0.5rem]">
           <LocationIcon />
-          <p className="text-[#464646] caption-1">Yeoksam-dong, Seoul</p>
+          <p className="text-[#464646] caption-1">
+            {postDetailData.company_information.company_address}
+          </p>
         </div>
         <div className="flex gap-[0.5rem] px-[0.5rem]">
           <ClockIcon />
-          <p className="text-[#464646] caption-1">Yeoksam-dong, Seoul</p>
+          <p className="text-[#464646] caption-1">
+            {postDetailData.summaries.work_days_per_week} days a week
+          </p>
         </div>
         <div className="flex gap-[0.5rem] px-[0.5rem]">
           <MoneyIcon />
-          <p className="text-[#464646] caption-1">Yeoksam-dong, Seoul</p>
+          <p className="text-[#464646] caption-1">
+            ${postDetailData.summaries.houlry_rate}
+          </p>
         </div>
         <div className="flex gap-[0.5rem] px-[0.5rem]">
           <ClockIcon />
-          <p className="text-[#464646] caption-1">Yeoksam-dong, Seoul</p>
+          <p className="text-[#464646] caption-1">
+            {postDetailData.summaries.work_period
+              .replace(/_/g, ' ')
+              .toLowerCase()}
+          </p>
         </div>
       </div>
     </section>
