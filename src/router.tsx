@@ -7,7 +7,7 @@ import ApplicationDocumentsPage from '@/pages/ApplicationDocuments/ApplicationDo
 import PostSearchPage from '@/pages/PostSearch/PostSearchPage';
 import PostSearchFilterPage from '@/pages/PostSearchFilter/PostSearchFilterPage';
 import ProfilePage from '@/pages/Profile/ProfilePage';
-import LanguageSettingPage from './pages/Profile/LanguageSettingPage';
+import LanguageSettingPage from '@/pages/Profile/LanguageSettingPage';
 
 const Router = () => {
   return (
