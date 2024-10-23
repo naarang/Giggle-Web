@@ -8,10 +8,12 @@ import PostSearchPage from '@/pages/PostSearch/PostSearchPage';
 import PostSearchFilterPage from '@/pages/PostSearchFilter/PostSearchFilterPage';
 import PostDetailPage from '@/pages/PostDetail/PostDetailPage';
 import PostApplyPage from '@/pages/PostApply/PostApplyPage';
+import ScrollToTop from '@/components/Common/ScrollToTop';
 
 const Router = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/information" element={<InformationPage />} />
