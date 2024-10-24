@@ -33,7 +33,7 @@ const Navbar = () => {
 
   return (
     <div className="flex justify-center items-center z-50">
-      <section className="fixed bottom-4 w-[90%] py-6 px-8 bg-navbarGradient rounded-[2rem]">
+      <section className="fixed bottom-0 w-full py-6 px-12 bg-navbarGradient rounded-t-[2rem]">
         <div className="flex justify-between items-center">
           {routes.map((route, index) => {
             const IconComponent = route.svg;
