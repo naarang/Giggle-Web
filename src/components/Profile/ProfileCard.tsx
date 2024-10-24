@@ -25,7 +25,10 @@ const ProfileCard = ({ data }: ProfileCardProps) => {
             {data.first_name} {data.last_name}
           </div>
           {/* 생년월일 */}
-          <div className="body-3 text-[#656565]">{data.birth}</div>
+          <div className="body-3 text-[#656565]">
+            {data.birth.replace(/-/g, '.')}
+          </div>
+
           {/* 교육 정보 */}
           {data.school_name === '' ? (
             <span className="body-2 text-[#1E1926]">
