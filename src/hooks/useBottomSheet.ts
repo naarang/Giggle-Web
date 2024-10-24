@@ -4,7 +4,9 @@ import usePreviousValue from '@/hooks/usePreviousValue';
 
 const VIEW_HEIGHT = window.innerHeight;
 
-const useBottomSheet = () => {
+const useBottomSheet = (
+  setIsShowBottomSheet?: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
   const [isOpen, setIsOpen] = useState(false);
   const controls = useAnimation();
   const prevIsOpen = usePreviousValue(isOpen);
@@ -27,10 +29,12 @@ const useBottomSheet = () => {
   useEffect(() => {
     if (prevIsOpen && !isOpen) {
       controls.start('hidden');
+      if (setIsShowBottomSheet) setIsShowBottomSheet(false);
     } else if (!prevIsOpen && isOpen) {
       controls.start('visible');
+      if (setIsShowBottomSheet) setIsShowBottomSheet(true);
     }
-  }, [controls, isOpen, prevIsOpen]);
+  }, [controls, isOpen, prevIsOpen, setIsShowBottomSheet]);
 
   return { onDragEnd, controls, setIsOpen, isOpen };
 };

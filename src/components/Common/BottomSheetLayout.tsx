@@ -6,6 +6,7 @@ type BottomSheetLayoutProps = {
   hasHandlebar: boolean; // 최상단의 바 모양 존재 여부
   isAvailableHidden: boolean; // 아래로 내렸을 때 사라지도록 하는 여부
   isShowBottomsheet: boolean; // BottomSheet 보이기
+  setIsShowBottomSheet?: React.Dispatch<React.SetStateAction<boolean>>; // isShowBottomsheet 값 동기화하기 위한 함수
   children: ReactNode;
 };
 
@@ -16,11 +17,13 @@ const BottomSheetLayout = ({
   hasHandlebar,
   isAvailableHidden,
   isShowBottomsheet,
+  setIsShowBottomSheet,
   children,
 }: BottomSheetLayoutProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const { setIsOpen, onDragEnd, controls } = useBottomSheet();
+  const { setIsOpen, onDragEnd, controls } =
+    useBottomSheet(setIsShowBottomSheet);
   const [contentHeight, setContentHeight] = useState<number>(0);
 
   useEffect(() => {
@@ -55,7 +58,7 @@ const BottomSheetLayout = ({
         bottom: contentHeight,
       }} // 상단과 하단 드래그 제한 설정
       dragElastic={0.2}
-      className={`fixed left-0 bottom-0 w-full h-[90vh] p-[1.5rem] pb-[2.5rem] rounded-t-[2.5rem] bg-white shadow-bottomSheetShadow`}
+      className={`fixed left-0 bottom-0 w-full h-[90vh] p-[1.5rem] pb-[2.5rem] rounded-t-[2.5rem] bg-white shadow-bottomSheetShadow z-30`}
       style={{
         top: `${VIEW_HEIGHT - contentHeight - LAYOUT_MARGIN}px`,
       }}

@@ -8,18 +8,24 @@ import { JobPostingItemType } from '@/types/common/jobPostingItem';
 import { calculateTimeAgo } from '@/utils/calculateTimeAgo';
 import { calculateDDay } from '@/utils/calculateDDay';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface JobPostingCardProps {
   jobPostingData: JobPostingItemType;
 }
 
 const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
+  const navigate = useNavigate();
+
   const [isBookmarked, setIsBookmarked] = useState<boolean>(
     jobPostingData?.is_book_marked ?? false,
   );
 
   return (
-    <article className="flex flex-col gap-[1rem] w-full px-[1.125rem] pt-[1.125rem] pb-[0.75rem] border-[0.5px] border-solid border-[#1E19263D] rounded-[1.125rem]">
+    <article
+      className="flex flex-col gap-[1rem] w-full px-[1.125rem] pt-[1.125rem] pb-[0.75rem] border-[0.5px] border-solid border-[#1E19263D] rounded-[1.125rem]"
+      onClick={() => navigate(`/post/${jobPostingData.id}`)}
+    >
       <div className="w-full flex justify-between items-start">
         <div>
           <div className="mb-[0.5rem] flex items-center gap-[0.625rem]">
@@ -90,7 +96,7 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
           fontStyle="caption-1"
         />
         <Tag
-          value={jobPostingData.tags.visa}
+          value={jobPostingData.tags.visa.replace(/_/g, '-')}
           padding="0.375rem 0.75rem"
           isRounded={false}
           hasCheckIcon={false}
