@@ -38,7 +38,7 @@ const EditProfilePage = () => {
 
   const handleSubmit = () => {
     // API - 3.5 (유학생) 프로필 수정
-    // console.log('file 변경 - ' + profileImage);
+    console.log('file 변경 - ' + profileImage);
 
     navigate('/profile');
   };
