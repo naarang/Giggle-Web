@@ -53,6 +53,7 @@ export const initialPartTimePermitForm: PartTimePermitFormRequest = {
   email: '',
 };
 
+// 문서 종류에 따른 속성과 이름 mapping
 export const PartTimeEmployPermitEmployerInfo = {
   [EmployerInfoProperty.COMPANY_NAME]: {
     name: 'Company name',
@@ -72,6 +73,7 @@ export const PartTimeEmployPermitEmployerInfo = {
   },
 } as const;
 
+// 고용주 mock data
 export const mockEmployerInformation: EmployerInformation = {
   company_name: '테크스타트 주식회사',
   company_registration_number: '123-45-67890',

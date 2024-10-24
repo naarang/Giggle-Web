@@ -87,7 +87,7 @@ export type LaborContractDataResponse = {
   employer_information?: LaborContractEmployerInfo;
 };
 
-//
+// 근로 계약서 작성 양식
 export type LaborContractEmployeeInfo = {
   first_name: string;
   last_name: string;
@@ -133,7 +133,7 @@ export type WorkDayTime = {
   break_end_time: string; // HH:MM 형식
 };
 
-// 표준 계약서 고용주 정보
+// 근로 계약서 고용주 정보
 export type LaborContractEmployerInfo = {
   company_name: string;
   name: string;

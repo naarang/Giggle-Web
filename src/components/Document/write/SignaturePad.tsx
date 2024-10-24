@@ -19,6 +19,7 @@ const SignaturePad: React.FC<SignaturePadProps> = ({
   const [canSave, setCanSave] = useState<boolean>(false);
 
   useEffect(() => {
+    // 화면 크기에 맞춰 서명 패드의 크기를 따로 조절하는 Observer를 추가하는 Effect 훅
     if (!containerRef.current) return;
 
     const updateWidth = () => {
@@ -50,6 +51,7 @@ const SignaturePad: React.FC<SignaturePadProps> = ({
     };
   }, [width]); //
 
+  // 서명 패드의 활성화/비활성화를 담당하는 함수
   const handleCreateOrReset = () => {
     if (isEditing) {
       // Reset 동작
@@ -64,6 +66,7 @@ const SignaturePad: React.FC<SignaturePadProps> = ({
     }
   };
 
+  // 작성된 서명을 base64 형태로 저장하는 함수
   const handleSave = () => {
     if (sigPadRef.current) {
       const dataUrl = sigPadRef.current.toDataURL();
@@ -72,6 +75,7 @@ const SignaturePad: React.FC<SignaturePadProps> = ({
     }
   };
 
+  // 서명 입력 시작을 감지하는 함수
   const handleBeginStroke = () => {
     if (isEditing) {
       setCanSave(true);
@@ -81,6 +85,7 @@ const SignaturePad: React.FC<SignaturePadProps> = ({
   return (
     <div className="flex flex-col gap-4">
       <div ref={containerRef} className="border border-gray-200 rounded-xl">
+        {/* 서명 패드 활성화에 따른 조건부 렌더링 */}
         {isEditing && width > 0 ? (
           <SignatureCanvas
             ref={sigPadRef}
@@ -96,7 +101,7 @@ const SignaturePad: React.FC<SignaturePadProps> = ({
           <div className="w-full h-[7.5rem]" />
         )}
       </div>
-
+      {/* 서명 패드 제어판 */}
       <div className="flex gap-2">
         <button
           onClick={handleCreateOrReset}

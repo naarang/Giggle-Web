@@ -38,10 +38,13 @@ const LaborContractWriteForm = ({
     middle: '',
     end: '',
   });
+  // 주소 검색용 input 저장하는 state
   const [addressInput, setAddressInput] = useState('');
+  // 주소 검색 결과를 저장하는 array
   const [addressSearchResult, setAddressSearchResult] = useState<Document[]>(
     [],
   );
+  // 지도에 표시할 핀에 사용되는 위/경도 좌표
   const [currentGeoInfo, setCurrentGeoInfo] = useState({
     lat: 0,
     lon: 0,
@@ -51,6 +54,7 @@ const LaborContractWriteForm = ({
   const { searchAddress } = useSearchAddress({
     onSuccess: (data) => setAddressSearchResult(data),
   });
+  // 작성된 근로계약서 제출 훅
   const { mutate } = usePostStandardLaborContracts();
   // 문서 편집일 시 페이지 진입과 동시에 기존 내용 자동 입력
   useEffect(() => {
@@ -89,29 +93,23 @@ const LaborContractWriteForm = ({
     [searchAddress],
   );
 
-  const handleNext = () => {
-    mutate({
-      id: 1,
-      document: {
-        ...newDocumentData,
-        phone_number: formatPhoneNumber(phoneNum),
-      },
-    }); // TODO: 로그인 연결 후 userId를 넣어야 하는 것으로 추정
-  };
   // 검색 결과 중 원하는 주소를 선택할 시 state에 입력
   const handleAddressSelect = (selectedAddressName: string) => {
+    // 사용자가 선택한 주소와 일치하는 결과를 검색 결과를 저장하는 array에서 탐색
     const selectedAddress = addressSearchResult.find(
       (address) => address.address_name === selectedAddressName,
     ) as Document | undefined;
 
     if (!selectedAddress) return;
 
+    // 구 주소와 도로명 주소를 구분하기 위한 플래그(카카오에서 반환하는 속성 명이 달라짐)
     const isRegionAddr =
       selectedAddress.address_type === AddressType.REGION_ADDR;
     const addressData = isRegionAddr
       ? selectedAddress.address
       : selectedAddress.road_address;
 
+    // 카카오에서 반환하는 데이터 중 필요한 속성들만 선택
     const selectedProperties = pick(addressData, [
       'address_name',
       'region_1depth_name',
@@ -119,13 +117,14 @@ const LaborContractWriteForm = ({
       'region_3depth_name',
     ]);
 
-    let region4DepthName = '';
+    let region4DepthName = ''; // optional property인 region4DeptName
     if (isRegionAddr) {
       region4DepthName = selectedAddress.address.region_3depth_h_name || '';
     } else {
       region4DepthName = selectedAddress.road_address.road_name || '';
     }
 
+    // 선택한 데이터들을 state에 update
     setNewDocumentData({
       ...newDocumentData,
       address: {
@@ -141,12 +140,19 @@ const LaborContractWriteForm = ({
       lon: Number(selectedAddress.x),
       lat: Number(selectedAddress.y),
     });
+    // 검색 결과 초기화
     setAddressSearchResult([]);
   };
 
   // 문서 작성 완료 핸들러 함수
   const handleNext = () => {
-    // TODO: 로그인 연결 후 userId를 넣어야 하는 것으로 추정
+    mutate({
+      id: 1,
+      document: {
+        ...newDocumentData,
+        phone_number: formatPhoneNumber(phoneNum),
+      },
+    }); // TODO: 로그인 연결 후 userId를 넣어야 하는 것으로 추정
   };
   return (
     <div className="w-full p-6 flex flex-col">
