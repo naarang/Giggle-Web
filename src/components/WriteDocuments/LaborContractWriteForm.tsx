@@ -322,6 +322,12 @@ const LaborContractWriteForm = ({
                   signature_base64: signature,
                 })
               }
+              onReset={() =>
+                setNewDocumentData({
+                  ...newDocumentData,
+                  signature_base64: '',
+                })
+              }
             />
           </div>
         </div>

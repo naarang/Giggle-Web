@@ -1,14 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import SignatureCanvas from 'react-signature-canvas';
 
-interface SignaturePadProps {
+type SignaturePadProps = {
   onSave?: (signature: string) => void;
+  onReset?: () => void;
   width?: number;
   height?: number;
 }
 
 const SignaturePad: React.FC<SignaturePadProps> = ({
   onSave,
+  onReset,
   height = 120,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -57,6 +59,7 @@ const SignaturePad: React.FC<SignaturePadProps> = ({
       // Reset 동작
       if (sigPadRef.current) {
         sigPadRef.current.clear();
+        onReset?.();
         setSignatureData('');
         setCanSave(false);
       }
