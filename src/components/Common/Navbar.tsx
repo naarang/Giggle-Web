@@ -22,7 +22,7 @@ const Navbar = () => {
       svg: SearchIcon,
     },
     {
-      path: '/documents',
+      path: '/applicants',
       svg: DocumentsIcon,
     },
     {
@@ -32,22 +32,24 @@ const Navbar = () => {
   ];
 
   return (
-    <section className="w-full py-6 px-12 bg-navbarGradient rounded-[2rem]">
-      <div className="flex justify-between items-center">
-        {routes.map((route, index) => {
-          const IconComponent = route.svg;
-          return (
-            <button key={index} onClick={() => navigate(route.path)}>
-              {route.path == '/profile' ? (
-                <IconComponent stroke={getIconColor(route.path)} />
-              ) : (
-                <IconComponent fill={getIconColor(route.path)} />
-              )}
-            </button>
-          );
-        })}
-      </div>
-    </section>
+    <div className="flex justify-center items-center z-50">
+      <section className="fixed bottom-4 w-[90%] py-6 px-8 bg-navbarGradient rounded-[2rem]">
+        <div className="flex justify-between items-center">
+          {routes.map((route, index) => {
+            const IconComponent = route.svg;
+            return (
+              <button key={index} onClick={() => navigate(route.path)}>
+                {route.path == '/profile' ? (
+                  <IconComponent stroke={getIconColor(route.path)} />
+                ) : (
+                  <IconComponent fill={getIconColor(route.path)} />
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </section>
+    </div>
   );
 };
 
