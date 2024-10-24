@@ -1,5 +1,5 @@
 import { SignInRequest, SignInResponse, SignUpRequest, SignUpResponse } from '@/types/api/auth';
-import { api } from './index.ts';
+import { api } from '@/api/index.ts';
 
 /**
  * 사용자 로그인을 처리하는 함수

@@ -1,4 +1,4 @@
-import { Address, Language, UserInfo } from './users';
+import { Address, Language, UserInfo } from '@/types/api/users';
 
 export type SignInRequest = {
   serial_id: string;

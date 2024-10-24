@@ -7,13 +7,13 @@ import {
   UserInfoRequestBody,
 } from '@/types/api/users';
 import { useCallback, useEffect, useState } from 'react';
-import BottomButtonPanel from '../Common/BottomButtonPanel';
+import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import { useGetGeoInfo, useSearchAddress } from '@/hooks/api/useKaKaoMap';
 import { Document } from '@/types/api/map';
-import { DropdownModal } from '../Common/Dropdown';
+import { DropdownModal } from '@/components/Common/Dropdown';
 import { AddressType } from '@/types/api/map';
-import { pick } from '../../utils/map';
-import Button from '../Common/Button';
+import { pick } from '@/utils/map';
+import Button from '@/components/Common/Button';
 
 type AddressStepProps = {
   userInfo: UserInfoRequestBody;

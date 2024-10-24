@@ -1,9 +1,9 @@
 import { Language, UserInfoRequestBody } from '@/types/api/users';
-import BottomButtonPanel from '../Common/BottomButtonPanel';
+import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import { useState } from 'react';
-import Dropdown from '../Common/Dropdown';
+import Dropdown from '@/components/Common/Dropdown';
 import { languageList } from '@/constants/information';
-import Button from '../Common/Button';
+import Button from '@/components/Common/Button';
 
 type LanguageStepProps = {
   userInfo: UserInfoRequestBody;

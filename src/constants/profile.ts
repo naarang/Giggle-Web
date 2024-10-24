@@ -1,0 +1,8 @@
+export const enum IconType {
+  PROFILE = 'PROFILE',
+  MANAGE = 'MANAGE',
+  SCRAPPED = 'SCRAPPED',
+  NOTIFICATION = 'NOTIFICATION',
+  LANGUAGE = 'LANGUAGE',
+  LOGOUT = 'LOGOUT',
+}
