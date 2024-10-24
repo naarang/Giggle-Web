@@ -14,6 +14,7 @@ const SignaturePad: React.FC<SignaturePadProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState<number>(0);
   const sigPadRef = useRef<SignatureCanvas>(null);
+  const [signatureData, setSignatureData] = useState('');
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [canSave, setCanSave] = useState<boolean>(false);
 
@@ -54,6 +55,7 @@ const SignaturePad: React.FC<SignaturePadProps> = ({
       // Reset 동작
       if (sigPadRef.current) {
         sigPadRef.current.clear();
+        setSignatureData('');
         setCanSave(false);
       }
     } else {
@@ -65,6 +67,7 @@ const SignaturePad: React.FC<SignaturePadProps> = ({
   const handleSave = () => {
     if (sigPadRef.current) {
       const dataUrl = sigPadRef.current.toDataURL();
+      setSignatureData(dataUrl);
       onSave?.(dataUrl);
     }
   };
@@ -108,7 +111,7 @@ const SignaturePad: React.FC<SignaturePadProps> = ({
             canSave ? 'bg-[#fef387]' : 'bg-[#F4F4F9] cursor-not-allowed'
           }`}
         >
-          Saving
+          {signatureData !== '' ? 'Saved' : 'Saving'}
         </button>
       </div>
     </div>
