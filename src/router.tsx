@@ -14,6 +14,7 @@ import PostDetailPage from '@/pages/PostDetail/PostDetailPage';
 import PostApplyPage from '@/pages/PostApply/PostApplyPage';
 import ScrollToTop from '@/components/Common/ScrollToTop';
 import ApplicationPage from '@/pages/Application/ApplicationPage';
+import ApplicationDetailPage from '@/pages/ApplicationDetail/ApplicationDetailPage';
 
 const Router = () => {
   return (
@@ -37,6 +38,7 @@ const Router = () => {
         <Route path="/post/:id" element={<PostDetailPage />} />
         <Route path="/post/apply/:id" element={<PostApplyPage />} />
         <Route path="/application" element={<ApplicationPage />} />
+        <Route path="/application/:id" element={<ApplicationDetailPage />} />
       </Routes>
     </BrowserRouter>
   );
