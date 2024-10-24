@@ -74,7 +74,7 @@ const ApplicationCard = ({ applicationData }: ApplicationCardType) => {
         {/* TODO: 각각 공고의 id로 이동하기, 지원 상태 상세로 이동하기 */}
         <button
           className="flex-1 py-[0.75rem] caption-1-sb text-[#F4F4F9] bg-[#1E1926]  text-center"
-          onClick={() => navigate(`/post/${applicationData.id}`)}
+          onClick={() => navigate(`/post/${applicationData.job_posting_id}`)}
         >
           Read More Posting
         </button>

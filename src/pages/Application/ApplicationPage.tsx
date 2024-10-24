@@ -17,7 +17,8 @@ type StatusType =
 // 더미데이터
 const APPLICATION_LIST_DATA: AppicationItemType[] = [
   {
-    id: 1,
+    job_posting_id: 1,
+    user_owner_job_posting_id: 1,
     icon_img_url: 'https://example.com/icon1.png',
     title: 'Frontend Developer',
     address_name: '123 Tech Avenue, Seoul',
@@ -26,7 +27,8 @@ const APPLICATION_LIST_DATA: AppicationItemType[] = [
     duration_of_days: 90,
   },
   {
-    id: 2,
+    job_posting_id: 2,
+    user_owner_job_posting_id: 2,
     icon_img_url: 'https://example.com/icon2.png',
     title: 'Backend Developer',
     address_name: '456 Code Street, Busan',
@@ -35,7 +37,8 @@ const APPLICATION_LIST_DATA: AppicationItemType[] = [
     duration_of_days: 120,
   },
   {
-    id: 3,
+    job_posting_id: 3,
+    user_owner_job_posting_id: 3,
     icon_img_url: 'https://example.com/icon3.png',
     title: 'Full Stack Developer',
     address_name: '789 Web Road, Incheon',
@@ -44,7 +47,8 @@ const APPLICATION_LIST_DATA: AppicationItemType[] = [
     duration_of_days: 60,
   },
   {
-    id: 4,
+    job_posting_id: 4,
+    user_owner_job_posting_id: 4,
     icon_img_url: 'https://example.com/icon3.png',
     title: 'Full Stack Developer',
     address_name: '789 Web Road, Incheon',

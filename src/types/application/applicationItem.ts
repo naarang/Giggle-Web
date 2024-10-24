@@ -11,7 +11,8 @@ export type ApplicationStepType =
   | 'REGISTRATION_RESULTS';
 
 export type AppicationItemType = {
-  id: number;
+  job_posting_id: number;
+  user_owner_job_posting_id: number;
   icon_img_url: string;
   title: string;
   address_name: string;
