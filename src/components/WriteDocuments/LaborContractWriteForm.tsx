@@ -17,7 +17,7 @@ import { isNotEmpty } from '@/utils/document';
 import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
 import SignaturePad from '@/components/Document/write/SignaturePad';
-import EmployerInfoSection from '../Document/write/EmployerInfoSection';
+import EmployerInfoSection from '@/components/Document/write/EmployerInfoSection';
 import { usePostStandardLaborContracts } from '@/hooks/api/useDocument';
 
 type LaborContractFormProps = {
