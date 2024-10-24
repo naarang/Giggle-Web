@@ -72,7 +72,9 @@ const SignaturePad: React.FC<SignaturePadProps> = ({
   // 작성된 서명을 base64 형태로 저장하는 함수
   const handleSave = () => {
     if (sigPadRef.current) {
-      const dataUrl = sigPadRef.current.toDataURL();
+      const dataUrl = sigPadRef.current.toDataURL('image/png', {
+        backgroundColor: 'transparent',
+      });
       setSignatureData(dataUrl);
       onSave?.(dataUrl);
     }
