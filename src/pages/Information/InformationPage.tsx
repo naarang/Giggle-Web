@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 
 // funnel 패턴으로 구현한 추가정보 입력 페이지. 총 3 step으로 구성
 const InformationPage = () => {
-  const [currentStep, setCurrentStep] = useState(3);
+  const [currentStep, setCurrentStep] = useState(1);
   const [userInfo, setUserInfo] = useState<UserInfoRequestBody>(
     initialUserInfoRequestBody,
   );
