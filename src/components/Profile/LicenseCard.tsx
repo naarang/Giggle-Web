@@ -1,6 +1,6 @@
-import LevelIcon from '@/assets/icons/Profile/LevelIcon.svg?react';
 import { LanguageLevelType, MetaDataType } from '@/types/api/profile';
 import { useNavigate } from 'react-router-dom';
+import LevelSection from '@/components/Profile/LevelSection';
 
 type LicenseCardProps = {
   languageData: LanguageLevelType;
@@ -9,34 +9,17 @@ type LicenseCardProps = {
 
 const LicenseCard = ({ languageData, metaData }: LicenseCardProps) => {
   const navigate = useNavigate();
+
+  // 언어설정 화면으로 이동
   const handleEnterButton = () => {
     navigate('/profile/language');
   };
+
   const emptyLevel = (): boolean => {
     return (
       languageData.kiip_level === 0 &&
       languageData.sejong_level === 0 &&
       languageData.topik_level === 0
-    );
-  };
-
-  const LevelSection = ({ title, level }: { title: string; level: number }) => {
-    return (
-      <div className="flex flex-col gap-4">
-        <div className="flex flex-col gap-2">
-          <div className="head-2 text-[#1E1926] text-center">{title}</div>
-          <div className="caption-2 text-[#464646] text-center">
-            {title} description description
-          </div>
-        </div>
-        <div className="relative flex justify-center items-center">
-          <LevelIcon />
-          <div className="absolute flex flex-col justify-center items-center gap-1">
-            <div className="text-center body-3 text-[#1E1926]">Level</div>
-            <div className="text-center head-3 text-[#1E1926]">{level}</div>
-          </div>
-        </div>
-      </div>
     );
   };
 
