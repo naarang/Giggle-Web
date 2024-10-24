@@ -16,14 +16,14 @@ const PostApplyButton = () => {
         <Button
           type={buttonTypeKeys.BACK}
           bgColor={'bg-[#F4F4F9]'}
-          fontColor="text-[#BDBDBD] button-1"
+          fontColor="text-[#BDBDBD]"
           title="Edit"
           isBorder={false}
         />
         <Button
           type={buttonTypeKeys.APPLY}
           bgColor={'bg-[#FEF387]'}
-          fontColor="text-[#1E1926] button-1"
+          fontColor="text-[#1E1926]"
           title="Apply Now"
           isBorder={false}
           onClick={() => setIsComplete(true)}
