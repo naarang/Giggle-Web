@@ -9,10 +9,7 @@ const ProfileCard = ({ data }: ProfileCardProps) => {
   const handleButtonClick = () => {};
 
   return (
-    <div
-      className="flex flex-col px-[1.125rem] pt-5 pb-4 rounded-[1.125rem] gap-4"
-      style={{ background: 'rgba(255, 255, 255, 0.50)' }}
-    >
+    <div className="flex flex-col px-[1.125rem] pt-5 pb-4 rounded-[1.125rem] gap-4 bg-[rgba(255,255,255,0.5)]">
       <div className="flex items-center gap-4">
         {/* 프로필 사진 */}
         <div className="w-20 h-20 rounded-full overflow-hidden">

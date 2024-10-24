@@ -125,12 +125,7 @@ const ProfilePage = () => {
               </div>
             </BottomSheetLayout>
           )}
-          <div
-            className="w-full h-full min-h-[100vh]"
-            style={{
-              background: 'linear-gradient(180deg, #FEF387 0.01%, #FFF 46.31%)',
-            }}
-          >
+          <div className="w-full h-full min-h-[100vh] bg-profilePageGradient">
             {/* Profile 페이지 시작 */}
             <ProfileHeader />
             <div className="flex flex-col px-6 gap-9 pb-24">

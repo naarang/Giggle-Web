@@ -40,13 +40,7 @@ const SubHeader = ({
   };
 
   const InfoHeader = () => (
-    <div
-      className="w-full px-8 pt-6 pb-7 rounded-b-lg"
-      style={{
-        boxShadow:
-          '0px 1px 2px 0px rgba(0, 0, 0, 0.12), 0px 0px 1px 0px rgba(0, 0, 0, 0.08), 0px 0px 1px 0px rgba(0, 0, 0, 0.08)',
-      }}
-    >
+    <div className="w-full px-8 pt-6 pb-7 rounded-b-lg shadow-subHeaderShadow">
       <h1 className="w-[70%] head-2">{title}</h1>
       <p className="w-[70%] caption-1">{body}</p>
     </div>

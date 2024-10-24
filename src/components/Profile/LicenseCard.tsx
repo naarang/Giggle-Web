@@ -24,13 +24,7 @@ const LicenseCard = ({ languageData, metaData }: LicenseCardProps) => {
   };
 
   return (
-    <div
-      className="w-[327px] p-8 flex flex-col gap-4 bg-[#FEF387] rounded-2xl"
-      style={{
-        boxShadow:
-          '0px 218px 61px 0px rgba(152, 147, 81, 0.00), 0px 139px 56px 0px rgba(152, 147, 81, 0.01), 0px 78px 47px 0px rgba(152, 147, 81, 0.05), 0px 35px 35px 0px rgba(152, 147, 81, 0.09), 0px 9px 19px 0px rgba(152, 147, 81, 0.10)',
-      }}
-    >
+    <div className="w-full p-8 flex flex-col gap-4 bg-[#FEF387] rounded-2xl shadow-languageCardShadow">
       <div className="flex gap-6 justify-center items-center">
         <LevelSection title="TOPIK" level={languageData.topik_level} />
         <LevelSection title="KIIP" level={languageData.kiip_level} />

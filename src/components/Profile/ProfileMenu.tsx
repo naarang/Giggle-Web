@@ -70,11 +70,7 @@ const ProfileMenu = ({
   return (
     <div
       onClick={onClick}
-      className="flex items-center justify-between cursor-pointer p-6 rounded-[1.375rem]"
-      style={{
-        background:
-          'linear-gradient(0deg, var(--grey, #F4F4F9) 0%, var(--grey, #F4F4F9) 100%), linear-gradient(0deg, rgba(255, 255, 255, 0.50) 0%, rgba(255, 255, 255, 0.50) 100%), url(<path-to-image>) lightgray 50% / cover no-repeat',
-      }}
+      className="flex items-center justify-between cursor-pointer p-6 rounded-[1.375rem] bg-profileMenuGradient  bg-cover bg-no-repeat bg-center"
     >
       <div className="flex justify-center items-center gap-4">
         {Icon}
