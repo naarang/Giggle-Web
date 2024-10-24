@@ -1,5 +1,9 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Outlet, useLocation } from 'react-router-dom';
+
+import ScrollToTop from '@/components/Common/ScrollToTop';
+import Navbar from '@/components/Common/Navbar';
+
 import HomePage from '@/pages/Home/HomePage';
 import SigninPage from '@/pages/Signin/SigninPage';
 import SignupPage from '@/pages/Signup/SignupPage';
@@ -12,8 +16,8 @@ import LanguageSettingPage from '@/pages/Profile/LanguageSettingPage';
 import EditProfilePage from '@/pages/Profile/EditProfilePage';
 import PostDetailPage from '@/pages/PostDetail/PostDetailPage';
 import PostApplyPage from '@/pages/PostApply/PostApplyPage';
-import ScrollToTop from '@/components/Common/ScrollToTop';
-import Navbar from '@/components/Common/Navbar';
+import ApplicationPage from '@/pages/Application/ApplicationPage';
+import WriteDocumentsPage from '@/pages/WriteDocuments/WriteDocumentsPage';
 
 const Layout = () => {
   const location = useLocation();
@@ -38,20 +42,29 @@ const Router = () => {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
-          <Route path="/information" element={<InformationPage />} />
+
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/information" element={<InformationPage />} />
+
           <Route
             path="/application-documents"
             element={<ApplicationDocumentsPage />}
           />
+
           <Route path="/search" element={<PostSearchPage />} />
           <Route path="/search/filter" element={<PostSearchFilterPage />} />
+
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/profile/language" element={<LanguageSettingPage />} />
           <Route path="/profile/edit" element={<EditProfilePage />} />
+
           <Route path="/post/:id" element={<PostDetailPage />} />
           <Route path="/post/apply/:id" element={<PostApplyPage />} />
+
+          <Route path="/write-documents" element={<WriteDocumentsPage />} />
+
+          <Route path="/application" element={<ApplicationPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -68,8 +68,6 @@ const EditProfilePicture = ({
         onChange={handlePictureChange}
         style={{ display: 'none' }}
       />
-
-      {imagePreviewUrl && <p>Profile picture has been changed.</p>}
     </div>
   );
 };
