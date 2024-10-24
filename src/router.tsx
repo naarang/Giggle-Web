@@ -9,10 +9,14 @@ import PostSearchFilterPage from '@/pages/PostSearchFilter/PostSearchFilterPage'
 import ProfilePage from '@/pages/Profile/ProfilePage';
 import LanguageSettingPage from '@/pages/Profile/LanguageSettingPage';
 import EditProfilePage from '@/pages/Profile/EditProfilePage';
+import PostDetailPage from '@/pages/PostDetail/PostDetailPage';
+import PostApplyPage from '@/pages/PostApply/PostApplyPage';
+import ScrollToTop from '@/components/Common/ScrollToTop';
 
 const Router = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/information" element={<InformationPage />} />
@@ -27,6 +31,8 @@ const Router = () => {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/profile/language" element={<LanguageSettingPage />} />
         <Route path="/profile/edit" element={<EditProfilePage />} />
+        <Route path="/post/:id" element={<PostDetailPage />} />
+        <Route path="/post/apply/:id" element={<PostApplyPage />} />
       </Routes>
     </BrowserRouter>
   );
