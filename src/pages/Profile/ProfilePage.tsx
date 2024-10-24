@@ -56,7 +56,7 @@ const ProfilePage = () => {
           'https://images.pexels.com/photos/1458926/pexels-photo-1458926.jpeg?cs=srgb&dl=pexels-poodles2doodles-1458926.jpg&fm=jpg',
         first_name: 'Hyeona',
         last_name: 'Seol',
-        birth: '0000.00.00',
+        birth: '0000-00-00',
         school_name: 'Dongguk University',
         grade: 3,
         gpa: 3.5,
