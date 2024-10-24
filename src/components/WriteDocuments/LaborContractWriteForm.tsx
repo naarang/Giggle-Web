@@ -1,5 +1,6 @@
-import { initialLaborContractEmployeeInfo } from '@/constants/documents';
+import { initialLaborContractEmployeeInfo, sampleLaborContract } from '@/constants/documents';
 import {
+  DocumentType,
   LaborContractDataResponse,
   LaborContractEmployeeInfo,
 } from '@/types/api/document';
@@ -314,7 +315,7 @@ const LaborContractWriteForm = ({
               </div>
             </div>
           </div>
-          <div className="w-full relative shadow rounded-xl box-border h-[120px]">
+          <div className="w-full relative shadow rounded-xl box-border h-[120px] mb-16">
             <SignaturePad
               onSave={(signature: string) =>
                 setNewDocumentData({
@@ -333,7 +334,10 @@ const LaborContractWriteForm = ({
         </div>
         {/* 고용주 정보가 있다면 표시 */}
         {document?.employer_information && (
-          <EmployerInfoSection employ={document.employer_information} />
+          <EmployerInfoSection
+            employ={document.employer_information}
+            type={DocumentType.LABOR_CONTRACT}
+          />
         )}
       </div>
       <BottomButtonPanel>
