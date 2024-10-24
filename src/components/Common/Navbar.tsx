@@ -22,7 +22,7 @@ const Navbar = () => {
       svg: SearchIcon,
     },
     {
-      path: '/applicants',
+      path: '/application',
       svg: DocumentsIcon,
     },
     {

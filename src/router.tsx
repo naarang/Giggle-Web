@@ -23,7 +23,7 @@ const Layout = () => {
   const location = useLocation();
 
   // Nav bar 컴포넌트가 랜딩되는 페이지
-  const showNavbarPaths = ['/', '/profile', '/search', '/applicants'];
+  const showNavbarPaths = ['/', '/profile', '/search', '/application'];
 
   const shouldShowNavbar = showNavbarPaths.includes(location.pathname);
 
