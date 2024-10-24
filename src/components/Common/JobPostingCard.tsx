@@ -96,7 +96,7 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
           fontStyle="caption-1"
         />
         <Tag
-          value={jobPostingData.tags.visa}
+          value={jobPostingData.tags.visa.replace(/_/g, '-')}
           padding="0.375rem 0.75rem"
           isRounded={false}
           hasCheckIcon={false}

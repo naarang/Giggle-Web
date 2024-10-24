@@ -70,7 +70,7 @@ const PostDetailContent = ({ postDetailData }: PostDetailContentProps) => {
             <div>
               <h5 className="pb-[0.5rem] text-[#656565] button-2">Visa</h5>
               <p className="text-[#656565] caption-1">
-                {postDetailData.recruitment_conditions.visa}
+                {postDetailData.recruitment_conditions.visa.replace(/_/g, '-')}
               </p>
             </div>
             <div>
