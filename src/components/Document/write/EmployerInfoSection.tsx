@@ -38,9 +38,11 @@ const EmployerInfoSection = ({ employ }: { employ: EmployerInformation }) => {
     <div className="w-full relative rounded-3xl flex flex-col items center justify-center px-6 py-3 text-left body-3 text-[#1e1926] bg-[#f4f4f9]">
       <div className="w-full self-stretch flex flex-col items-center jusitfy-center">
         <div className="w-full self-stretch flex flex-col items-center justify-start">
+          {/* 추후 UI 재사용 위한 고용주 정보 property를 반복문으로 ui 나열 */}
           {Object.entries(employ).map(([key, value]) => (
             <>
               <div className="w-full self-stretch flex flex-col text-left items-center justify-start px-1 py-1.5">
+                {/* title */}
                 <div className="w-full flex-1 flex flex-col items-start justify-start">
                   <div className="w-full self-stretch flex items-center justify-start">
                     <div className="w-full relative">
@@ -52,7 +54,7 @@ const EmployerInfoSection = ({ employ }: { employ: EmployerInformation }) => {
                     </div>
                   </div>
                 </div>
-                {/* .textfield1 */}
+                {/* value */}
                 {key !== 'address' && (
                   <div className="w-full self-stretch drop-shadow-[0_1px_2px_rgba(107,110,116,0.04)] rounded-xl flex items-center justify-start py-2.5 pr-3.5 pl-4">
                     <div className="w-full flex-1 relative">
@@ -62,20 +64,19 @@ const EmployerInfoSection = ({ employ }: { employ: EmployerInformation }) => {
                 )}
                 {key === 'address' && renderMap(value as Address)}
               </div>
+              {/* 별도 property가 없는 detailed address 예외 처리 */}
               {key === 'address' && (
                 <div className="w-full self-stretch flex flex-col text-left items-center justify-start px-1 py-1.5">
                   <div className="w-full flex-1 flex flex-col items-start justify-start">
                     <div className="w-full self-stretch flex items-center justify-start">
-                      <div className="w-full relative">
-                        Detailed Address
-                      </div>
+                      <div className="w-full relative">Detailed Address</div>
                     </div>
                   </div>
-                  {/* .textfield1 */}
                   {key === 'address' && (
                     <div className="w-full self-stretch drop-shadow-[0_1px_2px_rgba(107,110,116,0.04)] rounded-xl flex items-center justify-start py-2.5 pr-3.5 pl-4">
                       <div className="w-full flex-1 relative">
-                        {typeof value !== 'string' && value.address_detail as string}
+                        {typeof value !== 'string' &&
+                          (value.address_detail as string)}
                       </div>
                     </div>
                   )}

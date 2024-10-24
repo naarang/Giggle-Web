@@ -9,7 +9,6 @@ import { InputType } from '@/types/common/input';
 import Dropdown from '@/components/Common/Dropdown';
 import { phone } from '@/constants/information';
 import EmployerInfoSection from '@/components/Document/write/EmployerInfoSection';
-import { mockEmployerInformation } from '../../constants/documents';
 import BottomButtonPanel from '../Common/BottomButtonPanel';
 import Button from '../Common/Button';
 import { isNotEmpty } from '@/utils/document';
@@ -34,6 +33,7 @@ const PartTimePermitWriteForm = ({
     middle: '',
     end: '',
   });
+  // 문서 편집일 시 페이지 진입과 동시에 기존 내용 자동 입력
   useEffect(() => {
     if (isEdit && document) {
       setNewDocumentData({
@@ -47,6 +47,7 @@ const PartTimePermitWriteForm = ({
     }
   }, [document, isEdit]);
 
+  // 문서 작성 완료 핸들러 함수
   const handleNext = () => {
     mutate({
       id: 1,
@@ -56,12 +57,10 @@ const PartTimePermitWriteForm = ({
       },
     }); // TODO: 로그인 연결 후 userId를 넣어야 하는 것으로 추정
   };
-  {
-    console.log(isNotEmpty(newDocumentData));
-  }
   return (
     <div className="w-full p-6 flex flex-col">
       <div className="[&>*:last-child]:mb-24 flex flex-col gap-4">
+        {/* 이름 입력 */}
         <div className="w-full">
           <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
             <div className="relative">
@@ -81,6 +80,7 @@ const PartTimePermitWriteForm = ({
             canDelete={false}
           />
         </div>
+        {/* 성 입력 */}
         <div className="w-full">
           <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
             <div className="relative">
@@ -100,6 +100,7 @@ const PartTimePermitWriteForm = ({
             canDelete={false}
           />
         </div>
+        {/* 전공 입력 */}
         <div className="w-full">
           <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
             <div className="relative">
@@ -119,6 +120,7 @@ const PartTimePermitWriteForm = ({
             canDelete={false}
           />
         </div>
+        {/* 학점 입력 */}
         <div className="w-full">
           <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
             <div className="relative">
@@ -141,6 +143,7 @@ const PartTimePermitWriteForm = ({
             canDelete={false}
           />
         </div>
+        {/* 전화번호 입력 */}
         <div className="w-full">
           <div className="w-full flex flex-row items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
             Telephone No.
@@ -170,6 +173,7 @@ const PartTimePermitWriteForm = ({
             />
           </div>
         </div>
+        {/* 이메일 입력 */}
         <div className="w-full">
           <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
             <div className="relative">
@@ -192,18 +196,14 @@ const PartTimePermitWriteForm = ({
             canDelete={false}
           />
         </div>
-
-        {
-          /*
-        
-        document?.employer_information && (
-        <EmployerInfoSection employ={document.employer_information} />
-      )*/
-          <EmployerInfoSection employ={mockEmployerInformation} />
-        }
+        {/* 고용주 정보가 있다면 표시 */}
+        {document?.employer_information && (
+          <EmployerInfoSection employ={document.employer_information} />
+        )}
       </div>
 
       <BottomButtonPanel>
+        {/* 입력된 정보 중 빈 칸이 없다면 활성화 */}
         {isNotEmpty(newDocumentData) && isNotEmpty(phoneNum) ? (
           <Button
             type="large"

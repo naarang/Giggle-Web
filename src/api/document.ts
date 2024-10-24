@@ -1,6 +1,7 @@
 import { PartTimePermitFormRequest } from '@/types/api/document';
 import { api } from '.';
 
+//시간제 취업허가서 작성 api 통신 함수
 export const postPartTimeEmployPermit = async ({
   id,
   document,
