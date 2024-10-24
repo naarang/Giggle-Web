@@ -10,9 +10,9 @@ import { calculateDDay } from '@/utils/calculateDDay';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-interface JobPostingCardProps {
+type JobPostingCardProps = {
   jobPostingData: JobPostingItemType;
-}
+};
 
 const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
   const navigate = useNavigate();

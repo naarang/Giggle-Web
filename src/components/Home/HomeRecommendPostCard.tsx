@@ -2,9 +2,9 @@ import MessageIcon from '@/assets/icons/Home/MessageIcon.svg?react';
 import { RecommendJobPostingItemType } from '@/types/home/recommendJobPostingItem';
 import { calculateDDay } from '@/utils/calculateDDay';
 
-interface HomeRecommendPostCardProps {
+type HomeRecommendPostCardProps = {
   jobPostingData: RecommendJobPostingItemType;
-}
+};
 
 const HomeRecommendPostCard = ({
   jobPostingData,
