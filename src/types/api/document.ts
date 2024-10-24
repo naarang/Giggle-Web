@@ -87,20 +87,11 @@ export type LaborContractDataResponse = {
   employer_information?: LaborContractEmployerInfo;
 };
 
-export type LaborContractAddress = {
-  address_name: string;
-  region_1depth_name: string;
-  region_2depth_name: string;
-  region_3depth_name: string;
-  region_4depth_name: string;
-  detail_address: string;
-};
-
 //
 export type LaborContractEmployeeInfo = {
   first_name: string;
   last_name: string;
-  address: LaborContractAddress;
+  address: Address;
   phone_number: string;
   signature_base64: string; // base64 문자열
 };
@@ -142,13 +133,13 @@ export type WorkDayTime = {
   break_end_time: string; // HH:MM 형식
 };
 
-// 메인 타입
+// 표준 계약서 고용주 정보
 export type LaborContractEmployerInfo = {
   company_name: string;
   name: string;
   start_date: string; // yyyy-MM-dd 형식
   end_date: string; // yyyy-MM-dd 형식
-  address: LaborContractAddress;
+  address: Address;
   description: string;
   work_day_time_list: WorkDayTime[];
   weekly_last_days: DayOfWeek[];
