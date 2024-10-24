@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import ArrowIcon from '@/assets/icons/ArrowUp.tsx';
-import DatePicker from './DatePicker';
+import DatePicker from '@/components/Common/DatePicker';
 
 // Dropdown 컴포넌트의 props 타입을 정의합니다.
 type DropDownProps = {
@@ -23,7 +23,7 @@ export const DropdownModal = ({
   onSelect: (option: string) => void;
 }) => {
   return (
-    <div className="w-full relative shadow rounded-2xl bg-white border border-[#dcdcdc] flex flex-row items-start justify-start p-2 text-left body-2 text-[#656565]">
+    <div className="w-full relative shadow rounded-2xl bg-white border border-[#dcdcdc] flex flex-row items-start justify-start p-2 text-left body-2 text-[#656565] z-10">
       <div className="flex-1 flex flex-col items-start justify-start gap-[5px]">
         {/* 각 옵션을 매핑하여 표시합니다. */}
         {options.map((option) => (
@@ -81,10 +81,10 @@ const Dropdown = ({
             {/* 드롭다운 토글 버튼 */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-fu transition-colors"
+              className="p-0 rounded-full transition-colors"
             >
               <div
-                className={`flex items-center justify-center w-6 h-6 transition-transform duration-300 ${
+                className={`flex items-center justify-center w-5 h-6 transition-transform duration-300 ${
                   isOpen ? '' : 'rotate-180'
                 }`}
               >

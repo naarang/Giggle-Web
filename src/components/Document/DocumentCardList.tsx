@@ -1,6 +1,6 @@
 import { DocumentsSummaryResponse, DocumentType } from '@/types/api/document';
-import DocumentCardDispenser from './DocumentCard';
-import MakeDocumentButton from './MakeDocumentButton';
+import DocumentCardDispenser from '@/components/Document/DocumentCard';
+import MakeDocumentButton from '@/components/Document/MakeDocumentButton';
 import { DocumentTypeInfo } from '@/constants/documents';
 
 const DocumentCardList = ({
@@ -24,7 +24,7 @@ const DocumentCardList = ({
             onNext={handleOnNext}
           />
         ) : (
-          <MakeDocumentButton title={DocumentTypeInfo[property].name} />
+          <MakeDocumentButton type={property} />
         ),
       )}
     </div>

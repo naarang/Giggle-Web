@@ -1,7 +1,9 @@
 import AddIcon from '@/assets/icons/AddButton.svg?react';
+import { DocumentTypeInfo } from '@/constants/documents';
+import { DocumentType } from '@/types/api/document';
 import { useNavigate } from 'react-router-dom';
 
-const MakeDocumentButton = ({ title }: { title: string }) => {
+const MakeDocumentButton = ({ type }: { type: DocumentType }) => {
   const navigate = useNavigate();
 
   return (
@@ -9,9 +11,13 @@ const MakeDocumentButton = ({ title }: { title: string }) => {
       <div className="self-stretch flex flex-col items-start justify-start px-4">
         <div className="self-stretch flex flex-row items-center justify-center pl-2 gap-4">
           <div className="flex-1 flex items-center justify-start">
-            <div className="relative head-3">{title}</div>
+            <div className="relative head-3">{DocumentTypeInfo[type].name}</div>
           </div>
-          <div onClick={() => navigate('/write/application-form')}>
+          <div onClick={() => navigate('/write-documents', {
+            state: {
+              type: type
+            }
+          })}>
             <AddIcon />
           </div>
         </div>
