@@ -100,6 +100,6 @@ export const initialLaborContractEmployeeInfo: LaborContractEmployeeInfo = {
     region_4depth_name: '',
     detail_address: '',
   },
-  phone_number: '',
+  phone_number: '010-0000-0000',
   signature_base64: '',
 };
