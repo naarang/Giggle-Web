@@ -12,8 +12,10 @@ export const buttonTypeKeys = {
   LARGE: 'large',
   SMALL: 'small',
   APPLY: 'applyNow',
+  SMALLAPPLY: 'smallApply',
   BACK: 'back',
   CONTINUE: 'continue',
+  SCRAP: 'scrap',
 } as const
 
 export type buttonTypeUnion = typeof buttonTypeKeys[keyof typeof buttonTypeKeys]

@@ -33,24 +33,16 @@ const SubHeader = ({
     return (
       <div className="h-fit w-[90%]">
         <div className="flex justify-start pt-2.5 pr-3 pb-2 pl-5">
-          <div className="h-9 flex items-end font-semibold text-base">
-            {title}
-          </div>
+          <div className="h-9 flex items-end head-3">{title}</div>
         </div>
       </div>
     );
   };
 
   const InfoHeader = () => (
-    <div
-      className="w-full px-8 pt-6 pb-7 rounded-b-lg"
-      style={{
-        boxShadow:
-          '0px 1px 2px 0px rgba(0, 0, 0, 0.12), 0px 0px 1px 0px rgba(0, 0, 0, 0.08), 0px 0px 1px 0px rgba(0, 0, 0, 0.08)',
-      }}
-    >
-      <h1 className="w-[70%] text-[1.25rem] font-semibold">{title}</h1>
-      <p className="w-[70%] text-[0.625rem] font-normal">{body}</p>
+    <div className="w-full px-8 pt-6 pb-7 rounded-b-lg shadow-subHeaderShadow">
+      <h1 className="w-[70%] head-2">{title}</h1>
+      <p className="w-[70%] caption-1">{body}</p>
     </div>
   );
 
@@ -66,7 +58,7 @@ const SubHeader = ({
                 placeholder={placeHolder}
                 value={value}
                 onChange={handleInputChange}
-                className="w-[90%] outline-none font-semibold text-base"
+                className="w-[90%] outline-none head-3"
               />
             </div>
             <div className="flex justify-center items-center gap-[0.125rem]">
