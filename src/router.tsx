@@ -14,6 +14,7 @@ import PostDetailPage from '@/pages/PostDetail/PostDetailPage';
 import PostApplyPage from '@/pages/PostApply/PostApplyPage';
 import ScrollToTop from '@/components/Common/ScrollToTop';
 import ApplicationPage from '@/pages/Application/ApplicationPage';
+import ManageResumePage from '@/pages/ManageResumePage/ManageResumePage';
 
 const Router = () => {
   return (
@@ -34,6 +35,7 @@ const Router = () => {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/profile/language" element={<LanguageSettingPage />} />
         <Route path="/profile/edit" element={<EditProfilePage />} />
+        <Route path="/profile/manage-resume" element={<ManageResumePage />} />
         <Route path="/post/:id" element={<PostDetailPage />} />
         <Route path="/post/apply/:id" element={<PostApplyPage />} />
         <Route path="/application" element={<ApplicationPage />} />

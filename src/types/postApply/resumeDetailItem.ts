@@ -12,7 +12,7 @@ type VisaType =
 
 type EducationLevelType = 'BACHELOR' | 'ASSOCIATE' | 'HIGHSCHOOL';
 
-type WorkExperienceType = {
+export type WorkExperienceType = {
   id: number;
   title: string;
   description: string;
@@ -21,7 +21,7 @@ type WorkExperienceType = {
   duration: number;
 };
 
-type EducationType = {
+export type EducationType = {
   id: number;
   education_level: EducationLevelType;
   school_name: string;
@@ -37,19 +37,19 @@ type LanguageType = {
   level: number;
 };
 
-type LanguageListType = {
+export type LanguageListType = {
   topik: number;
   social_integration: number;
   sejong_institute: number;
   etc: LanguageType[];
 };
 
-type VisaListType = {
+export type VisaListType = {
   visa: VisaType;
   description: string;
 };
 
-type PersonalInformationType = {
+export type PersonalInformationType = {
   main_address: string;
   detailed_address: string;
   phone_number: string;
