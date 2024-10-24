@@ -6,7 +6,7 @@ type SignaturePadProps = {
   onReset?: () => void;
   width?: number;
   height?: number;
-}
+};
 
 const SignaturePad: React.FC<SignaturePadProps> = ({
   onSave,
@@ -97,6 +97,7 @@ const SignaturePad: React.FC<SignaturePadProps> = ({
               width,
               height,
               className: 'signature-canvas',
+              style: { borderRadius: '12px' },
             }}
             backgroundColor="white"
           />
