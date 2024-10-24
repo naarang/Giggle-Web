@@ -3,6 +3,7 @@ import { UserEditProfileDataType, UserProfileDetailDataType } from "@/types/api/
 // GET 데이터를 PATCH 요청 데이터로 변환
 export const transformToEditProfileData = (
   userData: UserProfileDetailDataType,
+  phoneNum: { start: string; middle: string; end: string },
   profileImage: File | null,
   isProfileImgChanged: boolean,
 ): UserEditProfileDataType => {
@@ -15,7 +16,8 @@ export const transformToEditProfileData = (
       gender: userData.gender,
       nationality: userData.nationality,
       visa: userData.visa,
-      phone_number: userData.phone_number,
+      // phone_number 통합
+      phone_number: `${phoneNum.start}-${phoneNum.middle}-${phoneNum.end}`,
       is_profile_img_changed: isProfileImgChanged,
     },
   };

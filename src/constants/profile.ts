@@ -24,4 +24,4 @@ export const enum VisaType{
   D_4_1='D_4_1',
   D_4_7='D_4_7',
   F_2='F_2'
-} 
+}
