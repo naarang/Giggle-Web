@@ -45,6 +45,13 @@ export type EmployeeInformation = {
   email: string;
 }
 
+export enum EmployerInfoProperty {
+  COMPANY_NAME = 'company_name',
+  COMPANY_REGISTRATION_NUMBER = 'company_registration_number',
+  JOB_TYPE = 'job_type',
+  ADDRESS = 'address'
+}
+
 export type EmployerInformation = {
   company_name?: string;
   company_registration_number?: string;
