@@ -13,6 +13,7 @@ import EditProfilePage from '@/pages/Profile/EditProfilePage';
 import PostDetailPage from '@/pages/PostDetail/PostDetailPage';
 import PostApplyPage from '@/pages/PostApply/PostApplyPage';
 import ScrollToTop from '@/components/Common/ScrollToTop';
+import ApplicationPage from '@/pages/Application/ApplicationPage';
 
 const Router = () => {
   return (
@@ -35,6 +36,7 @@ const Router = () => {
         <Route path="/profile/edit" element={<EditProfilePage />} />
         <Route path="/post/:id" element={<PostDetailPage />} />
         <Route path="/post/apply/:id" element={<PostApplyPage />} />
+        <Route path="/application" element={<ApplicationPage />} />
       </Routes>
     </BrowserRouter>
   );
