@@ -1,18 +1,18 @@
-import Input from '../Common/Input';
+import Input from '@/components/Common/Input';
 import { initialUserInfo, UserInfoRequestBody } from '@/types/api/users';
-import { UserInfo } from '../../types/api/users';
+import { UserInfo } from '@/types/api/users';
 import { useEffect, useState } from 'react';
 import {
   formatPhoneNumber,
   isValidName,
   isValidPhoneNumber,
 } from '@/utils/information';
-import Dropdown from '../Common/Dropdown';
+import Dropdown from '@/components/Common/Dropdown';
 import { country, gender, phone, visa } from '@/constants/information';
-import RadioButton from './RadioButton';
-import { InputType } from '../../types/common/input';
-import BottomButtonPanel from '../Common/BottomButtonPanel';
-import Button from '../Common/Button';
+import RadioButton from '@/components/Information/RadioButton';
+import { InputType } from '@/types/common/input';
+import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
+import Button from '@/components/Common/Button';
 
 const InformationStep = ({
   userInfo,
