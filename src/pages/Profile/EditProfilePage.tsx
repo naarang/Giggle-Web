@@ -5,7 +5,7 @@ import Input from '@/components/Common/Input';
 import RadioButton from '@/components/Information/RadioButton';
 import EditProfilePicture from '@/components/Profile/EditProfilePicture';
 import { buttonTypeKeys } from '@/constants/components';
-import { GenderType, VisaType } from '@/constants/profile';
+import { GenderType, NationalityType, VisaType } from '@/constants/profile';
 import { UserProfileDetailDataType } from '@/types/api/profile';
 import { InputType } from '@/types/common/input';
 import { transformToEditProfileData } from '@/utils/editProfileData';
@@ -106,7 +106,7 @@ const EditProfilePage = () => {
       last_name: 'Seol',
       birth: '2001-02-09',
       gender: GenderType.FEMALE,
-      nationality: 'South Korea',
+      nationality: NationalityType.SOUTH_KOREA,
       visa: VisaType.D_2_1,
       phone_number: '010-1111-2222',
     });
@@ -212,7 +212,7 @@ const EditProfilePage = () => {
               <Dropdown
                 value={userData.nationality}
                 placeholder="Select Nationality"
-                options={country} // TODO: 국가명 데이터 받으면 교체해야 함.
+                options={country}
                 setValue={(value: string) =>
                   setUserData({ ...userData, nationality: value })
                 }
@@ -224,7 +224,7 @@ const EditProfilePage = () => {
                 Visa Status
               </div>
               <Dropdown
-                value={userData.visa.replace(/_/g, '-')}
+                value={userData.visa}
                 placeholder="Select Visa Status"
                 options={visa}
                 setValue={(value: string) =>
