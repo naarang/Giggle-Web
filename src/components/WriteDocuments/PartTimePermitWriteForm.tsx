@@ -4,6 +4,17 @@ import {
   PartTimePermitFormRequest,
 } from '@/types/api/document';
 import { useEffect, useState } from 'react';
+import Input from '@/components/Common/Input';
+import { InputType } from '@/types/common/input';
+import Dropdown from '@/components/Common/Dropdown';
+import { phone } from '@/constants/information';
+import EmployerInfoSection from '@/components/Document/write/EmployerInfoSection';
+import { mockEmployerInformation } from '../../constants/documents';
+import BottomButtonPanel from '../Common/BottomButtonPanel';
+import Button from '../Common/Button';
+import { isNotEmpty } from '@/utils/document';
+import { formatPhoneNumber } from '@/utils/information';
+import { usePostPartTimeEmployPermit } from '@/hooks/api/useDocument';
 
 type PartTimePermitFormProps = {
   document?: PartTimePermitData;
@@ -16,6 +27,13 @@ const PartTimePermitWriteForm = ({
 }: PartTimePermitFormProps) => {
   const [newDocumentData, setNewDocumentData] =
     useState<PartTimePermitFormRequest>(initialPartTimePermitForm);
+  const { mutate } = usePostPartTimeEmployPermit();
+  // 세 부분으로 나누어 입력받는 방식을 위해 전화번호만 별도의 state로 분리, 추후 유효성 검사 단에서 통합
+  const [phoneNum, setPhoneNum] = useState({
+    start: '',
+    middle: '',
+    end: '',
+  });
   useEffect(() => {
     if (isEdit && document) {
       setNewDocumentData({
@@ -27,9 +45,186 @@ const PartTimePermitWriteForm = ({
         email: document.employee_information.email,
       });
     }
-  }, [isEdit]);
+  }, [document, isEdit]);
 
-  return <div>{newDocumentData.first_name}</div>;
+  const handleNext = () => {
+    mutate({
+      id: 1,
+      document: {
+        ...newDocumentData,
+        phone_number: formatPhoneNumber(phoneNum),
+      },
+    }); // TODO: 로그인 연결 후 userId를 넣어야 하는 것으로 추정
+  };
+  {
+    console.log(isNotEmpty(newDocumentData));
+  }
+  return (
+    <div className="w-full p-6 flex flex-col">
+      <div className="[&>*:last-child]:mb-24 flex flex-col gap-4">
+        <div className="w-full">
+          <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
+            <div className="relative">
+              First Name
+              <div className="w-1.5 absolute !m-0 top-[0rem] right-[-0.5rem] rounded-full text-[#ff6f61] h-1.5 z-[1]">
+                *
+              </div>
+            </div>
+          </div>
+          <Input
+            inputType={InputType.TEXT}
+            placeholder="First Name"
+            value={newDocumentData.first_name}
+            onChange={(value) =>
+              setNewDocumentData({ ...newDocumentData, first_name: value })
+            }
+            canDelete={false}
+          />
+        </div>
+        <div className="w-full">
+          <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
+            <div className="relative">
+              Last Name
+              <div className="w-1.5 absolute !m-0 top-[0rem] right-[-0.5rem] rounded-full text-[#ff6f61] h-1.5 z-[1]">
+                *
+              </div>
+            </div>
+          </div>
+          <Input
+            inputType={InputType.TEXT}
+            placeholder="Last Name"
+            value={newDocumentData.last_name}
+            onChange={(value) =>
+              setNewDocumentData({ ...newDocumentData, last_name: value })
+            }
+            canDelete={false}
+          />
+        </div>
+        <div className="w-full">
+          <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
+            <div className="relative">
+              Department (major)
+              <div className="w-1.5 absolute !m-0 top-[0rem] right-[-0.5rem] rounded-full text-[#ff6f61] h-1.5 z-[1]">
+                *
+              </div>
+            </div>
+          </div>
+          <Input
+            inputType={InputType.TEXT}
+            placeholder="Major"
+            value={newDocumentData.major}
+            onChange={(value) =>
+              setNewDocumentData({ ...newDocumentData, major: value })
+            }
+            canDelete={false}
+          />
+        </div>
+        <div className="w-full">
+          <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
+            <div className="relative">
+              Term of completion
+              <div className="w-1.5 absolute !m-0 top-[0rem] right-[-0.5rem] rounded-full text-[#ff6f61] h-1.5 z-[1]">
+                *
+              </div>
+            </div>
+          </div>
+          <Input
+            inputType={InputType.TEXT}
+            placeholder="Term of completion"
+            value={String(newDocumentData.term_of_completion)}
+            onChange={(value) =>
+              setNewDocumentData({
+                ...newDocumentData,
+                term_of_completion: Number(value),
+              })
+            }
+            canDelete={false}
+          />
+        </div>
+        <div className="w-full">
+          <div className="w-full flex flex-row items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
+            Telephone No.
+          </div>
+          <div className="w-full flex flex-row gap-2 justify-between mb-[0rem]">
+            <div className="w-full h-[2.75rem]">
+              <Dropdown
+                value={phoneNum.start}
+                placeholder="+82"
+                options={phone}
+                setValue={(value) => setPhoneNum({ ...phoneNum, start: value })}
+              />
+            </div>
+            <Input
+              inputType={InputType.TEXT}
+              placeholder="0000"
+              value={phoneNum.middle}
+              onChange={(value) => setPhoneNum({ ...phoneNum, middle: value })}
+              canDelete={false}
+            />
+            <Input
+              inputType={InputType.TEXT}
+              placeholder="0000"
+              value={phoneNum.end}
+              onChange={(value) => setPhoneNum({ ...phoneNum, end: value })}
+              canDelete={false}
+            />
+          </div>
+        </div>
+        <div className="w-full">
+          <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
+            <div className="relative">
+              Email
+              <div className="w-1.5 absolute !m-0 top-[0rem] right-[-0.5rem] rounded-full text-[#ff6f61] h-1.5 z-[1]">
+                *
+              </div>
+            </div>
+          </div>
+          <Input
+            inputType={InputType.TEXT}
+            placeholder="email@email.com"
+            value={newDocumentData.email}
+            onChange={(value) =>
+              setNewDocumentData({
+                ...newDocumentData,
+                email: value,
+              })
+            }
+            canDelete={false}
+          />
+        </div>
+
+        {
+          /*
+        
+        document?.employer_information && (
+        <EmployerInfoSection employ={document.employer_information} />
+      )*/
+          <EmployerInfoSection employ={mockEmployerInformation} />
+        }
+      </div>
+
+      <BottomButtonPanel>
+        {isNotEmpty(newDocumentData) && isNotEmpty(phoneNum) ? (
+          <Button
+            type="large"
+            bgColor="bg-[#fef387]"
+            fontColor="text-[#222]"
+            isBorder={false}
+            title="Next"
+            onClick={handleNext}
+          />
+        ) : (
+          <Button
+            type="large"
+            bgColor="bg-[#F4F4F9]"
+            fontColor=""
+            isBorder={false}
+            title="Next"
+          />
+        )}
+      </BottomButtonPanel>
+    </div>
+  );
 };
 
 export default PartTimePermitWriteForm;
