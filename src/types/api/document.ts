@@ -152,3 +152,23 @@ export type LaborContractEmployerInfo = {
   insurance: Insurance;
   signature_base64: string; // base64 문자열
 };
+
+// 근로계약서 고용주 정보 속성명 enum
+export enum LaborContractEmployerInfoProperty {
+  COMPANY_NAME = 'company_name',
+  NAME = 'name',
+  START_DATE = 'start_date', // yyyy-MM-dd format
+  END_DATE = 'end_date', // yyyy-MM-dd format
+  ADDRESS = 'address',
+  DESCRIPTION = 'description',
+  WORK_DAY_TIME_LIST = 'work_day_time_list',
+  WEEKLY_LAST_DAYS = 'weekly_last_days',
+  HOURLY_RATE = 'hourly_rate',
+  BONUS = 'bonus', // optional
+  ADDITIONAL_SALARY = 'additional_salary', // optional
+  WAGE_RATE = 'wage_rate',
+  PAYMENT_DAY = 'payment_day',
+  PAYMENT_METHOD = 'payment_method',
+  INSURANCE = 'insurance',
+  SIGNATURE_BASE64 = 'signature_base64', // base64 string
+}
