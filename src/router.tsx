@@ -4,7 +4,7 @@ import SigninPage from '@/pages/Signin/SigninPage';
 import SignupPage from '@/pages/Signup/SignupPage';
 import InformationPage from '@/pages/Information/InformationPage';
 import ApplicationDocumentsPage from '@/pages/ApplicationDocuments/ApplicationDocumentsPage';
-import WriteDocumentsPage from './pages/WriteDocuments/WriteDocumentsPage';
+import WriteDocumentsPage from '@/pages/WriteDocuments/WriteDocumentsPage';
 import PostSearchPage from '@/pages/PostSearch/PostSearchPage';
 import PostSearchFilterPage from '@/pages/PostSearchFilter/PostSearchFilterPage';
 import ProfilePage from '@/pages/Profile/ProfilePage';

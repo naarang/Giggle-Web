@@ -1,7 +1,7 @@
 import { DocumentType } from '@/types/api/document';
-import PartTimePermitWriteForm from './PartTimePermitWriteForm';
-import LaborContractWriteForm from './LaborContractWriteForm';
-import IntegratedApplicationWriteForm from './IntegratedApplicationWriteForm';
+import PartTimePermitWriteForm from '@/components/WriteDocuments/PartTimePermitWriteForm';
+import LaborContractWriteForm from '@/components/WriteDocuments/LaborContractWriteForm';
+import IntegratedApplicationWriteForm from '@/components/WriteDocuments/IntegratedApplicationWriteForm';
 
 type DocumentFormDispenserProps = {
   type: DocumentType;
