@@ -2,6 +2,7 @@ import {
   DocumentType,
   EmployerInfoProperty,
   EmployerInformation,
+  LaborContractEmployeeInfo,
   PartTimePermitFormRequest,
 } from '@/types/api/document';
 
@@ -85,4 +86,20 @@ export const mockEmployerInformation: EmployerInformation = {
     longitude: 127.0507355,
     latitude: 37.5051374,
   },
+};
+
+// 표준계약서 초기 state
+export const initialLaborContractEmployeeInfo: LaborContractEmployeeInfo = {
+  first_name: '',
+  last_name: '',
+  address: {
+    address_name: '',
+    region_1depth_name: '',
+    region_2depth_name: '',
+    region_3depth_name: '',
+    region_4depth_name: '',
+    detail_address: '',
+  },
+  phone_number: '',
+  signature_base64: '',
 };

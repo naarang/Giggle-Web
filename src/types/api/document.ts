@@ -66,7 +66,7 @@ export type EmployerInformation = {
 };
 
 // 시간제 근무 허가서 조회 응답 양식
-export type EmployeeInformationPartTimePermitData = {
+export type PartTimePermitData = {
   employee_information: EmployeeInformation;
   employer_information?: EmployerInformation;
 };
@@ -97,9 +97,11 @@ export type LaborContractAddress = {
 };
 
 //
-export type LaborContractEmployeeInfo = EmployeeInformation & {
+export type LaborContractEmployeeInfo = {
+  first_name: string;
+  last_name: string;
   address: LaborContractAddress;
-  photo_number: string;
+  phone_number: string;
   signature_base64: string; // base64 문자열
 };
 
