@@ -1,4 +1,4 @@
-import { initialLaborContractEmployeeInfo, sampleLaborContract } from '@/constants/documents';
+import { initialLaborContractEmployeeInfo } from '@/constants/documents';
 import {
   DocumentType,
   LaborContractDataResponse,
