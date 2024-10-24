@@ -2,17 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 
 type EditProfilePictureProps = {
   profileImgUrl: string; // 변경 전 프로필 URL
-  isProfileImgChanged: boolean; // 변경 여부
-  onProfileImgChanged: (value: boolean) => void;
-  image: File | null; // 변경 후 프로필 사진 파일 (초기값 null로 변경)
   onImageUpdate: (img: File) => void;
 };
 
 const EditProfilePicture = ({
   profileImgUrl,
-  isProfileImgChanged,
-  onProfileImgChanged,
-  image,
   onImageUpdate,
 }: EditProfilePictureProps) => {
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | undefined>(
@@ -30,8 +24,7 @@ const EditProfilePicture = ({
     // 파일이 이미지 형식인지 확인
     if (file && file.type.startsWith('image/')) {
       onImageUpdate(file);
-      onProfileImgChanged(true);
-      console.log(file);
+      // console.log('components : ' + file);
 
       const objectUrl = URL.createObjectURL(file); // 이미지 미리보기 URL 생성
       setImagePreviewUrl(objectUrl); // 미리보기 URL 업데이트
@@ -76,7 +69,7 @@ const EditProfilePicture = ({
         style={{ display: 'none' }}
       />
 
-      {isProfileImgChanged && <p>Profile picture has been changed.</p>}
+      {imagePreviewUrl && <p>Profile picture has been changed.</p>}
     </div>
   );
 };

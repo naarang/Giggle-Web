@@ -13,7 +13,9 @@ const ProfileMenuList = ({
 }: ProfileMenuListProps) => {
   const navigate = useNavigate();
 
-  const handleEditProfileClick = () => {};
+  const handleEditProfileClick = () => {
+    navigate('/profile/edit');
+  };
   const handleManageClick = () => {};
   const handleScrappedClick = () => {};
   const handleNotificationClick = () => {};

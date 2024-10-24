@@ -13,8 +13,6 @@ const EditProfilePage = () => {
   const [userData, setUserData] = useState<UserEditProfileDataType | undefined>(
     undefined,
   );
-  const [isProfileImgChanged, setIsProfileImgChanged] =
-    useState<boolean>(false);
   const [profileImage, setProfileImage] = useState<File | null>(null);
 
   const handleInputChange =
@@ -40,6 +38,8 @@ const EditProfilePage = () => {
 
   const handleSubmit = () => {
     // API - 3.5 (유학생) 프로필 수정
+    // console.log('file 변경 - ' + profileImage);
+
     navigate('/profile');
   };
 
@@ -52,7 +52,7 @@ const EditProfilePage = () => {
       birth: '0000.00.00',
       gender: 'Female',
       nationality: 'Korea',
-      visa_satus: '어떤 값일까',
+      visa_satus: 'D_2_7',
       telephone_number: '010-1111-2222',
     });
   }, []);
@@ -70,9 +70,6 @@ const EditProfilePage = () => {
           <div className="flex flex-col px-6 gap-9">
             <EditProfilePicture
               profileImgUrl={userData.profile_img_url}
-              isProfileImgChanged={isProfileImgChanged}
-              onProfileImgChanged={setIsProfileImgChanged}
-              image={profileImage}
               onImageUpdate={setProfileImage}
             />
             <Input
