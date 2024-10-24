@@ -10,7 +10,7 @@ type DropdownProps = {
 // DropdownModal 컴포넌트: 드롭다운 옵션을 표시하는 모달
 const DropdownModal = ({ options, value, onSelect }: DropdownProps) => {
   return (
-    <div className="w-min absolute top-[1.7rem] right-0 shadow rounded-2xl bg-white border border-[#dcdcdc] flex flex-row items-start justify-start p-2 text-left text-sm text-[#656565]">
+    <div className="w-max absolute top-[1.7rem] right-0 shadow rounded-2xl bg-white border border-[#dcdcdc] flex flex-row items-start justify-start p-2 text-left text-sm text-[#656565]">
       <div className="flex-1 flex flex-col items-start justify-start gap-[5px]">
         {options.map((option, index) => (
           <div
@@ -26,11 +26,7 @@ const DropdownModal = ({ options, value, onSelect }: DropdownProps) => {
   );
 };
 
-const PostSearchSortDropdown = ({
-  options,
-  value,
-  onSelect,
-}: DropdownProps) => {
+const SearchSortDropdown = ({ options, value, onSelect }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const onSelectOption = (option: string) => {
@@ -63,4 +59,4 @@ const PostSearchSortDropdown = ({
     </div>
   );
 };
-export default PostSearchSortDropdown;
+export default SearchSortDropdown;

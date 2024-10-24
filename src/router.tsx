@@ -6,6 +6,7 @@ import InformationPage from '@/pages/Information/InformationPage';
 import ApplicationDocumentsPage from '@/pages/ApplicationDocuments/ApplicationDocumentsPage';
 import PostSearchPage from '@/pages/PostSearch/PostSearchPage';
 import PostSearchFilterPage from '@/pages/PostSearchFilter/PostSearchFilterPage';
+import ApplicationPage from '@/pages/Application/ApplicationPage';
 
 const Router = () => {
   return (
@@ -21,6 +22,7 @@ const Router = () => {
         />
         <Route path="/search" element={<PostSearchPage />} />
         <Route path="/search/filter" element={<PostSearchFilterPage />} />
+        <Route path="/application" element={<ApplicationPage />} />
       </Routes>
     </BrowserRouter>
   );
