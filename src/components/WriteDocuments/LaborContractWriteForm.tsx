@@ -17,6 +17,8 @@ import { isNotEmpty } from '@/utils/document';
 import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
 import SignaturePad from '@/components/Document/write/SignaturePad';
+import EmployerInfoSection from '../Document/write/EmployerInfoSection';
+import { usePostStandardLaborContracts } from '@/hooks/api/useDocument';
 
 type LaborContractFormProps = {
   document?: LaborContractDataResponse;
@@ -46,9 +48,10 @@ const LaborContractWriteForm = ({
   });
   const { data, isSuccess } = useGetGeoInfo(setCurrentGeoInfo); // 현재 좌표 기준 주소 획득
   // 키워드로 주소 검색
-  const { mutate } = useSearchAddress({
+  const { searchAddress } = useSearchAddress({
     onSuccess: (data) => setAddressSearchResult(data),
   });
+  const { mutate } = usePostStandardLaborContracts();
   // 문서 편집일 시 페이지 진입과 동시에 기존 내용 자동 입력
   useEffect(() => {
     if (isEdit && document) {
@@ -78,14 +81,23 @@ const LaborContractWriteForm = ({
     (address: string) => {
       setAddressInput(address);
       if (address !== '') {
-        mutate(address);
+        searchAddress(address);
       } else {
         setAddressSearchResult([]);
       }
     },
-    [mutate],
+    [searchAddress],
   );
 
+  const handleNext = () => {
+    mutate({
+      id: 1,
+      document: {
+        ...newDocumentData,
+        phone_number: formatPhoneNumber(phoneNum),
+      },
+    }); // TODO: 로그인 연결 후 userId를 넣어야 하는 것으로 추정
+  };
   // 검색 결과 중 원하는 주소를 선택할 시 state에 입력
   const handleAddressSelect = (selectedAddressName: string) => {
     const selectedAddress = addressSearchResult.find(
@@ -120,6 +132,8 @@ const LaborContractWriteForm = ({
         ...newDocumentData.address,
         ...selectedProperties,
         region_4depth_name: region4DepthName,
+        longitude: Number(addressData.x),
+        latitude: Number(addressData.y),
       },
     });
     setAddressInput(selectedAddress.address_name);
@@ -235,13 +249,13 @@ const LaborContractWriteForm = ({
             <Input
               inputType={InputType.TEXT}
               placeholder="ex) 101-dong"
-              value={newDocumentData.address.detail_address}
+              value={newDocumentData.address.address_detail}
               onChange={(value) =>
                 setNewDocumentData({
                   ...newDocumentData,
                   address: {
                     ...newDocumentData.address,
-                    detail_address: value,
+                    address_detail: value,
                   },
                 })
               }
@@ -305,6 +319,10 @@ const LaborContractWriteForm = ({
             />
           </div>
         </div>
+        {/* 고용주 정보가 있다면 표시 */}
+        {document?.employer_information && (
+          <EmployerInfoSection employ={document.employer_information} />
+        )}
       </div>
       <BottomButtonPanel>
         {/* 입력된 정보 중 빈 칸이 없다면 활성화 */}
