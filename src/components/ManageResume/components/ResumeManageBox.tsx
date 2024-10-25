@@ -7,6 +7,7 @@ import {
   WorkExperienceType,
 } from '@/types/postApply/resumeDetailItem';
 import { formatDate } from '@/utils/editResume';
+import { useNavigate } from 'react-router-dom';
 
 type ResumeManageBoxProps = {
   type: ManageResumeType;
@@ -15,13 +16,15 @@ type ResumeManageBoxProps = {
 };
 
 const ResumeManageBox = ({ type, data, onDelete }: ResumeManageBoxProps) => {
+  const navigate = useNavigate();
+
   const IntroductionManageCard = () => (
     <div className="px-3 py-4 flex justify-between items-start bg-[#F4F4F9] rounded-xl">
       <div className="text-[#656565] flex flex-col gap-4">
         <p className="caption-1-sb">{data.toString()}</p>
       </div>
       <div className="flex justify-center items-center gap-2.5 ml-1">
-        <EditIcon />
+        <EditIcon onClick={() => navigate('/resume/introduction')} />
         {onDelete && (
           <DeleteIcon onClick={() => onDelete()} className="cursor-pointer" />
         )}
@@ -50,7 +53,11 @@ const ResumeManageBox = ({ type, data, onDelete }: ResumeManageBoxProps) => {
             <p className="body-3">{work.description}</p>
           </div>
           <div className="flex justify-center items-center gap-2.5 ml-1">
-            <EditIcon />
+            <EditIcon
+              onClick={() =>
+                navigate(`/resume/work-experience/edit/${work.id}`)
+              }
+            />
             {onDelete && (
               <DeleteIcon
                 onClick={() => onDelete(work.id)}
@@ -83,7 +90,9 @@ const ResumeManageBox = ({ type, data, onDelete }: ResumeManageBoxProps) => {
             </p>
           </div>
           <div className="absolute top-4 right-3 flex justify-center items-center gap-2.5 ml-1">
-            <EditIcon />
+            <EditIcon
+              onClick={() => navigate(`/resume/education/edit/${education.id}`)}
+            />
             {onDelete && (
               <DeleteIcon
                 onClick={() => onDelete(education.id)}

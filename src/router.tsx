@@ -19,6 +19,12 @@ import PostApplyPage from '@/pages/PostApply/PostApplyPage';
 import ApplicationPage from '@/pages/Application/ApplicationPage';
 import ManageResumePage from '@/pages/ManageResumePage/ManageResumePage';
 import WriteDocumentsPage from '@/pages/WriteDocuments/WriteDocumentsPage';
+import ScrappedJobPostsPage from './pages/ScrappedJobPosts/ScrappedJobPostsPage';
+import LanguagePage from './pages/Language/LanguagePage';
+import PostEducationPage from './pages/SetEducation/PostEducationPage';
+import PatchEducationPage from './pages/SetEducation/PatchEducationPage';
+import PostWorkExperiencePage from './pages/SetWorkExperience/PostWorkExperiencePage';
+import IntroductionPage from './pages/SetIntroduction/IntroductionPage';
 
 const Layout = () => {
   const location = useLocation();
@@ -57,9 +63,26 @@ const Router = () => {
           <Route path="/search/filter" element={<PostSearchFilterPage />} />
 
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/profile/language" element={<LanguageSettingPage />} />
           <Route path="/profile/edit" element={<EditProfilePage />} />
           <Route path="/profile/manage-resume" element={<ManageResumePage />} />
+          <Route path="/profile/language" element={<LanguagePage />} />
+
+          <Route path="/resume/introduction" element={<IntroductionPage />} />
+          <Route path="/resume/language" element={<LanguagePage />} />
+          <Route path="/resume/scrapped" element={<ScrappedJobPostsPage />} />
+          <Route path="/resume/education" element={<PostEducationPage />} />
+          <Route
+            path="/resume/education/edit/:id"
+            element={<PatchEducationPage />}
+          />
+          <Route
+            path="/resume/work-experience"
+            element={<PostWorkExperiencePage />}
+          />
+          <Route
+            path="/resume/work-experience/edit/:id"
+            element={<PatchEducationPage />}
+          />
 
           <Route path="/post/:id" element={<PostDetailPage />} />
           <Route path="/post/apply/:id" element={<PostApplyPage />} />

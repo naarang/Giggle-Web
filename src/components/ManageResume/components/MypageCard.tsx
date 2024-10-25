@@ -35,19 +35,19 @@ const MypageCard = ({
     [ManageResumeType.PERSONALINFORMATION]: { icon: <ProfileIcon />, path: '' },
     [ManageResumeType.INTRODUCTION]: {
       icon: <ProfileIcon />,
-      path: '/profile/manage-resume/introduction',
+      path: '/resume/introduction',
     },
     [ManageResumeType.WORKEXPERIENCE]: {
       icon: <WorkIcon />,
-      path: '/profile/manage-resume/work-experience',
+      path: '/resume/work-experience/write',
     },
     [ManageResumeType.EDUCATION]: {
       icon: <EducationIcon />,
-      path: '/profile/manage-resume/education',
+      path: '/resume/education/write',
     },
     [ManageResumeType.LANGUAGE]: {
       icon: <LanguageIcon />,
-      path: '/profile/manage-resume/language',
+      path: '/resume/language',
     },
   };
 
