@@ -36,15 +36,15 @@ const ManageResumePage = () => {
       introduction:
         'A passionate software developer with experience in full-stack development.',
       work_experience: [
-        {
-          id: 1,
-          title: 'Software Engineer',
-          description:
-            'Worked on developing and maintaining a web application.',
-          start_date: '2021-03-01',
-          end_date: '2023-05-15',
-          duration: 805,
-        },
+        // {
+        //   id: 1,
+        //   title: 'Software Engineer',
+        //   description:
+        //     'Worked on developing and maintaining a web application.',
+        //   start_date: '2021-03-01',
+        //   end_date: '2023-05-15',
+        //   duration: 805,
+        // },
       ],
       education: [
         {
@@ -98,9 +98,9 @@ const ManageResumePage = () => {
               />
             </div>
             <ResumeEditSection
-              introData={data.introduction}
-              workData={data.work_experience}
-              eduData={data.education}
+              introductionData={data.introduction}
+              workexperienceData={data.work_experience}
+              educationData={data.education}
               languageData={data.languages}
             />
           </div>

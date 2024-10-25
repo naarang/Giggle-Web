@@ -3,6 +3,7 @@ import {
   VisaListType,
 } from '@/types/postApply/resumeDetailItem';
 import MypageCard from '@/components/ManageResume/components/MypageCard';
+import { ManageResumeType } from '@/constants/manageResume';
 
 type MypageCardSectionProps = {
   visaData: VisaListType;
@@ -16,7 +17,7 @@ const MypageCardSection = ({
   return (
     <>
       <MypageCard
-        title="Visa"
+        type={ManageResumeType.VISA}
         informations={[
           {
             title: visaData.visa as string,
@@ -25,7 +26,7 @@ const MypageCardSection = ({
         ]}
       />
       <MypageCard
-        title="Personal Information"
+        type={ManageResumeType.PERSONALINFORMATION}
         informations={[
           {
             title: 'Address',

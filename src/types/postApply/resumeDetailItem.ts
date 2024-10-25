@@ -10,7 +10,7 @@ type VisaType =
   | 'D_4_7'
   | 'F_2';
 
-type EducationLevelType = 'BACHELOR' | 'ASSOCIATE' | 'HIGHSCHOOL';
+export type EducationLevelType = 'BACHELOR' | 'ASSOCIATE' | 'HIGHSCHOOL';
 
 export type WorkExperienceType = {
   id: number;

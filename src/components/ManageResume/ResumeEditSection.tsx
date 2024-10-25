@@ -3,55 +3,69 @@ import {
   LanguageListType,
   WorkExperienceType,
 } from '@/types/postApply/resumeDetailItem';
-import ResumeEditBox from './components/ResumeEditBox';
-import ResumeManageBox from './components/ResumeManageBox';
 import { ManageResumeType } from '@/constants/manageResume';
+import { useState } from 'react';
+import MypageCard from './components/MypageCard';
+import { ResumeDataState } from '@/types/manageResume/manageResume';
 
 type ResumeEditSectionProps = {
-  introData: string;
-  workData: WorkExperienceType[];
-  eduData: EducationType[];
+  introductionData: string;
+  workexperienceData: WorkExperienceType[];
+  educationData: EducationType[];
   languageData: LanguageListType;
 };
 
 const ResumeEditSection = ({
-  introData,
-  workData,
-  eduData,
+  introductionData,
+  workexperienceData,
+  educationData,
   languageData,
 }: ResumeEditSectionProps) => {
+  // 데이터 상태 관리
+  const [resumeData, setResumeData] = useState<ResumeDataState>({
+    introductionData,
+    workexperienceData,
+    educationData,
+    languageData,
+  });
+
+  // 삭제 핸들러 (데이터 삭제 시 해당 필드를 null로 설정)
+  const handleDelete = (type: ManageResumeType) => {
+    setResumeData((prevData) => ({
+      ...prevData,
+      [type.toLowerCase() + 'Data']: null,
+    }));
+  };
+
   return (
-    <div className="flex flex-col gap-4">
-      <ResumeEditBox title={ManageResumeType.INTRODUCTION}>
-        {introData && (
-          <ResumeManageBox
+    <>
+      {resumeData ? (
+        <div className="flex flex-col gap-4">
+          <MypageCard
             type={ManageResumeType.INTRODUCTION}
-            data={introData}
+            data={resumeData.introductionData}
+            onDelete={() => handleDelete(ManageResumeType.INTRODUCTION)}
           />
-        )}
-      </ResumeEditBox>
-      <ResumeEditBox title={ManageResumeType.WORKEXPERIENCE}>
-        {workData && (
-          <ResumeManageBox
+          <MypageCard
             type={ManageResumeType.WORKEXPERIENCE}
-            data={workData}
+            data={resumeData.workexperienceData}
+            onDelete={() => handleDelete(ManageResumeType.WORKEXPERIENCE)}
           />
-        )}
-      </ResumeEditBox>
-      <ResumeEditBox title={ManageResumeType.EDUCATION}>
-        {eduData && (
-          <ResumeManageBox type={ManageResumeType.EDUCATION} data={eduData} />
-        )}
-      </ResumeEditBox>
-      <ResumeEditBox title={ManageResumeType.LANGUAGE}>
-        {languageData && (
-          <ResumeManageBox
+          <MypageCard
+            type={ManageResumeType.EDUCATION}
+            data={resumeData.educationData}
+            onDelete={() => handleDelete(ManageResumeType.EDUCATION)}
+          />
+          <MypageCard
             type={ManageResumeType.LANGUAGE}
-            data={languageData}
+            data={resumeData.languageData}
+            onDelete={() => handleDelete(ManageResumeType.LANGUAGE)}
           />
-        )}
-      </ResumeEditBox>
-    </div>
+        </div>
+      ) : (
+        <div></div>
+      )}
+    </>
   );
 };
 
