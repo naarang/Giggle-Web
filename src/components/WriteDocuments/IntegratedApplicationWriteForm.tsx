@@ -521,14 +521,11 @@ const IntegratedApplicationWriteForm = ({
         </InputLayout>
         {/* 하이코리아 작성 정보 입력 안내 */}
         <div className="w-full relative flex flex-col gap-7 items-start justify-center py-7 text-left body-3 text-[#1e1926]">
-          <div className="self-stretch flex flex-col items-start justify-start gap-2">
-            <div className="self-stretch relative button-2">
-              Date of apllication
-            </div>
-            <div className="self-stretch relative text-[#656565]">
-              Please fill it out on the application date for Hi Korea documents.
-            </div>
-          </div>
+          <Notice
+            title="Date of apllication"
+            content="Please fill it out on the application date for Hi Korea documents."
+            notWarning
+          />
         </div>
         {/* 서명 입력 */}
         <InputLayout title="Applicant Signature" isEssential>
