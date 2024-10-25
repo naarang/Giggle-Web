@@ -19,7 +19,7 @@ type MypageCardProps = {
   type: ManageResumeType;
   informations?: MypageCardType[];
   data?: MypageCardData;
-  onDelete?: () => void;
+  onDelete?: (id?: number) => void;
 };
 
 const MypageCard = ({
@@ -69,7 +69,8 @@ const MypageCard = ({
         </div>
         {/* Visa, personal informaion은 Cta 버튼 제외 */}
         {type !== ManageResumeType.VISA &&
-        type !== ManageResumeType.PERSONALINFORMATION ? (
+        type !== ManageResumeType.PERSONALINFORMATION &&
+        type !== ManageResumeType.INTRODUCTION ? (
           // Language는 Cta 버튼 디자인 분리
           type === ManageResumeType.LANGUAGE ? (
             <BigEditIcon onClick={handleClick} />
@@ -98,32 +99,37 @@ const MypageCard = ({
 
   // 수정 가능한 정보 조건부 렌더링
   const renderEditSection = () => {
-    if (data && isEmptyData(data)) {
-      return (
-        <div className="flex flex-col">
-          <div className="bg-profileMenuGradient bg-cover bg-no-repeat bg-center rounded-[1.375rem] py-7 px-6 flex justify-between items-center cursor-pointer">
-            <div className="flex items-center gap-3">
-              <div>{iconAndPath[type].icon}</div>
-              <div className="head-3 text-[#1E1926]">{type}</div>
+    if (data) {
+      if (isEmptyData(data)) {
+        return (
+          <div className="flex flex-col">
+            <div className="bg-profileMenuGradient bg-cover bg-no-repeat bg-center rounded-[1.375rem] py-7 px-6 flex justify-between items-center cursor-pointer">
+              <div className="flex items-center gap-3">
+                <div>{iconAndPath[type].icon}</div>
+                <div className="head-3 text-[#1E1926]">{type}</div>
+              </div>
+              <CtaIcon onClick={handleClick} />
             </div>
-            <CtaIcon onClick={handleClick} />
           </div>
-        </div>
-      );
+        );
+      } else {
+        return (
+          <div className="flex flex-col w-full p-4 justify-center gap-4 rounded-[1.125rem] border-[0.5px] border-solid border-[#DCDCDC]">
+            {renderHeader()}
+            <ResumeManageBox
+              type={type}
+              data={data}
+              onDelete={() => onDelete}
+            />
+          </div>
+        );
+      }
     }
-    return (
-      data &&
-      onDelete && (
-        <div className="flex flex-col w-full p-4 justify-center gap-4 rounded-[1.125rem] border-[0.5px] border-solid border-[#DCDCDC]">
-          {renderHeader()}
-          <ResumeManageBox type={type} data={data} onDelete={onDelete} />
-        </div>
-      )
-    );
   };
 
   return (
     <>
+      {/* visa, personal informaion은 다른 스타일의 헤더 랜더링 */}
       {type === ManageResumeType.VISA ||
       type === ManageResumeType.PERSONALINFORMATION ? (
         <>

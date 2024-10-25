@@ -11,51 +11,89 @@ import { formatDate } from '@/utils/manageresume';
 type ResumeManageBoxProps = {
   type: ManageResumeType;
   data: string | WorkExperienceType[] | EducationType[] | LanguageListType;
-  onDelete: () => void;
+  onDelete: (id?: number) => void;
 };
 
 const ResumeManageBox = ({ type, data, onDelete }: ResumeManageBoxProps) => {
   const IntroductionManageCard = () => (
-    <p className="caption-1-sb">{data.toString()}</p>
+    <div className="px-3 py-4 flex justify-between items-start bg-[#F4F4F9] rounded-xl">
+      <div className="text-[#656565] flex flex-col gap-4">
+        <p className="caption-1-sb">{data.toString()}</p>
+      </div>
+      <div className="flex justify-center items-center gap-2.5 ml-1">
+        <EditIcon />
+        {onDelete && (
+          <DeleteIcon onClick={() => onDelete()} className="cursor-pointer" />
+        )}
+      </div>
+    </div>
+    // handleDeleteIntroduction
   );
 
   const WorkExperienceManageCard = () => (
-    <div>
+    <>
       {(data as WorkExperienceType[]).map((work) => (
-        <div key={work.id} className="text-[#656565] flex flex-col gap-4">
-          <div className="flex flex-col gap-1">
-            <p className="head-3">{work.title}</p>
+        <div
+          key={work.id}
+          className="px-3 py-4 flex justify-between items-start bg-[#F4F4F9] rounded-xl"
+        >
+          <div className="text-[#656565] flex flex-col gap-4">
+            <div className="flex flex-col gap-1">
+              <p className="head-3">{work.title}</p>
+              <p className="body-3">{work.work_place}</p>
+            </div>
+            <p className="caption-1">
+              {formatDate(work.start_date)} ~{' '}
+              {work.end_date && formatDate(work.end_date)} •{' '}
+              {(work.duration / 30).toFixed(0)} months
+            </p>
             <p className="body-3">{work.description}</p>
           </div>
-          <p className="caption-1">
-            {formatDate(work.start_date)} ~{' '}
-            {work.end_date && formatDate(work.end_date)} •{' '}
-            {(work.duration / 30).toFixed(0)} months
-          </p>
-          {/* TODO : API - Task property 추가 */}
-          <p className="body-3">Task1</p>
+          <div className="flex justify-center items-center gap-2.5 ml-1">
+            <EditIcon />
+            {onDelete && (
+              <DeleteIcon
+                onClick={() => onDelete(work.id)}
+                className="cursor-pointer"
+              />
+            )}
+          </div>
         </div>
       ))}
-    </div>
+    </>
   );
 
   const EducationManageCard = () => (
-    <div>
+    <>
       {(data as EducationType[]).map((education) => (
-        <div key={education.id} className="text-[#656565]">
-          <p className="head-3 mb-1">{education.education_level}</p>
-          <div className="flex gap-1 body-3 mb-4">
-            <p>{education.school_name}</p>
-            <p>•</p>
-            <p>{education.major}</p>
+        <div
+          key={education.id}
+          className="relative px-3 py-4 flex justify-between items-start bg-[#F4F4F9] rounded-xl"
+        >
+          <div className="text-[#656565]">
+            <p className="head-3 mb-1">{education.education_level}</p>
+            <div className="flex gap-1 body-3 mb-4 mr-4 justify-between">
+              <p className="max-w-[50%]">{education.school_name}</p>
+              <p>•</p>
+              <p className="max-w-[50%]">{education.major}</p>
+            </div>
+            <p className="caption-1">
+              {formatDate(education.start_date)} ~{' '}
+              {formatDate(education.end_date)}
+            </p>
           </div>
-          <p className="caption-1">
-            {formatDate(education.start_date)} ~{' '}
-            {formatDate(education.end_date)}
-          </p>
+          <div className="absolute top-4 right-3 flex justify-center items-center gap-2.5 ml-1">
+            <EditIcon />
+            {onDelete && (
+              <DeleteIcon
+                onClick={() => onDelete(education.id)}
+                className="cursor-pointer"
+              />
+            )}
+          </div>
         </div>
       ))}
-    </div>
+    </>
   );
 
   const LanguageManageCard = () => (
@@ -86,22 +124,10 @@ const ResumeManageBox = ({ type, data, onDelete }: ResumeManageBoxProps) => {
 
   return (
     <>
-      {/* Language 컴포넌트 디자인 예외처리 */}
-      {type === ManageResumeType.LANGUAGE ? (
-        <LanguageManageCard />
-      ) : (
-        <div className="px-3 py-4 flex justify-between items-start bg-[#F4F4F9] rounded-xl">
-          {type === ManageResumeType.INTRODUCTION && <IntroductionManageCard />}
-          {type === ManageResumeType.WORKEXPERIENCE && (
-            <WorkExperienceManageCard />
-          )}
-          {type === ManageResumeType.EDUCATION && <EducationManageCard />}
-          <div className="flex justify-center items-center gap-2.5 ml-1">
-            <EditIcon />
-            <DeleteIcon onClick={onDelete} className="cursor-pointer" />
-          </div>
-        </div>
-      )}
+      {type === ManageResumeType.LANGUAGE && <LanguageManageCard />}
+      {type === ManageResumeType.INTRODUCTION && <IntroductionManageCard />}
+      {type === ManageResumeType.WORKEXPERIENCE && <WorkExperienceManageCard />}
+      {type === ManageResumeType.EDUCATION && <EducationManageCard />}
     </>
   );
 };

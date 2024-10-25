@@ -38,20 +38,21 @@ const ManageResumePage = () => {
       work_experience: [
         {
           id: 1,
-          title: 'Software Engineer',
+          title: 'Restaurant Work',
           description:
             'Worked on developing and maintaining a web application.',
           start_date: '2021-03-01',
           end_date: '2023-05-15',
           duration: 805,
+          work_place: 'Some Rastaurant',
         },
       ],
       education: [
         {
           id: 1,
           education_level: 'ASSOCIATE',
-          school_name: 'Seoul National University',
-          major: 'Computer Science',
+          school_name: 'Dongguk University',
+          major: 'Department of Computer Engineering',
           start_date: '2017-03-01',
           end_date: '2021-02-28',
           grade: 3,

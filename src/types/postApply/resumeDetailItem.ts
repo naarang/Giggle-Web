@@ -19,6 +19,7 @@ export type WorkExperienceType = {
   start_date: string; // yyyy-MM-dd
   end_date?: string; // yyyy-MM-dd
   duration: number;
+  work_place?: string; // 마이페이지 적용
 };
 
 export type EducationType = {
