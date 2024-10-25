@@ -7,6 +7,7 @@ import {
 import Input from '@/components/Common/Input';
 import { InputType } from '@/types/common/input';
 import { School } from '@/types/api/document';
+import { schoolMockData } from '@/constants/documents';
 
 type SearchSchoolBottomSheetProps = {
   newDocumentData: IntegratedApplicationData;
@@ -19,48 +20,14 @@ const SearchSchoolBottomSheet = ({
   setNewDocumentData,
   onClose,
 }: SearchSchoolBottomSheetProps) => {
-  const [searchResult, setSearchResult] = useState<School[]>([
-    {
-      id: 1,
-      name: '서울대학교',
-      phone_number: '02-880-5114',
-    },
-    {
-      id: 2,
-      name: '연세대학교',
-      phone_number: '02-2123-2114',
-    },
-    {
-      id: 3,
-      name: '고려대학교',
-      phone_number: '02-3290-1114',
-    },
-    {
-      id: 4,
-      name: '한양대학교',
-      phone_number: '02-2220-0114',
-    },
-    {
-      id: 5,
-      name: '성균관대학교',
-      phone_number: '02-760-1114',
-    },
-    {
-      id: 6,
-      name: '경희대학교',
-      phone_number: '02-961-0114',
-    },
-    {
-      id: 7,
-      name: '중앙대학교',
-      phone_number: '02-820-5114',
-    },
-  ]);
+  // TODO: 학교 검색 API와 연결 후 mock data 제거, 함수는 작성완료된 상태
+  const [searchResult, setSearchResult] = useState<School[]>(schoolMockData);
   const { searchSchool } = useSearchSchool({
     onSuccess: (data: SearchSchoolResponse) =>
       setSearchResult(data.school_list),
   });
 
+  // 검색 입력 시 실시간으로 검색 진행
   const handleAddressSearch = useCallback(
     (name: string) => {
       setNewDocumentData({
@@ -76,6 +43,7 @@ const SearchSchoolBottomSheet = ({
     [searchSchool],
   );
 
+  // 학교 선택 시 자동 입력 및 bottomsheet 제거
   const handleSelect = (name: string) => {
     setNewDocumentData({ ...newDocumentData, school_name: name });
     onClose();

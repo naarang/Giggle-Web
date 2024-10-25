@@ -60,7 +60,7 @@ const DatePicker = ({ setSelectedDate }: Props) => {
           className={styles.reactCalendar}
           nextLabel={<NextMonthIcon />} // 월 이동 아이콘 커스텀
           prevLabel={<PrevMonthIcon />} // 월 이동 아이콘 커스텀
-          next2Label={
+          next2Label={ // 년 이동 아이콘 커스텀
             <div style={{ transform: 'rotate(180deg)' }}>
               <PrevYearIcon />
             </div>

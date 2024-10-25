@@ -280,3 +280,42 @@ export const initialIntegratedApplication: IntegratedApplicationData = {
     latitude: 0,
   },
 };
+
+// 학교 검색 api 연결 전 사용할 학교 mock data
+export const schoolMockData = [ 
+  {
+    id: 1,
+    name: '서울대학교',
+    phone_number: '02-880-5114',
+  },
+  {
+    id: 2,
+    name: '연세대학교',
+    phone_number: '02-2123-2114',
+  },
+  {
+    id: 3,
+    name: '고려대학교',
+    phone_number: '02-3290-1114',
+  },
+  {
+    id: 4,
+    name: '한양대학교',
+    phone_number: '02-2220-0114',
+  },
+  {
+    id: 5,
+    name: '성균관대학교',
+    phone_number: '02-760-1114',
+  },
+  {
+    id: 6,
+    name: '경희대학교',
+    phone_number: '02-961-0114',
+  },
+  {
+    id: 7,
+    name: '중앙대학교',
+    phone_number: '02-820-5114',
+  },
+]
