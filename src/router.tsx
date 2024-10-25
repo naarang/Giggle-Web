@@ -3,7 +3,6 @@ import { Outlet, useLocation } from 'react-router-dom';
 
 import ScrollToTop from '@/components/Common/ScrollToTop';
 import Navbar from '@/components/Common/Navbar';
-
 import HomePage from '@/pages/Home/HomePage';
 import SigninPage from '@/pages/Signin/SigninPage';
 import SignupPage from '@/pages/Signup/SignupPage';
@@ -26,6 +25,9 @@ import PatchEducationPage from '@/pages/SetEducation/PatchEducationPage';
 import PostWorkExperiencePage from '@/pages/SetWorkExperience/PostWorkExperiencePage';
 import IntroductionPage from '@/pages/Introduction/IntroductionPage';
 import PatchWorkExperiencePage from '@/pages/SetWorkExperience/PatchWorkExperiencePage';
+import ApplicationDetailPage from '@/pages/ApplicationDetail/ApplicationDetailPage';
+import ApplicationResultPage from '@/pages/ApplicationResult/ApplicationResultPage';
+import EmployerPostDetailPage from '@/pages/Employer/PostDetail/EmployerPostDetailPage';
 
 const Layout = () => {
   const location = useLocation();
@@ -87,10 +89,18 @@ const Router = () => {
 
           <Route path="/post/:id" element={<PostDetailPage />} />
           <Route path="/post/apply/:id" element={<PostApplyPage />} />
-
+          <Route
+            path="/employer/post/:id"
+            element={<EmployerPostDetailPage />}
+          />
           <Route path="/write-documents" element={<WriteDocumentsPage />} />
 
           <Route path="/application" element={<ApplicationPage />} />
+          <Route path="/application/:id" element={<ApplicationDetailPage />} />
+          <Route
+            path="/application/result/:id"
+            element={<ApplicationResultPage />}
+          />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -20,7 +20,7 @@ type JobCategoryType =
   | 'TOUR_GUIDE_AND_DUTY_FREE_ASSISTANT'
   | 'MANUFACTURING';
 
-type WorkPeriodType =
+export type WorkPeriodType =
   | 'ONE_DAY'
   | 'LESS_THAN_ONE_WEEK'
   | 'ONE_WEEK_TO_ONE_MONTH'
@@ -33,7 +33,7 @@ type GenderType = 'MALE' | 'FEMALE' | 'NONE';
 
 type EducationType = 'BACHELOR' | 'ASSOCIATE' | 'HIGHSCHOOL';
 
-type DayOfWeekType =
+export type DayOfWeekType =
   | 'WEEKDAYS'
   | 'WEEKEND'
   | 'MONDAY'
