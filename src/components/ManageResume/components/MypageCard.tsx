@@ -39,11 +39,11 @@ const MypageCard = ({
     },
     [ManageResumeType.WORKEXPERIENCE]: {
       icon: <WorkIcon />,
-      path: '/resume/work-experience/write',
+      path: '/resume/work-experience',
     },
     [ManageResumeType.EDUCATION]: {
       icon: <EducationIcon />,
-      path: '/resume/education/write',
+      path: '/resume/education',
     },
     [ManageResumeType.LANGUAGE]: {
       icon: <LanguageIcon />,

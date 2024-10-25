@@ -65,7 +65,7 @@ const Router = () => {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/profile/edit" element={<EditProfilePage />} />
           <Route path="/profile/manage-resume" element={<ManageResumePage />} />
-          <Route path="/profile/language" element={<LanguagePage />} />
+          <Route path="/profile/language" element={<LanguageSettingPage />} />
 
           <Route path="/resume/introduction" element={<IntroductionPage />} />
           <Route path="/resume/language" element={<LanguagePage />} />
