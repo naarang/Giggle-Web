@@ -6,7 +6,7 @@ import {
   LanguageListType,
   WorkExperienceType,
 } from '@/types/postApply/resumeDetailItem';
-import { formatDate } from '@/utils/manageresume';
+import { formatDate } from '@/utils/editResume';
 
 type ResumeManageBoxProps = {
   type: ManageResumeType;

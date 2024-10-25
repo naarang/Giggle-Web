@@ -13,7 +13,7 @@ import WorkIcon from '@/assets/icons/ManageResume/WorkIcon.svg?react';
 import EducationIcon from '@/assets/icons/ManageResume/EducationIcon.svg?react';
 import LanguageIcon from '@/assets/icons/ManageResume/LanguageIcon.svg?react';
 import BigEditIcon from '@/assets/icons/ManageResume/BigEditIcon.svg?react';
-import { isEmptyData } from '@/utils/manageresume';
+import { isEmptyData } from '@/utils/editResume';
 
 type MypageCardProps = {
   type: ManageResumeType;

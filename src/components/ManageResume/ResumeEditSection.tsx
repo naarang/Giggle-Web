@@ -4,7 +4,6 @@ import {
   WorkExperienceType,
 } from '@/types/postApply/resumeDetailItem';
 import { ManageResumeType } from '@/constants/manageResume';
-import { useState } from 'react';
 import MypageCard from './components/MypageCard';
 import { ResumeDataState } from '@/types/manageResume/manageResume';
 // import { useMutation, useQueryClient } from '@tanstack/react-query';
