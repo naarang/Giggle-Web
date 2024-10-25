@@ -1,5 +1,5 @@
 import { IconType } from '@/constants/profile';
-import ProfileMenu from './ProfileMenu';
+import ProfileMenu from '@/components/Profile/ProfileMenu';
 import { useNavigate } from 'react-router-dom';
 
 type ProfileMenuListProps = {
