@@ -20,6 +20,7 @@ import WriteDocumentsPage from '@/pages/WriteDocuments/WriteDocumentsPage';
 import ApplicationDetailPage from '@/pages/ApplicationDetail/ApplicationDetailPage';
 import ApplicationResultPage from '@/pages/ApplicationResult/ApplicationResultPage';
 import EmployerPostDetailPage from '@/pages/Employer/PostDetail/EmployerPostDetailPage';
+import EmployerPostPage from '@/pages/Employer/Post/EmployerPostPage';
 
 const Layout = () => {
   const location = useLocation();
@@ -63,6 +64,7 @@ const Router = () => {
 
           <Route path="/post/:id" element={<PostDetailPage />} />
           <Route path="/post/apply/:id" element={<PostApplyPage />} />
+          <Route path="/employer/post" element={<EmployerPostPage />} />
           <Route
             path="/employer/post/:id"
             element={<EmployerPostDetailPage />}

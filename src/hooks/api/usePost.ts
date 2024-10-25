@@ -1,4 +1,5 @@
-import { deletePost, getPostDetail } from '@/api/post';
+import { deletePost, getEmployerPostList, getPostDetail } from '@/api/post';
+import { AscendingSortType } from '@/types/common/sort';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,5 +20,13 @@ export const useDeletePost = () => {
     onError: (error) => {
       console.error('공고 삭제하기 실패', error);
     },
+  });
+};
+
+// 6.6 (고용주) 등록한 공고 리스트 조회하기 훅
+export const useGetEmployerPostList = (sorting: AscendingSortType) => {
+  return useQuery({
+    queryKey: ['post'],
+    queryFn: () => getEmployerPostList(sorting),
   });
 };

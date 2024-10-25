@@ -11,11 +11,6 @@ export const enum APPLICATION_STEP {
   REGISTRATION_RESULTS = 'REGISTRATION_RESULTS',
 }
 
-export const APPLICATION_SORT_TYPE = {
-  ASCENDING: 'Ascending',
-  DESCENDING: 'Descending',
-} as const;
-
 export const APPLICATION_STATUS_TYPE = {
   INPROGRESS: 'Inprogress',
   APPLICATION_SUCCESSFUL: 'Applicatioin successful',
