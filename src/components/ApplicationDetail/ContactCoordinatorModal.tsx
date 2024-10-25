@@ -1,19 +1,18 @@
 import { useEffect } from 'react';
 import PhoneIcon from '@/assets/icons/PhoneIcon.svg?react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import { ApplicationCoordinaterItemType } from '@/types/application/applicationItem';
 
 type ContactCoordinatorModalProps = {
   onClickClose: () => void;
   onClickContact: () => void;
-  name: string;
-  phoneNumber: string;
+  coordinatorData: ApplicationCoordinaterItemType;
 };
 
 const ContactCoordinatorModal = ({
   onClickClose,
   onClickContact,
-  name,
-  phoneNumber,
+  coordinatorData,
 }: ContactCoordinatorModalProps) => {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -37,8 +36,12 @@ const ContactCoordinatorModal = ({
               <PhoneIcon />
             </div>
             <div>
-              <h5 className="button-2 text-black">{name}</h5>
-              <p className="caption-1 text-[#656565]">{phoneNumber}</p>
+              <h5 className="button-2 text-black">
+                {coordinatorData.coordinator_name}
+              </h5>
+              <p className="caption-1 text-[#656565]">
+                {coordinatorData.coordinator_phone_number}
+              </p>
             </div>
           </div>
           <div className="w-full px-[0.75rem] pt-[0.75rem] pb-[0.5rem] border-[0.031rem] border-[#DCDCDC] rounded-[1.125rem]">
@@ -46,23 +49,24 @@ const ContactCoordinatorModal = ({
               Check the address
             </p>
             <p className="pb-[0.75rem] px-[0.25rem] button-2 text-[#1E1926]">
-              장소 이름
+              {coordinatorData.address.school_name}{' '}
+              {coordinatorData.address.institute_name}
             </p>
             <p className="pb-[0.75rem] px-[0.5rem] caption-1 text-[##656565]">
-              main address
+              {coordinatorData.address.detail_address}
             </p>
             <Map
               center={{
-                lat: 0,
-                lng: 0,
+                lat: coordinatorData.address.latitude,
+                lng: coordinatorData.address.longitude,
               }}
               style={{ width: '100%', height: '99px' }}
               className="rounded-xl"
             >
               <MapMarker
                 position={{
-                  lat: 0,
-                  lng: 0,
+                  lat: coordinatorData.address.latitude,
+                  lng: coordinatorData.address.longitude,
                 }}
               ></MapMarker>
             </Map>

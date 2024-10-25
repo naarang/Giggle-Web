@@ -4,15 +4,31 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import ApplicationDetailBottomSheet from '@/components/ApplicationDetail/ApplicationDetailBottomSheet';
 import ContactCoordinatorModal from '@/components/ApplicationDetail/ContactCoordinatorModal';
+import { ApplicationCoordinaterItemType } from '@/types/application/applicationItem';
+
+const COORDINATER_DATA: ApplicationCoordinaterItemType = {
+  coordinator_name: 'John Doe',
+  coordinator_phone_number: '+1234567890',
+  address: {
+    school_name: 'Example High School',
+    institute_name: 'Example School District',
+    detail_address: '123 Main Street, City, Country',
+    longitude: 127.12345,
+    latitude: 37.54321,
+  },
+};
 
 const ApplicationDetailStep4 = () => {
   const navigate = useNavigate();
 
   const [isShowBottomsheet, setIsShowBottomSheet] = useState<boolean>(false);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
+  const [coordinatorData, setCoordinatorData] =
+    useState<ApplicationCoordinaterItemType>();
 
   const onClickBlackButton = () => {
     // TODO: 9.2 조회
+    setCoordinatorData(COORDINATER_DATA);
     setIsShowModal(true);
     setIsShowBottomSheet(false);
   };
@@ -55,12 +71,11 @@ const ApplicationDetailStep4 = () => {
         yellowButtonTitle="Completed"
         onClickYellowButton={onClickYellowButton}
       />
-      {isShowModal && (
+      {isShowModal && coordinatorData && (
         <ContactCoordinatorModal
           onClickClose={() => setIsShowModal(false)}
           onClickContact={onClickContact}
-          name={'name'}
-          phoneNumber={'010-0000-0000'}
+          coordinatorData={coordinatorData}
         />
       )}
     </>

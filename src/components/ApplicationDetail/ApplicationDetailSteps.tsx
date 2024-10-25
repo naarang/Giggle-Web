@@ -2,9 +2,11 @@ import CheckStepIcon from '@/assets/icons/ApplicationDetail/CheckStepIcon.svg?re
 import CurrentStepIcon from '@/assets/icons/ApplicationDetail/CurrentStepIcon.svg?react';
 import UncheckStepIcon from '@/assets/icons/ApplicationDetail/UncheckStepIcon.svg?react';
 
-const ApplicationDetailSteps = () => {
-  const step = 3; // 1 ~6
+type ApplicationDetailStepsProps = {
+  step: number;
+};
 
+const ApplicationDetailSteps = ({ step }: ApplicationDetailStepsProps) => {
   const stepIconStyler = (currentStep: number) => {
     if (step > currentStep) {
       return <CheckStepIcon />;

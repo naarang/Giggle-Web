@@ -10,11 +10,42 @@ import ApplicationDetailSteps from '@/components/ApplicationDetail/ApplicationDe
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import { useNavigate } from 'react-router-dom';
 import ApplicationDetailStep7 from '@/components/ApplicationDetail/ApplicationDetailStep7';
+import { ApplicationDetailItemType } from '@/types/application/applicationItem';
+import { findCurrentStep } from '@/utils/application';
+
+// 더미데이터
+const APPICATION_DETAIL_DATA: ApplicationDetailItemType = {
+  title: 'Job Opportunity',
+  icon_img_url: 'https://example.com/icon.png',
+  address_name: '123 Example Street, City, Country',
+  duration_of_days: 30,
+  job_info: {
+    hourly_rate: 15,
+    work_period: 'ONE_MONTH_TO_THREE_MONTHS',
+    work_day_times: [
+      {
+        day_of_week: 'MONDAY',
+        work_start_time: '09:00',
+        work_end_time: '17:00',
+      },
+      {
+        day_of_week: 'WEDNESDAY',
+        work_start_time: '10:00',
+        work_end_time: '16:00',
+      },
+      {
+        day_of_week: 'FRIDAY',
+        work_start_time: '09:30',
+        work_end_time: '18:00',
+      },
+    ],
+  },
+  step: 'APPLICATION_SUCCESS',
+};
 
 // TODO: enum에 따라서 몇번째 step인지 숫자로 반환하도록 하기! 그에 따른 step과 하단 버튼 구현하기
 const ApplicationDetailPage = () => {
   const navigate = useNavigate();
-  const step = 7; // 1 ~ 6 + 7은 신청 결과...
 
   const showCurrentStepButton = (step: number) => {
     switch (step) {
@@ -31,7 +62,7 @@ const ApplicationDetailPage = () => {
       case 6:
         return <ApplicationDetailStep6 />;
       case 7:
-        return <ApplicationDetailStep7 />;
+        return <ApplicationDetailStep7 result={APPICATION_DETAIL_DATA.step} />;
     }
   };
 
@@ -44,11 +75,13 @@ const ApplicationDetailPage = () => {
         title="Applicants"
       />
       <div className="w-full flex flex-col gap-[2.25rem] p-[1.5rem]">
-        <ApplicationDetailCard />
-        <ApplicationDetailInfo />
-        <ApplicationDetailSteps />
+        <ApplicationDetailCard applicationData={APPICATION_DETAIL_DATA} />
+        <ApplicationDetailInfo applicationData={APPICATION_DETAIL_DATA} />
+        <ApplicationDetailSteps
+          step={findCurrentStep(APPICATION_DETAIL_DATA.step)}
+        />
       </div>
-      {showCurrentStepButton(step)}
+      {showCurrentStepButton(findCurrentStep(APPICATION_DETAIL_DATA.step))}
     </>
   );
 };
