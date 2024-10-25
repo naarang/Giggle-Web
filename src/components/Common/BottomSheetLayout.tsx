@@ -38,36 +38,50 @@ const BottomSheetLayout = ({
     }
   }, [contentRef]);
 
+  useEffect(() => {
+    if (isShowBottomsheet) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'auto';
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isShowBottomsheet]);
+
   return (
-    <motion.div
-      drag="y"
-      initial="hidden"
-      {...(isAvailableHidden ? { onDragEnd } : {})}
-      animate={controls}
-      transition={{
-        type: 'spring',
-        damping: 40,
-        stiffness: 400,
-      }}
-      variants={{
-        visible: { y: 0 },
-        hidden: { y: '100%' },
-      }}
-      dragConstraints={{
-        top: 0,
-        bottom: contentHeight,
-      }} // 상단과 하단 드래그 제한 설정
-      dragElastic={0.2}
-      className={`fixed left-0 bottom-0 w-full h-[90vh] p-[1.5rem] pb-[2.5rem] rounded-t-[2.5rem] bg-white shadow-bottomSheetShadow z-30`}
-      style={{
-        top: `${VIEW_HEIGHT - contentHeight - LAYOUT_MARGIN}px`,
-      }}
-    >
-      {hasHandlebar && (
-        <div className="mx-auto mt-[-0.5rem] mb-[1.5rem] w-[4rem] border-[0.125rem] border-[#F1F2F6]"></div>
+    <>
+      {isShowBottomsheet && (
+        <div className="fixed top-0 bottom-0 left-0 right-0 bg-transparent z-30"></div>
       )}
-      <div ref={contentRef}>{children}</div>
-    </motion.div>
+      <motion.div
+        drag="y"
+        initial="hidden"
+        {...(isAvailableHidden ? { onDragEnd } : {})}
+        animate={controls}
+        transition={{
+          type: 'spring',
+          damping: 40,
+          stiffness: 400,
+        }}
+        variants={{
+          visible: { y: 0 },
+          hidden: { y: '100%' },
+        }}
+        dragConstraints={{
+          top: 0,
+          bottom: contentHeight,
+        }} // 상단과 하단 드래그 제한 설정
+        dragElastic={0.2}
+        className={`fixed left-0 bottom-0 w-full h-[90vh] p-[1.5rem] pb-[2.5rem] rounded-t-[2.5rem] bg-white shadow-bottomSheetShadow z-30`}
+        style={{
+          top: `${VIEW_HEIGHT - contentHeight - LAYOUT_MARGIN}px`,
+        }}
+      >
+        {hasHandlebar && (
+          <div className="mx-auto mt-[-0.5rem] mb-[1.5rem] w-[4rem] border-[0.125rem] border-[#F1F2F6]"></div>
+        )}
+        <div ref={contentRef}>{children}</div>
+      </motion.div>
+    </>
   );
 };
 
