@@ -40,7 +40,7 @@ const PostDetailTitle = ({ postDetailData }: PostDetailTitleProps) => {
           fontStyle="caption-1"
         />
         <Tag
-          value={postDetailData.tags.visa}
+          value={postDetailData.tags.visa.replace(/_/g, '-')}
           padding="0.375rem 0.75rem"
           isRounded={true}
           hasCheckIcon={false}
