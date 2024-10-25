@@ -35,7 +35,7 @@ const ApplicationDetailStep4 = () => {
 
   const onClickYellowButton = () => {
     // TODO: 6.13 조회
-    // 서류 상태? 페이지가 어디임?
+    window.location.reload();
   };
 
   const onClickContact = () => {

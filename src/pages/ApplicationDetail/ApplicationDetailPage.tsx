@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import ApplicationDetailStep7 from '@/components/ApplicationDetail/ApplicationDetailStep7';
 import { ApplicationDetailItemType } from '@/types/application/applicationItem';
 import { findCurrentStep } from '@/utils/application';
+import ApplicationDetailStepEtc from '@/components/ApplicationDetail/ApplicationDetailStepEtc';
 
 // 더미데이터
 const APPICATION_DETAIL_DATA: ApplicationDetailItemType = {
@@ -40,7 +41,7 @@ const APPICATION_DETAIL_DATA: ApplicationDetailItemType = {
       },
     ],
   },
-  step: 'APPLICATION_SUCCESS',
+  step: 'PENDING',
 };
 
 // TODO: enum에 따라서 몇번째 step인지 숫자로 반환하도록 하기! 그에 따른 step과 하단 버튼 구현하기
@@ -63,6 +64,10 @@ const ApplicationDetailPage = () => {
         return <ApplicationDetailStep6 />;
       case 7:
         return <ApplicationDetailStep7 result={APPICATION_DETAIL_DATA.step} />;
+      default:
+        return (
+          <ApplicationDetailStepEtc result={APPICATION_DETAIL_DATA.step} />
+        );
     }
   };
 

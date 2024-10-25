@@ -10,7 +10,8 @@ const ApplicationDetailStep5 = () => {
   const [isShowBottomsheet, setIsShowBottomSheet] = useState<boolean>(false);
 
   const onClickBlackButton = () => {
-    // TODO: 하이코리아 전자민원 신청으로 이동
+    window.location.href =
+      'https://www.hikorea.go.kr/cvlappl/CvlapplStep1.pt#this';
   };
 
   const onClickYellowButton = () => {

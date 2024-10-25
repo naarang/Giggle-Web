@@ -13,11 +13,13 @@ export const findCurrentStep = (step: ApplicationStepType) => {
       return 4;
     case APPLICATION_STEP.APPLICATION_IN_PROGRESS:
       return 5;
+    case APPLICATION_STEP.REGISTRATION_RESULTS:
+      return 6;
     case APPLICATION_STEP.APPLICATION_SUCCESS:
       return 7;
     case APPLICATION_STEP.APPLICATION_REJECTED:
       return 7;
     default:
-      return 6;
+      return 0;
   }
 };
