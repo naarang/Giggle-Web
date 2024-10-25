@@ -40,7 +40,13 @@ const ApplicationCard = ({ applicationData }: ApplicationCardType) => {
           </p>
           <div className="w-[0.375rem] h-[0.375rem] rounded-full bg-[#FF6F61]"></div>
         </div>
-        <RightArrowIcon />
+        <RightArrowIcon
+          onClick={() =>
+            navigate(
+              `/application/${applicationData.user_owner_job_posting_id}`,
+            )
+          }
+        />
       </div>
       <div className="flex flex-col gap-[1.25rem] w-full px-[1.5rem] pt-[1.5rem] pb-[1rem]">
         <div className="flex gap-[0.75rem]">
@@ -78,7 +84,14 @@ const ApplicationCard = ({ applicationData }: ApplicationCardType) => {
         >
           Read More Posting
         </button>
-        <button className="flex-1 py-[0.75rem] caption-1-sb text-[#1E1926] bg-[#FEF387]  text-center">
+        <button
+          className="flex-1 py-[0.75rem] caption-1-sb text-[#1E1926] bg-[#FEF387]  text-center"
+          onClick={() =>
+            navigate(
+              `/application/${applicationData.user_owner_job_posting_id}`,
+            )
+          }
+        >
           Check Application Status
         </button>
       </div>
