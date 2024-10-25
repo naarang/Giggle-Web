@@ -30,6 +30,7 @@ const MypageCard = ({
 }: MypageCardProps) => {
   const navigate = useNavigate();
 
+  // '+' CTA를 눌렀을 떄 이동되는 경로와 아이콘을 매칭
   const iconAndPath = {
     [ManageResumeType.VISA]: { icon: <ProfileIcon />, path: '' },
     [ManageResumeType.PERSONALINFORMATION]: { icon: <ProfileIcon />, path: '' },

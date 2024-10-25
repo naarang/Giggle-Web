@@ -11,6 +11,7 @@ const ManageResumePage = () => {
   const handleBackButtonClick = useNavigateBack();
 
   useEffect(() => {
+    // TODO : API - 7.1 (유학생/고용주) 이력서 조회하기
     setData({
       profile_img_url:
         'https://images.pexels.com/photos/1458926/pexels-photo-1458926.jpeg?cs=srgb&dl=pexels-poodles2doodles-1458926.jpg&fm=jpg',

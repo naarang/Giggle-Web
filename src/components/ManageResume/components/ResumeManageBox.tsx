@@ -18,6 +18,7 @@ type ResumeManageBoxProps = {
 const ResumeManageBox = ({ type, data, onDelete }: ResumeManageBoxProps) => {
   const navigate = useNavigate();
 
+  // Introduction 타입의 카드
   const IntroductionManageCard = () => (
     <div className="px-3 py-4 flex justify-between items-start bg-[#F4F4F9] rounded-xl">
       <div className="text-[#656565] flex flex-col gap-4">
@@ -26,15 +27,16 @@ const ResumeManageBox = ({ type, data, onDelete }: ResumeManageBoxProps) => {
       <div className="flex justify-center items-center gap-2.5 ml-1">
         <EditIcon
           onClick={() => navigate('/resume/introduction', { state: { data } })}
+          className="cursor-pointer"
         />
         {onDelete && (
           <DeleteIcon onClick={() => onDelete()} className="cursor-pointer" />
         )}
       </div>
     </div>
-    // handleDeleteIntroduction
   );
 
+  // WorkExperience 타입의 카드
   const WorkExperienceManageCard = () => (
     <>
       {(data as WorkExperienceType[]).map((work) => (
@@ -59,6 +61,7 @@ const ResumeManageBox = ({ type, data, onDelete }: ResumeManageBoxProps) => {
               onClick={() =>
                 navigate(`/resume/work-experience/edit/${work.id}`)
               }
+              className="cursor-pointer"
             />
             {onDelete && (
               <DeleteIcon
@@ -72,6 +75,7 @@ const ResumeManageBox = ({ type, data, onDelete }: ResumeManageBoxProps) => {
     </>
   );
 
+  // Education 타입의 카드
   const EducationManageCard = () => (
     <>
       {(data as EducationType[]).map((education) => (
@@ -94,6 +98,7 @@ const ResumeManageBox = ({ type, data, onDelete }: ResumeManageBoxProps) => {
           <div className="absolute top-4 right-3 flex justify-center items-center gap-2.5 ml-1">
             <EditIcon
               onClick={() => navigate(`/resume/education/edit/${education.id}`)}
+              className="cursor-pointer"
             />
             {onDelete && (
               <DeleteIcon
@@ -107,6 +112,7 @@ const ResumeManageBox = ({ type, data, onDelete }: ResumeManageBoxProps) => {
     </>
   );
 
+  // Language 타입의 카드
   const LanguageManageCard = () => (
     <div className="flex flex-wrap gap-2">
       <p className="bg-[#FEF387] rounded-md px-4 py-1.5 text-[#1E1926] caption-1">

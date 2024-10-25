@@ -33,11 +33,13 @@ const PostWorkExperiencePage = () => {
         hasMenuButton={false}
         title="Introduction"
       />
+      {/* input 컴포넌트 */}
       <WorkExperiencePost
         workExperienceData={workExperienceData}
         setWorkExperienceData={setWorkExperienceData}
       />
       <div className="pb-[3.125rem] px-6 mt-3 w-full">
+        {/* post 버튼 */}
         <Button
           type={buttonTypeKeys.LARGE}
           bgColor="bg-[#FEF387]"

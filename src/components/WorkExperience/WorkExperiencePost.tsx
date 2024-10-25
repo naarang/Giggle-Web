@@ -16,15 +16,18 @@ const WorkExperiencePost = ({
   setWorkExperienceData,
 }: WorkExperiencePostProps) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  // 경력 "진행 중" 인지 여부
   const [isOngoing, setIsOngoing] = useState(false);
 
+  // "진행 중" 체크 시 end_date 초기화
   const handleOngoingToggle = () => {
     setIsOngoing((prev) => !prev);
     if (!isOngoing) {
-      handleInputChange('end_date', ''); // "진행 중" 체크 시 end_date 초기화
+      handleInputChange('end_date', '');
     }
   };
 
+  // 텍스트 입력 공간 클릭시 포커스 이동
   const handleFocusTextArea = () => {
     textareaRef.current?.focus();
     const length = textareaRef.current!.value.length;
@@ -65,6 +68,7 @@ const WorkExperiencePost = ({
   return (
     <div className="p-6 flex flex-col gap-3">
       <div className="head-1 mb-6 text-[#1E1926]">Add Work Experience</div>
+      {/* titl 입력 */}
       <div>
         <p className="body-3 text-[#1E1926] px-1 py-2">
           Experience Title <span className="text-[#EE4700] body-1">*</span>
@@ -77,6 +81,7 @@ const WorkExperiencePost = ({
           canDelete={false}
         />
       </div>
+      {/* 장소 입력 */}
       <div>
         <p className="body-3 text-[#1E1926] px-1 py-2">
           Workplace <span className="text-[#EE4700] body-1">*</span>
@@ -89,6 +94,7 @@ const WorkExperiencePost = ({
           canDelete={false}
         />
       </div>
+      {/* 시작 날짜 입력 */}
       <div className="w-fit">
         <p className="body-3 text-[#1E1926] px-1 py-2">
           Start Date <span className="text-[#EE4700] body-1">*</span>
@@ -101,6 +107,7 @@ const WorkExperiencePost = ({
           setValue={(value) => handleDateChange('start_date', value)}
         />
       </div>
+      {/* 종료 날짜 입력 */}
       <div className="w-fit">
         <p className="body-3 text-[#1E1926] px-1 py-2">
           End Date <span className="text-[#EE4700] body-1">*</span>
@@ -122,6 +129,7 @@ const WorkExperiencePost = ({
           <p className="body-3 text-[#656565]">It's in progress right now</p>
         </div>
       </div>
+      {/* 상세설명 입력 */}
       <div>
         <p className="body-3 text-[#1E1926] px-1 py-2">
           Description <span className="text-[#EE4700] body-1">*</span>
