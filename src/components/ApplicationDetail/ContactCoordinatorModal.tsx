@@ -1,19 +1,20 @@
 import { useEffect } from 'react';
 import PhoneIcon from '@/assets/icons/PhoneIcon.svg?react';
+import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
-type ContactModalProps = {
+type ContactCoordinatorModalProps = {
   onClickClose: () => void;
   onClickContact: () => void;
   name: string;
   phoneNumber: string;
 };
 
-const ContactModal = ({
+const ContactCoordinatorModal = ({
   onClickClose,
   onClickContact,
   name,
   phoneNumber,
-}: ContactModalProps) => {
+}: ContactCoordinatorModalProps) => {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => {
@@ -24,16 +25,14 @@ const ContactModal = ({
   return (
     <div className="w-[100vw] h-[100vh] fixed top-0 left-0 flex items-center justify-center bg-[rgba(70,70,70,0.6)] z-50">
       <div className="w-[90%] max-w-[22rem] flex flex-col gap-8 bg-white rounded-[1.125rem] overflow-hidden">
-        <div>
+        <div className="flex flex-col w-full px-[2.5rem]">
           <h1 className="pt-[1.125rem] pb-4 border-b-[0.5px] border-solid border-[#DCDCDC] text-center head-3 text-[#464646]">
-            Would you like to contact to Recruiter?
+            Would you like to contact to Coordinator?
           </h1>
           <p className="pt-7 body-3 text-[#656565] text-center">
-            if you didn't get a response,
-            <br />
-            you can contact to Recruiter directly
+            You can contact to Coordinator directly
           </p>
-          <div className="mt-[0.5rem] mx-auto max-w-[14.375rem] flex items-center gap-[0.75rem] py-[0.75rem] px-[1rem] rounded-[1rem] bg-[#F4F4F9]">
+          <div className="mt-[0.5rem] mb-[1.5rem] px-[1rem] flex items-center gap-[0.75rem] py-[0.75rem] rounded-[1rem] bg-[#F4F4F9]">
             <div className="p-[0.375rem] bg-white rounded-[0.5rem]">
               <PhoneIcon />
             </div>
@@ -41,6 +40,32 @@ const ContactModal = ({
               <h5 className="button-2 text-black">{name}</h5>
               <p className="caption-1 text-[#656565]">{phoneNumber}</p>
             </div>
+          </div>
+          <div className="w-full px-[0.75rem] pt-[0.75rem] pb-[0.5rem] border-[0.031rem] border-[#DCDCDC] rounded-[1.125rem]">
+            <p className="pb-[0.75rem] px-[0.5rem] body-3 text-[#555555]">
+              Check the address
+            </p>
+            <p className="pb-[0.75rem] px-[0.25rem] button-2 text-[#1E1926]">
+              장소 이름
+            </p>
+            <p className="pb-[0.75rem] px-[0.5rem] caption-1 text-[##656565]">
+              main address
+            </p>
+            <Map
+              center={{
+                lat: 0,
+                lng: 0,
+              }}
+              style={{ width: '100%', height: '99px' }}
+              className="rounded-xl"
+            >
+              <MapMarker
+                position={{
+                  lat: 0,
+                  lng: 0,
+                }}
+              ></MapMarker>
+            </Map>
           </div>
         </div>
         <div className="flex items-center justify-center">
@@ -62,4 +87,4 @@ const ContactModal = ({
   );
 };
 
-export default ContactModal;
+export default ContactCoordinatorModal;

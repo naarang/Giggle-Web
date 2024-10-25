@@ -15,6 +15,7 @@ import PostApplyPage from '@/pages/PostApply/PostApplyPage';
 import ScrollToTop from '@/components/Common/ScrollToTop';
 import ApplicationPage from '@/pages/Application/ApplicationPage';
 import ApplicationDetailPage from '@/pages/ApplicationDetail/ApplicationDetailPage';
+import ApplicationResultPage from '@/pages/ApplicationResult/ApplicationResultPage';
 
 const Router = () => {
   return (
@@ -39,6 +40,10 @@ const Router = () => {
         <Route path="/post/apply/:id" element={<PostApplyPage />} />
         <Route path="/application" element={<ApplicationPage />} />
         <Route path="/application/:id" element={<ApplicationDetailPage />} />
+        <Route
+          path="/application/result/:id"
+          element={<ApplicationResultPage />}
+        />
       </Routes>
     </BrowserRouter>
   );

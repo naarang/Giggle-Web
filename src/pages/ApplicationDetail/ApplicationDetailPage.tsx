@@ -9,11 +9,12 @@ import ApplicationDetailInfo from '@/components/ApplicationDetail/ApplicationDet
 import ApplicationDetailSteps from '@/components/ApplicationDetail/ApplicationDetailSteps';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import { useNavigate } from 'react-router-dom';
+import ApplicationDetailStep7 from '@/components/ApplicationDetail/ApplicationDetailStep7';
 
 // TODO: enum에 따라서 몇번째 step인지 숫자로 반환하도록 하기! 그에 따른 step과 하단 버튼 구현하기
 const ApplicationDetailPage = () => {
   const navigate = useNavigate();
-  const step = 4; // 1 ~6
+  const step = 7; // 1 ~ 6 + 7은 신청 결과...
 
   const showCurrentStepButton = (step: number) => {
     switch (step) {
@@ -29,6 +30,8 @@ const ApplicationDetailPage = () => {
         return <ApplicationDetailStep5 />;
       case 6:
         return <ApplicationDetailStep6 />;
+      case 7:
+        return <ApplicationDetailStep7 />;
     }
   };
 

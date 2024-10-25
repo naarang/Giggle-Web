@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ContactModal from '@/components/ApplicationDetail/ContactModal';
+import ContactRecruiterModal from '@/components/ApplicationDetail/ContactRecruiterModal';
 
 const ApplicationDetailStep2 = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -32,7 +32,7 @@ const ApplicationDetailStep2 = () => {
         </div>
       </section>
       {modalOpen && (
-        <ContactModal
+        <ContactRecruiterModal
           onClickClose={() => setModalOpen(false)}
           onClickContact={onClickContact}
           name={'name'}
