@@ -42,6 +42,7 @@ export const arrayToString = (array: string[]): string => {
 };
 
 export const propertyToString = (value: string) => {
+  if (['South Korea', 'SOUTH_KOREA'].includes(value)) return 'South Korea';
   const spaceConverted = value.replace(/_/g, ' ');
   return (
     spaceConverted.charAt(0).toUpperCase() +
