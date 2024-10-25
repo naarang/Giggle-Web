@@ -194,15 +194,7 @@ const IntegratedApplicationWriteForm = ({
           />
         </InputLayout>
         {/* 생일 입력 */}
-        <div className="w-full">
-          <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
-            <div className="relative">
-              Date Of Birth
-              <div className="w-1.5 absolute !m-0 top-[0rem] right-[-0.5rem] rounded-full text-[#ff6f61] h-1.5 z-[1]">
-                *
-              </div>
-            </div>
-          </div>
+        <InputLayout title="Date Of Birth" isEssential>
           <Dropdown
             value={newDocumentData.birth}
             placeholder="Select Date"
@@ -212,7 +204,7 @@ const IntegratedApplicationWriteForm = ({
               setNewDocumentData({ ...newDocumentData, birth: value })
             }
           />
-        </div>
+        </InputLayout>
         {/* 성별 입력 */}
         <InputLayout title="Gender" isEssential>
           <div className="w-full flex flex-row gap-[1.75rem]">
