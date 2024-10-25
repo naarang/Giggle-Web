@@ -15,8 +15,11 @@ export const deletePost = async (id: number) => {
 
 // 6.6 (고용주) 등록한 공고 리스트 조회하기
 export const getEmployerPostList = async (sorting: AscendingSortType) => {
+  // TODO: 무한 스크롤 구현하기
+  const page = 1;
+  const size = 10;
   const response = await api.get(
-    `/api/v1/owners/job-postings/overviews?sorting=${sorting}`,
+    `/api/v1/owners/job-postings/overviews?page=${page}&size=${size}&sorting=${sorting}`,
   );
   return response.data;
 };
