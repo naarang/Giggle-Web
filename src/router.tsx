@@ -19,12 +19,13 @@ import PostApplyPage from '@/pages/PostApply/PostApplyPage';
 import ApplicationPage from '@/pages/Application/ApplicationPage';
 import ManageResumePage from '@/pages/ManageResumePage/ManageResumePage';
 import WriteDocumentsPage from '@/pages/WriteDocuments/WriteDocumentsPage';
-import ScrappedJobPostsPage from './pages/ScrappedJobPosts/ScrappedJobPostsPage';
-import LanguagePage from './pages/Language/LanguagePage';
-import PostEducationPage from './pages/SetEducation/PostEducationPage';
-import PatchEducationPage from './pages/SetEducation/PatchEducationPage';
-import PostWorkExperiencePage from './pages/SetWorkExperience/PostWorkExperiencePage';
-import IntroductionPage from './pages/Introduction/IntroductionPage';
+import ScrappedJobPostsPage from '@/pages/ScrappedJobPosts/ScrappedJobPostsPage';
+import LanguagePage from '@/pages/Language/LanguagePage';
+import PostEducationPage from '@/pages/SetEducation/PostEducationPage';
+import PatchEducationPage from '@/pages/SetEducation/PatchEducationPage';
+import PostWorkExperiencePage from '@/pages/SetWorkExperience/PostWorkExperiencePage';
+import IntroductionPage from '@/pages/Introduction/IntroductionPage';
+import PatchWorkExperiencePage from '@/pages/SetWorkExperience/PatchWorkExperiencePage';
 
 const Layout = () => {
   const location = useLocation();
@@ -81,7 +82,7 @@ const Router = () => {
           />
           <Route
             path="/resume/work-experience/edit/:id"
-            element={<PatchEducationPage />}
+            element={<PatchWorkExperiencePage />}
           />
 
           <Route path="/post/:id" element={<PostDetailPage />} />
