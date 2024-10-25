@@ -8,6 +8,7 @@ type HeaderProps = {
   onClickBackButton: () => void;
   onClickSearchButton: (value: string) => void;
   onClickFilterButton?: () => void;
+  initialValue?: string;
   placeholder: string;
 };
 
@@ -15,9 +16,10 @@ const TextFieldHeader = ({
   onClickBackButton,
   onClickSearchButton,
   onClickFilterButton,
+  initialValue,
   placeholder,
 }: HeaderProps) => {
-  const [value, setValue] = useState<string>('');
+  const [value, setValue] = useState<string>(initialValue ?? '');
 
   const onClickDeleteButton = () => {
     setValue('');
