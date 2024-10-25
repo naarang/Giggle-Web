@@ -1,4 +1,11 @@
-import { DayOfWeek, Insurance, LaborContractEmployerInfo, LaborContractEmployerInfoProperty, PaymentMethod } from '@/types/api/document';
+import {
+  DayOfWeek,
+  Insurance,
+  IntegratedApplicationData,
+  LaborContractEmployerInfo,
+  LaborContractEmployerInfoProperty,
+  PaymentMethod,
+} from '@/types/api/document';
 import {
   DocumentType,
   EmployerInfoProperty,
@@ -6,6 +13,7 @@ import {
   LaborContractEmployeeInfo,
   PartTimePermitFormRequest,
 } from '@/types/api/document';
+import { Gender } from '@/types/api/users';
 
 // 문서 타입별 정보를 담은 객체
 export const DocumentTypeInfo = {
@@ -179,57 +187,57 @@ export const initialLaborContractEmployeeInfo: LaborContractEmployeeInfo = {
 
 // 근로계약서 고용주 mock data
 export const sampleLaborContract: LaborContractEmployerInfo = {
-  company_name: "ABC Technology Co., Ltd.",
-  name: "John Smith",
-  start_date: "2024-01-01",
-  end_date: "2024-12-31",
+  company_name: 'ABC Technology Co., Ltd.',
+  name: 'John Smith',
+  start_date: '2024-01-01',
+  end_date: '2024-12-31',
   address: {
-    address_name: "서울특별시 강남구 테헤란로 123",
-    region_1depth_name: "서울특별시",
-    region_2depth_name: "강남구",
-    region_3depth_name: "테헤란로",
+    address_name: '서울특별시 강남구 테헤란로 123',
+    region_1depth_name: '서울특별시',
+    region_2depth_name: '강남구',
+    region_3depth_name: '테헤란로',
     region_4depth_name: undefined,
-    address_detail: "ABC빌딩 5층",
+    address_detail: 'ABC빌딩 5층',
     longitude: 127.0495556,
-    latitude: 37.5048122
+    latitude: 37.5048122,
   },
-  description: "Software development and maintenance for web applications",
+  description: 'Software development and maintenance for web applications',
   work_day_time_list: [
     {
       day_of_week: DayOfWeek.MONDAY,
-      work_start_time: "09:00",
-      work_end_time: "18:00",
-      break_start_time: "12:00",
-      break_end_time: "13:00"
+      work_start_time: '09:00',
+      work_end_time: '18:00',
+      break_start_time: '12:00',
+      break_end_time: '13:00',
     },
     {
       day_of_week: DayOfWeek.TUESDAY,
-      work_start_time: "09:00",
-      work_end_time: "18:00",
-      break_start_time: "12:00",
-      break_end_time: "13:00"
+      work_start_time: '09:00',
+      work_end_time: '18:00',
+      break_start_time: '12:00',
+      break_end_time: '13:00',
     },
     {
       day_of_week: DayOfWeek.WEDNESDAY,
-      work_start_time: "09:00",
-      work_end_time: "18:00",
-      break_start_time: "12:00",
-      break_end_time: "13:00"
+      work_start_time: '09:00',
+      work_end_time: '18:00',
+      break_start_time: '12:00',
+      break_end_time: '13:00',
     },
     {
       day_of_week: DayOfWeek.THURSDAY,
-      work_start_time: "09:00",
-      work_end_time: "18:00",
-      break_start_time: "12:00",
-      break_end_time: "13:00"
+      work_start_time: '09:00',
+      work_end_time: '18:00',
+      break_start_time: '12:00',
+      break_end_time: '13:00',
     },
     {
       day_of_week: DayOfWeek.FRIDAY,
-      work_start_time: "09:00",
-      work_end_time: "18:00",
-      break_start_time: "12:00",
-      break_end_time: "13:00"
-    }
+      work_start_time: '09:00',
+      work_end_time: '18:00',
+      break_start_time: '12:00',
+      break_end_time: '13:00',
+    },
   ],
   weekly_last_days: [DayOfWeek.SATURDAY, DayOfWeek.SUNDAY],
   hourly_rate: 20000,
@@ -239,5 +247,36 @@ export const sampleLaborContract: LaborContractEmployerInfo = {
   payment_day: 10,
   payment_method: PaymentMethod.BANK_TRANSFER,
   insurance: Insurance.HEALTH_INSURANCE,
-  signature_base64: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg=="
+  signature_base64:
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==',
+};
+
+export const initialIntegratedApplication: IntegratedApplicationData = {
+  first_name: '',
+  last_name: '',
+  birth: '',
+  gender: Gender.MALE,
+  nationality: '',
+  tele_phone_number: '010-0000-0000',
+  cell_phone_number: '010-0000-0000',
+  is_accredited: true,
+  school_name: '',
+  school_phone_number: '010-0000-0000',
+  new_work_place_name: '',
+  new_work_place_registration_number: '',
+  new_work_place_phone_number: '010-0000-0000',
+  annual_income_amount: 0,
+  occupation: '',
+  email: '',
+  signature_base64: '',
+  address: {
+    address_name: '',
+    region_1depth_name: '',
+    region_2depth_name: '',
+    region_3depth_name: '',
+    region_4depth_name: '',
+    address_detail: '',
+    longitude: 0,
+    latitude: 0,
+  },
 };
