@@ -1,22 +1,14 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { ResumeDetailItemType } from '@/types/postApply/resumeDetailItem';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import MypageCardSection from '@/components/ManageResume/MypageCardSection';
 import ProfilePicture from '@/components/ManageResume/ProfilePicture';
 import ResumeEditSection from '@/components/ManageResume/ResumeEditSection';
+import useNavigateBack from '@/hooks/useNavigateBack';
 
 const ManageResumePage = () => {
-  const navigate = useNavigate();
   const [data, setData] = useState<ResumeDetailItemType>();
-
-  const handleBackButtonClick = () => {
-    if (window.history.length > 1) {
-      navigate(-1);
-    } else {
-      navigate('/');
-    }
-  };
+  const handleBackButtonClick = useNavigateBack();
 
   useEffect(() => {
     setData({

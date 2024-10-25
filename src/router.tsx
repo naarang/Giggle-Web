@@ -24,7 +24,7 @@ import LanguagePage from './pages/Language/LanguagePage';
 import PostEducationPage from './pages/SetEducation/PostEducationPage';
 import PatchEducationPage from './pages/SetEducation/PatchEducationPage';
 import PostWorkExperiencePage from './pages/SetWorkExperience/PostWorkExperiencePage';
-import IntroductionPage from './pages/SetIntroduction/IntroductionPage';
+import IntroductionPage from './pages/Introduction/IntroductionPage';
 
 const Layout = () => {
   const location = useLocation();

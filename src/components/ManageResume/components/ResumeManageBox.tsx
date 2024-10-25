@@ -24,7 +24,9 @@ const ResumeManageBox = ({ type, data, onDelete }: ResumeManageBoxProps) => {
         <p className="caption-1-sb">{data.toString()}</p>
       </div>
       <div className="flex justify-center items-center gap-2.5 ml-1">
-        <EditIcon onClick={() => navigate('/resume/introduction')} />
+        <EditIcon
+          onClick={() => navigate('/resume/introduction', { state: { data } })}
+        />
         {onDelete && (
           <DeleteIcon onClick={() => onDelete()} className="cursor-pointer" />
         )}

@@ -4,20 +4,13 @@ import Button from '@/components/Common/Button';
 import Dropdown from '@/components/Common/Dropdown';
 import { languageList } from '@/constants/information';
 import { useState } from 'react';
+import useNavigateBack from '@/hooks/useNavigateBack';
 
 const LanguageSettingPage = () => {
   const [language, setLanguage] = useState<string>('English');
   const navigate = useNavigate();
 
-  const handleBackButton = () => {
-    if (window.history.length > 1) {
-      // 직전 히스토리가 있으면 뒤로 가기
-      navigate(-1);
-    } else {
-      // 직전 히스토리가 없으면 홈으로 이동
-      navigate('/');
-    }
-  };
+  const handleBackButtonClick = useNavigateBack();
 
   const handleSaveButton = () => {
     // API - 3.8 (유학생) 앱 내 언어 수정
@@ -28,7 +21,7 @@ const LanguageSettingPage = () => {
     <div className="w-full h-[100vh] flex flex-col">
       <BaseHeader
         hasBackButton={true}
-        onClickBackButton={handleBackButton}
+        onClickBackButton={handleBackButtonClick}
         hasMenuButton={false}
         title="Language"
       />
