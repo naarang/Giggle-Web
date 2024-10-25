@@ -6,3 +6,5 @@ export const enum ManageResumeType {
   EDUCATION = 'Education',
   LANGUAGE = 'Language',
 }
+
+export const EducationLevels = ['BACHELOR','ASSOCIATE', 'HIGHSCHOOL'];
