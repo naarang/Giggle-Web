@@ -20,7 +20,7 @@ const MypageCardSection = ({
         type={ManageResumeType.VISA}
         informations={[
           {
-            title: visaData.visa as string,
+            title: (visaData.visa as string).replace(/_/g, '-'),
             description: [visaData.description],
           },
         ]}

@@ -25,12 +25,12 @@ const ResumeEditSection = ({
   // const queryClient = useQueryClient();
 
   // 데이터 상태 관리
-  const [resumeData, setResumeData] = useState<ResumeDataState>({
+  const resumeData: ResumeDataState = {
     introductionData,
     workexperienceData,
     educationData,
     languageData,
-  });
+  };
 
   // 삭제 핸들러 (데이터 삭제 시 해당 필드를 null로 설정)
   const handleDeleteIntroduction = () => {
