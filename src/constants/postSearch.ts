@@ -1,3 +1,5 @@
+import { PostSearchFilterItemType } from '@/types/PostSearchFilter/PostSearchFilterItem';
+
 export const enum FILTER_CATEGORY {
   REGION_1DEPTH = 'Region 1depth', // 시, 도
   REGION_2DEPTH = 'Region 2depth', // 구
@@ -76,4 +78,18 @@ export const FILTER_CATEGORY_OPTIONS: FilterOptionsType = {
   [FILTER_CATEGORY.RECRUITMENT_PERIOD]: ['Opening', 'Closed'],
   [FILTER_CATEGORY.EMPLOYMENT_TYPE]: ['Part-time', 'Internship'],
   [FILTER_CATEGORY.VISA]: ['D-2', 'D-4', 'F-2'],
+};
+
+export const initialFilterList: PostSearchFilterItemType = {
+  [FILTER_CATEGORY.REGION_1DEPTH]: [],
+  [FILTER_CATEGORY.REGION_2DEPTH]: [],
+  [FILTER_CATEGORY.REGION_3DEPTH]: [],
+  [FILTER_CATEGORY.INDUSTRY]: [],
+  [FILTER_CATEGORY.WORK_PERIOD]: [],
+  [FILTER_CATEGORY.WORK_DAYS_PER_WEEK]: [],
+  [FILTER_CATEGORY.WORKING_DAY]: [],
+  [FILTER_CATEGORY.WORKING_HOURS]: [],
+  [FILTER_CATEGORY.RECRUITMENT_PERIOD]: [],
+  [FILTER_CATEGORY.EMPLOYMENT_TYPE]: [],
+  [FILTER_CATEGORY.VISA]: [],
 };

@@ -1,29 +1,19 @@
 import { buttonTypeKeys } from '@/constants/components';
 import Button from '@/components/Common/Button';
 import { PostSearchFilterItemType } from '@/types/PostSearchFilter/PostSearchFilterItem';
-import { FILTER_CATEGORY } from '@/constants/postSearch';
+import { initialFilterList } from '@/constants/postSearch';
 
 type PostSearchFilterButtonsType = {
   setFilterList: React.Dispatch<React.SetStateAction<PostSearchFilterItemType>>;
+  onClickApply: () => void;
 };
 
 const PostSearchFilterButtons = ({
   setFilterList,
+  onClickApply,
 }: PostSearchFilterButtonsType) => {
   const onClickReset = () => {
-    setFilterList({
-      [FILTER_CATEGORY.REGION_1DEPTH]: [],
-      [FILTER_CATEGORY.REGION_2DEPTH]: [],
-      [FILTER_CATEGORY.REGION_3DEPTH]: [],
-      [FILTER_CATEGORY.INDUSTRY]: [],
-      [FILTER_CATEGORY.WORK_PERIOD]: [],
-      [FILTER_CATEGORY.WORK_DAYS_PER_WEEK]: [],
-      [FILTER_CATEGORY.WORKING_DAY]: [],
-      [FILTER_CATEGORY.WORKING_HOURS]: [],
-      [FILTER_CATEGORY.RECRUITMENT_PERIOD]: [],
-      [FILTER_CATEGORY.EMPLOYMENT_TYPE]: [],
-      [FILTER_CATEGORY.VISA]: [],
-    });
+    setFilterList(initialFilterList);
   };
 
   return (
@@ -42,6 +32,7 @@ const PostSearchFilterButtons = ({
         fontColor="text-[#1E1926] button-1"
         title="Apply"
         isBorder={false}
+        onClick={onClickApply}
       />
     </section>
   );
