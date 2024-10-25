@@ -14,6 +14,9 @@ const IntroductionPage = () => {
   const initialData = location.state?.data || '';
   const [data, setData] = useState<string>(initialData);
 
+  // 초기 값에서 수정된 내용이 있는지 확인
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+
   // 입력창을 감싸는 div 클릭 시 textarea에 포커스 설정
   const handleFocusTextArea = () => {
     textareaRef.current?.focus();
@@ -40,6 +43,12 @@ const IntroductionPage = () => {
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
+    // 편집 중인지 여부 확인
+    if (data == initialData) {
+      setIsEditing(false);
+    } else {
+      setIsEditing(true);
+    }
   }, [data]);
 
   return (
@@ -59,11 +68,11 @@ const IntroductionPage = () => {
       <div className="fixed bottom-0 pb-[3.125rem] px-6 w-full">
         <Button
           type={buttonTypeKeys.LARGE}
-          bgColor="bg-[#FEF387]"
-          fontColor="text-[#1E1926]"
+          bgColor={isEditing ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'}
+          fontColor={isEditing ? 'text-[#1E1926]' : 'text-[#BDBDBD]'}
           title="Save"
           isBorder={false}
-          onClick={handleSubmit}
+          onClick={isEditing ? handleSubmit : undefined}
         />
       </div>
     </div>

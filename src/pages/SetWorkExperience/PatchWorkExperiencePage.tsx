@@ -4,6 +4,7 @@ import WorkExperiencePatch from '@/components/WorkExperience/WorkExperiencePatch
 import { buttonTypeKeys } from '@/constants/components';
 import useNavigateBack from '@/hooks/useNavigateBack';
 import { PostWorkExperienceType } from '@/types/postResume/postWorkExperience';
+import { formatDateToDash } from '@/utils/editResume';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -23,7 +24,18 @@ const PatchWorkExperiencePage = () => {
   const [workExperienceData, setWorkExperienceData] =
     useState<PostWorkExperienceType>(initialData);
 
+  // 초기 값에서 수정된 내용이 있는지 확인
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+
   const handleSubmit = () => {
+    // 날짜 형식 서버 데이터와 통일
+    const formattedData = {
+      ...workExperienceData,
+      start_date: formatDateToDash(workExperienceData.start_date),
+      end_date: formatDateToDash(workExperienceData.end_date),
+    };
+    if (formattedData) true; //추후 로직 추가
+
     // TODO: API - 7.5 경력 생성하기
     navigate('/profile/manage-resume');
   };
@@ -46,6 +58,15 @@ const PatchWorkExperiencePage = () => {
     setWorkExperienceData(fetchData);
     setInitialData(fetchData);
   }, []);
+
+  useEffect(() => {
+    // 편집 중인지 여부 확인
+    if (workExperienceData == initialData) {
+      setIsEditing(false);
+    } else {
+      setIsEditing(true);
+    }
+  }, [workExperienceData]);
 
   return (
     <div>
@@ -73,11 +94,11 @@ const PatchWorkExperiencePage = () => {
         {/* patch 버튼 */}
         <Button
           type={buttonTypeKeys.LARGE}
-          bgColor="bg-[#FEF387]"
-          fontColor="text-[#1E1926]"
+          bgColor={isEditing ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'}
+          fontColor={isEditing ? 'text-[#1E1926]' : 'text-[#BDBDBD]'}
           title="Save"
           isBorder={false}
-          onClick={handleSubmit}
+          onClick={isEditing ? handleSubmit : undefined}
         />
       </div>
     </div>
