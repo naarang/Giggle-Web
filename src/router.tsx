@@ -3,7 +3,6 @@ import { Outlet, useLocation } from 'react-router-dom';
 
 import ScrollToTop from '@/components/Common/ScrollToTop';
 import Navbar from '@/components/Common/Navbar';
-
 import HomePage from '@/pages/Home/HomePage';
 import SigninPage from '@/pages/Signin/SigninPage';
 import SignupPage from '@/pages/Signup/SignupPage';
@@ -18,6 +17,8 @@ import PostDetailPage from '@/pages/PostDetail/PostDetailPage';
 import PostApplyPage from '@/pages/PostApply/PostApplyPage';
 import ApplicationPage from '@/pages/Application/ApplicationPage';
 import WriteDocumentsPage from '@/pages/WriteDocuments/WriteDocumentsPage';
+import ApplicationDetailPage from '@/pages/ApplicationDetail/ApplicationDetailPage';
+import ApplicationResultPage from '@/pages/ApplicationResult/ApplicationResultPage';
 
 const Layout = () => {
   const location = useLocation();
@@ -66,6 +67,11 @@ const Router = () => {
 
           <Route path="/application" element={<ApplicationPage />} />
         </Route>
+        <Route path="/application/:id" element={<ApplicationDetailPage />} />
+        <Route
+          path="/application/result/:id"
+          element={<ApplicationResultPage />}
+        />
       </Routes>
     </BrowserRouter>
   );
