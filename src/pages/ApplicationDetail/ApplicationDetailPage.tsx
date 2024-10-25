@@ -41,7 +41,7 @@ const APPICATION_DETAIL_DATA: ApplicationDetailItemType = {
       },
     ],
   },
-  step: 'PENDING',
+  step: 'DOCUMENT_UNDER_REVIEW',
 };
 
 // TODO: enum에 따라서 몇번째 step인지 숫자로 반환하도록 하기! 그에 따른 step과 하단 버튼 구현하기
