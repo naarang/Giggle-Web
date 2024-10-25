@@ -262,7 +262,7 @@ const EditProfilePage = () => {
               </div>
             </div>
           </div>
-          <div className="mt-32 pt-3 pb-[3.125rem] flex justify-center items-center">
+          <div className="mt-32 pt-3 px-6 pb-[3.125rem] flex justify-center items-center">
             <Button
               type={buttonTypeKeys.LARGE}
               title="Save"
