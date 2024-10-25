@@ -7,3 +7,11 @@ export const isEmptyData = (data: MypageCardData) => {
     (typeof data === 'string' && data.trim() === '')
   );
 };
+
+export const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("ko-KR", {
+    year: "numeric",
+    month: "2-digit",
+  }).replace(/\.$/, "");
+};

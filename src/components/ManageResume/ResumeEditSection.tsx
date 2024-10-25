@@ -35,6 +35,7 @@ const ResumeEditSection = ({
       ...prevData,
       [type.toLowerCase() + 'Data']: null,
     }));
+    // TODO:
   };
 
   return (

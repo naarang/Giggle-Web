@@ -6,6 +6,7 @@ import {
   LanguageListType,
   WorkExperienceType,
 } from '@/types/postApply/resumeDetailItem';
+import { formatDate } from '@/utils/manageresume';
 
 type ResumeManageBoxProps = {
   type: ManageResumeType;
@@ -21,9 +22,18 @@ const ResumeManageBox = ({ type, data, onDelete }: ResumeManageBoxProps) => {
   const WorkExperienceManageCard = () => (
     <div>
       {(data as WorkExperienceType[]).map((work) => (
-        <div key={work.id}>
-          <p>{work.title}</p>
-          <p>{work.description}</p>
+        <div key={work.id} className="text-[#656565] flex flex-col gap-4">
+          <div className="flex flex-col gap-1">
+            <p className="head-3">{work.title}</p>
+            <p className="body-3">{work.description}</p>
+          </div>
+          <p className="caption-1">
+            {formatDate(work.start_date)} ~{' '}
+            {work.end_date && formatDate(work.end_date)} •{' '}
+            {(work.duration / 30).toFixed(0)} months
+          </p>
+          {/* TODO : API - Task property 추가 */}
+          <p className="body-3">Task1</p>
         </div>
       ))}
     </div>
@@ -40,7 +50,8 @@ const ResumeManageBox = ({ type, data, onDelete }: ResumeManageBoxProps) => {
             <p>{education.major}</p>
           </div>
           <p className="caption-1">
-            {education.start_date} ~ {education.end_date}
+            {formatDate(education.start_date)} ~{' '}
+            {formatDate(education.end_date)}
           </p>
         </div>
       ))}
