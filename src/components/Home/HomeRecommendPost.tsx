@@ -34,7 +34,7 @@ const HomeRecommendPost = () => {
       ) : (
         // 이력서 미등록 -> 추가 메뉴 보여주기
         <>
-          <article className="flex flex-col justify-between min-w-[11.25rem] w-[11.25rem] h-[8.75rem] pt-[0.75rem] pb-[1.125rem] px-[1.125rem] rounded-[1.5rem] border-[0.031rem] border-[#F4F4F9] shadow-cardShadow bg-[#F4F4F9]">
+          <article className="flex flex-col justify-between min-w-[11.25rem] w-[11.25rem] h-[8.75rem] pt-[0.75rem] pb-[1.125rem] px-[1.125rem] rounded-[1.5rem] border-[0.031rem] border-[#F4F4F9] shadow-cardShadow bg-cover bg-center bg-[url('/src/assets/images/blueGradient.png')]">
             <MessageIcon />
             <div>
               <p className="pb-[0.5rem] caption-1 text-[#656565]">
@@ -45,7 +45,7 @@ const HomeRecommendPost = () => {
               </div>
             </div>
           </article>
-          <article className="flex flex-col justify-between min-w-[11.25rem] w-[11.25rem] h-[8.75rem] pt-[0.75rem] pb-[1.125rem] px-[1.125rem] rounded-[1.5rem] border-[0.031rem] border-[#F4F4F9] shadow-cardShadow bg-[#F4F4F9]">
+          <article className="flex flex-col justify-between min-w-[11.25rem] w-[11.25rem] h-[8.75rem] pt-[0.75rem] pb-[1.125rem] px-[1.125rem] rounded-[1.5rem] border-[0.031rem] border-[#F4F4F9] shadow-cardShadow bg-cover bg-center bg-[url('/src/assets/images/yellowGradient.png')]">
             <MessageIcon />
             <div>
               <p className="pb-[0.5rem] caption-1 text-[#656565]">
