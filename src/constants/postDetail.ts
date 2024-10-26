@@ -52,7 +52,6 @@ export const POST_DETAIL_DATA: PostDetailItemType = {
   workplace_information: {
     main_address: '123 Main St, Seoul',
     detailed_address: '5th Floor, Room 501',
-    school_name: 'Seoul National University',
     distance: 1.5,
     latitude: 37.5665,
     longitude: 126.978,

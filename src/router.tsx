@@ -28,6 +28,8 @@ import PatchWorkExperiencePage from '@/pages/SetWorkExperience/PatchWorkExperien
 import ApplicationDetailPage from '@/pages/ApplicationDetail/ApplicationDetailPage';
 import ApplicationResultPage from '@/pages/ApplicationResult/ApplicationResultPage';
 import EmployerPostDetailPage from '@/pages/Employer/PostDetail/EmployerPostDetailPage';
+import EmployerPostPage from '@/pages/Employer/Post/EmployerPostPage';
+import EmployerApplicantListPage from '@/pages/Employer/ApplicantList/EmployerApplicantListPage';
 
 const Layout = () => {
   const location = useLocation();
@@ -89,9 +91,14 @@ const Router = () => {
 
           <Route path="/post/:id" element={<PostDetailPage />} />
           <Route path="/post/apply/:id" element={<PostApplyPage />} />
+          <Route path="/employer/post" element={<EmployerPostPage />} />
           <Route
             path="/employer/post/:id"
             element={<EmployerPostDetailPage />}
+          />
+          <Route
+            path="/employer/post/:id/applicant"
+            element={<EmployerApplicantListPage />}
           />
           <Route path="/write-documents" element={<WriteDocumentsPage />} />
 

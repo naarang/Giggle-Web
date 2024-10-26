@@ -1,5 +1,6 @@
 import {
   DayOfWeekType,
+  VisaType,
   WorkPeriodType,
 } from '@/types/postDetail/postDetailItem';
 
@@ -67,4 +68,17 @@ export type ApplicationCoordinaterItemType = {
   coordinator_name: string;
   coordinator_phone_number: string;
   address: SchoolAddressType;
+};
+
+// 공고에 대한 지원자 리스트
+export type ApplicantItemType = {
+  id: number;
+  profile_img_url: string;
+  name: string;
+  nationality: string;
+  gender: string;
+  visa: VisaType;
+  school_name: string;
+  duration_of_days: number;
+  step: ApplicationStepType;
 };
