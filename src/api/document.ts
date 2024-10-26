@@ -1,6 +1,8 @@
 import {
   IntegratedApplicationData,
+  LaborContractDataResponse,
   LaborContractEmployeeInfo,
+  PartTimePermitData,
   PartTimePermitFormRequest,
   SearchSchoolResponse,
 } from '@/types/api/document';
@@ -117,5 +119,35 @@ export const postRequest = async ({
   const response = await api.post(`/users/documents/${id}/status/requestion`, {
     reason: reason,
   });
+  return response.data;
+};
+
+// 8.3 (유학생/고용주) 시간제 취업 허가서 조회하기
+export const getPartTimeEmployPermit = async (
+  id: number,
+): Promise<PartTimePermitData> => {
+  const response = await api.get(
+    `documents/${id}/part-time-employment-permit/details`,
+  );
+  return response.data;
+};
+
+// 8.4 (유학생/고용주) 근로계약서 조회하기
+export const getStandardLaborContract = async (
+  id: number,
+): Promise<LaborContractDataResponse> => {
+  const response = await api.get(
+    `documents/${id}/standard-labor-contract/details`,
+  );
+  return response.data;
+};
+
+// 8.5 (유학생/고용주) 통합신청서 조회하기
+export const getIntegratedApplication = async (
+  id: number,
+): Promise<IntegratedApplicationData> => {
+  const response = await api.get(
+    `documents/${id}/integrated-application/details`,
+  );
   return response.data;
 };

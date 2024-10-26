@@ -1,4 +1,7 @@
 import {
+  getIntegratedApplication,
+  getPartTimeEmployPermit,
+  getStandardLaborContract,
   postIntegratedApplications,
   postPartTimeEmployPermit,
   postRequest,
@@ -8,7 +11,13 @@ import {
   putStandardLaborContracts,
   searchSchool,
 } from '@/api/document';
-import { DocumentType, SearchSchoolResponse } from '@/types/api/document';
+import {
+  DocumentType,
+  IntegratedApplicationData,
+  LaborContractDataResponse,
+  PartTimePermitData,
+  SearchSchoolResponse,
+} from '@/types/api/document';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
@@ -143,4 +152,61 @@ export const usePostRequest = () => {
     },
     onError: () => navigate('/request-modify'),
   });
+};
+
+// 8.3 (유학생/고용주) 시간제 취업허가서 조회 api 통신 커스텀 훅
+export const useGetPartTimeEmployPermit = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess?: (data: PartTimePermitData) => void;
+  onError?: (error: unknown) => void;
+}) => {
+  const { mutate, ...rest } = useMutation({
+    mutationFn: getPartTimeEmployPermit,
+    onSuccess,
+    onError: (error) => {
+      console.error('시간제 취업 허가서 조회 중 에러 발생:', error);
+      onError?.(error);
+    },
+  });
+  return { mutate, ...rest };
+};
+
+// 8.4 (유학생/고용주) 근로계약서 조회 api 통신 커스텀 훅
+export const useGetStandardLaborContract = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess?: (data: LaborContractDataResponse) => void;
+  onError?: (error: unknown) => void;
+}) => {
+  const { mutate, ...rest } = useMutation({
+    mutationFn: getStandardLaborContract,
+    onSuccess,
+    onError: (error) => {
+      console.error('근로계약서 조회 중 에러 발생:', error);
+      onError?.(error);
+    },
+  });
+  return { mutate, ...rest };
+};
+
+// 8.5 (유학생/고용주) 통합신청서 조회 api 통신 커스텀 훅
+export const useGetIntegratedApplication = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess?: (data: IntegratedApplicationData) => void;
+  onError?: (error: unknown) => void;
+}) => {
+  const { mutate, ...rest } = useMutation({
+    mutationFn: getIntegratedApplication,
+    onSuccess,
+    onError: (error) => {
+      console.error('통합신청서 조회 중 에러 발생:', error);
+      onError?.(error);
+    },
+  });
+  return { mutate, ...rest };
 };
