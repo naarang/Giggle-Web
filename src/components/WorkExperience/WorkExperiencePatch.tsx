@@ -3,7 +3,7 @@ import Input from '@/components/Common/Input';
 import { useEffect, useRef, useState, ChangeEvent } from 'react';
 import Dropdown from '@/components/Common/Dropdown';
 import { PostWorkExperienceType } from '@/types/postResume/postWorkExperience';
-import InputLayout from './InputLayout';
+import InputLayout from '@/components/WorkExperience/InputLayout';
 
 type WorkExperiencePatchProps = {
   workExperienceData: PostWorkExperienceType;
