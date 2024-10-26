@@ -70,8 +70,8 @@ const IntegratedApplicationWriteForm = ({
   const { searchAddress } = useSearchAddress({
     onSuccess: (data) => setAddressSearchResult(data),
   });
-  const { mutate } = usePostIntegratedApplicants(); // 통합신청서 생성 훅
-
+  const { mutate: postDocument } = usePostIntegratedApplicants(); // 통합신청서 생성 훅
+  const { mutate: updateDocument } = usePostIntegratedApplicants(); // 통합신청서 수정 훅
   // 문서 편집일 시 페이지 진입과 동시에 기존 내용 자동 입력
   useEffect(() => {
     if (isEdit && document) {
@@ -155,16 +155,23 @@ const IntegratedApplicationWriteForm = ({
 
   // 문서 작성 완료 핸들러 함수
   const handleNext = () => {
-    mutate({
+    const finalDocument = {
+      ...newDocumentData,
+      birth: newDocumentData.birth.replace(/\//g, '.'),
+      tele_phone_number: formatPhoneNumber(phoneNum),
+      cell_phone_number: formatPhoneNumber(cellPhoneNum),
+      school_phone_number: formatPhoneNumber(schoolPhoneNum),
+    };
+    const payload = {
       id: 1,
-      document: {
-        ...newDocumentData,
-        birth: newDocumentData.birth.replace(/\//g, '.'),
-        tele_phone_number: formatPhoneNumber(phoneNum),
-        cell_phone_number: formatPhoneNumber(cellPhoneNum),
-        school_phone_number: formatPhoneNumber(schoolPhoneNum),
-      },
-    }); // TODO: 로그인 연결 후 userId를 넣어야 하는 것으로 추정
+      document: finalDocument, // TODO: 로그인 연결 후 userId를 넣어야 하는 것으로 추정
+    };
+
+    if (isEdit) {
+      updateDocument(payload);
+      return;
+    }
+    postDocument(payload);
   };
   return (
     <div className="w-full p-6 flex flex-col">
@@ -581,7 +588,7 @@ const IntegratedApplicationWriteForm = ({
             bgColor="bg-[#fef387]"
             fontColor="text-[#222]"
             isBorder={false}
-            title="Create"
+            title={isEdit ? 'Modify' : 'Create'}
             onClick={handleNext}
           />
         ) : (
@@ -590,7 +597,7 @@ const IntegratedApplicationWriteForm = ({
             bgColor="bg-[#F4F4F9]"
             fontColor=""
             isBorder={false}
-            title="Create"
+            title={isEdit ? 'Modify' : 'Create'}
           />
         )}
       </BottomButtonPanel>
