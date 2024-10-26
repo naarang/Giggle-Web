@@ -1,7 +1,7 @@
 import { InputType } from '@/types/common/input';
-import Input from '../Common/Input';
+import Input from '@/components/Common/Input';
 import { useEffect, useRef, useState, ChangeEvent } from 'react';
-import Dropdown from '../Common/Dropdown';
+import Dropdown from '@/components/Common/Dropdown';
 import { PostWorkExperienceType } from '@/types/postResume/postWorkExperience';
 
 type WorkExperiencePatchProps = {

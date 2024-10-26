@@ -1,5 +1,5 @@
-import { EducationLevelType } from "../postApply/resumeDetailItem";
-import { PostWorkExperienceType } from "../postResume/postWorkExperience";
+import { EducationLevelType } from "@/types/postApply/resumeDetailItem";
+import { PostWorkExperienceType } from "@/types/postResume/postWorkExperience";
 
 // 자기소개 요청 타입
 export type IntroDuctionRequest = {

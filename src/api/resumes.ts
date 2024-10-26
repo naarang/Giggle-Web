@@ -1,6 +1,5 @@
 import { AdditionalLanguageRequest, EducationRequest, IntroDuctionRequest, LanguagesLevelType, WorkExperienctRequest } from '@/types/api/resumes';
 import { api } from '.';
-import { WorkExperienceType } from '@/types/postApply/resumeDetailItem';
 
 // 7.1 (유학생/고용주) 이력서 조회하기
 export const getResume = async() =>{
