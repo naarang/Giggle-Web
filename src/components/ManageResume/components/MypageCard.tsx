@@ -58,7 +58,7 @@ const MypageCard = ({
     if (path) navigate(path);
   };
 
-  // 공통 렌더링 헤더 컴포넌트
+  // 공통 헤더 컴포넌트
   const renderHeader = () => (
     <>
       <div className="w-full flex justify-between items-center px-2 pt-2 pb-4 border-b-[0.5px] border-solid border-[#DCDCDC] gap-3">
@@ -68,37 +68,39 @@ const MypageCard = ({
           </div>
           <div className="head-3 text-[#1E1926]">{type}</div>
         </div>
-        {/* Visa, personal informaion은 Cta 버튼 제외 */}
-        {type !== ManageResumeType.VISA &&
-        type !== ManageResumeType.PERSONALINFORMATION &&
-        type !== ManageResumeType.INTRODUCTION ? (
-          // Language는 Cta 버튼 디자인 분리
-          type === ManageResumeType.LANGUAGE ? (
-            <BigEditIcon onClick={handleClick} />
-          ) : (
-            <BlackCtaIcon onClick={handleClick} />
-          )
-        ) : (
-          <></>
+        {/* Language 수정 페이지 이동 */}
+        {type === ManageResumeType.LANGUAGE && (
+          <BigEditIcon onClick={handleClick} />
+        )}
+        {/* Education 추가 페이지 이동 */}
+        {type === ManageResumeType.EDUCATION && (
+          <BlackCtaIcon onClick={handleClick} />
+        )}
+        {/* Work experience 추가 페이지 이동 */}
+        {type === ManageResumeType.WORKEXPERIENCE && (
+          <BlackCtaIcon onClick={handleClick} />
         )}
       </div>
     </>
   );
 
-  // 조건부 스타일
-  // VISA와 PERSONALINFORMATION의 렌더링 내용
+  // -------- 조건부 스타일 --------
+  // 이력서 관리 페이지에서 수정 불가한 정보 렌더링
+  // server 데이터 : title, description 구조
   const renderInformations = () => (
-    <>
+    <div className="flex flex-col w-full p-4 justify-center gap-4 rounded-[1.125rem] border-[0.5px] border-solid border-[#DCDCDC]">
+      {renderHeader()}
       {informations?.map((info, index) => (
         <div key={index} className="px-3 py-4 flex flex-col gap-1">
           <div className="head-3 text-[#1E1926]">{info.title}</div>
           <div className="body-3 text-[#656565]">{info.description}</div>
         </div>
       ))}
-    </>
+    </div>
   );
 
-  // 수정 가능한 정보 조건부 렌더링
+  // 이력서 관리 페이지에서 수정 가능한 정보 렌더링
+  // server 데이터 : Json 구조
   const renderEditSection = () => {
     if (data) {
       if (isEmptyData(data)) {
@@ -130,18 +132,11 @@ const MypageCard = ({
 
   return (
     <>
-      {/* visa, personal informaion은 다른 스타일의 헤더 랜더링 */}
+      {/* 이력서 관리 페이지 내, 수정 가능 여부에 따른 스타일 분리 */}
       {type === ManageResumeType.VISA ||
-      type === ManageResumeType.PERSONALINFORMATION ? (
-        <>
-          <div className="flex flex-col w-full p-4 justify-center gap-4 rounded-[1.125rem] border-[0.5px] border-solid border-[#DCDCDC]">
-            {renderHeader()}
-            {renderInformations()}
-          </div>
-        </>
-      ) : (
-        renderEditSection()
-      )}
+      type === ManageResumeType.PERSONALINFORMATION
+        ? renderInformations()
+        : renderEditSection()}
     </>
   );
 };

@@ -4,9 +4,13 @@ import {
   WorkExperienceType,
 } from '@/types/postApply/resumeDetailItem';
 import { ManageResumeType } from '@/constants/manageResume';
-import MypageCard from './components/MypageCard';
+import MypageCard from '@/components/ManageResume/components/MypageCard';
 import { ResumeDataState } from '@/types/manageResume/manageResume';
-// import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  useDeleteEducation,
+  useDeleteWorkExperience,
+  useDeleteIntroduction,
+} from '@/hooks/api/useResume';
 
 type ResumeEditSectionProps = {
   introductionData: string;
@@ -21,8 +25,6 @@ const ResumeEditSection = ({
   educationData,
   languageData,
 }: ResumeEditSectionProps) => {
-  // const queryClient = useQueryClient();
-
   // 데이터 상태 관리
   const resumeData: ResumeDataState = {
     introductionData,
@@ -31,67 +33,46 @@ const ResumeEditSection = ({
     languageData,
   };
 
-  // 삭제 핸들러 (데이터 삭제 시 해당 필드를 null로 설정)
+  // API 훅 적용
+  const deleteIntroductionMutation = useDeleteIntroduction();
+  const deleteEducationMutation = useDeleteEducation();
+  const deleteWorkExperienceMutation = useDeleteWorkExperience();
+
+  // 삭제 핸들러 (데이터 삭제 시 해당 API 호출)
   const handleDeleteIntroduction = () => {
-    console.log('introductio delete');
+    deleteIntroductionMutation.mutate(undefined, {
+      onSuccess: () => {
+        console.log('Introduction 삭제');
+        // 필요 시 상태 업데이트나 추가 로직 실행
+      },
+      onError: (error) => {
+        console.error('Introduction 삭제 실패', error);
+      },
+    });
   };
 
-  // TODO : Education 삭제 API
   const handleDeleteEducation = (id: number) => {
-    console.log('education delete : ' + id);
-  };
-  /*
-  const deleteEducation = async (id: number): Promise<AxiosResponse> => {
-    return await axios.delete(`/api/v1/users/resumes/educations/${id}`);
+    deleteEducationMutation.mutate(id, {
+      onSuccess: () => {
+        console.log(`Education 삭제: ${id}`);
+      },
+      onError: (error) => {
+        console.error(`Education 삭제 실패: ${id}`, error);
+      },
+    });
   };
 
-  const { mutate: handleDeleteEducation } = useMutation<
-    AxiosResponse,
-    Error,
-    number
-  >(deleteEducation, {
-    onSuccess: (_, id) => {
-      setResumeData((prevData) => ({
-        ...prevData,
-        educationData:
-          prevData.educationData?.filter((education) => education.id !== id) ||
-          null,
-      }));
-      queryClient.invalidateQueries(['resumeData']);
-    },
-    onError: (error) => {
-      console.error('Error deleting education:', error);
-    },
-  });
-  */
-
-  // TODO : Work Experience 삭제 API
   const handleDeleteWorkExperience = (id: number) => {
-    console.log('work experience delete : ' + id);
+    deleteWorkExperienceMutation.mutate(id, {
+      onSuccess: () => {
+        console.log(`Work experience 삭제: ${id}`);
+        // 필요 시 상태 업데이트나 추가 로직 실행
+      },
+      onError: (error) => {
+        console.error(`Work experience 삭제 실패: ${id}`, error);
+      },
+    });
   };
-  /*
-  const deleteWorkExperience = async (id: number): Promise<AxiosResponse> => {
-    return await axios.delete(`/api/v1/users/resumes/work-experiences/${id}`);
-  };
-
-  const { mutate: handleDeleteWorkExperience } = useMutation<
-    AxiosResponse,
-    Error,
-    number
-  >(deleteWorkExperience, {
-    onSuccess: (_, id) => {
-      setResumeData((prevData) => ({
-        ...prevData,
-        workexperienceData:
-          prevData.workexperienceData?.filter((work) => work.id !== id) || null,
-      }));
-      queryClient.invalidateQueries(['resumeData']);
-    },
-    onError: (error) => {
-      console.error('Error deleting work experience:', error);
-    },
-  });
-  */
 
   return (
     <div className="flex flex-col gap-4">

@@ -1,8 +1,9 @@
 import { InputType } from '@/types/common/input';
-import Input from '../Common/Input';
+import Input from '@/components/Common/Input';
 import { useEffect, useRef, useState, ChangeEvent } from 'react';
-import Dropdown from '../Common/Dropdown';
+import Dropdown from '@/components/Common/Dropdown';
 import { PostWorkExperienceType } from '@/types/postResume/postWorkExperience';
+import InputLayout from '@/components/WorkExperience/InputLayout';
 
 type WorkExperiencePatchProps = {
   workExperienceData: PostWorkExperienceType;
@@ -25,6 +26,7 @@ const WorkExperiencePatch = ({
     }
   };
 
+  // text area를 감싼 div 태크 영역 클릭시 text area의 마지막 글자로 자동 포커스되는 함수
   const handleFocusTextArea = () => {
     textareaRef.current?.focus();
     const length = textareaRef.current!.value.length;
@@ -66,10 +68,7 @@ const WorkExperiencePatch = ({
     <div className="p-6 flex flex-col gap-3">
       <div className="head-1 mb-6 text-[#1E1926]">Modify Work Experience</div>
       {/* title 입력 */}
-      <div>
-        <p className="body-3 text-[#1E1926] px-1 py-2">
-          Experience Title <span className="text-[#EE4700] body-1">*</span>
-        </p>
+      <InputLayout title="Experience Title" isEssential={true}>
         <Input
           inputType={InputType.TEXT}
           placeholder="Experience Title"
@@ -77,12 +76,9 @@ const WorkExperiencePatch = ({
           onChange={(value) => handleInputChange('title', value)}
           canDelete={false}
         />
-      </div>
+      </InputLayout>
       {/* 장소 입력 */}
-      <div>
-        <p className="body-3 text-[#1E1926] px-1 py-2">
-          Workplace <span className="text-[#EE4700] body-1">*</span>
-        </p>
+      <InputLayout title="Workplace" isEssential={true}>
         <Input
           inputType={InputType.TEXT}
           placeholder="Workplace"
@@ -90,32 +86,32 @@ const WorkExperiencePatch = ({
           onChange={(value) => handleInputChange('workplace', value)}
           canDelete={false}
         />
-      </div>
+      </InputLayout>
       {/* 시작 날짜 입력 */}
-      <div className="w-fit">
-        <p className="body-3 text-[#1E1926] px-1 py-2">
-          Start Date <span className="text-[#EE4700] body-1">*</span>
-        </p>
-        <Dropdown
-          value={workExperienceData.start_date.replace(/-/g, '/')}
-          placeholder="Select Date"
-          options={[]}
-          isCalendar={true}
-          setValue={(value) => handleDateChange('start_date', value)}
-        />
-      </div>
+      <InputLayout title="Start Date" isEssential={true}>
+        <div className="absolute z-50">
+          <Dropdown
+            value={workExperienceData.start_date.replace(/-/g, '/')}
+            placeholder="Select Date"
+            options={[]}
+            isCalendar={true}
+            setValue={(value) => handleDateChange('start_date', value)}
+          />
+        </div>
+      </InputLayout>
+      <div className="h-8" />
       {/* 끝 날짜 입력 */}
-      <div className="w-fit">
-        <p className="body-3 text-[#1E1926] px-1 py-2">
-          End Date <span className="text-[#EE4700] body-1">*</span>
-        </p>
-        <Dropdown
-          value={workExperienceData.end_date?.replace(/-/g, '/')}
-          placeholder="Select Date"
-          options={[]}
-          isCalendar={true}
-          setValue={(value) => handleDateChange('end_date', value)}
-        />
+      <InputLayout title="End Date" isEssential={true} width="w-fit">
+        <div className="absolute z-40">
+          <Dropdown
+            value={workExperienceData.end_date?.replace(/-/g, '/')}
+            placeholder="Select Date"
+            options={[]}
+            isCalendar={true}
+            setValue={(value) => handleDateChange('end_date', value)}
+          />
+        </div>
+        <div className="h-12" />
         <div
           className="flex items-center gap-3 mt-2 cursor-pointer"
           onClick={handleOngoingToggle}
@@ -125,12 +121,9 @@ const WorkExperiencePatch = ({
           />
           <p className="body-3 text-[#656565]">It's in progress right now</p>
         </div>
-      </div>
+      </InputLayout>
       {/* 상세설명 입력 */}
-      <div>
-        <p className="body-3 text-[#1E1926] px-1 py-2">
-          Description <span className="text-[#EE4700] body-1">*</span>
-        </p>
+      <InputLayout title="Description" isEssential={true}>
         <div
           onClick={handleFocusTextArea}
           className="w-full min-h-32 px-4 py-3 flex flex-col gap-2.5 rounded-xl border border-[#E2E5EB] shadow-inputFieldShadow p-2"
@@ -146,7 +139,7 @@ const WorkExperiencePatch = ({
             {workExperienceData.description.length}/200
           </span>
         </div>
-      </div>
+      </InputLayout>
     </div>
   );
 };
