@@ -15,10 +15,14 @@ export const useGetPostDetail = (id: number) => {
 };
 
 // 4.6 (고용주) 공고에 대한 지원자 리스트 조회 훅
-export const useGetApplicantList = (id: number) => {
+export const useGetApplicantList = (
+  id: number,
+  sorting: string,
+  status: string,
+) => {
   return useQuery({
     queryKey: ['post', id],
-    queryFn: () => getApplicantList(id),
+    queryFn: () => getApplicantList(id, sorting, status),
   });
 };
 
