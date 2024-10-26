@@ -6,11 +6,9 @@ import { useNavigate } from "react-router-dom";
 
 // 7.1 (유학생/고용주) 이력서 조회하기
 export const useGetResume = () => {
-  return useMutation({
-    mutationFn: getResume,
-    onError: (error) => {
-      console.error('이력서 조회 실패', error);
-    },
+  return useQuery({
+    queryKey: ['resume'],
+    queryFn: getResume,
   });
 };
 
@@ -29,18 +27,28 @@ export const useDeleteIntroduction = () => {
 };
 
 // 7.16 (유학생) 경력 삭제하기
-export const useDeleteWorkExperience = (id: number) => {
-  return useQuery({ 
-    queryKey: ['workExperience', id], 
-    queryFn: () => deleteWorkExperience(id),
+export const useDeleteWorkExperience = () => {
+  return useMutation({
+    mutationFn: deleteWorkExperience,
+    onSuccess: () => {
+      console.log('경력 삭제 성공');
+    },
+    onError: (error) => {
+      console.error('경력 삭제 실패', error);
+    },
   });
 };
 
 // 7.17 (유학생) 학력 삭제하기
-export const useDeleteEducation = (id: number) => {
-  return useQuery({ 
-    queryKey: ['education', id], 
-    queryFn: () => deleteEducation(id),
+export const useDeleteEducation = () => {
+  return useMutation({
+    mutationFn: deleteEducation,
+    onSuccess: () => {
+      console.log('학력 삭제 성공');
+    },
+    onError: (error) => {
+      console.error('학력 삭제 실패', error);
+    },
   });
 };
 
@@ -68,16 +76,16 @@ export const usePostWorkExperience = () => {
     onSuccess: () => {
       navigate('/profile/manage-resume');
     },
-    onError: (error) =>{
+    onError: (error) => {
       console.error('경력 작성 실패', error);
-    }
+    },
   });
 };
 
 // 7.2 경력 상세 조회하기
 export const useGetWorkExperience = (id: number) => {
-  return useQuery({ 
-    queryKey: ['workExperience', id], 
+  return useQuery({
+    queryKey: ['workExperience', id],
     queryFn: () => getWorkExperience(id),
   });
 };
@@ -90,9 +98,9 @@ export const usePatchWorkExperience = () => {
     onSuccess: () => {
       navigate('/profile/manage-resume');
     },
-    onError: (error) =>{
+    onError: (error) => {
       console.error('경력 수정 실패', error);
-    }
+    },
   });
 };
 
@@ -104,42 +112,39 @@ export const usePostEducation = () => {
     onSuccess: () => {
       navigate('/profile/manage-resume');
     },
-    onError: (error) =>{
+    onError: (error) => {
       console.error('학력 작성 실패', error);
-    }
+    },
   });
 };
 
 // 7.3 학력 상세 조회하기
 export const useGetEducation = (id: number) => {
-  return useQuery({ 
-    queryKey: ['education', id], 
+  return useQuery({
+    queryKey: ['education', id],
     queryFn: () => getEducation(id),
   });
 };
 
 // 7.10 (유학생) 학력 수정하기
-export const usePatchEducation = (id: number) => {
+export const usePatchEducation = () => {
   const navigate = useNavigate();
-  return useQuery({ 
-    queryKey: ['education', id], 
-    queryFn: () => getEducation(id),
-    // onSuccess: () => {
-    //   navigate('/profile/manage-resume');
-    // },
-    // onError: (error) =>{
-    //   console.error('학력 수정 실패', error);
-    // }
+  return useMutation({
+    mutationFn: patchWorkExperience,
+    onSuccess: () => {
+      navigate('/profile/manage-resume');
+    },
+    onError: (error) => {
+      console.error('학력 수정 실패', error);
+    },
   });
 };
 
 // 7.4 언어 요약 조회하기
 export const useGetLanguagesSummaries = () => {
-  return useMutation({
-    mutationFn: getLanguagesSummaries,
-    onError: (error) => {
-      console.error('언어 요약 조회 실패', error);
-    },
+  return useQuery({
+    queryKey: ['languagesSummaries'],
+    queryFn: getLanguagesSummaries,
   });
 };
 
@@ -151,17 +156,22 @@ export const usePostEtcLanguageLevel = () => {
     onSuccess: () => {
       navigate('/resume/language');
     },
-    onError: (error) =>{
+    onError: (error) => {
       console.error('ETC 작성 실패', error);
-    }
+    },
   });
 };
 
 // 7.18 (유학생) 언어 - ETC 삭제하기
-export const useDeleteEtcLanguageLevel = (id: number) => {
-  return useQuery({ 
-    queryKey: ['etcLanguage', id], 
-    queryFn: () => deleteEtcLanguageLevel(id),
+export const useDeleteEtcLanguageLevel = () => {
+  return useMutation({
+    mutationFn: deleteEtcLanguageLevel,
+    onSuccess: () => {
+      console.log('ETC 삭제 성공');
+    },
+    onError: (error) => {
+      console.error('ETC 삭제 실패', error);
+    },
   });
 };
 
