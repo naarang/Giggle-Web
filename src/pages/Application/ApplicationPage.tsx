@@ -1,18 +1,12 @@
 import ApplicationCardList from '@/components/Application/ApplicationCardList';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import SearchSortDropdown from '@/components/Common/SearchSortDropdown';
-import {
-  APPLICATION_SORT_TYPE,
-  APPLICATION_STATUS_TYPE,
-} from '@/constants/application';
+import { APPLICATION_STATUS_TYPE } from '@/constants/application';
+import { ASCENDING_SORT_TYPE } from '@/constants/sort';
 import { AppicationItemType } from '@/types/application/applicationItem';
+import { ApplicationStatusType } from '@/types/application/applicationStatus';
+import { AscendingSortType } from '@/types/common/sort';
 import { useState } from 'react';
-
-type SortType =
-  (typeof APPLICATION_SORT_TYPE)[keyof typeof APPLICATION_SORT_TYPE];
-
-type StatusType =
-  (typeof APPLICATION_STATUS_TYPE)[keyof typeof APPLICATION_STATUS_TYPE];
 
 // 더미데이터
 const APPLICATION_LIST_DATA: AppicationItemType[] = [
@@ -59,10 +53,10 @@ const APPLICATION_LIST_DATA: AppicationItemType[] = [
 ];
 
 const ApplicationPage = () => {
-  const [selectedSort, setSelectedSort] = useState<SortType>(
-    APPLICATION_SORT_TYPE.ASCENDING,
+  const [selectedSort, setSelectedSort] = useState<AscendingSortType>(
+    ASCENDING_SORT_TYPE.ASCENDING,
   );
-  const [selectedStatus, setSelectedStatus] = useState<StatusType>(
+  const [selectedStatus, setSelectedStatus] = useState<ApplicationStatusType>(
     APPLICATION_STATUS_TYPE.INPROGRESS,
   );
 
@@ -76,14 +70,16 @@ const ApplicationPage = () => {
       <div className="w-full p-[1.5rem]">
         <div className="flex gap-[0.25rem] pb-[2rem]">
           <SearchSortDropdown
-            options={Object.values(APPLICATION_SORT_TYPE)}
+            options={Object.values(ASCENDING_SORT_TYPE)}
             value={selectedSort}
-            onSelect={(sort) => setSelectedSort(sort as SortType)}
+            onSelect={(sort) => setSelectedSort(sort as AscendingSortType)}
           />
           <SearchSortDropdown
             options={Object.values(APPLICATION_STATUS_TYPE)}
             value={selectedStatus}
-            onSelect={(sort) => setSelectedStatus(sort as StatusType)}
+            onSelect={(sort) =>
+              setSelectedStatus(sort as ApplicationStatusType)
+            }
           />
         </div>
         <ApplicationCardList applicationListData={APPLICATION_LIST_DATA} />
