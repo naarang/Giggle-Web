@@ -1,5 +1,5 @@
 import { IconType } from '@/constants/profile';
-import ProfileMenu from './ProfileMenu';
+import ProfileMenu from '@/components/Profile/ProfileMenu';
 import { useNavigate } from 'react-router-dom';
 
 type ProfileMenuListProps = {
@@ -16,7 +16,9 @@ const ProfileMenuList = ({
   const handleEditProfileClick = () => {
     navigate('/profile/edit');
   };
-  const handleManageClick = () => {};
+  const handleManageClick = () => {
+    navigate('/profile/manage-resume');
+  };
   const handleScrappedClick = () => {};
   const handleNotificationClick = () => {};
   const handleLanguageClick = () => {
