@@ -29,7 +29,7 @@ const ApplicationDetailStepBarLayout = ({
       )}
       <div>
         <h5
-          className={`${step > currentStep ? 'head-3' : 'body-1'} text-[#464646]`}
+          className={`${step >= currentStep ? 'head-3' : 'body-1'} text-[#464646]`}
         >
           {title}
         </h5>

@@ -88,7 +88,7 @@ const EmployerApplicantCard = ({
       <div className="flex flex-col gap-[0.625rem] px-[1rem] pb-[1rem]">
         <button
           className="w-full px-[1.5rem] py-[0.75rem] text-center rounded-full bg-[#1E1926] text-[#F4F4F9] caption-1-sb"
-          onClick={() => navigate(`/employer/application/${applicantData.id}`)}
+          onClick={() => navigate(`/employer/applicant/${applicantData.id}`)}
         >
           Check Application Status
         </button>
