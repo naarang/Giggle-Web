@@ -1,4 +1,4 @@
-import { Address } from '@/types/api/users';
+import { Address, Gender } from '@/types/api/users';
 
 //현재 문서의 작성 상태
 export type DocumentStatus =
@@ -172,3 +172,36 @@ export enum LaborContractEmployerInfoProperty {
   INSURANCE = 'insurance',
   SIGNATURE_BASE64 = 'signature_base64', // base64 string
 }
+
+// 통합신청서 데이터 양식
+export type IntegratedApplicationData = {
+  first_name: string;
+  last_name: string;
+  birth: string; // format: yyyy-MM-dd
+  gender: Gender;
+  nationality: string;
+  tele_phone_number: string;
+  cell_phone_number: string;
+  is_accredited: boolean;
+  school_name: string;
+  school_phone_number: string;
+  new_work_place_name: string;
+  new_work_place_registration_number: string;
+  new_work_place_phone_number: string;
+  annual_income_amount: number;
+  occupation: string;
+  email: string;
+  signature_base64: string;
+  address: Address;
+};
+
+export type School = {
+  id: number;
+  name: string;
+  phone_number: string;
+};
+
+export type SearchSchoolResponse = {
+  school_list: School[];
+  has_next: boolean;
+};

@@ -12,6 +12,7 @@ import { transformToEditProfileData } from '@/utils/editProfileData';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { country, phone, visa } from '@/constants/information';
+import useNavigateBack from '@/hooks/useNavigateBack';
 
 const EditProfilePage = () => {
   const navigate = useNavigate();
@@ -38,13 +39,7 @@ const EditProfilePage = () => {
       });
     };
 
-  const handleBackButtonClick = () => {
-    if (window.history.length > 1) {
-      navigate(-1);
-    } else {
-      navigate('/');
-    }
-  };
+  const handleBackButtonClick = useNavigateBack();
 
   const handleSubmit = async (): Promise<void> => {
     // TODO : API - 3.5 (유학생) 프로필 수정
@@ -267,7 +262,7 @@ const EditProfilePage = () => {
               </div>
             </div>
           </div>
-          <div className="mt-32 pt-3 pb-[3.125rem] flex justify-center items-center">
+          <div className="mt-32 pt-3 px-6 pb-[3.125rem] flex justify-center items-center">
             <Button
               type={buttonTypeKeys.LARGE}
               title="Save"
