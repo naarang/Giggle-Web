@@ -105,3 +105,17 @@ export const searchSchool = async (
   );
   return response.data;
 };
+
+// 8.9 (유학생) 서류 (근로계약서, 시간제 취업허가서) 재검토 요청하기
+export const postRequest = async ({
+  id,
+  reason,
+}: {
+  id: number;
+  reason: string;
+}): Promise<{ id: number }> => {
+  const response = await api.post(`/users/documents/${id}/status/requestion`, {
+    reason: reason,
+  });
+  return response.data;
+};

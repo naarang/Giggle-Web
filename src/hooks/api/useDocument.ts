@@ -1,6 +1,7 @@
 import {
   postIntegratedApplications,
   postPartTimeEmployPermit,
+  postRequest,
   postStandardLaborContracts,
   putIntegratedApplications,
   putPartTimeEmployPermit,
@@ -130,4 +131,16 @@ export const useSearchSchool = ({
     },
   });
   return { searchSchool: mutate, ...rest };
+};
+
+// 8.14 (유학생) 통합신청서 수정 api 통신 커스텀 훅
+export const usePostRequest = () => {
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: postRequest,
+    onSuccess: () => {
+      navigate('/application-documents');
+    },
+    onError: () => navigate('/request-modify'),
+  });
 };
