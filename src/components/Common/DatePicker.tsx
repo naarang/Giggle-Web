@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import moment from 'moment';
 import styles from '@/style/CustomCalendar.module.css';
-import NextMonthIcon from '@/assets/icons/Chevron.svg?react';
-import PrevMonthIcon from '@/assets/icons/ChevronLeft.svg?react';
+import NextMonthIcon from '@/assets/icons/Common/calendar/Chevron_light_right.svg?react';
+import PrevMonthIcon from '@/assets/icons/Common/calendar/Chevron_light_left.svg?react';
+import PrevYearIcon from '@/assets/icons/Common/calendar/Chevron_bold_left.svg?react';
 
 const months = [
   'January',
@@ -59,6 +60,12 @@ const DatePicker = ({ setSelectedDate }: Props) => {
           className={styles.reactCalendar}
           nextLabel={<NextMonthIcon />} // 월 이동 아이콘 커스텀
           prevLabel={<PrevMonthIcon />} // 월 이동 아이콘 커스텀
+          next2Label={ // 년 이동 아이콘 커스텀
+            <div style={{ transform: 'rotate(180deg)' }}>
+              <PrevYearIcon />
+            </div>
+          }
+          prev2Label={<PrevYearIcon />} // 년 이동 아이콘 커스텀
           //TODO: 연도 이동 아이콘 디자이넝에게 제공 받으면 추가해야 함.
           showNeighboringMonth={false} // 이전/다음 달의 날짜를 표시하지 않음
           locale="en-US" // 로케일 설정
