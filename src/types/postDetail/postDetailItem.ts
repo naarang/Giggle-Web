@@ -1,4 +1,4 @@
-type VisaType =
+export type VisaType =
   | 'D_2_1'
   | 'D_2_2'
   | 'D_2_3'
@@ -10,7 +10,7 @@ type VisaType =
   | 'D_4_7'
   | 'F_2';
 
-type JobCategoryType =
+export type JobCategoryType =
   | 'GENERAL_INTERPRETATION_TRANSLATION'
   | 'FOOD_SERVICE_ASSISTANT'
   | 'GENERAL_ADMINISTRATIVE_SUPPORT'
@@ -52,13 +52,13 @@ export type CompanyImageUrlType = {
   img_url: string;
 };
 
-type TagType = {
+export type TagType = {
   is_recruiting: boolean;
   visa: VisaType;
   job_category: JobCategoryType;
 };
 
-type SummariesType = {
+export type SummariesType = {
   address: string;
   houlry_rate: number;
   work_period: WorkPeriodType;
