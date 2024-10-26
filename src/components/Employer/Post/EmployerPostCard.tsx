@@ -46,7 +46,7 @@ const EmployerPostCard = ({ postData }: EmployerPostCardType) => {
         </button>
         <button
           className="flex-1 py-[0.75rem] caption-1-sb text-[#1E1926] bg-[#FEF387]  text-center"
-          onClick={() => navigate(`/employer/application/${postData.id}`)}
+          onClick={() => navigate(`/employer/post/${postData.id}/applicant`)}
         >
           지원자 확인
         </button>

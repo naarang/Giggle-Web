@@ -7,6 +7,24 @@ export const getPostDetail = async (id: number) => {
   return response.data;
 };
 
+// 4.6 (고용주) 공고에 대한 지원자 리스트 조회
+// TODO: 정렬값 추가 필요
+export const getApplicantList = async (id: number) => {
+  // TODO: 무한 스크롤 구현하기
+  const page = 1;
+  const size = 10;
+  const response = await api.get(
+    `/api/v1/owners/job-postings/${id}/user-owner-job-postings/users/overviews?page=${page}&size=${size}`,
+  );
+  return response.data;
+};
+
+// 4.7 (유학생/고용주) 공고 요약 정보 조회하기
+export const getPostSummary = async (id: number) => {
+  const response = await api.get(`/api/v1/job-postings/${id}/summaries`);
+  return response.data;
+};
+
 // 4.13 (고용주) 공고 삭제하기
 export const deletePost = async (id: number) => {
   const response = await api.delete(`/api/v1/owners/job-postings/${id}`);

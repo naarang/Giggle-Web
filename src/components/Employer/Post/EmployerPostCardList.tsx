@@ -1,10 +1,10 @@
 import { EMPLOYER_POST_LIST } from '@/constants/post';
-import { AscendingSortType } from '@/types/common/sort';
+import { KoAscendingSortType } from '@/types/common/sort';
 import EmployerPostCard from '@/components/Employer/Post/EmployerPostCard';
 import { useEffect } from 'react';
 
 type EmployerPostCardListProps = {
-  selectedSort: AscendingSortType;
+  selectedSort: KoAscendingSortType;
 };
 
 const EmployerPostCardList = ({ selectedSort }: EmployerPostCardListProps) => {
@@ -14,7 +14,7 @@ const EmployerPostCardList = ({ selectedSort }: EmployerPostCardListProps) => {
   return (
     <>
       {EMPLOYER_POST_LIST.map((data) => (
-        <EmployerPostCard postData={data} />
+        <EmployerPostCard key={data.id} postData={data} />
       ))}
     </>
   );

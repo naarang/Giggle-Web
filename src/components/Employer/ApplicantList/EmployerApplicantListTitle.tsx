@@ -4,38 +4,18 @@ import ClockIcon from '@/assets/icons/ClockIcon.svg?react';
 import MoneyIcon from '@/assets/icons/MoneyIcon.svg?react';
 import TopRightArrowIcons from '@/assets/icons/Home/TopRightArrowIcon.svg?react';
 import { PostSummaryItemType } from '@/types/post/postSummaryItem';
-import { useEffect, useState } from 'react';
+
 import { useNavigate, useParams } from 'react-router-dom';
 
-// 더미데이터 4.7로 불러오기
-const POST_SUMMARY_ITEM: PostSummaryItemType = {
-  icon_img_url: 'https://example.com/icon.png',
-  company_name: 'Global Translations Ltd.',
-  title: 'General Interpretation & Translation',
-  tags: {
-    is_recruiting: true,
-    visa: 'D_2_1',
-    job_category: 'GENERAL_INTERPRETATION_TRANSLATION',
-  },
-  summaries: {
-    address: '123 Translation Ave, Seoul',
-    houlry_rate: 15000,
-    work_period: 'ONE_MONTH_TO_THREE_MONTHS',
-    work_days_per_week: 5,
-  },
+type EmployerApplicantListTitlePropsType = {
+  postData: PostSummaryItemType;
 };
 
-const EmployerApplicantListTitle = () => {
+const EmployerApplicantListTitle = ({
+  postData,
+}: EmployerApplicantListTitlePropsType) => {
   const navigate = useNavigate();
   const { id } = useParams();
-
-  const [postData, setPostData] = useState<PostSummaryItemType>();
-
-  useEffect(() => {
-    setPostData(POST_SUMMARY_ITEM);
-  }, []);
-
-  if (!postData) return <></>;
 
   return (
     <section className="flex flex-col items-center gap-[0.25rem] w-full pt-[0.5rem]">

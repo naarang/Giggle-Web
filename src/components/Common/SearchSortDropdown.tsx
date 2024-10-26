@@ -15,7 +15,7 @@ const DropdownModal = ({ options, value, onSelect }: DropdownProps) => {
         {options.map((option, index) => (
           <div
             key={index}
-            className={`px-4 py-2 ${value == option && 'bg-[#37383C9C] text-white'} rounded-lg  caption-1-sb`}
+            className={`w-full px-4 py-2 ${value == option && 'bg-[#37383C9C] text-white'} rounded-lg  caption-1-sb`}
             onClick={() => onSelect(option)}
           >
             {option}

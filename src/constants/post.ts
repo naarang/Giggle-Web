@@ -1,4 +1,5 @@
 import { EmployerPostItemType } from '@/types/post/employerPostItem';
+import { PostSummaryItemType } from '@/types/post/postSummaryItem';
 
 // 더미데이터
 export const EMPLOYER_POST_LIST: EmployerPostItemType[] = [
@@ -27,3 +28,21 @@ export const EMPLOYER_POST_LIST: EmployerPostItemType[] = [
     duration_of_days: 45,
   },
 ];
+
+// 4.7 더미데이터
+export const POST_SUMMARY_ITEM: PostSummaryItemType = {
+  icon_img_url: 'https://example.com/icon.png',
+  company_name: 'Global Translations Ltd.',
+  title: 'General Interpretation & Translation',
+  tags: {
+    is_recruiting: true,
+    visa: 'D_2_1',
+    job_category: 'GENERAL_INTERPRETATION_TRANSLATION',
+  },
+  summaries: {
+    address: '123 Translation Ave, Seoul',
+    houlry_rate: 15000,
+    work_period: 'ONE_MONTH_TO_THREE_MONTHS',
+    work_days_per_week: 5,
+  },
+};

@@ -1,13 +1,13 @@
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import SearchSortDropdown from '@/components/Common/SearchSortDropdown';
 import EmployerPostCardList from '@/components/Employer/Post/EmployerPostCardList';
-import { ASCENDING_SORT_TYPE } from '@/constants/sort';
-import { AscendingSortType } from '@/types/common/sort';
+import { KO_ASCENDING_SORT_TYPE } from '@/constants/sort';
+import { KoAscendingSortType } from '@/types/common/sort';
 import { useState } from 'react';
 
 const EmployerPostPage = () => {
-  const [selectedSort, setSelectedSort] = useState<AscendingSortType>(
-    ASCENDING_SORT_TYPE.ASCENDING,
+  const [selectedSort, setSelectedSort] = useState<KoAscendingSortType>(
+    KO_ASCENDING_SORT_TYPE.ASCENDING,
   );
   return (
     <>
@@ -22,9 +22,9 @@ const EmployerPostPage = () => {
         </h2>
         <div className="flex justify-end">
           <SearchSortDropdown
-            options={Object.values(ASCENDING_SORT_TYPE)}
+            options={Object.values(KO_ASCENDING_SORT_TYPE)}
             value={selectedSort}
-            onSelect={(sort) => setSelectedSort(sort as AscendingSortType)}
+            onSelect={(sort) => setSelectedSort(sort as KoAscendingSortType)}
           />
         </div>
         <EmployerPostCardList selectedSort={selectedSort} />

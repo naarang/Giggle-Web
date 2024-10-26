@@ -4,11 +4,9 @@ import SearchSortDropdown from '@/components/Common/SearchSortDropdown';
 import { APPLICATION_STATUS_TYPE } from '@/constants/application';
 import { ASCENDING_SORT_TYPE } from '@/constants/sort';
 import { AppicationItemType } from '@/types/application/applicationItem';
+import { ApplicationStatusType } from '@/types/application/applicationStatus';
 import { AscendingSortType } from '@/types/common/sort';
 import { useState } from 'react';
-
-type StatusType =
-  (typeof APPLICATION_STATUS_TYPE)[keyof typeof APPLICATION_STATUS_TYPE];
 
 // 더미데이터
 const APPLICATION_LIST_DATA: AppicationItemType[] = [
@@ -58,7 +56,7 @@ const ApplicationPage = () => {
   const [selectedSort, setSelectedSort] = useState<AscendingSortType>(
     ASCENDING_SORT_TYPE.ASCENDING,
   );
-  const [selectedStatus, setSelectedStatus] = useState<StatusType>(
+  const [selectedStatus, setSelectedStatus] = useState<ApplicationStatusType>(
     APPLICATION_STATUS_TYPE.INPROGRESS,
   );
 
@@ -79,7 +77,9 @@ const ApplicationPage = () => {
           <SearchSortDropdown
             options={Object.values(APPLICATION_STATUS_TYPE)}
             value={selectedStatus}
-            onSelect={(sort) => setSelectedStatus(sort as StatusType)}
+            onSelect={(sort) =>
+              setSelectedStatus(sort as ApplicationStatusType)
+            }
           />
         </div>
         <ApplicationCardList applicationListData={APPLICATION_LIST_DATA} />
