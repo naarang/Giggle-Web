@@ -1,3 +1,4 @@
+import { School } from "@/types/api/document";
 import { ResumeDetailItemType } from "@/types/postApply/resumeDetailItem";
 
 export const enum ManageResumeType {
@@ -86,3 +87,32 @@ export const ResumeData: ResumeDetailItemType = {
     ],
   },
 };
+
+export const SearchSchollsList: School[] = [
+  { id: 1, name: 'University of Oxford', phone_number: '000-0000' },
+  {
+    id: 2,
+    name: 'National University of Lesotho International School',
+    phone_number: '000-0000',
+  },
+  { id: 3, name: 'University of Chester CE Academy', phone_number: '000-0000' },
+  {
+    id: 4,
+    name: 'University of Chester Academy Northwich',
+    phone_number: '000-0000',
+  },
+  { id: 5, name: 'University of Birmingham School', phone_number: '000-0000' },
+  { id: 6, name: 'University of Oxford', phone_number: '000-0000' },
+  {
+    id: 7,
+    name: 'National University of Lesotho International School',
+    phone_number: '000-0000',
+  },
+  { id: 8, name: 'University of Chester CE Academy', phone_number: '000-0000' },
+  {
+    id: 9,
+    name: 'University of Chester Academy Northwich',
+    phone_number: '000-0000',
+  },
+  { id: 10, name: 'University of Birmingham School', phone_number: '000-0000' },
+];

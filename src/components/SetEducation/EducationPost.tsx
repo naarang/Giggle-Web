@@ -1,26 +1,31 @@
 import { InputType } from '@/types/common/input';
 import Input from '../Common/Input';
 import Dropdown from '../Common/Dropdown';
-import { PostEducationType } from '@/types/postResume/postEducation';
+import { InitailEducationType } from '@/types/postResume/postEducation';
 import { EducationLevels } from '@/constants/manageResume';
 import GraySearchIcon from '@/assets/icons/ManageResume/GraySearchIcon.svg?react';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import SearchSchools from './SearchSchools';
+import { School } from '@/types/api/document';
 
 type EducationPostProps = {
-  educationData: PostEducationType;
-  setEducationData: React.Dispatch<React.SetStateAction<PostEducationType>>;
+  educationData: InitailEducationType;
+  setEducationData: React.Dispatch<React.SetStateAction<InitailEducationType>>;
 };
 
 const EducationPost = ({
   educationData,
   setEducationData,
 }: EducationPostProps) => {
-  const navigate = useNavigate();
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
+  const [school, setSchool] = useState<School>();
+
+  const handleSchoolChange = (school: School) => {
+    setSchool(school);
+  };
+
   const handleInputChange = (
-    field: keyof PostEducationType,
+    field: keyof InitailEducationType,
     value: string | number,
   ) => {
     setEducationData((prev) => ({ ...prev, [field]: value }));
@@ -39,8 +44,9 @@ const EducationPost = ({
     <>
       {searchOpen && (
         <SearchSchools
-          setSchoolId={(value) => handleInputChange('school_id', value)}
+          setSchool={handleSchoolChange}
           setSearchOpen={setSearchOpen}
+          handleInputChange={handleInputChange}
         />
       )}
       <div className="p-6 flex flex-col gap-3">
@@ -71,10 +77,10 @@ const EducationPost = ({
           >
             <GraySearchIcon />
             {/* 선택되었다면, 선택한 학교명 */}
-            <p>
-              {educationData.school_id
-                ? educationData.school_id
-                : 'Search Name of school'}
+            <p
+              className={`body-2 ${school ? 'text-[#1E1926]' : 'text-[#BDBDBD]'}`}
+            >
+              {school ? school.name : 'Search Name of school'}
             </p>
           </div>
         </div>
@@ -88,6 +94,19 @@ const EducationPost = ({
             placeholder="Education Title"
             value={educationData.major}
             onChange={(value) => handleInputChange('major', value)}
+            canDelete={false}
+          />
+        </div>
+        {/* 학년 입력 */}
+        <div>
+          <p className="body-3 text-[#1E1926] px-1 py-2">
+            Grade<span className="text-[#EE4700] body-1">*</span>
+          </p>
+          <Input
+            inputType={InputType.TEXT}
+            placeholder="Grade"
+            value={String(educationData.grade)}
+            onChange={(value) => handleInputChange('grade', value)}
             canDelete={false}
           />
         </div>

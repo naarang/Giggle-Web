@@ -1,63 +1,62 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BaseHeader from '../Common/Header/BaseHeader';
 import Input from '../Common/Input';
 import { InputType } from '@/types/common/input';
 import Button from '../Common/Button';
 import { buttonTypeKeys } from '@/constants/components';
-
-type School = {
-  id: number;
-  name: string;
-  phone_number: string;
-};
+import { School } from '@/types/api/document';
+import { SearchSchollsList } from '@/constants/manageResume';
+import { InitailEducationType } from '@/types/postResume/postEducation';
+// import { useGetSearchSchools } from '@/hooks/api/useResume';
 
 type SearchSchoolsProps = {
-  setSchoolId: (value: number) => void; //Id말고 객체로 넘기기
+  setSchool: (school: School) => void;
   setSearchOpen: (value: boolean) => void;
+  handleInputChange: (field: keyof InitailEducationType, value: number) => void;
 };
 
-const SearchSchools = ({ setSchoolId, setSearchOpen }: SearchSchoolsProps) => {
+const SearchSchools = ({
+  setSchool,
+  setSearchOpen,
+  handleInputChange,
+}: SearchSchoolsProps) => {
+  // 학교명 검색어 상태 관리
   const [searchSchool, setSearchSchool] = useState<string>('');
+  // 선택한 학교 상태 관리
   const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
+  // 학교 목록의 페이지(서버 요청)
+  const [page, setPage] = useState<number>(1);
+  const size = 10;
 
-  const [schoolList, setSchoolList] = useState<School[]>([
-    { id: 1, name: 'University of Oxford', phone_number: 'String' },
-    {
-      id: 2,
-      name: 'National University of Lesotho International School',
-      phone_number: 'String',
-    },
-    { id: 3, name: 'University of Chester CE Academy', phone_number: 'String' },
-    {
-      id: 4,
-      name: 'University of Chester Academy Northwich',
-      phone_number: 'String',
-    },
-    { id: 5, name: 'University of Birmingham School', phone_number: 'String' },
-    { id: 6, name: 'University of Oxford', phone_number: 'String' },
-    {
-      id: 7,
-      name: 'National University of Lesotho International School',
-      phone_number: 'String',
-    },
-    { id: 8, name: 'University of Chester CE Academy', phone_number: 'String' },
-    {
-      id: 9,
-      name: 'University of Chester Academy Northwich',
-      phone_number: 'String',
-    },
-    { id: 10, name: 'University of Birmingham School', phone_number: 'String' },
-  ]);
+  const schoolList = SearchSchollsList;
+  // const { data: schoolList = [], isLoading } = useGetSearchSchools(
+  //   searchSchool,
+  //   page,
+  //   size,
+  // );
 
+  useEffect(() => {
+    if (selectedSchool) {
+      console.log(`Selected School: ${selectedSchool.name}`);
+    }
+  }, [selectedSchool]);
+
+  // 선택 버튼
   const handleSubmit = () => {
     if (selectedSchool) {
-      setSchoolId(selectedSchool.id);
+      setSchool(selectedSchool);
       setSearchOpen(false);
+      handleInputChange('school_id', selectedSchool.id);
     }
   };
 
   const handleSelectSchool = (school: School) => {
     setSelectedSchool(school);
+  };
+
+  const handleSearchChange = (value: string) => {
+    setSearchSchool(value);
+    setPage(1); // 새로운 검색어가 들어오면 페이지를 초기화
   };
 
   return (
@@ -78,24 +77,31 @@ const SearchSchools = ({ setSchoolId, setSearchOpen }: SearchSchoolsProps) => {
           inputType={InputType.SEARCH}
           placeholder="Search Name of school"
           value={searchSchool}
-          onChange={(value: string) => setSearchSchool(value)}
+          onChange={handleSearchChange}
           canDelete={true}
           onDelete={() => setSearchSchool('')}
         />
         <div className="mt-6 p-2 body-2 text-[#656565] h-[26rem] overflow-scroll">
-          {schoolList.map((school) => (
-            <div
-              key={school.id}
-              className={`px-3.5 py-2.5 rounded-lg cursor-pointer ${
-                selectedSchool?.id === school.id
-                  ? 'bg-[#FEF387] text-[#1E1926]'
-                  : 'bg-white text-[#656565]'
-              }`}
-              onClick={() => handleSelectSchool(school)}
-            >
-              {school.name}
-            </div>
-          ))}
+          {/* {isLoading ? (
+            <div>Loading...</div>
+          ) : ( */}
+          {/* 검색된 학교 목록 */}
+          {
+            schoolList.map((school: School) => (
+              <div
+                key={school.id}
+                className={`px-3.5 py-2.5 rounded-lg cursor-pointer ${
+                  selectedSchool?.id === school.id
+                    ? 'bg-[#FEF387] text-[#1E1926]'
+                    : 'bg-white text-[#656565]'
+                }`}
+                onClick={() => handleSelectSchool(school)}
+              >
+                {school.name}
+              </div>
+            ))
+            // )}
+          }
         </div>
       </div>
       <div className="fixed w-full bottom-[3.125rem] px-6 pt-3 bg-grayGradient">

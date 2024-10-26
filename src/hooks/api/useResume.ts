@@ -1,4 +1,4 @@
-import { deleteEducation, deleteEtcLanguageLevel, deleteIntroduction, deleteWorkExperience, getEducation, getLanguagesSummaries, getResume, getWorkExperience, patchIntroduction, patchWorkExperience, postEducation, postEtcLanguageLevel, postWorkExperience } from "@/api/resumes";
+import { deleteEducation, deleteEtcLanguageLevel, deleteIntroduction, deleteWorkExperience, getEducation, getLanguagesSummaries, getResume, getSearchSchools, getWorkExperience, patchIntroduction, patchWorkExperience, postEducation, postEtcLanguageLevel, postWorkExperience } from "@/api/resumes";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
@@ -176,3 +176,12 @@ export const useDeleteEtcLanguageLevel = () => {
 };
 
 // TODO: ETC 수정하기 추가
+
+// 9.1 (유학생) 학교 검색하기
+export const useGetSearchSchools = (search: string, page: number, size: number) => {
+  return useQuery({
+    queryKey: ['searchSchools', search, page, size],
+    queryFn: () => getSearchSchools({ search, page: page.toString(), size: size.toString() }),
+    enabled: !!search, // 검색어가 있을 때만 쿼리 활성화
+  });
+};

@@ -1,30 +1,30 @@
-import Button from '@/components/Common/Button';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
+import Button from '@/components/Common/Button';
 import EducationPost from '@/components/SetEducation/EducationPost';
 import { buttonTypeKeys } from '@/constants/components';
 import useNavigateBack from '@/hooks/useNavigateBack';
-import { PostEducationType } from '@/types/postResume/postEducation';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { InitailEducationType } from '@/types/postResume/postEducation';
+import { formatGpa, isPostEducationType } from '@/utils/introduction';
+
+// input 기본값 설정
+const InitailEducation = (): InitailEducationType => ({
+  education_level: '',
+  school_id: 0,
+  major: '',
+  gpa: 0.0,
+  start_date: '',
+  end_date: '',
+  grade: 0,
+});
 
 const PostEducationPage = () => {
-  const initialData: PostEducationType = {
-    education_level: 'BACHELOR', // Enum(BACHELOR, ASSOCIATE, HIGHSCHOOL),
-    school_id: 1,
-    major: 'Department of Computer Engineering',
-    gpa: 3.5,
-    start_date: '2021-03-01', // yyyy-MM-dd
-    end_date: '2026-03-01', // yyyy-MM-dd
-    grade: 4,
-  };
-
   const handleBackButtonClick = useNavigateBack();
   const navigate = useNavigate();
-
   const [educationData, setEducationData] =
-    useState<PostEducationType>(initialData);
-  // 초기 값에서 수정된 내용이 있는지 확인
-  const [isEditing, setIsEditing] = useState<boolean>(false);
+    useState<InitailEducationType>(InitailEducation());
+  const [isValid, setIsValid] = useState<boolean>(false);
 
   const handleSubmit = () => {
     // TODO: API - 7.6 학력 생성하기
@@ -32,12 +32,8 @@ const PostEducationPage = () => {
   };
 
   useEffect(() => {
-    // 편집 중인지 여부 확인
-    if (educationData == initialData) {
-      setIsEditing(false);
-    } else {
-      setIsEditing(true);
-    }
+    setIsValid(isPostEducationType(educationData));
+    console.log(educationData);
   }, [educationData]);
 
   return (
@@ -48,20 +44,18 @@ const PostEducationPage = () => {
         hasMenuButton={false}
         title="Introduction"
       />
-      {/* input 컴포넌트 */}
       <EducationPost
         educationData={educationData}
         setEducationData={setEducationData}
       />
       <div className="pb-[3.125rem] px-6 mt-3 w-full">
-        {/* post 버튼 */}
         <Button
           type={buttonTypeKeys.LARGE}
-          bgColor={isEditing ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'}
-          fontColor={isEditing ? 'text-[#1E1926]' : 'text-[#BDBDBD]'}
+          bgColor={isValid ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'}
+          fontColor={isValid ? 'text-[#1E1926]' : 'text-[#BDBDBD]'}
           title="Save"
           isBorder={false}
-          onClick={isEditing ? handleSubmit : undefined}
+          onClick={isValid ? handleSubmit : undefined}
         />
       </div>
     </div>
