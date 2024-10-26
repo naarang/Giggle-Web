@@ -77,7 +77,6 @@ type RecruitmentConditionsType = {
 type WorkplaceInformationType = {
   main_address: string;
   detailed_address: string;
-  school_name: string;
   distance: number;
   latitude: number;
   longitude: number;
