@@ -6,7 +6,7 @@ import EducationPost from '@/components/SetEducation/EducationPost';
 import { buttonTypeKeys } from '@/constants/components';
 import useNavigateBack from '@/hooks/useNavigateBack';
 import { InitailEducationType } from '@/types/postResume/postEducation';
-import { formatGpa, isPostEducationType } from '@/utils/introduction';
+import { isPostEducationType } from '@/utils/introduction';
 
 // input 기본값 설정
 const InitailEducation = (): InitailEducationType => ({
@@ -37,18 +37,20 @@ const PostEducationPage = () => {
   }, [educationData]);
 
   return (
-    <div>
-      <BaseHeader
-        hasBackButton={true}
-        onClickBackButton={handleBackButtonClick}
-        hasMenuButton={false}
-        title="Introduction"
-      />
-      <EducationPost
-        educationData={educationData}
-        setEducationData={setEducationData}
-      />
-      <div className="pb-[3.125rem] px-6 mt-3 w-full">
+    <>
+      <div className="mb-24">
+        <BaseHeader
+          hasBackButton={true}
+          onClickBackButton={handleBackButtonClick}
+          hasMenuButton={false}
+          title="Introduction"
+        />
+        <EducationPost
+          educationData={educationData}
+          setEducationData={setEducationData}
+        />
+      </div>
+      <div className="pb-[2.5rem] px-6 w-full fixed bottom-0 bg-grayGradient">
         <Button
           type={buttonTypeKeys.LARGE}
           bgColor={isValid ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'}
@@ -58,7 +60,7 @@ const PostEducationPage = () => {
           onClick={isValid ? handleSubmit : undefined}
         />
       </div>
-    </div>
+    </>
   );
 };
 

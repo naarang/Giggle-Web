@@ -36,8 +36,6 @@ const EducationPost = ({
     value: string,
   ) => {
     handleInputChange(field, value.replace(/\//g, '-'));
-    if (field === 'end_date') {
-    }
   };
 
   return (
@@ -124,9 +122,9 @@ const EducationPost = ({
           />
         </div>
         {/* 입학 날짜 입력 */}
-        <div className="w-fit">
+        <div className="w-full">
           <p className="body-3 text-[#1E1926] px-1 py-2">
-            Start Date <span className="text-[#EE4700] body-1">*</span>
+            Entrance Date <span className="text-[#EE4700] body-1">*</span>
           </p>
           <Dropdown
             value={educationData.start_date.replace(/-/g, '/')}
@@ -137,9 +135,9 @@ const EducationPost = ({
           />
         </div>
         {/* 졸업 날짜 입력 */}
-        <div className="w-fit">
+        <div className="w-full">
           <p className="body-3 text-[#1E1926] px-1 py-2">
-            End Date <span className="text-[#EE4700] body-1">*</span>
+            Graduation Date <span className="text-[#EE4700] body-1">*</span>
           </p>
           <Dropdown
             value={educationData.end_date?.replace(/-/g, '/')}
