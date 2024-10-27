@@ -30,6 +30,7 @@ import ApplicationResultPage from '@/pages/ApplicationResult/ApplicationResultPa
 import EmployerPostDetailPage from '@/pages/Employer/PostDetail/EmployerPostDetailPage';
 import EmployerPostPage from '@/pages/Employer/Post/EmployerPostPage';
 import EmployerApplicantListPage from '@/pages/Employer/ApplicantList/EmployerApplicantListPage';
+import PostLanguage from '@/pages/Language/PostLanguage';
 
 const Layout = () => {
   const location = useLocation();
@@ -74,6 +75,7 @@ const Router = () => {
 
           <Route path="/resume/introduction" element={<IntroductionPage />} />
           <Route path="/resume/language" element={<LanguagePage />} />
+          <Route path="/resume/language/add" element={<PostLanguage />} />
           <Route path="/resume/scrapped" element={<ScrappedJobPostsPage />} />
           <Route path="/resume/education" element={<PostEducationPage />} />
           <Route

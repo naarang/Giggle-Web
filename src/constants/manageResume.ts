@@ -1,3 +1,4 @@
+import { LanguagesSummariesResponse } from "@/types/api/resumes";
 import { ResumeDetailItemType } from "@/types/postApply/resumeDetailItem";
 
 export const enum ManageResumeType {
@@ -84,3 +85,23 @@ export const ResumeData: ResumeDetailItemType = {
     ],
   },
 };
+
+
+export const LanguageData:LanguagesSummariesResponse = {
+  topik_level : 3,
+  social_integration_level : 2,
+  sejong_institute : 3,
+  additional_language : 
+  [
+    {
+      id : 1,
+      language_name : 'English',
+      level : 5
+    },
+    {
+      id : 2,
+      language_name : 'Japanese',
+      level : 5
+    },
+  ] 
+}

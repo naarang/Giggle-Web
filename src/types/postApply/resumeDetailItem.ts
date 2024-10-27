@@ -32,7 +32,7 @@ export type EducationType = {
   grade: number;
 };
 
-type LanguageType = {
+export type LanguageType = {
   id: number;
   laguage_name: string;
   level: number;
