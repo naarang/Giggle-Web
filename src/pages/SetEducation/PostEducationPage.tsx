@@ -43,7 +43,7 @@ const PostEducationPage = () => {
           hasBackButton={true}
           onClickBackButton={handleBackButtonClick}
           hasMenuButton={false}
-          title="Introduction"
+          title="Education"
         />
         <EducationPost
           educationData={educationData}

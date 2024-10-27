@@ -35,12 +35,6 @@ const SearchSchools = ({
   //   size,
   // );
 
-  useEffect(() => {
-    if (selectedSchool) {
-      console.log(`Selected School: ${selectedSchool.name}`);
-    }
-  }, [selectedSchool]);
-
   // 선택 버튼
   const handleSubmit = () => {
     if (selectedSchool) {
@@ -58,6 +52,14 @@ const SearchSchools = ({
     setSearchSchool(value);
     setPage(1); // 새로운 검색어가 들어오면 페이지를 초기화
   };
+
+  // 모달이 열렸을 떄 스크롤 방지
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
 
   return (
     <div className="fixed top-0 w-screen h-screen bg-white z-50">
@@ -82,6 +84,7 @@ const SearchSchools = ({
           onDelete={() => setSearchSchool('')}
         />
         <div className="mt-6 p-2 body-2 text-[#656565] h-[26rem] overflow-scroll">
+          {/* API 연결 후 아래 주석 해제 */}
           {/* {isLoading ? (
             <div>Loading...</div>
           ) : ( */}

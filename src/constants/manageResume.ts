@@ -1,5 +1,6 @@
 import { School } from "@/types/api/document";
 import { ResumeDetailItemType } from "@/types/postApply/resumeDetailItem";
+import { GetEducationType, PostEducationType } from "@/types/postResume/postEducation";
 
 export const enum ManageResumeType {
   VISA = 'VISA',
@@ -116,3 +117,17 @@ export const SearchSchollsList: School[] = [
   },
   { id: 10, name: 'University of Birmingham School', phone_number: '000-0000' },
 ];
+
+export const GetEducationData: GetEducationType = {
+  education_level: 'BACHELOR', // Enum(BACHELOR, ASSOCIATE, HIGHSCHOOL),
+  school:{
+    id: 1,
+    name: 'University of Chester Academy Northwich',
+    phone_number: '000-0000'
+  },
+  major: 'Department of Computer Engineering',
+  gpa: 3.5,
+  start_date: '2021-03-01', // yyyy-MM-dd
+  end_date: '2026-03-01', // yyyy-MM-dd
+  grade: 4,
+};
