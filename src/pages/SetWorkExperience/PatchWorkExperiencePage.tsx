@@ -70,18 +70,20 @@ const PatchWorkExperiencePage = () => {
 
   return (
     <div>
-      <BaseHeader
-        hasBackButton={true}
-        onClickBackButton={handleBackButtonClick}
-        hasMenuButton={false}
-        title="Introduction"
-      />
-      {/* input 영역 */}
-      <WorkExperiencePatch
-        workExperienceData={workExperienceData}
-        setWorkExperienceData={setWorkExperienceData}
-      />
-      <div className="pb-[3.125rem] px-6 mt-3 w-full flex gap-2">
+      <div className="mb-24">
+        <BaseHeader
+          hasBackButton={true}
+          onClickBackButton={handleBackButtonClick}
+          hasMenuButton={false}
+          title="Introduction"
+        />
+        {/* input 영역 */}
+        <WorkExperiencePatch
+          workExperienceData={workExperienceData}
+          setWorkExperienceData={setWorkExperienceData}
+        />
+      </div>
+      <div className="fixed bottom-0 flex gap-2 pb-[2.5rem] px-6 w-full bg-grayGradient">
         {/* 리셋 버튼 */}
         <Button
           type={buttonTypeKeys.LARGE}

@@ -92,7 +92,7 @@ const PatchEducationPage = () => {
               schoolData={fetchData.school}
             />
           </div>
-          <div className="flex gap-2 pb-[2.5rem] px-6 w-full fixed bottom-0 bg-grayGradient">
+          <div className="fixed bottom-0 flex gap-2 pb-[2.5rem] px-6 w-full bg-grayGradient">
             <Button
               type={buttonTypeKeys.LARGE}
               bgColor="bg-[#F4F4F9]"
