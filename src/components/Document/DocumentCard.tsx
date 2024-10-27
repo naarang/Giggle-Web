@@ -27,9 +27,11 @@ type DocumentCardProps = {
 const TemporarySaveCard = ({
   title,
   onNext,
+  onEdit,
 }: {
   title: string;
   onNext: () => void;
+  onEdit: () => void;
 }) => {
   return (
     <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-center justify-center gap-2 caption-2 text-left text-[#1e1926]">
@@ -74,7 +76,7 @@ const TemporarySaveCard = ({
           fontColor="text-[#222]"
           isBorder={false}
           title="Edit"
-          onClick={onNext}
+          onClick={onEdit}
         />
         <Button
           type="large"
@@ -357,7 +359,20 @@ const DocumentCardDispenser = ({
     );
   switch (document.status) {
     case DocumentStatus.TEMPORARY_SAVE:
-      return <TemporarySaveCard title={title} onNext={onNext} />;
+      return (
+        <TemporarySaveCard
+          title={title}
+          onNext={onNext}
+          onEdit={() =>
+            navigate('/write-documents', {
+              state: {
+                type: type,
+                isEdit: true,
+              },
+            })
+          }
+        />
+      );
     case DocumentStatus.SUBMITTED:
       return <SubmittedCard title={title} />;
     case DocumentStatus.BEFORE_CONFIRMATION:
