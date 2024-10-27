@@ -170,7 +170,7 @@ export const deleteEtcLanguageLevel = async (id: number) => {
 // 7.19 (고용주) 이력서 조회하기
 export const getApplicantResume = async (id: number) => {
   const response = await api.get(
-    `/api/v1/owners/user-owner-job-postings/${id}/users/resumes/details`,
+    `/owners/user-owner-job-postings/${id}/users/resumes/details`,
   );
   return response.data;
 };

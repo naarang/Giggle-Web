@@ -12,7 +12,7 @@ export const getEmployerApplicationDetail = async (id: number) => {
 // 6.8 (고용주) 지원자 간단 정보 조회하기
 export const getEmployerApplicationSummary = async (id: number) => {
   const response = await api.get(
-    `/api/v1/owners/user-owner-job-postings/${id}/users/briefs`,
+    `/owners/user-owner-job-postings/${id}/users/briefs`,
   );
   return response.data;
 };
@@ -35,7 +35,7 @@ export const patchResumeAccepted = async ({
 // 6.11 (고용주) 인터뷰 완료하기
 export const patchInterviewFinish = async (id: number) => {
   const response = await api.patch(
-    `/api/v1/owners/user-owner-job-postings/${id}/step-waiting-for-interview`,
+    `/owners/user-owner-job-postings/${id}/step-waiting-for-interview`,
   );
   return response.data;
 };
