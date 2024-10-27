@@ -21,6 +21,7 @@ import ApplicationDetailPage from '@/pages/ApplicationDetail/ApplicationDetailPa
 import ApplicationResultPage from '@/pages/ApplicationResult/ApplicationResultPage';
 import EmployerPostDetailPage from '@/pages/Employer/PostDetail/EmployerPostDetailPage';
 import RequestModifyPage from './pages/WriteDocuments/RequestModifyPage';
+import DocumentPreview from './pages/WriteDocuments/DocumentPreviewPage';
 
 const Layout = () => {
   const location = useLocation();
@@ -69,6 +70,7 @@ const Router = () => {
             element={<EmployerPostDetailPage />}
           />
           <Route path="/write-documents" element={<WriteDocumentsPage />} />
+          <Route path="/document-preview" element={<DocumentPreview />} />
           <Route path="/request-modify" element={<RequestModifyPage />} />
 
           <Route path="/application" element={<ApplicationPage />} />

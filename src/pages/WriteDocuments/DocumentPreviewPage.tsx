@@ -14,14 +14,24 @@ import {
   useGetPartTimeEmployPermit,
   useGetStandardLaborContract,
 } from '@/hooks/api/useDocument';
-
+import EmployeeInfoSection from '@/components/Document/write/EmployeeInfoSection';
+import {
+  mockIntegratedApplication,
+  mockLaborContractEmployeeInfo,
+  sampleLaborContract,
+} from '../../constants/documents';
+import InfoAlert from '@/components/Document/write/InfoAlert';
+import IntegratedApplicationPreview from '@/components/Document/write/IntegratedApplicationPreview';
 const DocumentPreview = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { type } = location.state || {};
   const [document, setDocument] = useState<
     PartTimePermitData | LaborContractDataResponse | IntegratedApplicationData
-  >();
+  >(
+    mockIntegratedApplication
+    //employer_information: sampleLaborContract,
+  );
   const { mutate: getPartTimeEmployPermit } = useGetPartTimeEmployPermit({
     onSuccess: (data) => setDocument(data),
   });
@@ -31,7 +41,8 @@ const DocumentPreview = () => {
   const { mutate: getIntegratedApplication } = useGetIntegratedApplication({
     onSuccess: (data) => setDocument(data),
   });
-  useEffect(() => {
+  {
+    /*  useEffect(() => {
     switch (type) {
       case DocumentType.PART_TIME_PERMIT:
         getPartTimeEmployPermit(1);
@@ -43,19 +54,34 @@ const DocumentPreview = () => {
         getIntegratedApplication(1);
         break;
     }
-  }, [type]);
+  }, [type]); */
+  }
 
-  const hasEmployerInfo = (
+  const hasInfo = (
     doc:
       | PartTimePermitData
       | LaborContractDataResponse
       | IntegratedApplicationData,
+    properties: ('employer_information' | 'employee_information')[] = [
+      'employer_information',
+      'employee_information',
+    ],
   ): doc is PartTimePermitData | LaborContractDataResponse => {
-    return 'employer_information' in doc;
+    return properties.every((prop) => prop in doc);
   };
 
+  const renderDocument = (
+    document: PartTimePermitData | LaborContractDataResponse,
+  ) => {
+    return (
+      <EmployeeInfoSection
+        employee={document.employee_information}
+        type={type as DocumentType}
+      />
+    );
+  };
   return (
-    <div>
+    <div className="last:pb-[10rem]">
       <BaseHeader
         hasBackButton={true}
         hasMenuButton={true}
@@ -63,14 +89,26 @@ const DocumentPreview = () => {
         onClickBackButton={() => navigate('/application-documents')}
       />
       <DocumentSubHeader type={type as DocumentType} />
+      {type === DocumentType.INTEGRATED_APPLICATION ? (
+        <IntegratedApplicationPreview
+          document={document as IntegratedApplicationData}
+        />
+      ) : (
+        renderDocument(
+          document as PartTimePermitData | LaborContractDataResponse,
+        )
+      )}
       {type !== DocumentType.INTEGRATED_APPLICATION &&
         document &&
-        hasEmployerInfo(document) &&
+        hasInfo(document, ['employer_information']) &&
         document.employer_information && (
-          <EmployerInfoSection
-            employ={document.employer_information}
-            type={DocumentType.PART_TIME_PERMIT}
-          />
+          <div className="flex flex-col w-full gap-4 px-6">
+            <InfoAlert content="Make sure that the information written by the employer is correct." />
+            <EmployerInfoSection
+              employ={document.employer_information}
+              type={type}
+            />
+          </div>
         )}
     </div>
   );
