@@ -1,4 +1,4 @@
-import { deleteEducation, deleteEtcLanguageLevel, deleteIntroduction, deleteWorkExperience, getEducation, getLanguagesSummaries, getResume, getWorkExperience, patchIntroduction, patchWorkExperience, postEducation, postEtcLanguageLevel, postWorkExperience } from "@/api/resumes";
+import { deleteEducation, deleteEtcLanguageLevel, deleteIntroduction, deleteWorkExperience, getEducation, getLanguagesSummaries, getResume, getSearchSchools, getWorkExperience, patchIntroduction, patchWorkExperience, postEducation, postEtcLanguageLevel, postWorkExperience } from "@/api/resumes";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
@@ -30,9 +30,6 @@ export const useDeleteIntroduction = () => {
 export const useDeleteWorkExperience = () => {
   return useMutation({
     mutationFn: deleteWorkExperience,
-    onSuccess: () => {
-      console.log('경력 삭제 성공');
-    },
     onError: (error) => {
       console.error('경력 삭제 실패', error);
     },
@@ -43,9 +40,6 @@ export const useDeleteWorkExperience = () => {
 export const useDeleteEducation = () => {
   return useMutation({
     mutationFn: deleteEducation,
-    onSuccess: () => {
-      console.log('학력 삭제 성공');
-    },
     onError: (error) => {
       console.error('학력 삭제 실패', error);
     },
@@ -166,9 +160,6 @@ export const usePostEtcLanguageLevel = () => {
 export const useDeleteEtcLanguageLevel = () => {
   return useMutation({
     mutationFn: deleteEtcLanguageLevel,
-    onSuccess: () => {
-      console.log('ETC 삭제 성공');
-    },
     onError: (error) => {
       console.error('ETC 삭제 실패', error);
     },
@@ -176,3 +167,12 @@ export const useDeleteEtcLanguageLevel = () => {
 };
 
 // TODO: ETC 수정하기 추가
+
+// 9.1 (유학생) 학교 검색하기
+export const useGetSearchSchools = (search: string, page: number, size: number) => {
+  return useQuery({
+    queryKey: ['searchSchools', search, page, size],
+    queryFn: () => getSearchSchools({ search, page: page.toString(), size: size.toString() }),
+    enabled: !!search, // 검색어가 있을 때만 쿼리 활성화
+  });
+};

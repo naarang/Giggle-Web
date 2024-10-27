@@ -40,18 +40,20 @@ const PostWorkExperiencePage = () => {
 
   return (
     <div>
-      <BaseHeader
-        hasBackButton={true}
-        onClickBackButton={handleBackButtonClick}
-        hasMenuButton={false}
-        title="Introduction"
-      />
-      {/* input 컴포넌트 */}
-      <WorkExperiencePost
-        workExperienceData={workExperienceData}
-        setWorkExperienceData={setWorkExperienceData}
-      />
-      <div className="pb-[3.125rem] px-6 mt-3 w-full">
+      <div className="mb-24">
+        <BaseHeader
+          hasBackButton={true}
+          onClickBackButton={handleBackButtonClick}
+          hasMenuButton={false}
+          title="Introduction"
+        />
+        {/* input 컴포넌트 */}
+        <WorkExperiencePost
+          workExperienceData={workExperienceData}
+          setWorkExperienceData={setWorkExperienceData}
+        />
+      </div>
+      <div className="pb-[2.5rem] px-6 w-full fixed bottom-0 bg-grayGradient">
         {/* post 버튼 */}
         <Button
           type={buttonTypeKeys.LARGE}
