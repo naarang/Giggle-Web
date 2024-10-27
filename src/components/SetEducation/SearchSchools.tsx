@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import BaseHeader from '../Common/Header/BaseHeader';
-import Input from '../Common/Input';
+import BaseHeader from '@/components/Common/Header/BaseHeader';
+import Input from '@/components/Common/Input';
 import { InputType } from '@/types/common/input';
-import Button from '../Common/Button';
+import Button from '@/components/Common/Button';
 import { buttonTypeKeys } from '@/constants/components';
 import { School } from '@/types/api/document';
 import { SearchSchollsList } from '@/constants/manageResume';

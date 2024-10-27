@@ -1,11 +1,11 @@
 import { InputType } from '@/types/common/input';
-import Input from '../Common/Input';
-import Dropdown from '../Common/Dropdown';
+import Input from '@/components/Common/Input';
+import Dropdown from '@/components/Common/Dropdown';
 import { InitailEducationType } from '@/types/postResume/postEducation';
 import { EducationLevels } from '@/constants/manageResume';
 import GraySearchIcon from '@/assets/icons/ManageResume/GraySearchIcon.svg?react';
 import { useState } from 'react';
-import SearchSchools from './SearchSchools';
+import SearchSchools from '@/components/SetEducation/SearchSchools';
 import { School } from '@/types/api/document';
 
 type EducationPostProps = {

@@ -33,7 +33,6 @@ const PostEducationPage = () => {
 
   useEffect(() => {
     setIsValid(isPostEducationType(educationData));
-    console.log(educationData);
   }, [educationData]);
 
   return (

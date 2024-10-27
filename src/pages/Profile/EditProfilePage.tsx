@@ -54,7 +54,6 @@ const EditProfilePage = () => {
       profileImage,
       Boolean(profileImage), // 이미지 변경 여부 확인
     );
-    // console.log('transformedData: ', transformedData);
     try {
       const formData = new FormData();
 
@@ -70,14 +69,6 @@ const EditProfilePage = () => {
           type: 'application/json',
         }),
       );
-      /*
-      const response = await axios.patch('/api/v1/users', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log('API 성공:', response.data);
-      */
       navigate('/profile');
     } catch (error) {
       console.error('API 호출 중 에러 발생:', error);

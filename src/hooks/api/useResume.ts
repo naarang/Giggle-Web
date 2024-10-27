@@ -30,9 +30,6 @@ export const useDeleteIntroduction = () => {
 export const useDeleteWorkExperience = () => {
   return useMutation({
     mutationFn: deleteWorkExperience,
-    onSuccess: () => {
-      console.log('경력 삭제 성공');
-    },
     onError: (error) => {
       console.error('경력 삭제 실패', error);
     },
@@ -43,9 +40,6 @@ export const useDeleteWorkExperience = () => {
 export const useDeleteEducation = () => {
   return useMutation({
     mutationFn: deleteEducation,
-    onSuccess: () => {
-      console.log('학력 삭제 성공');
-    },
     onError: (error) => {
       console.error('학력 삭제 실패', error);
     },
@@ -166,9 +160,6 @@ export const usePostEtcLanguageLevel = () => {
 export const useDeleteEtcLanguageLevel = () => {
   return useMutation({
     mutationFn: deleteEtcLanguageLevel,
-    onSuccess: () => {
-      console.log('ETC 삭제 성공');
-    },
     onError: (error) => {
       console.error('ETC 삭제 실패', error);
     },

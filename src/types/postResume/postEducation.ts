@@ -1,5 +1,5 @@
-import { School } from "../api/document"
-import { EducationLevelType } from "../postApply/resumeDetailItem"
+import { School } from "@/types/api/document"
+import { EducationLevelType } from "@/types/postApply/resumeDetailItem"
 
 export type PostEducationType = {
 	education_level : EducationLevelType // Enum(BACHELOR, ASSOCIATE, HIGHSCHOOL),
