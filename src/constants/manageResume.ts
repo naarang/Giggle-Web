@@ -166,7 +166,7 @@ export const ScrappedJobPostsData: JobPostingItemType[] = [
     summaries: {
       address: 'Yeoksam-dong, Seoul', // 위치 정보
       work_period: '3 months', // 근무 기간
-      work_days_per_week: 1009, // // 근무 일자
+      work_days_per_week: 3, // // 근무 일자
     },
     tags: {
       is_recruiting: true, // “모집중/마감"
@@ -175,7 +175,7 @@ export const ScrappedJobPostsData: JobPostingItemType[] = [
     },
     hourly_rate: 10000, // 시급
     recruitment_dead_line: '2024-11-12', // 마감일자
-    created_at: '2024-10-28', // 등록일자
+    created_at: '2024-10-28T00:40:00', // 등록일자
   },
   {
     id: 2,
@@ -186,7 +186,7 @@ export const ScrappedJobPostsData: JobPostingItemType[] = [
     summaries: {
       address: 'Yeoksam-dong, Seoul', // 위치 정보
       work_period: '3 months', // 근무 기간
-      work_days_per_week: 1009, // // 근무 일자
+      work_days_per_week: 4, // // 근무 일자
     },
     tags: {
       is_recruiting: true, // “모집중/마감"
@@ -195,7 +195,7 @@ export const ScrappedJobPostsData: JobPostingItemType[] = [
     },
     hourly_rate: 10000, // 시급
     recruitment_dead_line: '2024-11-30', // 마감일자
-    created_at: '2024-10-28', // 등록일자
+    created_at: '2024-10-28T00:10:00', // 등록일자
   },
   {
     id: 3,
@@ -206,7 +206,7 @@ export const ScrappedJobPostsData: JobPostingItemType[] = [
     summaries: {
       address: 'Yeoksam-dong, Seoul', // 위치 정보
       work_period: '3 months', // 근무 기간
-      work_days_per_week: 109, // // 근무 일자
+      work_days_per_week: 1, // // 근무 일자
     },
     tags: {
       is_recruiting: true, // “모집중/마감"
@@ -215,7 +215,7 @@ export const ScrappedJobPostsData: JobPostingItemType[] = [
     },
     hourly_rate: 12000, // 시급
     recruitment_dead_line: '2024-11-30', // 마감일자
-    created_at: '2024-10-28', // 등록일자
+    created_at: '2024-10-28T00:38:00', // 등록일자
   },
   {
     id: 4,
@@ -226,7 +226,7 @@ export const ScrappedJobPostsData: JobPostingItemType[] = [
     summaries: {
       address: 'Yeoksam-dong, Seoul', // 위치 정보
       work_period: '3 months', // 근무 기간
-      work_days_per_week: 1009, // // 근무 일자
+      work_days_per_week: 5, // // 근무 일자
     },
     tags: {
       is_recruiting: true, // “모집중/마감"
@@ -235,7 +235,7 @@ export const ScrappedJobPostsData: JobPostingItemType[] = [
     },
     hourly_rate: 10000, // 시급
     recruitment_dead_line: '2024-11-12', // 마감일자
-    created_at: '2024-10-28', // 등록일자
+    created_at: '2024-10-28T00:30:00', // 등록일자
   },
   {
     id: 5,
@@ -246,7 +246,7 @@ export const ScrappedJobPostsData: JobPostingItemType[] = [
     summaries: {
       address: 'Yeoksam-dong, Seoul', // 위치 정보
       work_period: '3 months', // 근무 기간
-      work_days_per_week: 1009, // // 근무 일자
+      work_days_per_week: 3, // // 근무 일자
     },
     tags: {
       is_recruiting: true, // “모집중/마감"
@@ -255,6 +255,6 @@ export const ScrappedJobPostsData: JobPostingItemType[] = [
     },
     hourly_rate: 10000, // 시급
     recruitment_dead_line: '2024-11-12', // 마감일자
-    created_at: '2024-10-28', // 등록일자
+    created_at: '2024-10-28T00:03:00', // 등록일자
   },
 ];

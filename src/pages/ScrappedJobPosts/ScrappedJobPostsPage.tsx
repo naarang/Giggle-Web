@@ -23,7 +23,7 @@ const ScrappedJobPostsPage = () => {
             hasMenuButton={false}
             title="Scrap Job Posting"
           />
-          <div>
+          <div className="p-6 flex flex-col gap-4">
             {jobPostingData.map((post) => (
               <JobPostingCard jobPostingData={post} />
             ))}
