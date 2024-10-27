@@ -7,6 +7,7 @@ import FolderIcon from '@/assets/icons/FolderIcon.svg?react';
 import DownloadIcon from '@/assets/icons/DownloadIcon.svg?react';
 import CheckIconGreen from '@/assets/icons/CheckIconGreen.svg?react';
 import WriteIcon from '@/assets/icons/WriteIcon.svg?react';
+import { useNavigate } from 'react-router-dom';
 
 const enum DocumentStatus {
   TEMPORARY_SAVE = 'TEMPORARY_SAVE',
@@ -19,6 +20,7 @@ const enum DocumentStatus {
 type DocumentCardProps = {
   document: DocumentInfo;
   title: string;
+  type: string;
   onNext: () => void;
 };
 
@@ -90,9 +92,11 @@ const TemporarySaveCard = ({
 const BeforeConfirmationCard = ({
   title,
   onNext,
+  onPreview,
 }: {
   title: string;
   onNext: () => void;
+  onPreview: () => void;
 }) => {
   return (
     <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-center justify-center gap-2 caption-2 text-left text-[#1e1926]">
@@ -102,7 +106,10 @@ const BeforeConfirmationCard = ({
         </div>
         <div className="w-1.5 absolute !m-0 top-[0.4rem] left-[8rem] rounded-full bg-[#ff6f61] h-1.5 z-[1]" />
         <div className="w-[0.75rem] relative h-[0.75rem] z-[2]">
-          <div className="absolute w-full h-full top-0 righ-0 bottom-0 left-0" />
+          <div
+            className="absolute w-full h-full top-0 righ-0 bottom-0 left-0"
+            onClick={onPreview}
+          />
           <ArrowrightIcon />
         </div>
       </div>
@@ -119,7 +126,7 @@ const BeforeConfirmationCard = ({
         <div className="self-stretch flex items-center justify-center px-3 text-[#656565] caption-1">
           <div className="flex-1 relative">
             <p className="m-0">
-              r has completed the part-time employment permit form. Please
+              The employer has completed the part-time employment permit form. Please
               review the content and if there are any issues, submit a Request.
               If everything is fine, complete the process by selecting Confirm.
             </p>
@@ -330,8 +337,10 @@ const ConfirmationCard = ({
 const DocumentCardDispenser = ({
   document,
   title,
+  type,
   onNext,
 }: DocumentCardProps) => {
+  const navigate = useNavigate();
   const handleDownload = (url: string) => {
     window.open(url, '_blank');
   };
@@ -349,7 +358,19 @@ const DocumentCardDispenser = ({
     case DocumentStatus.SUBMITTED:
       return <SubmittedCard title={title} />;
     case DocumentStatus.BEFORE_CONFIRMATION:
-      return <BeforeConfirmationCard title={title} onNext={onNext} />;
+      return (
+        <BeforeConfirmationCard
+          title={title}
+          onNext={onNext}
+          onPreview={() =>
+            navigate('/document-preview', {
+              state: {
+                type: type,
+              },
+            })
+          }
+        />
+      );
     case DocumentStatus.REQUEST:
       return <RequestedCard title={title} />;
     case DocumentStatus.CONFIRMATION:
