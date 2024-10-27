@@ -28,6 +28,8 @@ import PatchWorkExperiencePage from '@/pages/SetWorkExperience/PatchWorkExperien
 import ApplicationDetailPage from '@/pages/ApplicationDetail/ApplicationDetailPage';
 import ApplicationResultPage from '@/pages/ApplicationResult/ApplicationResultPage';
 import EmployerPostDetailPage from '@/pages/Employer/PostDetail/EmployerPostDetailPage';
+import RequestModifyPage from './pages/WriteDocuments/RequestModifyPage';
+import DocumentPreview from './pages/WriteDocuments/DocumentPreviewPage';
 import EmployerPostPage from '@/pages/Employer/Post/EmployerPostPage';
 import EmployerApplicantListPage from '@/pages/Employer/ApplicantList/EmployerApplicantListPage';
 
@@ -101,6 +103,8 @@ const Router = () => {
             element={<EmployerApplicantListPage />}
           />
           <Route path="/write-documents" element={<WriteDocumentsPage />} />
+          <Route path="/document-preview" element={<DocumentPreview />} />
+          <Route path="/request-modify" element={<RequestModifyPage />} />
 
           <Route path="/application" element={<ApplicationPage />} />
           <Route path="/application/:id" element={<ApplicationDetailPage />} />
