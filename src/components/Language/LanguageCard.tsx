@@ -54,6 +54,7 @@ const LanguageCard = ({
 
   return (
     <>
+      {/* 언어 레벨 선택 바텀 시트 */}
       {levelBottomSheet && (
         <BottomSheetLayout
           hasHandlebar={true}
@@ -96,6 +97,7 @@ const LanguageCard = ({
           </div>
         </BottomSheetLayout>
       )}
+      {/* 컴포넌트 시작 */}
       <div className="flex flex-col p-4 gap-2 rounded-[1.125rem] border-[0.5px] border-[#DCDCDC] border-solid">
         <div className="flex justify-between">
           <div className="flex gap-4 justify-center items-center">
