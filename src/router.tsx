@@ -11,8 +11,8 @@ import ApplicationDocumentsPage from '@/pages/ApplicationDocuments/ApplicationDo
 import PostSearchPage from '@/pages/PostSearch/PostSearchPage';
 import PostSearchFilterPage from '@/pages/PostSearchFilter/PostSearchFilterPage';
 import ProfilePage from '@/pages/Profile/ProfilePage';
-import LanguageSettingPage from '@/pages/Profile/LanguageSettingPage';
-import EditProfilePage from '@/pages/Profile/EditProfilePage';
+import LanguageSettingPage from '@/pages/LanguageSetting/LanguageSettingPage';
+import EditProfilePage from '@/pages/EditProfile/EditProfilePage';
 import PostDetailPage from '@/pages/PostDetail/PostDetailPage';
 import PostApplyPage from '@/pages/PostApply/PostApplyPage';
 import ApplicationPage from '@/pages/Application/ApplicationPage';
@@ -30,7 +30,7 @@ import ApplicationResultPage from '@/pages/ApplicationResult/ApplicationResultPa
 import EmployerPostDetailPage from '@/pages/Employer/PostDetail/EmployerPostDetailPage';
 import EmployerPostPage from '@/pages/Employer/Post/EmployerPostPage';
 import EmployerApplicantListPage from '@/pages/Employer/ApplicantList/EmployerApplicantListPage';
-import PostLanguagePage from '@/pages/Language/PostLanguagePage';
+import PostLanguagePage from '@/pages/PostLanguage/PostLanguagePage';
 
 const Layout = () => {
   const location = useLocation();

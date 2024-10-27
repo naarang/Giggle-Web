@@ -128,7 +128,7 @@ const ProfilePage = () => {
           <div className="w-full h-full min-h-[100vh] bg-profilePageGradient">
             {/* Profile 페이지 시작 */}
             <ProfileHeader />
-            <div className="flex flex-col px-6 gap-9 pb-24">
+            <div className="flex flex-col px-6 gap-9 pb-12">
               <ProfileCard data={userData.user_information} />
               <ApplicationStatus />
               <LicenseCard

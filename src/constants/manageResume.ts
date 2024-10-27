@@ -2,6 +2,7 @@ import { LanguagesSummariesResponse } from '@/types/api/resumes';
 import { ResumeDetailItemType } from '@/types/postApply/resumeDetailItem';
 import { School } from '@/types/api/document';
 import { GetEducationType } from '@/types/postResume/postEducation';
+import { JobPostingItemType } from '@/types/common/jobPostingItem';
 
 export const enum ManageResumeType {
   VISA = 'VISA',
@@ -153,3 +154,107 @@ export const GetEducationData: GetEducationType = {
   end_date: '2026-03-01', // yyyy-MM-dd
   grade: 4,
 };
+
+// 북마크 공고 더미데이터
+export const ScrappedJobPostsData: JobPostingItemType[] = [
+  {
+    id: 1,
+    is_book_marked: true, // 북마크 여부
+    icon_img_url:
+      'https://images.mypetlife.co.kr/content/uploads/2022/12/16162807/IMG_1666-edited-scaled.jpg', // 회사 로고
+    title: 'Coffee shop', // 공고 제목
+    summaries: {
+      address: 'Yeoksam-dong, Seoul', // 위치 정보
+      work_period: '3 months', // 근무 기간
+      work_days_per_week: 1009, // // 근무 일자
+    },
+    tags: {
+      is_recruiting: true, // “모집중/마감"
+      visa: 'D_1_1', // “비자종류"
+      job_category: 'Industry', // “업직종종류",
+    },
+    hourly_rate: 10000, // 시급
+    recruitment_dead_line: '2024-11-12', // 마감일자
+    created_at: '2024-10-28', // 등록일자
+  },
+  {
+    id: 2,
+    is_book_marked: true, // 북마크 여부
+    icon_img_url:
+      'https://images.mypetlife.co.kr/content/uploads/2022/12/16162807/IMG_1666-edited-scaled.jpg', // 회사 로고
+    title: 'lala shop', // 공고 제목
+    summaries: {
+      address: 'Yeoksam-dong, Seoul', // 위치 정보
+      work_period: '3 months', // 근무 기간
+      work_days_per_week: 1009, // // 근무 일자
+    },
+    tags: {
+      is_recruiting: true, // “모집중/마감"
+      visa: 'D_1_1', // “비자종류"
+      job_category: 'Industry', // “업직종종류",
+    },
+    hourly_rate: 10000, // 시급
+    recruitment_dead_line: '2024-11-30', // 마감일자
+    created_at: '2024-10-28', // 등록일자
+  },
+  {
+    id: 3,
+    is_book_marked: true, // 북마크 여부
+    icon_img_url:
+      'https://images.mypetlife.co.kr/content/uploads/2022/12/16162807/IMG_1666-edited-scaled.jpg', // 회사 로고
+    title: 'Coffee shop', // 공고 제목
+    summaries: {
+      address: 'Yeoksam-dong, Seoul', // 위치 정보
+      work_period: '3 months', // 근무 기간
+      work_days_per_week: 109, // // 근무 일자
+    },
+    tags: {
+      is_recruiting: true, // “모집중/마감"
+      visa: 'D_1_1', // “비자종류"
+      job_category: 'Industry', // “업직종종류",
+    },
+    hourly_rate: 12000, // 시급
+    recruitment_dead_line: '2024-11-30', // 마감일자
+    created_at: '2024-10-28', // 등록일자
+  },
+  {
+    id: 4,
+    is_book_marked: true, // 북마크 여부
+    icon_img_url:
+      'https://images.mypetlife.co.kr/content/uploads/2022/12/16162807/IMG_1666-edited-scaled.jpg', // 회사 로고
+    title: 'Coffee shop', // 공고 제목
+    summaries: {
+      address: 'Yeoksam-dong, Seoul', // 위치 정보
+      work_period: '3 months', // 근무 기간
+      work_days_per_week: 1009, // // 근무 일자
+    },
+    tags: {
+      is_recruiting: true, // “모집중/마감"
+      visa: 'D_1_1', // “비자종류"
+      job_category: 'Industry', // “업직종종류",
+    },
+    hourly_rate: 10000, // 시급
+    recruitment_dead_line: '2024-11-12', // 마감일자
+    created_at: '2024-10-28', // 등록일자
+  },
+  {
+    id: 5,
+    is_book_marked: true, // 북마크 여부
+    icon_img_url:
+      'https://images.mypetlife.co.kr/content/uploads/2022/12/16162807/IMG_1666-edited-scaled.jpg', // 회사 로고
+    title: 'Coffee shop', // 공고 제목
+    summaries: {
+      address: 'Yeoksam-dong, Seoul', // 위치 정보
+      work_period: '3 months', // 근무 기간
+      work_days_per_week: 1009, // // 근무 일자
+    },
+    tags: {
+      is_recruiting: true, // “모집중/마감"
+      visa: 'D_1_1', // “비자종류"
+      job_category: 'Industry', // “업직종종류",
+    },
+    hourly_rate: 10000, // 시급
+    recruitment_dead_line: '2024-11-12', // 마감일자
+    created_at: '2024-10-28', // 등록일자
+  },
+];
