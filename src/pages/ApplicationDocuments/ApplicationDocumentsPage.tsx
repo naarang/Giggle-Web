@@ -10,7 +10,7 @@ const mockDocumentsSummaryResponse: DocumentsSummaryResponse = {
     id: 2001,
     hwp_url: 'https://example.com/contracts/standard_2001.hwp',
     word_url: 'https://example.com/contracts/standard_2001.docx',
-    status: 'TEMPORARY_SAVE',
+    status: 'BEFORE_CONFIRMATION',
   },
   integrated_application: {
     id: 3001,

@@ -99,6 +99,15 @@ export const initialPartTimePermitForm: PartTimePermitFormRequest = {
   phone_number: '000-0000-0000',
   email: '',
 };
+// 시간제 근무 허가 신청서 mock data
+export const mockPartTimePermitForm: PartTimePermitFormRequest = {
+  first_name: '길동',
+  last_name: '홍',
+  major: '컴퓨터공학과',
+  term_of_completion: 4,
+  phone_number: '010-1234-5678',
+  email: 'gildong.hong@example.com',
+ };
 
 // 시간제 근무 허가서 내 고용주 입력 정보 속성과 이름 mapping
 export const PartTimeEmployPermitEmployerInfo = {
@@ -113,6 +122,10 @@ export const PartTimeEmployPermitEmployerInfo = {
   [EmployerInfoProperty.JOB_TYPE]: {
     name: 'Industry',
     key: 'job_type',
+  },
+  [EmployerInfoProperty.SIGNATURE_BASE64]: {
+    name: "Representative's signature",
+    key: 'signature_base64',
   },
   [EmployerInfoProperty.ADDRESS]: {
     name: 'Address in Korea',
@@ -193,6 +206,7 @@ export const mockEmployerInformation: EmployerInformation = {
   company_name: '테크스타트 주식회사',
   company_registration_number: '123-45-67890',
   job_type: '정보통신업',
+  signature_base64: '',
   address: {
     address_name: '서울 강남구 테헤란로 401 팁스타운',
     region_1depth_name: '서울',
@@ -398,7 +412,7 @@ export const mockIntegratedApplication: IntegratedApplicationData = {
     longitude: 127.0495556,
     latitude: 37.5063889,
   },
- };
+};
 
 // 학교 검색 api 연결 전 사용할 학교 mock data
 export const schoolMockData = [
