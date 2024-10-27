@@ -13,6 +13,7 @@ type LanguageCardProps = {
   description: string;
   level: number;
   isAdditionalLanguage: boolean;
+  maxLevel: number;
 };
 
 const LanguageCard = ({
@@ -20,6 +21,7 @@ const LanguageCard = ({
   description,
   level,
   isAdditionalLanguage,
+  maxLevel,
 }: LanguageCardProps) => {
   const [levelBottomSheet, setLevelBottomSheet] = useState(false);
   const [selectedLevel, setSelectedLevel] = useState(level);
@@ -62,30 +64,26 @@ const LanguageCard = ({
           isShowBottomsheet={true}
           setIsShowBottomSheet={setLevelBottomSheet}
         >
-          <div className="w-full flex flex-col py-2">
-            <div className="head-2 text-[#1E1926] py-3 pb-8 text-center">
-              Choose your {title} Grade
-            </div>
-            {/* 언어 등급 선택 - 사회통합프로그램 0~5, 그외 0~6 */}
-            <div className="w-full mb-8">
-              {[
-                ...Array(title === 'Social integration program' ? 6 : 7).keys(),
-              ].map((grade) => (
-                <div
-                  key={grade}
-                  className="w-full flex items-center justify-between px-2.5 py-3"
-                >
-                  <div className="ml-2 body-1 text-[#656565]">
-                    Grade {grade}
-                  </div>
-                  <NumberRadioButton
-                    value={grade}
-                    setValue={() => setSelectedLevel(grade)}
-                    isOn={selectedLevel === grade}
-                  />
-                </div>
-              ))}
-            </div>
+          <div className="head-2 text-[#1E1926] py-3 pb-8 text-center">
+            Choose your {title} Grade
+          </div>
+          {/* 언어 등급 선택 (0 ~ maxLevel) */}
+          <div className="w-full h-[48vh] overflow-x-scroll">
+            {[...Array(maxLevel + 1).keys()].map((grade) => (
+              <div
+                key={grade}
+                className="w-full flex items-center justify-between px-2.5 py-3"
+              >
+                <div className="ml-2 body-1 text-[#656565]">Grade {grade}</div>
+                <NumberRadioButton
+                  value={grade}
+                  setValue={() => setSelectedLevel(grade)}
+                  isOn={selectedLevel === grade}
+                />
+              </div>
+            ))}
+          </div>
+          <div className="bg-grayGradient">
             <Button
               type="large"
               title="Select"

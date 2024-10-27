@@ -30,6 +30,7 @@ const LanguageSection = () => {
               description="default"
               level={languageData.topik_level}
               isAdditionalLanguage={false}
+              maxLevel={6}
             />
             {/* Social Program */}
             <LanguageCard
@@ -37,6 +38,7 @@ const LanguageSection = () => {
               description="default"
               level={languageData.social_integration_level}
               isAdditionalLanguage={false}
+              maxLevel={5}
             />
             {/* Sejong */}
             <LanguageCard
@@ -44,14 +46,16 @@ const LanguageSection = () => {
               description="default"
               level={languageData.sejong_institute}
               isAdditionalLanguage={false}
+              maxLevel={6}
             />
             {/* 별도의 언어 추가 카드 */}
             {languageData.additional_language.map((language) => (
               <LanguageCard
                 title={language.language_name}
-                description="default"
+                description="add"
                 level={language.level}
                 isAdditionalLanguage={true}
+                maxLevel={10}
               />
             ))}
           </div>
