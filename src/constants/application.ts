@@ -101,7 +101,7 @@ export const APPLICANT_DETAIL_DATA: ApplicantDetailItemType = {
   visa: 'D_2_1',
   school_name: 'Seoul National University',
   duration_of_days: 30,
-  step: 'PENDING',
+  step: 'RESUME_UNDER_REVIEW',
 };
 
 // 지원 상태 단계별 문구

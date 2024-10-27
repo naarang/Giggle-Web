@@ -44,7 +44,7 @@ const EmployerApplicantCard = ({
           <div className="w-[0.375rem] h-[0.375rem] rounded-full bg-[#FF6F61]"></div>
         </div>
         <RightArrowIcon
-          onClick={() => navigate(`/employer/application/${applicantData.id}`)}
+          onClick={() => navigate(`/employer/applicant/${applicantData.id}`)}
         />
       </div>
       <div className="flex justify-between w-full px-[1.5rem] pt-[1rem] pb-[0.75rem]">
@@ -95,7 +95,7 @@ const EmployerApplicantCard = ({
         <button
           className="w-full px-[1.5rem] py-[0.75rem] text-center rounded-full bg-[#FEF387] text-[#1E1926] caption-1-sb"
           onClick={() =>
-            navigate(`/employer/application/resume/${applicantData.id}`)
+            navigate(`/employer/applicant/${applicantData.id}/resume/`)
           }
         >
           See Resume

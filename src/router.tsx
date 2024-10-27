@@ -31,6 +31,8 @@ import EmployerPostDetailPage from '@/pages/Employer/PostDetail/EmployerPostDeta
 import EmployerPostPage from '@/pages/Employer/Post/EmployerPostPage';
 import EmployerApplicantListPage from '@/pages/Employer/ApplicantList/EmployerApplicantListPage';
 import EmployerApplicantDetailPage from '@/pages/Employer/ApplicantDetail/EmployerApplicantDetailPage';
+import EmployerApplicantResumePage from '@/pages/Employer/ApplicantResume/EmployerApplicantResumePage';
+import EmployerApplicantResumeAcceptPage from '@/pages/Employer/ApplicantResumeAccept/EmployerApplicantResumeAcceptPage';
 
 const Layout = () => {
   const location = useLocation();
@@ -104,6 +106,14 @@ const Router = () => {
           <Route
             path="/employer/applicant/:id"
             element={<EmployerApplicantDetailPage />}
+          />
+          <Route
+            path="/employer/applicant/:id/resume"
+            element={<EmployerApplicantResumePage />}
+          />
+          <Route
+            path="/employer/applicant/:id/resume/accept"
+            element={<EmployerApplicantResumeAcceptPage />}
           />
           <Route path="/write-documents" element={<WriteDocumentsPage />} />
 

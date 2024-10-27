@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { buttonTypeKeys } from '@/constants/components';
 import Button from '@/components/Common/Button';
 import { useState } from 'react';
@@ -15,6 +15,7 @@ const EmployerApplicantDetailButton = ({
   step,
 }: EmployerApplicantDetailButtonPropsType) => {
   const navigate = useNavigate();
+  const { id } = useParams();
   const [isShowBottomsheet, setIsShowBottomSheet] = useState<boolean>(false);
 
   const onClickGetApplicantData = () => {
@@ -32,7 +33,7 @@ const EmployerApplicantDetailButton = ({
             fontColor="text-[#1E1926]"
             title="이력서 확인하기"
             isBorder={false}
-            onClick={() => navigate('/employer/applicant/:id/verification')}
+            onClick={() => navigate(`/employer/applicant/${id}/resume/accept`)}
           />
         );
       case 2:
