@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
-import BottomSheetLayout from '../Common/BottomSheetLayout';
-import NumberRadioButton from './NumberRadioButton';
-import Button from '../Common/Button';
+import BottomSheetLayout from '@/components/Common/BottomSheetLayout';
+import NumberRadioButton from '@/components/Language/NumberRadioButton';
+import Button from '@/components/Common/Button';
 
 type LevelBottomSheetProps = {
   level: number;

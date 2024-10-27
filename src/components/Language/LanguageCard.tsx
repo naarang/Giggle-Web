@@ -2,11 +2,11 @@ import ArrowIcon from '@/assets/icons/Language/ArrowIcon.svg?react';
 import EditIcon from '@/assets/icons/Language/EditIcon.svg?react';
 import TrashcanIcon from '@/assets/icons/Language/TrashcanIcon.svg?react';
 import KoreanFlag from '@/assets/images/koreanFlag.png';
-import BottomSheetLayout from '../Common/BottomSheetLayout';
+import BottomSheetLayout from '@/components/Common/BottomSheetLayout';
 import { useState } from 'react';
-import Button from '../Common/Button';
+import Button from '@/components/Common/Button';
 import { usePatchLanguagesLevel } from '@/hooks/api/useResume';
-import NumberRadioButton from './NumberRadioButton';
+import NumberRadioButton from '@/components/Language/NumberRadioButton';
 import { LanguagesLevelType } from '@/types/api/resumes';
 
 type LanguageCardProps = {

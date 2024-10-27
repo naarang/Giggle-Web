@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import LevelBottomSheet from './LevelBottomSheet';
+import LevelBottomSheet from '@/components/Language/LevelBottomSheet';
 
 type EtcLevelSectionProps = {
   level: number;
