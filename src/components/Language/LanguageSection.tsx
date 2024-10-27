@@ -21,7 +21,10 @@ const LanguageSection = () => {
           <h1 className="head-2 text-[#1e1926 py-6">Language</h1>
           <div className="w-full flex justify-end gap-3 items-center pb-6 pr-2">
             <div className="body-2 text-[#1e1926">Add</div>
-            <AddIcon onClick={() => navigage('/resume/language/add')} />
+            <AddIcon
+              onClick={() => navigage('/resume/language/add')}
+              className="cursor-pointer"
+            />
           </div>
           <div className="flex flex-col gap-4 mb-14">
             {/* TOPIC */}
