@@ -265,7 +265,7 @@ const ConfirmationCard = ({
             <div className="relative head-3">{title}</div>
           </div>
           <div className="overflow-hidden flex items-center justify-center p-2">
-            {!document.pdf_url && !document.hwp_url && !document.word_url ? (
+            {!document.hwp_url && !document.word_url ? (
               <WriteIcon />
             ) : (
               <CheckIconGreen />
@@ -284,21 +284,6 @@ const ConfirmationCard = ({
       </div>
 
       <div className="flex flex-col gap-2 w-full items-start justify-start py-2 px-4 text-[#464646]">
-        {document.pdf_url && (
-          <div className="w-full rounded-3xl bg-[#f4f4f9] flex items-center justify-between border border-[#dcdcdc] px-4 py-2 pl-2.5">
-            <div className="flex items-center justify-start gap-2">
-              <div className="w-[1.375rem] h-[1.375rem] flex items-center justify-center rounded-full bg-[#1e1926]">
-                <FolderIcon />
-              </div>
-              <div className="relative body-3 opacity-75">
-                Pdf file download
-              </div>
-            </div>
-            <div onClick={() => onDownload(document.pdf_url as string)}>
-              <DownloadIcon />
-            </div>
-          </div>
-        )}
         {document.word_url && (
           <div className="w-full rounded-3xl bg-[#f4f4f9] flex items-center justify-between border border-[#dcdcdc] px-4 py-2 pl-2.5">
             <div className="flex items-center justify-start gap-2">

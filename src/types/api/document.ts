@@ -11,7 +11,6 @@ export type DocumentStatus =
 // 통합 신청서 외 문서 타입
 export type DocumentInfo = {
   id: number;
-  pdf_url?: string;
   hwp_url?: string;
   word_url?: string;
   status?: DocumentStatus;
@@ -20,7 +19,6 @@ export type DocumentInfo = {
 // 통합 신청서 타입
 export type IntegratedApplicationInfo = {
   id: number;
-  pdf_url?: string;
   hwp_url?: string;
   word_url?: string;
 };
