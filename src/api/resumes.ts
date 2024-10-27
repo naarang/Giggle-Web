@@ -166,3 +166,19 @@ export const deleteEtcLanguageLevel = async (id: number) => {
   );
   return response.data;
 };
+
+// 9.1 (유학생) 학교 검색하기
+export const getSearchSchools = async ({
+  search,
+  page,
+  size,
+}: {
+  search: string;
+  page: string;
+  size: string;
+}) => {
+  const response = await api.get(
+    `/api/v1/users/schools/brief?search=${search}&page=${page}&size=${size}`,
+  );
+  return response.data;
+};

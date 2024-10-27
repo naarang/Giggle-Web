@@ -54,7 +54,6 @@ const EditProfilePage = () => {
       profileImage,
       Boolean(profileImage), // 이미지 변경 여부 확인
     );
-    // console.log('transformedData: ', transformedData);
     try {
       const formData = new FormData();
 
@@ -70,14 +69,6 @@ const EditProfilePage = () => {
           type: 'application/json',
         }),
       );
-      /*
-      const response = await axios.patch('/api/v1/users', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log('API 성공:', response.data);
-      */
       navigate('/profile');
     } catch (error) {
       console.error('API 호출 중 에러 발생:', error);
@@ -117,7 +108,7 @@ const EditProfilePage = () => {
             hasMenuButton={false}
             title="Edit Profile"
           />
-          <div className="flex flex-col px-6 gap-9">
+          <div className="flex flex-col px-6 gap-9 mb-32">
             <EditProfilePicture
               profileImgUrl={userData.profile_img_url}
               onImageUpdate={setProfileImage}
@@ -262,7 +253,7 @@ const EditProfilePage = () => {
               </div>
             </div>
           </div>
-          <div className="mt-32 pt-3 px-6 pb-[3.125rem] flex justify-center items-center">
+          <div className="pb-[2.5rem] px-6 w-full fixed bottom-0 bg-grayGradient">
             <Button
               type={buttonTypeKeys.LARGE}
               title="Save"

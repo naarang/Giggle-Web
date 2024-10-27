@@ -1,5 +1,7 @@
 import { LanguagesSummariesResponse } from '@/types/api/resumes';
 import { ResumeDetailItemType } from '@/types/postApply/resumeDetailItem';
+import { School } from '@/types/api/document';
+import { GetEducationType } from '@/types/postResume/postEducation';
 
 export const enum ManageResumeType {
   VISA = 'VISA',
@@ -9,6 +11,8 @@ export const enum ManageResumeType {
   EDUCATION = 'Education',
   LANGUAGE = 'Language',
 }
+
+export const EducationLevels = ['BACHELOR', 'ASSOCIATE', 'HIGHSCHOOL'];
 
 // 더미데이터 - TODO : 연결 후 삭제
 export const ResumeData: ResumeDetailItemType = {
@@ -86,6 +90,7 @@ export const ResumeData: ResumeDetailItemType = {
   },
 };
 
+// 언어 더미데이터
 export const LanguageData: LanguagesSummariesResponse = {
   topik_level: 3,
   social_integration_level: 2,
@@ -104,7 +109,47 @@ export const LanguageData: LanguagesSummariesResponse = {
   ],
 };
 
-// 언어 등급
-export const TOPIC_GRADE = [0, 1, 2, 3, 4, 5, 6];
-export const SOCIALINTEGRATION_GRADE = [0, 1, 2, 3, 4, 5];
-export const SEJONG_GRADE = [0, 1, 2, 3, 4, 5, 6];
+// 학교 더미데이터
+export const SearchSchollsList: School[] = [
+  { id: 1, name: 'University of Oxford', phone_number: '000-0000' },
+  {
+    id: 2,
+    name: 'National University of Lesotho International School',
+    phone_number: '000-0000',
+  },
+  { id: 3, name: 'University of Chester CE Academy', phone_number: '000-0000' },
+  {
+    id: 4,
+    name: 'University of Chester Academy Northwich',
+    phone_number: '000-0000',
+  },
+  { id: 5, name: 'University of Birmingham School', phone_number: '000-0000' },
+  { id: 6, name: 'University of Oxford', phone_number: '000-0000' },
+  {
+    id: 7,
+    name: 'National University of Lesotho International School',
+    phone_number: '000-0000',
+  },
+  { id: 8, name: 'University of Chester CE Academy', phone_number: '000-0000' },
+  {
+    id: 9,
+    name: 'University of Chester Academy Northwich',
+    phone_number: '000-0000',
+  },
+  { id: 10, name: 'University of Birmingham School', phone_number: '000-0000' },
+];
+
+// 학력 더미데이터
+export const GetEducationData: GetEducationType = {
+  education_level: 'BACHELOR', // Enum(BACHELOR, ASSOCIATE, HIGHSCHOOL),
+  school: {
+    id: 1,
+    name: 'University of Chester Academy Northwich',
+    phone_number: '000-0000',
+  },
+  major: 'Department of Computer Engineering',
+  gpa: 3.5,
+  start_date: '2021-03-01', // yyyy-MM-dd
+  end_date: '2026-03-01', // yyyy-MM-dd
+  grade: 4,
+};

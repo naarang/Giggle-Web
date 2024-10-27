@@ -33,7 +33,6 @@ const IntroductionPage = () => {
 
   const handleSubmit = () => {
     // TODO: API - 7.8 (유학생) 자기소개 수정하기
-    // console.log('introduction : ' + data);
     navigate('/profile/manage-resume');
   };
 

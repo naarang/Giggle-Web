@@ -24,7 +24,6 @@ const EditProfilePicture = ({
     // 파일이 이미지 형식인지 확인
     if (file && file.type.startsWith('image/')) {
       onImageUpdate(file);
-      // console.log('components : ' + file);
 
       const objectUrl = URL.createObjectURL(file); // 이미지 미리보기 URL 생성
       setImagePreviewUrl(objectUrl); // 미리보기 URL 업데이트

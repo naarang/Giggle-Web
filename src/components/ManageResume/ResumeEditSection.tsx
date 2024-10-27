@@ -41,10 +41,6 @@ const ResumeEditSection = ({
   // 삭제 핸들러 (데이터 삭제 시 해당 API 호출)
   const handleDeleteIntroduction = () => {
     deleteIntroductionMutation.mutate(undefined, {
-      onSuccess: () => {
-        console.log('Introduction 삭제');
-        // 필요 시 상태 업데이트나 추가 로직 실행
-      },
       onError: (error) => {
         console.error('Introduction 삭제 실패', error);
       },
@@ -53,9 +49,6 @@ const ResumeEditSection = ({
 
   const handleDeleteEducation = (id: number) => {
     deleteEducationMutation.mutate(id, {
-      onSuccess: () => {
-        console.log(`Education 삭제: ${id}`);
-      },
       onError: (error) => {
         console.error(`Education 삭제 실패: ${id}`, error);
       },
@@ -64,10 +57,6 @@ const ResumeEditSection = ({
 
   const handleDeleteWorkExperience = (id: number) => {
     deleteWorkExperienceMutation.mutate(id, {
-      onSuccess: () => {
-        console.log(`Work experience 삭제: ${id}`);
-        // 필요 시 상태 업데이트나 추가 로직 실행
-      },
       onError: (error) => {
         console.error(`Work experience 삭제 실패: ${id}`, error);
       },
