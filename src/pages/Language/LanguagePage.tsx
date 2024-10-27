@@ -1,15 +1,15 @@
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import LanguageSection from '@/components/Language/LanguageSection';
-import useNavigateBack from '@/hooks/useNavigateBack';
+import { useNavigate } from 'react-router-dom';
 
 const LanguagePage = () => {
-  const handleBackButtonClick = useNavigateBack();
+  const navigate = useNavigate();
 
   return (
     <div>
       <BaseHeader
         hasBackButton={true}
-        onClickBackButton={handleBackButtonClick}
+        onClickBackButton={() => navigate('/profile/manage-resume')}
         hasMenuButton={false}
         title="Language"
       />
