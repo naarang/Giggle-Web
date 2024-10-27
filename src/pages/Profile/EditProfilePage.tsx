@@ -108,7 +108,7 @@ const EditProfilePage = () => {
             hasMenuButton={false}
             title="Edit Profile"
           />
-          <div className="flex flex-col px-6 gap-9">
+          <div className="flex flex-col px-6 gap-9 mb-32">
             <EditProfilePicture
               profileImgUrl={userData.profile_img_url}
               onImageUpdate={setProfileImage}
@@ -253,7 +253,7 @@ const EditProfilePage = () => {
               </div>
             </div>
           </div>
-          <div className="mt-32 pt-3 px-6 pb-[3.125rem] flex justify-center items-center">
+          <div className="pb-[2.5rem] px-6 w-full fixed bottom-0 bg-grayGradient">
             <Button
               type={buttonTypeKeys.LARGE}
               title="Save"
