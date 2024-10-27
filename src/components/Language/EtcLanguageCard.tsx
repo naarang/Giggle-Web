@@ -13,6 +13,7 @@ const EtcLanguageCard = ({
   setSelectedLanguage,
 }: EtcLanguageCardProps) => {
   return (
+    // 언어 카드
     <div
       className={`border-[0.5px] ${isSelected && 'bg-[#F4F4F9]'} border-[#DCDCDC] rounded-[1.125rem] flex items-center gap-4 p-4 cursor-pointer`}
       onClick={() => setSelectedLanguage && setSelectedLanguage(language)}

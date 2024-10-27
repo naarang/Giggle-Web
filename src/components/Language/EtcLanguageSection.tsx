@@ -17,6 +17,11 @@ const EtcLanguageSection = ({
 }: EtcLanguageSectionProps) => {
   const [search, setSearch] = useState('');
 
+  // 검색어에 따라 언어 리스트 필터링
+  const filteredLanguages = languageList.filter((language) =>
+    language.language.toLowerCase().includes(search.toLowerCase()),
+  );
+
   return (
     <>
       <Input
@@ -27,7 +32,7 @@ const EtcLanguageSection = ({
         canDelete={false}
       />
       <div className="mt-6 flex flex-col gap-3">
-        {languageList.map((language) => (
+        {filteredLanguages.map((language) => (
           <EtcLanguageCard
             key={language.id}
             language={language}
