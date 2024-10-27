@@ -24,11 +24,14 @@ const SearchSchools = ({
   const [searchSchool, setSearchSchool] = useState<string>('');
   // 선택한 학교 상태 관리
   const [selectedSchool, setSelectedSchool] = useState<School | null>(null);
+
   // 학교 목록의 페이지(서버 요청)
-  const [page, setPage] = useState<number>(1);
-  const size = 10;
+  // ===== API 연결 후 주석 해제(현재 학교 더미데이터로 대체) =====
+  // const [page, setPage] = useState<number>(1);
+  // const size = 10;
 
   const schoolList = SearchSchollsList;
+  // ===== API 연결 후 주석 해제(현재 학교 더미데이터로 대체) =====
   // const { data: schoolList = [], isLoading } = useGetSearchSchools(
   //   searchSchool,
   //   page,
@@ -50,7 +53,9 @@ const SearchSchools = ({
 
   const handleSearchChange = (value: string) => {
     setSearchSchool(value);
-    setPage(1); // 새로운 검색어가 들어오면 페이지를 초기화
+
+    // ===== API 연결 후 주석 해제(현재 학교 더미데이터로 대체) =====
+    // setPage(1); // 새로운 검색어가 들어오면 페이지를 초기화
   };
 
   // 모달이 열렸을 떄 스크롤 방지

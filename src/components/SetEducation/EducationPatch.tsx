@@ -4,7 +4,7 @@ import Dropdown from '../Common/Dropdown';
 import { PostEducationType } from '@/types/postResume/postEducation';
 import { EducationLevels } from '@/constants/manageResume';
 import GraySearchIcon from '@/assets/icons/ManageResume/GraySearchIcon.svg?react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import SearchSchools from './SearchSchools';
 import { School } from '@/types/api/document';
 

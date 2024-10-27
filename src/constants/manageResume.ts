@@ -1,6 +1,6 @@
 import { School } from "@/types/api/document";
 import { ResumeDetailItemType } from "@/types/postApply/resumeDetailItem";
-import { GetEducationType, PostEducationType } from "@/types/postResume/postEducation";
+import { GetEducationType } from "@/types/postResume/postEducation";
 
 export const enum ManageResumeType {
   VISA = 'VISA',
