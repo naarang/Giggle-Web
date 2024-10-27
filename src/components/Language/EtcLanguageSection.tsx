@@ -32,6 +32,7 @@ const EtcLanguageSection = ({
         canDelete={false}
       />
       <div className="mt-6 flex flex-col gap-3">
+        {/* 검색된 언어 리스트 */}
         {filteredLanguages.map((language) => (
           <EtcLanguageCard
             key={language.id}

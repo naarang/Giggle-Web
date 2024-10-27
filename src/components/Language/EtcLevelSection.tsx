@@ -21,6 +21,7 @@ const EtcLevelSection = ({ level, setLevel }: EtcLevelSectionProps) => {
       <p className="body-3 text-[#656565] px-1.5 py-[0.375rem]">
         Proficiency level : 0 - Poor, 10 - Very good
       </p>
+      {/* 레벨 선택 바텀시트 */}
       {bottomSheetOpen && (
         <div className="w-screen h-screen">
           <LevelBottomSheet

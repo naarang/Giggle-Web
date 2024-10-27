@@ -10,6 +10,7 @@ import { EtcLanguageData } from '@/types/manageResume/manageResume';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// 초기 값
 const initialLanguage = {
   id: 0,
   language: '',
@@ -18,6 +19,7 @@ const initialLanguage = {
 
 const PostLanguagePage = () => {
   const navigate = useNavigate();
+  // 이전 페이지 이동
   const handleBackButtonClick = useNavigateBack();
   // 추후 언어 리스트 json으로 전달 받아 업데이트 예정
   const languageList = LanguageList;
