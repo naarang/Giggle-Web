@@ -1,5 +1,5 @@
-import { LanguagesSummariesResponse } from "@/types/api/resumes";
-import { ResumeDetailItemType } from "@/types/postApply/resumeDetailItem";
+import { LanguagesSummariesResponse } from '@/types/api/resumes';
+import { ResumeDetailItemType } from '@/types/postApply/resumeDetailItem';
 
 export const enum ManageResumeType {
   VISA = 'VISA',
@@ -86,22 +86,25 @@ export const ResumeData: ResumeDetailItemType = {
   },
 };
 
+export const LanguageData: LanguagesSummariesResponse = {
+  topik_level: 3,
+  social_integration_level: 2,
+  sejong_institute: 3,
+  additional_language: [
+    {
+      id: 1,
+      language_name: 'English',
+      level: 5,
+    },
+    {
+      id: 2,
+      language_name: 'Japanese',
+      level: 5,
+    },
+  ],
+};
 
-export const LanguageData:LanguagesSummariesResponse = {
-  topik_level : 3,
-  social_integration_level : 2,
-  sejong_institute : 3,
-  additional_language : 
-  [
-    {
-      id : 1,
-      language_name : 'English',
-      level : 5
-    },
-    {
-      id : 2,
-      language_name : 'Japanese',
-      level : 5
-    },
-  ] 
-}
+// 언어 등급
+export const TOPIC_GRADE = [0, 1, 2, 3, 4, 5, 6];
+export const SOCIALINTEGRATION_GRADE = [0, 1, 2, 3, 4, 5];
+export const SEJONG_GRADE = [0, 1, 2, 3, 4, 5, 6];

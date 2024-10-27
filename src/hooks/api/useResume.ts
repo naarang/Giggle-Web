@@ -1,6 +1,22 @@
-import { deleteEducation, deleteEtcLanguageLevel, deleteIntroduction, deleteWorkExperience, getEducation, getLanguagesSummaries, getResume, getWorkExperience, patchIntroduction, patchWorkExperience, postEducation, postEtcLanguageLevel, postWorkExperience } from "@/api/resumes";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import {
+  deleteEducation,
+  deleteEtcLanguageLevel,
+  deleteIntroduction,
+  deleteWorkExperience,
+  getEducation,
+  getLanguagesSummaries,
+  getResume,
+  getWorkExperience,
+  patchIntroduction,
+  patchLanguagesLevel,
+  patchWorkExperience,
+  postEducation,
+  postEtcLanguageLevel,
+  postWorkExperience,
+} from '@/api/resumes';
+import { LanguagesLevelType } from '@/types/api/resumes';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 // Profil page
 
@@ -145,6 +161,21 @@ export const useGetLanguagesSummaries = () => {
   return useQuery({
     queryKey: ['languagesSummaries'],
     queryFn: getLanguagesSummaries,
+  });
+};
+
+export const usePatchLanguagesLevel = ({
+  type,
+  level,
+}: {
+  type: LanguagesLevelType;
+  level: number;
+}) => {
+  return useMutation({
+    mutationFn: () => patchLanguagesLevel({ type, level }),
+    onError: (error) => {
+      console.error('언어 레벨 수정 실패', error);
+    },
   });
 };
 

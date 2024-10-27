@@ -96,8 +96,8 @@ const ProfilePage = () => {
           {/* bottom sheet */}
           {bottomSheetOpen && (
             <BottomSheetLayout
-              hasHandlebar={false}
-              isAvailableHidden={false}
+              hasHandlebar={true}
+              isAvailableHidden={true}
               isShowBottomsheet={true}
             >
               <div className="w-full flex flex-col py-10">
