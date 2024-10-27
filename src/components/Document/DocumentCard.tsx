@@ -94,10 +94,12 @@ const TemporarySaveCard = ({
 const BeforeConfirmationCard = ({
   title,
   onNext,
+  onRequest,
   onPreview,
 }: {
   title: string;
   onNext: () => void;
+  onRequest: () => void;
   onPreview: () => void;
 }) => {
   return (
@@ -147,7 +149,7 @@ const BeforeConfirmationCard = ({
           fontColor="text-white"
           isBorder={false}
           title="Request"
-          onClick={onNext}
+          onClick={onRequest}
         />
         <Button
           type="large"
@@ -380,6 +382,13 @@ const DocumentCardDispenser = ({
         <BeforeConfirmationCard
           title={title}
           onNext={onNext}
+          onRequest={() =>
+            navigate('/request-modify', {
+              state: {
+                type: type,
+              },
+            })
+          }
           onPreview={() =>
             navigate('/document-preview', {
               state: {
