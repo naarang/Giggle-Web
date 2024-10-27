@@ -126,9 +126,10 @@ const BeforeConfirmationCard = ({
         <div className="self-stretch flex items-center justify-center px-3 text-[#656565] caption-1">
           <div className="flex-1 relative">
             <p className="m-0">
-              The employer has completed the part-time employment permit form. Please
-              review the content and if there are any issues, submit a Request.
-              If everything is fine, complete the process by selecting Confirm.
+              The employer has completed the part-time employment permit form.
+              Please review the content and if there are any issues, submit a
+              Request. If everything is fine, complete the process by selecting
+              Confirm.
             </p>
             <div>&nbsp;</div>
             <p className="m-0 text-[#FF6F61]">
@@ -247,16 +248,26 @@ const ConfirmationCard = ({
   document,
   title,
   onDownload,
+  onPreview,
 }: {
   title: string;
   document: DocumentInfo;
   onDownload: (url: string) => void;
+  onPreview: () => void;
 }) => {
   return (
     <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-center justify-center gap-2 caption-2 text-left text-[#1e1926]">
-      <div className="self-stretch rounded-t-[1.125rem] bg-[#1e1926] h-7 flex items-center justify-between px-4 pl-6 py-2 relative">
-        <div className="flex items-center justify-start relative text-[#fef387]">
-          Your form is ready ! Check it out
+      <div className="self-stretch rounded-t-[1.125rem] bg-[#fef387] h-7 flex items-center justify-between px-4 pl-6 py-2 relative">
+        <div className="flex items-center justify-start relative ">
+          Check my Work Permit Form
+        </div>
+        <div className="w-1.5 absolute !m-0 top-[0.4rem] left-[8rem] rounded-full bg-[#ff6f61] h-1.5 z-[1]" />
+        <div className="w-[0.75rem] relative h-[0.75rem] z-[2]">
+          <div
+            className="absolute w-full h-full top-0 righ-0 bottom-0 left-0"
+            onClick={onPreview}
+          />
+          <ArrowrightIcon />
         </div>
       </div>
       <div className="self-stretch flex flex-col items-start px-4 gap-4 body-1">
@@ -335,6 +346,13 @@ const DocumentCardDispenser = ({
         title={title}
         document={document}
         onDownload={handleDownload}
+        onPreview={() =>
+          navigate('/document-preview', {
+            state: {
+              type: type,
+            },
+          })
+        }
       />
     );
   switch (document.status) {
@@ -364,6 +382,13 @@ const DocumentCardDispenser = ({
           title={title}
           document={document}
           onDownload={handleDownload}
+          onPreview={() =>
+            navigate('/document-preview', {
+              state: {
+                type: type,
+              },
+            })
+          }
         />
       );
   }
