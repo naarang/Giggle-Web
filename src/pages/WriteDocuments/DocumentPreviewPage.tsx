@@ -15,11 +15,6 @@ import {
   useGetStandardLaborContract,
 } from '@/hooks/api/useDocument';
 import EmployeeInfoSection from '@/components/Document/write/EmployeeInfoSection';
-import {
-  mockIntegratedApplication,
-  mockLaborContractEmployeeInfo,
-  sampleLaborContract,
-} from '../../constants/documents';
 import InfoAlert from '@/components/Document/write/InfoAlert';
 import IntegratedApplicationPreview from '@/components/Document/write/IntegratedApplicationPreview';
 const DocumentPreview = () => {
@@ -28,10 +23,7 @@ const DocumentPreview = () => {
   const { type } = location.state || {};
   const [document, setDocument] = useState<
     PartTimePermitData | LaborContractDataResponse | IntegratedApplicationData
-  >(
-    mockIntegratedApplication
-    //employer_information: sampleLaborContract,
-  );
+  >();
   const { mutate: getPartTimeEmployPermit } = useGetPartTimeEmployPermit({
     onSuccess: (data) => setDocument(data),
   });
@@ -42,19 +34,19 @@ const DocumentPreview = () => {
     onSuccess: (data) => setDocument(data),
   });
   {
-    /*  useEffect(() => {
-    switch (type) {
-      case DocumentType.PART_TIME_PERMIT:
-        getPartTimeEmployPermit(1);
-        break;
-      case DocumentType.LABOR_CONTRACT:
-        getStandardLaborContract(1);
-        break;
-      case DocumentType.INTEGRATED_APPLICATION:
-        getIntegratedApplication(1);
-        break;
-    }
-  }, [type]); */
+    useEffect(() => {
+      switch (type) {
+        case DocumentType.PART_TIME_PERMIT:
+          getPartTimeEmployPermit(1);
+          break;
+        case DocumentType.LABOR_CONTRACT:
+          getStandardLaborContract(1);
+          break;
+        case DocumentType.INTEGRATED_APPLICATION:
+          getIntegratedApplication(1);
+          break;
+      }
+    }, [type]);
   }
 
   const hasInfo = (
