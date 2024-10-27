@@ -10,7 +10,7 @@ import {
   LaborContractEmployerInfoProperty,
 } from '@/types/api/document';
 import { Address } from '@/types/api/users';
-import { WorkDayTime } from '../../../types/api/document';
+import { WorkDayTime } from '@/types/api/document';
 import {
   arrayToString,
   getDetailAddress,
