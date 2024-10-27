@@ -22,11 +22,11 @@ const statusStyler = (status: ApplicationStepType) => {
   }
 };
 
-type ApplicationCardType = {
+type ApplicationCardPropsType = {
   applicationData: AppicationItemType;
 };
 
-const ApplicationCard = ({ applicationData }: ApplicationCardType) => {
+const ApplicationCard = ({ applicationData }: ApplicationCardPropsType) => {
   const navigate = useNavigate();
 
   return (
