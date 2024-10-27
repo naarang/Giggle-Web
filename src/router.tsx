@@ -16,12 +16,22 @@ import EditProfilePage from '@/pages/Profile/EditProfilePage';
 import PostDetailPage from '@/pages/PostDetail/PostDetailPage';
 import PostApplyPage from '@/pages/PostApply/PostApplyPage';
 import ApplicationPage from '@/pages/Application/ApplicationPage';
+import ManageResumePage from '@/pages/ManageResumePage/ManageResumePage';
 import WriteDocumentsPage from '@/pages/WriteDocuments/WriteDocumentsPage';
+import ScrappedJobPostsPage from '@/pages/ScrappedJobPosts/ScrappedJobPostsPage';
+import LanguagePage from '@/pages/Language/LanguagePage';
+import PostEducationPage from '@/pages/SetEducation/PostEducationPage';
+import PatchEducationPage from '@/pages/SetEducation/PatchEducationPage';
+import PostWorkExperiencePage from '@/pages/SetWorkExperience/PostWorkExperiencePage';
+import IntroductionPage from '@/pages/Introduction/IntroductionPage';
+import PatchWorkExperiencePage from '@/pages/SetWorkExperience/PatchWorkExperiencePage';
 import ApplicationDetailPage from '@/pages/ApplicationDetail/ApplicationDetailPage';
 import ApplicationResultPage from '@/pages/ApplicationResult/ApplicationResultPage';
 import EmployerPostDetailPage from '@/pages/Employer/PostDetail/EmployerPostDetailPage';
 import RequestModifyPage from './pages/WriteDocuments/RequestModifyPage';
 import DocumentPreview from './pages/WriteDocuments/DocumentPreviewPage';
+import EmployerPostPage from '@/pages/Employer/Post/EmployerPostPage';
+import EmployerApplicantListPage from '@/pages/Employer/ApplicantList/EmployerApplicantListPage';
 
 const Layout = () => {
   const location = useLocation();
@@ -60,26 +70,49 @@ const Router = () => {
           <Route path="/search/filter" element={<PostSearchFilterPage />} />
 
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/profile/language" element={<LanguageSettingPage />} />
           <Route path="/profile/edit" element={<EditProfilePage />} />
+          <Route path="/profile/manage-resume" element={<ManageResumePage />} />
+          <Route path="/profile/language" element={<LanguageSettingPage />} />
+
+          <Route path="/resume/introduction" element={<IntroductionPage />} />
+          <Route path="/resume/language" element={<LanguagePage />} />
+          <Route path="/resume/scrapped" element={<ScrappedJobPostsPage />} />
+          <Route path="/resume/education" element={<PostEducationPage />} />
+          <Route
+            path="/resume/education/edit/:id"
+            element={<PatchEducationPage />}
+          />
+          <Route
+            path="/resume/work-experience"
+            element={<PostWorkExperiencePage />}
+          />
+          <Route
+            path="/resume/work-experience/edit/:id"
+            element={<PatchWorkExperiencePage />}
+          />
 
           <Route path="/post/:id" element={<PostDetailPage />} />
           <Route path="/post/apply/:id" element={<PostApplyPage />} />
+          <Route path="/employer/post" element={<EmployerPostPage />} />
           <Route
             path="/employer/post/:id"
             element={<EmployerPostDetailPage />}
+          />
+          <Route
+            path="/employer/post/:id/applicant"
+            element={<EmployerApplicantListPage />}
           />
           <Route path="/write-documents" element={<WriteDocumentsPage />} />
           <Route path="/document-preview" element={<DocumentPreview />} />
           <Route path="/request-modify" element={<RequestModifyPage />} />
 
           <Route path="/application" element={<ApplicationPage />} />
+          <Route path="/application/:id" element={<ApplicationDetailPage />} />
+          <Route
+            path="/application/result/:id"
+            element={<ApplicationResultPage />}
+          />
         </Route>
-        <Route path="/application/:id" element={<ApplicationDetailPage />} />
-        <Route
-          path="/application/result/:id"
-          element={<ApplicationResultPage />}
-        />
       </Routes>
     </BrowserRouter>
   );
