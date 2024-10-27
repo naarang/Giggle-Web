@@ -21,6 +21,7 @@ const DocumentCardList = ({
           <DocumentCardDispenser
             document={documents[property]}
             title={DocumentTypeInfo[property].name}
+            type={property}
             onNext={handleOnNext}
           />
         ) : (
