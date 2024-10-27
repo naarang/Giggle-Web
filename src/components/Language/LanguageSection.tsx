@@ -50,13 +50,15 @@ const LanguageSection = () => {
             />
             {/* 별도의 언어 추가 카드 */}
             {languageData.additional_language.map((language) => (
-              <LanguageCard
-                title={language.language_name}
-                description="add"
-                level={language.level}
-                isAdditionalLanguage={true}
-                maxLevel={10}
-              />
+              <div key={language.id}>
+                <LanguageCard
+                  title={language.language_name}
+                  description="add"
+                  level={language.level}
+                  isAdditionalLanguage={true}
+                  maxLevel={10}
+                />
+              </div>
             ))}
           </div>
         </div>

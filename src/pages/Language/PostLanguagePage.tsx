@@ -33,7 +33,6 @@ const PostLanguagePage = () => {
 
   const handleSubmit = () => {
     // TODO: API - 7.7 언어 - ETC 생성하기
-    console.log(selectedLanguage, level);
     navigate('/resume/language');
   };
 

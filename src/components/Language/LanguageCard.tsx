@@ -7,6 +7,7 @@ import { useState } from 'react';
 import Button from '../Common/Button';
 import { usePatchLanguagesLevel } from '@/hooks/api/useResume';
 import NumberRadioButton from './NumberRadioButton';
+import { LanguagesLevelType } from '@/types/api/resumes';
 
 type LanguageCardProps = {
   title: string;
@@ -27,7 +28,7 @@ const LanguageCard = ({
   const [selectedLevel, setSelectedLevel] = useState(level);
 
   const { mutate: patchLanguagesLevel } = usePatchLanguagesLevel({
-    type: title.toLowerCase().replace(/\s+/g, '-'),
+    type: title.toLowerCase().replace(/\s+/g, '-') as LanguagesLevelType,
     level: selectedLevel,
   });
 
