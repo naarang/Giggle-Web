@@ -4,6 +4,8 @@ import SignupInput from '@/components/Signup/SignupInput';
 import EmailInput from '@/components/Signup/EmailInput';
 import SignupVerification from '@/components/Signup/SignupVerification';
 import VerificationSuccessful from '@/components/Signup/VerificationSuccessful';
+import { usePatchAuthentication, useTempSignUp } from '@/hooks/api/useAuth';
+import { UserType } from '@/constants/user';
 
 const EmployerSignupPage = () => {
   // sign up 단계(총 4단계)
@@ -16,6 +18,10 @@ const EmployerSignupPage = () => {
 
   // authentication-code Field 상태 관리
   const [authenticationCode, setAuthenticationCode] = useState<string>('');
+
+  // mutate 관리
+  const { mutate: tempSignUp } = useTempSignUp();
+  const { mutate: verifyAuthCode } = usePatchAuthentication();
 
   // handler 정의
   const handleSignUpClick = () => {
@@ -36,15 +42,24 @@ const EmployerSignupPage = () => {
 
   // API 정의
   // API - 2.4 임시 회원가입 API 호출
-  const handleSignUp = async () => {
-    // 임의 로직 API 연동 후 삭제
-    handleSignUpClick();
+  const handleSignUp = () => {
+    tempSignUp(
+      {
+        id: id,
+        password: password,
+        email: email,
+        account_type: UserType.OWNER,
+      },
+      { onSuccess: handleSignUpClick },
+    );
   };
 
   // API - 2.7 이메일 인증코드 검증
-  const handleVerify = async () => {
-    // 임의 로직 API 연동 후 삭제
-    handleSignUpClick();
+  const handleVerify = () => {
+    verifyAuthCode(
+      { id: id, email: email, authentication_code: authenticationCode },
+      { onSuccess: () => setCurrentStep(currentStep + 1) },
+    );
   };
 
   return (
@@ -59,7 +74,7 @@ const EmployerSignupPage = () => {
           <Stroke stroke={currentStep === 3 ? '#1E1926' : '#FFF'} />
         </div>
       )}
-      <div className="grow px-6">
+      <div className="grow px-6 flex flex-col items-center">
         {currentStep === 1 && (
           <SignupInput
             onSignUpClick={handleSignUpClick}

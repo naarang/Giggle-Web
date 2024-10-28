@@ -28,6 +28,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { RESTYPE } from '@/types/api/common';
+import { useEmailTryCountStore } from '@/store/signup';
 
 /**
  * 로그인 프로세스를 처리하는 커스텀 훅
@@ -64,7 +65,6 @@ export const useSignIn = () => {
         setRefreshToken(data.data.refresh_token);
         navigate('/splash');
       }
-      console.log('로그인 실패 : ', data.error?.code, data.error?.message);
     },
     onError: () => {
       navigate('/signin');
@@ -83,7 +83,6 @@ export const useLogout = () => {
         deleteRefreshToken();
         navigate('/splash');
       }
-      console.log('로그아웃 실패 : ', data.error?.code, data.error?.message);
     },
     onError: () => {
       navigate('/profile');
@@ -100,7 +99,6 @@ export const useReIssueToken = () => {
         setAccessToken(data.data.access_token);
         setRefreshToken(data.data.refresh_token);
       }
-      console.log('JWT 재발급 실패 : ', data.error?.code, data.error?.message);
     },
   });
 };
@@ -135,11 +133,7 @@ export const useTempSignUp = () => {
     mutationFn: tempSignUp,
     onSuccess: (data: RESTYPE<TempSignUpResponse>) => {
       if (!data.success) {
-        console.log(
-          '임시 회원가입 실패 : ',
-          data.error?.code,
-          data.error?.message,
-        );
+        console.log('임시 회원가입 실패 : ', data.error?.message);
       }
     },
   });
@@ -156,7 +150,6 @@ export const useSignUp = () => {
         setAccessToken(data.data.access_token);
         setRefreshToken(data.data.refresh_token);
       }
-      console.log('회원가입 실패 : ', data.error?.code, data.error?.message);
     },
     onError: () => {
       navigate('/');
@@ -175,7 +168,6 @@ export const useOwnerSignUp = () => {
         setAccessToken(data.data.access_token);
         setRefreshToken(data.data.refresh_token);
       }
-      console.log('회원가입 실패 : ', data.error?.code, data.error?.message);
     },
     onError: () => {
       navigate('/');
@@ -193,11 +185,6 @@ export const usePatchAuthentication = () => {
         setTemporaryToken(data.data.temporary_token);
         navigate('/information');
       }
-      console.log(
-        '인증코드 검증 실패 : ',
-        data.error?.code,
-        data.error?.message,
-      );
     },
     onError: (error) => {
       console.log(error);
@@ -208,15 +195,13 @@ export const usePatchAuthentication = () => {
 // 2.8 이메일 인증코드 재전송 훅
 export const useReIssueAuthentication = () => {
   const navigate = useNavigate();
+  const { updateTryCnt } = useEmailTryCountStore();
   return useMutation({
     mutationFn: reIssueAuthentication,
     onSuccess: (data: RESTYPE<TempSignUpResponse>) => {
-      if (!data.success) {
-        console.log(
-          '인증코드 재전송 실패 : ',
-          data.error?.code,
-          data.error?.message,
-        );
+      if (data.success) {
+        // 이메일 재발송 횟수 업데이트
+        updateTryCnt(data.data.try_cnt);
       }
     },
     onError: () => {
@@ -235,7 +220,6 @@ export const useWithdraw = () => {
         deleteAccessToken();
         deleteRefreshToken();
       }
-      console.log('탈퇴 실패 : ', data.error?.code, data.error?.message);
     },
     onError: () => {
       navigate('/splash');

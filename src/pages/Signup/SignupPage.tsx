@@ -82,7 +82,7 @@ const SignupPage = () => {
           <Stroke stroke={currentStep === 4 ? '#1E1926' : '#FFF'} />
         </div>
       )}
-      <div className="grow px-6">
+      <div className="grow px-6 flex flex-col items-center">
         {currentStep === 1 && (
           <FindJourney
             onSignUpClick={handleSignUpClick}

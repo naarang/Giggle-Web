@@ -27,7 +27,7 @@ const EmailInput = ({ email, onEmailChange, onSubmit }: EmailInputProps) => {
     onEmailChange(value);
 
     // 이메일 형식 유효성 검사
-    if (validateEmail(value, setEmailError, pathname)) {
+    if (!validateEmail(value, setEmailError, pathname)) {
       setIsValid(false); // 유효성 검사 실패 시 버튼 비활성화
       return;
     }
@@ -38,6 +38,7 @@ const EmailInput = ({ email, onEmailChange, onSubmit }: EmailInputProps) => {
       setIsValid(true); // 중복 검사 통과 시 버튼 활성화
     } else {
       setEmailError(signInputTranclation.invalidEmail[isEmployer(pathname)]); // email 중복 오류 메시지
+      setIsValid(false); // 중복 검사 실패 시 버튼 비활성화
     }
   };
 
@@ -45,11 +46,6 @@ const EmailInput = ({ email, onEmailChange, onSubmit }: EmailInputProps) => {
     if (!isValid) return;
     onSubmit();
   };
-
-  // 이메일과 유효성 검사 상태에 따라 버튼 비활성화 상태를 관리
-  useEffect(() => {
-    setIsValid(email !== '' && !emailError); // 이메일 값이 있고 오류가 없으면 유효
-  }, [email, emailError]);
 
   return (
     <>
@@ -67,7 +63,7 @@ const EmailInput = ({ email, onEmailChange, onSubmit }: EmailInputProps) => {
             value={email}
             onChange={handleEmailChange}
             canDelete={false}
-            isInvalid={!!emailError}
+            isInvalid={!isValid}
           />
           {emailError && (
             <p className="text-[#FF6F61] text-xs p-2">{emailError}</p>

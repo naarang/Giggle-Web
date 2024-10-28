@@ -79,6 +79,14 @@ export const signInputTranclation = {
     ko: '5분 후에 코드를 재전송 하겠습니다.',
     en: 'We will resend the code in 5 mins',
   },
+  limitCounts: {
+    ko: '5회를 초과하였습니다. 24시간 후에 다시 시도해 주세요.',
+    en: 'You have reached the limit. Please try again in 24 hours.',
+  },
+  resentMessage: {
+    ko: '인증코드가 재전송되었습니다.',
+    en: 'Verification code has been resent.',
+  },
   verify: {
     ko: '인증하기',
     en: 'Verify',

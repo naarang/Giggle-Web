@@ -7,7 +7,7 @@ export const validateId = (
   setIdError: (error: string | null) => void,
   pathname: string,
 ): boolean => {
-  const idRegex = /^[A-Za-z0-9]{1,320}$/;
+  const idRegex = /^[a-zA-Z0-9]{5,20}$/;
   if (!idRegex.test(id)) {
     setIdError(signInputTranclation.invalidId[isEmployer(pathname)]);
     return false;
