@@ -3,22 +3,34 @@ import Input from '@/components/Common/Input';
 import InputLayout from '@/components/WorkExperience/InputLayout';
 import { phone } from '@/constants/information';
 import { useGetGeoInfo, useSearchAddress } from '@/hooks/api/useKaKaoMap';
-import { EmployerRegistrationRequest } from '@/types/api/employ';
+import { EmployerRegistrationRequestBody } from '@/types/api/employ';
 import { AddressType, Document } from '@/types/api/map';
 import { InputType } from '@/types/common/input';
 import { pick } from '@/utils/map';
 import { useCallback, useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import FileAddIcon from '@/assets/icons/FileAddIcon.svg?react';
+import CheckIcon from '@/assets/icons/CheckOfBoxIcon.svg?react';
+import GiggleLogo from '@/assets/icons/GiggleLogo.svg?react';
+import giggleLogoPng from '@/assets/images/GiggleLogo.png';
+import { formatPhoneNumber } from '@/utils/information';
 
 type InformationInputSectionProps = {
-  newEmployData: EmployerRegistrationRequest;
-  setNewEmployData: (newData: EmployerRegistrationRequest) => void;
+  newEmployData: EmployerRegistrationRequestBody;
+  setNewEmployData: (newData: EmployerRegistrationRequestBody) => void;
+  setLogoFile: (file: File | undefined) => void;
 };
+
+const enum LogoType {
+  DEFAULT = 'default',
+  NONE = 'none',
+  SELECTED = 'selected',
+}
 
 const InformationInputSection = ({
   newEmployData,
   setNewEmployData,
+  setLogoFile,
 }: InformationInputSectionProps) => {
   // 주소 검색용 input 저장하는 state
   const [addressInput, setAddressInput] = useState('');
@@ -37,6 +49,8 @@ const InformationInputSection = ({
     middle: '',
     end: '',
   });
+  const [logoStatus, setLogoStatus] = useState<LogoType>(LogoType.NONE);
+  const [selectedImage, setSelectedImage] = useState<string>();
   // 현재 좌표 기준 주소 획득
   const { data, isSuccess } = useGetGeoInfo(setCurrentGeoInfo);
   // 키워드로 주소 검색
@@ -53,6 +67,10 @@ const InformationInputSection = ({
       },
     });
   }, [isSuccess]);
+
+  useEffect(() => {
+    setNewEmployData({...newEmployData, owner_info: {...newEmployData.owner_info, phone_number: formatPhoneNumber(phoneNum)}})
+  }, [phoneNum])
 
   // 검색할 주소 입력 시 실시간 검색
   const handleAddressSearch = useCallback(
@@ -116,9 +134,43 @@ const InformationInputSection = ({
     // 검색 결과 초기화
     setAddressSearchResult([]);
   };
+  // 로고 선택
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedImage(reader.result as string);
+        setLogoFile(file);
+        setLogoStatus(LogoType.SELECTED);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  // Giggle 기본로고 선택 handler
+  const handleDefaultLogo = async (type: LogoType) => {
+    if (type === LogoType.NONE) {
+      setLogoStatus(LogoType.NONE);
+      setSelectedImage(undefined);
+      setLogoFile(undefined);
+    }
+    if (type === LogoType.DEFAULT) {
+      setLogoStatus(LogoType.DEFAULT);
+      try {
+        // 이미지 URL에서 Blob 생성
+        const response = await fetch(giggleLogoPng);
+        const blob = await response.blob();
+        // Blob을 File 객체로 변환
+        const file = new File([blob], 'giggle-logo.png', { type: 'image/png' });
+        setLogoFile(file);
+      } catch (error) {
+        console.error('Error converting image to File:', error);
+      }
+    }
+  };
   return (
     <>
-      <div className="w-full flex flex-col py-6 items-center justify-between [&>*:last-child]:mb-40">
+      <div className="w-full flex flex-col p-6 items-center justify-between [&>*:last-child]:mb-40">
         <div className="relative w-full flex items-center justify-center title-1 text-[#1e1926] text-left">
           추가 정보 입력
         </div>
@@ -159,6 +211,7 @@ const InformationInputSection = ({
               canDelete={false}
             />
           </InputLayout>
+          {/* 주소 입력 */}
           <div className="w-full flex flex-col gap-[1.125rem]">
             {/* 주소 검색 입력 input */}
             <InputLayout title="회사/점포주소" isEssential>
@@ -200,7 +253,7 @@ const InformationInputSection = ({
                 ></MapMarker>
               </Map>
             </div>
-            <InputLayout title="Detailed Address" isEssential>
+            <InputLayout title="상세 주소" isEssential={false}>
               <Input
                 inputType={InputType.TEXT}
                 placeholder="ex) 101-dong"
@@ -237,7 +290,7 @@ const InformationInputSection = ({
             />
           </InputLayout>
           {/* 개인 휴대폰 번호 입력 */}
-          <InputLayout title="Cell Phone No." isEssential>
+          <InputLayout title="대표자 전화번호" isEssential>
             <div className="w-full flex flex-row gap-2 justify-between">
               <div className="w-full h-[2.75rem]">
                 <Dropdown
@@ -267,11 +320,62 @@ const InformationInputSection = ({
               />
             </div>
           </InputLayout>
-          <InputLayout title="Cell Phone No." isEssential={false}>
+          {/* 회사 로고 입력 */}
+          <InputLayout title="회사 로고" isEssential={false}>
             <div className="w-full flex flex-col items-center justify-start">
               <div className="w-full flex items-center justify-start">
-                <div className="shadow-[0_1px_2px_rgba(107,110,116,0.04)] rounded-lg bg-white border-[0.5px] border-[#eae9f6] h-11 flex items-center justify-center px-4 py-2.5">
-                  <FileAddIcon />
+                <label
+                  className="cursor-pointer"
+                  htmlFor="logo-upload"
+                  aria-label={
+                    logoStatus === LogoType.SELECTED
+                      ? 'Change logo image'
+                      : 'Upload logo image'
+                  }
+                >
+                  <div className="w-11 shadow-[0_1px_2px_rgba(107,110,116,0.04)] rounded-lg bg-white border-[0.5px] border-[#eae9f6] h-11 flex items-center justify-center">
+                    {logoStatus === LogoType.NONE && <FileAddIcon />}
+                    {logoStatus === LogoType.DEFAULT && <GiggleLogo />}
+                    {logoStatus === LogoType.SELECTED && selectedImage && (
+                      <div className="relative w-full h-full group">
+                        <img
+                          src={selectedImage}
+                          alt="Selected logo"
+                          className="w-full h-full object-cover rounded-lg"
+                        />
+                        {/* Hover overlay */}
+                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity rounded-lg flex items-center justify-center">
+                          <FileAddIcon className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <input
+                    id="logo-upload"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="hidden"
+                    // input을 재선택할 수 있도록 key를 추가
+                    key={selectedImage}
+                  />
+                </label>
+              </div>
+              <div className="w-full relative flex items-center justify-start py-2 gap-3 text-left body-3 text-[#656565]">
+                <div className="w-6 h-6 relative">
+                  <div
+                    className={`w-full h-full border border-[#f4f4f9] flex items-center justify-center ${logoStatus === LogoType.DEFAULT ? 'bg-[#1E1926]' : 'bg-white'}`}
+                    onClick={
+                      logoStatus === LogoType.DEFAULT
+                        ? () => handleDefaultLogo(LogoType.NONE)
+                        : () => handleDefaultLogo(LogoType.DEFAULT)
+                    }
+                  >
+                    <CheckIcon />
+                  </div>
+                </div>
+                <div className="flex items-start justify-start">
+                  Giggle 기본로고를 사용 할게요
                 </div>
               </div>
             </div>
