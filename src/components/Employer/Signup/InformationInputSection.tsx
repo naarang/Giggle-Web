@@ -69,8 +69,14 @@ const InformationInputSection = ({
   }, [isSuccess]);
 
   useEffect(() => {
-    setNewEmployData({...newEmployData, owner_info: {...newEmployData.owner_info, phone_number: formatPhoneNumber(phoneNum)}})
-  }, [phoneNum])
+    setNewEmployData({
+      ...newEmployData,
+      owner_info: {
+        ...newEmployData.owner_info,
+        phone_number: formatPhoneNumber(phoneNum),
+      },
+    });
+  }, [phoneNum]);
 
   // 검색할 주소 입력 시 실시간 검색
   const handleAddressSearch = useCallback(
