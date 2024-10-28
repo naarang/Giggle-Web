@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import Input from '@/components/Common/Input';
 import Button from '@/components/Common/Button';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { validateId, validatePassword } from '@/utils/signin';
+import { useSignIn } from '@/hooks/api/useAuth';
 
 const SigninInputSection = () => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   // ===== state =====
   const [idValue, setIdValue] = useState<string>('');
@@ -14,61 +16,29 @@ const SigninInputSection = () => {
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [isValid, setIsValid] = useState(false);
 
+  const { mutate: signIn } = useSignIn();
+
   // ===== handler =====
   const handleIdChange = (value: string) => {
     setIdValue(value);
-    validateId(value, setIdError); // ID 입력 시 유효성 검사
+    validateId(value, setIdError, pathname); // ID 입력 시 유효성 검사
   };
 
   const handlePasswordChange = (value: string) => {
     setPasswordValue(value);
-    validatePassword(value, setPasswordError); // 비밀번호 입력 시 유효성 검사
+    validatePassword(value, setPasswordError, pathname); // 비밀번호 입력 시 유효성 검사
   };
 
   // ====== Sign in API =======
   const handleSubmit = async () => {
-    const serial_id = validateId(idValue, setIdError);
-    const password = validatePassword(passwordValue, setPasswordError);
-
-    // temp code
-    if (serial_id && password) {
-      navigate('/');
-    }
-
-    /*
-    if (serial_id && password) {
-      try {
-        // 로그인 POST API 요청
-        const response = await axios.post('/api/v1/auth/login', {
-          serial_id: idValue,
-          password: passwordValue,
-        });
-
-        // 로그인 성공 시 유저 타입에 따라 페이지 이동
-        if (type === 'USER') {
-          navigate('/');
-        } else if (type === 'OWNER') {
-          navigate('/owner');
-        }
-      } catch (error: any) {
-        // 서버에서 받은 오류 처리
-        if (error.response?.status === 404) {
-          setIdError('존재하지 않는 ID 입니다.'); // 3-1. 존재하지 않는 ID
-        } else if (error.response?.status === 401) {
-          setPasswordError('비밀번호가 일치하지 않습니다.'); // 3-2. 비밀번호 불일치
-        } else {
-          console.error('로그인 중 오류 발생:', error);
-        }
-      }
-    }
-      */
+    signIn({ serial_id: idValue, password: passwordValue });
   };
 
   // 모든 필드의 유효성 검사 후, Sign In 버튼 활성화
   useEffect(() => {
     if (
-      validateId(idValue, setIdError) &&
-      validatePassword(passwordValue, setPasswordError)
+      validateId(idValue, setIdError, pathname) &&
+      validatePassword(passwordValue, setPasswordError, pathname)
     ) {
       setIsValid(true);
     }

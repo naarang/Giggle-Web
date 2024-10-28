@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { validateEmail } from '@/utils/signin';
 import { signInputTranclation } from '@/constants/translation';
 import { isEmployer } from '@/utils/signup';
+import { useGetEmailValidation } from '@/hooks/api/useAuth';
 
 type EmailInputProps = {
   email: string;
@@ -19,37 +20,25 @@ const EmailInput = ({ email, onEmailChange, onSubmit }: EmailInputProps) => {
   const [emailError, setEmailError] = useState<string | null>(null);
   const [isValid, setIsValid] = useState<boolean>(false);
 
+  const { data: ValidationResponse } = useGetEmailValidation(email);
+
   // ===== handler =====
   const handleEmailChange = async (value: string) => {
     onEmailChange(value);
 
     // 이메일 형식 유효성 검사
-    if (!validateEmail(value, setEmailError, pathname)) {
+    if (validateEmail(value, setEmailError, pathname)) {
       setIsValid(false); // 유효성 검사 실패 시 버튼 비활성화
       return;
     }
 
-    // 이메일 중복 검사 API - 유효성 검사
-    /*
-    try {
-      const response = await fetch(
-        `/api/v1/auth/validations/email?email=${value}`,
-      );
-      const data = await response.json();
-      if (data.is_valid) {
-        setEmailError(null); // 중복되지 않은 경우 오류 초기화
-        setIsValid(true); // 이메일이 중복되지 않으면 버튼 활성화
-      } else {
-        setEmailError(
-          signInputTranclation.emailAvailability[isEmployer(pathname)],
-        ); // 중복된 경우 오류 메시지 설정
-        setIsValid(false); // 중복된 경우 버튼 비활성화
-      }
-    } catch (error) {
-      console.error('이메일 중복 확인 오류:', error);
-      setIsValid(false); // 오류 발생 시 버튼 비활성화
+    // 이메일 중복 검사 API 호출 결과 처리
+    if (ValidationResponse && ValidationResponse.data.is_valid) {
+      setEmailError(null); // email 중복 오류 메시지 초기화
+      setIsValid(true); // 중복 검사 통과 시 버튼 활성화
+    } else {
+      setEmailError(signInputTranclation.invalidEmail[isEmployer(pathname)]); // email 중복 오류 메시지
     }
-      */
   };
 
   const handleSignupClick = () => {

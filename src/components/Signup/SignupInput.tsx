@@ -10,6 +10,7 @@ import {
 import SigninSocialButtons from '@/components/Signin/SigninSocialButtons';
 import { isEmployer } from '@/utils/signup';
 import { signInputTranclation } from '@/constants/translation';
+import { useGetIdValidation } from '@/hooks/api/useAuth';
 
 type signupInputProps = {
   id: string;
@@ -38,22 +39,20 @@ const SignupInput = ({
   >(null);
   const [isValid, setIsValid] = useState(false);
 
+  const { data: validationResponse } = useGetIdValidation(id);
+
   // ===== handler =====
   const handleIdChange = async (value: string) => {
     onIdChange(value);
-    // ID 중복 검사 API 호출 - 유효성 검사
+
+    // ID 유효성 검사
     if (validateId(value, setIdError, pathname)) {
-      // try {
-      //   const response = await fetch(`/api/v1/auth/validations/id?id=${value}`);
-      //   const data = await response.json();
-      //   if (data.is_valid) {
-      //     setIdError(null); // 중복되지 않은 경우 오류 초기화
-      //   } else {
-      //     setIdError('This email already exists'); // 중복된 경우 오류 메시지 설정
-      //   }
-      // } catch (error) {
-      //   console.error('ID 중복 확인 오류:', error);
-      // }
+      // ID 중복 검사 API 호출 결과 처리
+      if (validationResponse && validationResponse.data.is_valid) {
+        setIdError(null); // ID 중복 오류 메시지 초기화
+      } else {
+        setIdError(signInputTranclation.invalidId[isEmployer(pathname)]); // ID 중복 오류 메시지
+      }
     }
   };
 
