@@ -1,4 +1,4 @@
-import { signIn, signUp } from '@/api/auth';
+import { signIn, signUp, signUpEmployer } from '@/api/auth';
 import { SignInResponse } from '@/types/api/auth';
 import { setAccessToken } from '@/utils/auth';
 import { useNavigate } from 'react-router-dom';
@@ -49,6 +49,19 @@ export const useSignUp = () => {
     onSuccess: (data: SignInResponse) => {
       setAccessToken(data.access_token);
       navigate('/information');
+    },
+    onError: () => {
+      navigate('/signin');
+    },
+  });
+};
+
+export const useSignupEmployer = (setSuccess: () => void) => {
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: signUpEmployer,
+    onSuccess: () => {
+      setSuccess();
     },
     onError: () => {
       navigate('/signin');

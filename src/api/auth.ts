@@ -1,5 +1,6 @@
 import { SignInRequest, SignInResponse, SignUpRequest, SignUpResponse } from '@/types/api/auth';
 import { api } from '@/api/index.ts';
+import { EmployerRegistrationRequest } from '@/types/api/employ';
 
 /**
  * 사용자 로그인을 처리하는 함수
@@ -30,5 +31,10 @@ export const signIn = async (
 
 export const signUp = async (signupInfo : SignUpRequest): Promise<SignUpResponse> => {
   const response = await api.post(`/auth/users`, signupInfo);
+  return response.data;
+}
+
+export const signUpEmployer = async (signupInfo : EmployerRegistrationRequest): Promise<{success: boolean}> => {
+  const response = await api.post(`/auth/owners`, signupInfo);
   return response.data;
 }
