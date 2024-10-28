@@ -1,5 +1,6 @@
 import { AscendingSortType } from '@/types/common/sort';
 import { api } from '.';
+import { JobPostingForm } from '@/types/postCreate/postCreate';
 
 // 4.4 (유학생/고용주) 공고 상세 조회하기
 export const getPostDetail = async (id: number) => {
@@ -25,6 +26,12 @@ export const getApplicantList = async (
 // 4.7 (유학생/고용주) 공고 요약 정보 조회하기
 export const getPostSummary = async (id: number) => {
   const response = await api.get(`/job-postings/${id}/summaries`);
+  return response.data;
+};
+
+// 4.10 (고용주) 공고 등록하기
+export const createPost = async (newPost: JobPostingForm) => {
+  const response = await api.post(`/owners/job-postings`, newPost);
   return response.data;
 };
 

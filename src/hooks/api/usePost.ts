@@ -1,4 +1,5 @@
 import {
+  createPost,
   deletePost,
   getApplicantList,
   getEmployerPostList,
@@ -31,6 +32,21 @@ export const useGetPostSummary = (id: number) => {
   return useQuery({
     queryKey: ['post', id],
     queryFn: () => getPostSummary(id),
+  });
+};
+
+// 4.10 (고용주) 공고 등록하기 훅
+export const useCreatePost = () => {
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: createPost,
+    onSuccess: () => {
+      // TODO: 고용주 공고 - 작성한 공고 조회 페이지로 이동하기
+      navigate('/employer/post');
+    },
+    onError: (error) => {
+      console.error('공고 등록하기 실패', error);
+    },
   });
 };
 
