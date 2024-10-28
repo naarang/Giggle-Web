@@ -7,6 +7,7 @@ import FolderIcon from '@/assets/icons/FolderIcon.svg?react';
 import DownloadIcon from '@/assets/icons/DownloadIcon.svg?react';
 import CheckIconGreen from '@/assets/icons/CheckIconGreen.svg?react';
 import WriteIcon from '@/assets/icons/WriteIcon.svg?react';
+import { useNavigate } from 'react-router-dom';
 
 const enum DocumentStatus {
   TEMPORARY_SAVE = 'TEMPORARY_SAVE',
@@ -19,15 +20,18 @@ const enum DocumentStatus {
 type DocumentCardProps = {
   document: DocumentInfo;
   title: string;
+  type: string;
   onNext: () => void;
 };
 
 const TemporarySaveCard = ({
   title,
   onNext,
+  onEdit,
 }: {
   title: string;
   onNext: () => void;
+  onEdit: () => void;
 }) => {
   return (
     <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-center justify-center gap-2 caption-2 text-left text-[#1e1926]">
@@ -72,7 +76,7 @@ const TemporarySaveCard = ({
           fontColor="text-[#222]"
           isBorder={false}
           title="Edit"
-          onClick={onNext}
+          onClick={onEdit}
         />
         <Button
           type="large"
@@ -90,9 +94,13 @@ const TemporarySaveCard = ({
 const BeforeConfirmationCard = ({
   title,
   onNext,
+  onRequest,
+  onPreview,
 }: {
   title: string;
   onNext: () => void;
+  onRequest: () => void;
+  onPreview: () => void;
 }) => {
   return (
     <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-center justify-center gap-2 caption-2 text-left text-[#1e1926]">
@@ -102,7 +110,10 @@ const BeforeConfirmationCard = ({
         </div>
         <div className="w-1.5 absolute !m-0 top-[0.4rem] left-[8rem] rounded-full bg-[#ff6f61] h-1.5 z-[1]" />
         <div className="w-[0.75rem] relative h-[0.75rem] z-[2]">
-          <div className="absolute w-full h-full top-0 righ-0 bottom-0 left-0" />
+          <div
+            className="absolute w-full h-full top-0 righ-0 bottom-0 left-0"
+            onClick={onPreview}
+          />
           <ArrowrightIcon />
         </div>
       </div>
@@ -119,9 +130,10 @@ const BeforeConfirmationCard = ({
         <div className="self-stretch flex items-center justify-center px-3 text-[#656565] caption-1">
           <div className="flex-1 relative">
             <p className="m-0">
-              r has completed the part-time employment permit form. Please
-              review the content and if there are any issues, submit a Request.
-              If everything is fine, complete the process by selecting Confirm.
+              The employer has completed the part-time employment permit form.
+              Please review the content and if there are any issues, submit a
+              Request. If everything is fine, complete the process by selecting
+              Confirm.
             </p>
             <div>&nbsp;</div>
             <p className="m-0 text-[#FF6F61]">
@@ -137,7 +149,7 @@ const BeforeConfirmationCard = ({
           fontColor="text-white"
           isBorder={false}
           title="Request"
-          onClick={onNext}
+          onClick={onRequest}
         />
         <Button
           type="large"
@@ -240,16 +252,26 @@ const ConfirmationCard = ({
   document,
   title,
   onDownload,
+  onPreview,
 }: {
   title: string;
   document: DocumentInfo;
   onDownload: (url: string) => void;
+  onPreview: () => void;
 }) => {
   return (
     <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-center justify-center gap-2 caption-2 text-left text-[#1e1926]">
-      <div className="self-stretch rounded-t-[1.125rem] bg-[#1e1926] h-7 flex items-center justify-between px-4 pl-6 py-2 relative">
-        <div className="flex items-center justify-start relative text-[#fef387]">
-          Your form is ready ! Check it out
+      <div className="self-stretch rounded-t-[1.125rem] bg-[#fef387] h-7 flex items-center justify-between px-4 pl-6 py-2 relative">
+        <div className="flex items-center justify-start relative ">
+          Check my Work Permit Form
+        </div>
+        <div className="w-1.5 absolute !m-0 top-[0.4rem] left-[8rem] rounded-full bg-[#ff6f61] h-1.5 z-[1]" />
+        <div className="w-[0.75rem] relative h-[0.75rem] z-[2]">
+          <div
+            className="absolute w-full h-full top-0 righ-0 bottom-0 left-0"
+            onClick={onPreview}
+          />
+          <ArrowrightIcon />
         </div>
       </div>
       <div className="self-stretch flex flex-col items-start px-4 gap-4 body-1">
@@ -258,7 +280,7 @@ const ConfirmationCard = ({
             <div className="relative head-3">{title}</div>
           </div>
           <div className="overflow-hidden flex items-center justify-center p-2">
-            {!document.pdf_url && !document.hwp_url && !document.word_url ? (
+            {!document.hwp_url && !document.word_url ? (
               <WriteIcon />
             ) : (
               <CheckIconGreen />
@@ -277,21 +299,6 @@ const ConfirmationCard = ({
       </div>
 
       <div className="flex flex-col gap-2 w-full items-start justify-start py-2 px-4 text-[#464646]">
-        {document.pdf_url && (
-          <div className="w-full rounded-3xl bg-[#f4f4f9] flex items-center justify-between border border-[#dcdcdc] px-4 py-2 pl-2.5">
-            <div className="flex items-center justify-start gap-2">
-              <div className="w-[1.375rem] h-[1.375rem] flex items-center justify-center rounded-full bg-[#1e1926]">
-                <FolderIcon />
-              </div>
-              <div className="relative body-3 opacity-75">
-                Pdf file download
-              </div>
-            </div>
-            <div onClick={() => onDownload(document.pdf_url as string)}>
-              <DownloadIcon />
-            </div>
-          </div>
-        )}
         {document.word_url && (
           <div className="w-full rounded-3xl bg-[#f4f4f9] flex items-center justify-between border border-[#dcdcdc] px-4 py-2 pl-2.5">
             <div className="flex items-center justify-start gap-2">
@@ -330,8 +337,10 @@ const ConfirmationCard = ({
 const DocumentCardDispenser = ({
   document,
   title,
+  type,
   onNext,
 }: DocumentCardProps) => {
+  const navigate = useNavigate();
   const handleDownload = (url: string) => {
     window.open(url, '_blank');
   };
@@ -341,15 +350,54 @@ const DocumentCardDispenser = ({
         title={title}
         document={document}
         onDownload={handleDownload}
+        onPreview={() =>
+          navigate('/document-preview', {
+            state: {
+              type: type,
+            },
+          })
+        }
       />
     );
   switch (document.status) {
     case DocumentStatus.TEMPORARY_SAVE:
-      return <TemporarySaveCard title={title} onNext={onNext} />;
+      return (
+        <TemporarySaveCard
+          title={title}
+          onNext={onNext}
+          onEdit={() =>
+            navigate('/write-documents', {
+              state: {
+                type: type,
+                isEdit: true,
+              },
+            })
+          }
+        />
+      );
     case DocumentStatus.SUBMITTED:
       return <SubmittedCard title={title} />;
     case DocumentStatus.BEFORE_CONFIRMATION:
-      return <BeforeConfirmationCard title={title} onNext={onNext} />;
+      return (
+        <BeforeConfirmationCard
+          title={title}
+          onNext={onNext}
+          onRequest={() =>
+            navigate('/request-modify', {
+              state: {
+                type: type,
+              },
+            })
+          }
+          onPreview={() =>
+            navigate('/document-preview', {
+              state: {
+                type: type,
+              },
+            })
+          }
+        />
+      );
     case DocumentStatus.REQUEST:
       return <RequestedCard title={title} />;
     case DocumentStatus.CONFIRMATION:
@@ -358,6 +406,13 @@ const DocumentCardDispenser = ({
           title={title}
           document={document}
           onDownload={handleDownload}
+          onPreview={() =>
+            navigate('/document-preview', {
+              state: {
+                type: type,
+              },
+            })
+          }
         />
       );
   }

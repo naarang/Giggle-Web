@@ -1,4 +1,8 @@
-import { ApplicantItemType } from '@/types/application/applicationItem';
+import {
+  ApplicantDetailItemType,
+  ApplicantItemType,
+  ApplicationStepExplainType,
+} from '@/types/application/applicationItem';
 
 export const enum APPLICATION_STEP {
   RESUME_UNDER_REVIEW = 'RESUME_UNDER_REVIEW',
@@ -85,5 +89,86 @@ export const APPLICANT_LIST_DATA: ApplicantItemType[] = [
     school_name: 'Hanyang University',
     duration_of_days: 45,
     step: 'PENDING',
+  },
+];
+
+// 지원 상태 상세 조회 더미데이터
+export const APPLICANT_DETAIL_DATA: ApplicantDetailItemType = {
+  profile_img_url: 'https://example.com/images/applicant1.jpg',
+  name: 'John Doe',
+  nationality: 'USA',
+  gender: 'Male',
+  visa: 'D_2_1',
+  school_name: 'Seoul National University',
+  duration_of_days: 30,
+  step: 'RESUME_UNDER_REVIEW',
+};
+
+// 지원 상태 단계별 문구
+export const APPLICATION_STEP_EXPLAIN_DATA: ApplicationStepExplainType[] = [
+  {
+    step: 1,
+    title: 'Resume Verification',
+    explain: 'The employer is currently reviewing your resume.',
+  },
+  {
+    step: 2,
+    title: 'Interview Preparation',
+    explain: 'Please check the employment contract and work conditions.',
+  },
+  {
+    step: 3,
+    title: 'Document Preparation',
+    explain:
+      'Please prepare the documents required for a part-time work permit.',
+  },
+  {
+    step: 4,
+    title: 'Document Review by the International Student Coordinator',
+    explain:
+      'Get the documents reviewed by the international student coordinator at your school.',
+  },
+  {
+    step: 5,
+    title: 'HiKorea e-Government Applica',
+    explain: 'Apply for a part-time work permit through HiKorea.',
+  },
+  {
+    step: 6,
+    title: 'Result Registration',
+    explain: 'Please register the results.',
+  },
+];
+
+export const KO_APPLICATION_STEP_EXPLAIN_DATA: ApplicationStepExplainType[] = [
+  {
+    step: 1,
+    title: '이력서 확인',
+    explain: '이력서를 확인하고 승인해주세요.',
+  },
+  {
+    step: 2,
+    title: '면접 진행',
+    explain: '면접을 동해 지원자를 확인하고 근무 조건에 대해 이야기하세요.',
+  },
+  {
+    step: 3,
+    title: '서류 작성',
+    explain: '유학생의 시간제 취업허가를 위해 필요한 서류를 준비해주세요.',
+  },
+  {
+    step: 4,
+    title: '유학생의 서류 검토',
+    explain: '유학생이 서류를 검토받고 있어요.',
+  },
+  {
+    step: 5,
+    title: '유학생의 하이코리아 전자민원 신청',
+    explain: '유학생이 하이코리아에 시간제 취업허가를 신청했어요.',
+  },
+  {
+    step: 6,
+    title: '결과 확인',
+    explain: '결과를 확인하세요.',
   },
 ];
