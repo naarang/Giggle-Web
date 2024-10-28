@@ -12,7 +12,11 @@ import {
   tempSignUp,
   withdraw,
 } from '@/api/auth';
-import { AuthenticationResponse, SignInResponse } from '@/types/api/auth';
+import {
+  AuthenticationResponse,
+  SignInResponse,
+  TempSignUpResponse,
+} from '@/types/api/auth';
 import {
   deleteAccessToken,
   deleteRefreshToken,
@@ -23,6 +27,7 @@ import {
 } from '@/utils/auth';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { RESTYPE } from '@/types/api/common';
 
 /**
  * 로그인 프로세스를 처리하는 커스텀 훅
@@ -53,10 +58,13 @@ export const useSignIn = () => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: signIn,
-    onSuccess: (data: SignInResponse) => {
-      setAccessToken(data.access_token);
-      setRefreshToken(data.refresh_token);
-      navigate('/splash');
+    onSuccess: (data: RESTYPE<SignInResponse>) => {
+      if (data.success) {
+        setAccessToken(data.data.access_token);
+        setRefreshToken(data.data.refresh_token);
+        navigate('/splash');
+      }
+      console.log('로그인 실패 : ', data.error);
     },
     onError: () => {
       navigate('/signin');
@@ -69,10 +77,13 @@ export const useLogout = () => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: logout,
-    onSuccess: () => {
-      deleteAccessToken();
-      deleteRefreshToken();
-      navigate('/splash');
+    onSuccess: (data: RESTYPE<null>) => {
+      if (data.success) {
+        deleteAccessToken();
+        deleteRefreshToken();
+        navigate('/splash');
+      }
+      console.log('로그아웃 실패 : ', data.error);
     },
     onError: () => {
       navigate('/profile');
@@ -84,9 +95,12 @@ export const useLogout = () => {
 export const useReIssueToken = () => {
   return useMutation({
     mutationFn: reIssueToken,
-    onSuccess: (data: SignInResponse) => {
-      setAccessToken(data.access_token);
-      setRefreshToken(data.refresh_token);
+    onSuccess: (data: RESTYPE<SignInResponse>) => {
+      if (data.success) {
+        setAccessToken(data.data.access_token);
+        setRefreshToken(data.data.refresh_token);
+      }
+      console.log('JWT 재발급 실패 : ', data.error);
     },
   });
 };
@@ -119,6 +133,11 @@ export const useGetUserType = () => {
 export const useTempSignUp = () => {
   return useMutation({
     mutationFn: tempSignUp,
+    onSuccess: (data: RESTYPE<TempSignUpResponse>) => {
+      if (!data.success) {
+        console.log('임시 회원가입 실패 : ', data.error);
+      }
+    },
   });
 };
 
@@ -127,10 +146,13 @@ export const useSignUp = () => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: signUp,
-    onSuccess: (data: SignInResponse) => {
-      deleteTemporaryToken();
-      setAccessToken(data.access_token);
-      setRefreshToken(data.refresh_token);
+    onSuccess: (data: RESTYPE<SignInResponse>) => {
+      if (data.success) {
+        deleteTemporaryToken();
+        setAccessToken(data.data.access_token);
+        setRefreshToken(data.data.refresh_token);
+      }
+      console.log('회원가입 실패 : ', data.error);
     },
     onError: () => {
       navigate('/');
@@ -143,10 +165,13 @@ export const useOwnerSignUp = () => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: ownerSignUp,
-    onSuccess: (data: SignInResponse) => {
-      deleteTemporaryToken();
-      setAccessToken(data.access_token);
-      setRefreshToken(data.refresh_token);
+    onSuccess: (data: RESTYPE<SignInResponse>) => {
+      if (data.success) {
+        deleteTemporaryToken();
+        setAccessToken(data.data.access_token);
+        setRefreshToken(data.data.refresh_token);
+      }
+      console.log('회원가입 실패 : ', data.error);
     },
     onError: () => {
       navigate('/');
@@ -159,11 +184,15 @@ export const usePatchAuthentication = () => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: patchAuthentication,
-    onSuccess: (data: AuthenticationResponse) => {
-      setTemporaryToken(data.temporary_token);
+    onSuccess: (data: RESTYPE<AuthenticationResponse>) => {
+      if (data.success) {
+        setTemporaryToken(data.data.temporary_token);
+        navigate('/information');
+      }
+      console.log('인증코드 검증 실패 : ', data.error);
     },
-    onError: () => {
-      navigate('/information');
+    onError: (error) => {
+      console.log(error);
     },
   });
 };
@@ -173,6 +202,11 @@ export const useReIssueAuthentication = () => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: reIssueAuthentication,
+    onSuccess: (data: RESTYPE<TempSignUpResponse>) => {
+      if (!data.success) {
+        console.log('인증코드 재전송 실패 : ', data.error);
+      }
+    },
     onError: () => {
       navigate('/signup');
     },
@@ -184,9 +218,12 @@ export const useWithdraw = () => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: withdraw,
-    onSuccess: () => {
-      deleteAccessToken();
-      deleteRefreshToken();
+    onSuccess: (data: RESTYPE<null>) => {
+      if (data.success) {
+        deleteAccessToken();
+        deleteRefreshToken();
+      }
+      console.log('탈퇴 실패 : ', data.error);
     },
     onError: () => {
       navigate('/splash');
