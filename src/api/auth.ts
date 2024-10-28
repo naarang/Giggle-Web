@@ -15,6 +15,7 @@ import { api } from '@/api/index.ts';
 import { apiWithoutAuth } from '@/api/index.ts';
 import { OwnerInfoRequest } from '@/types/api/users';
 import { RESTYPE } from '@/types/api/common';
+import { EmployerRegistrationRequest } from '@/types/api/employ';
 
 /**
  * 사용자 로그인을 처리하는 함수
@@ -138,5 +139,12 @@ export const reIssueAuthentication = async (
 // 2.9 탈퇴하기
 export const withdraw = async () => {
   const response = await api.delete('/auth/withdraw');
+  return response.data;
+};
+
+export const signUpEmployer = async (
+  signupInfo: EmployerRegistrationRequest,
+): Promise<{ success: boolean }> => {
+  const response = await api.post(`/auth/owners`, signupInfo);
   return response.data;
 };

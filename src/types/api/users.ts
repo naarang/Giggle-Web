@@ -55,8 +55,6 @@ export type OwnerInfoRequest = {
 
 // Type for user info with undefinedable fields
 export type UserInfo = {
-  id: string | undefined;
-  email: string | undefined;
   marketing_allow: boolean | undefined;
   first_name: string | undefined;
   last_name: string | undefined;
@@ -89,8 +87,6 @@ export type UserInfoRequestBody = {
 
 // Initial state for UserInfo
 export const initialUserInfo: UserInfo = {
-  id: undefined,
-  email: undefined,
   marketing_allow: undefined,
   first_name: '',
   last_name: '',

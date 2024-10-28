@@ -11,6 +11,7 @@ import {
   signUp,
   tempSignUp,
   withdraw,
+  signUpEmployer,
 } from '@/api/auth';
 import {
   AuthenticationResponse,
@@ -223,6 +224,19 @@ export const useWithdraw = () => {
     },
     onError: () => {
       navigate('/splash');
+    },
+  });
+};
+
+export const useSignupEmployer = (setSuccess: () => void) => {
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: signUpEmployer,
+    onSuccess: () => {
+      setSuccess();
+    },
+    onError: () => {
+      navigate('/signin');
     },
   });
 };
