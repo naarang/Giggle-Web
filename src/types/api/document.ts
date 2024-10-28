@@ -11,7 +11,6 @@ export type DocumentStatus =
 // 통합 신청서 외 문서 타입
 export type DocumentInfo = {
   id: number;
-  pdf_url?: string;
   hwp_url?: string;
   word_url?: string;
   status?: DocumentStatus;
@@ -20,7 +19,6 @@ export type DocumentInfo = {
 // 통합 신청서 타입
 export type IntegratedApplicationInfo = {
   id: number;
-  pdf_url?: string;
   hwp_url?: string;
   word_url?: string;
 };
@@ -54,6 +52,7 @@ export enum EmployerInfoProperty {
   COMPANY_NAME = 'company_name',
   COMPANY_REGISTRATION_NUMBER = 'company_registration_number',
   JOB_TYPE = 'job_type',
+  SIGNATURE_BASE64 = 'signature_base64',
   ADDRESS = 'address',
 }
 
@@ -63,6 +62,7 @@ export type EmployerInformation = {
   company_registration_number?: string;
   job_type?: string;
   address?: Address;
+  signature_base64: string;
 };
 
 // 시간제 근무 허가서 조회 응답 양식

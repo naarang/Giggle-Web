@@ -14,7 +14,10 @@ import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
 import { isNotEmpty } from '@/utils/document';
 import { formatPhoneNumber } from '@/utils/information';
-import { usePostPartTimeEmployPermit } from '@/hooks/api/useDocument';
+import {
+  usePostPartTimeEmployPermit,
+  usePutPartTimeEmployPermit,
+} from '@/hooks/api/useDocument';
 
 type PartTimePermitFormProps = {
   document?: PartTimePermitData;
@@ -27,7 +30,8 @@ const PartTimePermitWriteForm = ({
 }: PartTimePermitFormProps) => {
   const [newDocumentData, setNewDocumentData] =
     useState<PartTimePermitFormRequest>(initialPartTimePermitForm);
-  const { mutate } = usePostPartTimeEmployPermit();
+  const { mutate: postDocument } = usePostPartTimeEmployPermit(); // 작성된 문서 제출 훅
+  const { mutate: updateDocument } = usePutPartTimeEmployPermit(); // 수정된 문서 제출 훅
   // 세 부분으로 나누어 입력받는 방식을 위해 전화번호만 별도의 state로 분리, 추후 유효성 검사 단에서 통합
   const [phoneNum, setPhoneNum] = useState({
     start: '',
@@ -50,13 +54,20 @@ const PartTimePermitWriteForm = ({
 
   // 문서 작성 완료 핸들러 함수
   const handleNext = () => {
-    mutate({
+    const finalDocument = {
+      ...newDocumentData,
+      phone_number: formatPhoneNumber(phoneNum),
+    };
+    const payload = {
       id: 1,
-      document: {
-        ...newDocumentData,
-        phone_number: formatPhoneNumber(phoneNum),
-      },
-    }); // TODO: 로그인 연결 후 userId를 넣어야 하는 것으로 추정
+      document: finalDocument, // TODO: 로그인 연결 후 userId를 넣어야 하는 것으로 추정
+    };
+
+    if (isEdit) {
+      updateDocument(payload);
+      return;
+    }
+    postDocument(payload);
   };
   return (
     <div className="w-full p-6 flex flex-col">
@@ -214,7 +225,7 @@ const PartTimePermitWriteForm = ({
             bgColor="bg-[#fef387]"
             fontColor="text-[#222]"
             isBorder={false}
-            title="Next"
+            title={isEdit ? 'Modify' : 'Create'}
             onClick={handleNext}
           />
         ) : (
@@ -223,7 +234,7 @@ const PartTimePermitWriteForm = ({
             bgColor="bg-[#F4F4F9]"
             fontColor=""
             isBorder={false}
-            title="Next"
+            title={isEdit ? 'Modify' : 'Create'}
           />
         )}
       </BottomButtonPanel>

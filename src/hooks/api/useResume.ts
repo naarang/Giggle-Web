@@ -200,6 +200,16 @@ export const useDeleteEtcLanguageLevel = () => {
 
 // TODO: ETC 수정하기 추가
 
+/*
+// 7.19 (고용주) 이력서 조회하기 훅
+export const useGetApplicantResume = (id: number) => {
+  return useQuery({
+    queryKey: ['resume', id],
+    queryFn: () => getApplicantResume(id),
+  });
+};
+*/
+
 // 9.1 (유학생) 학교 검색하기
 export const useGetSearchSchools = (
   search: string,
