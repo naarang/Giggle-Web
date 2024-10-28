@@ -8,10 +8,14 @@ const mockDocumentsSummaryResponse: DocumentsSummaryResponse = {
 
   standard_labor_contract: {
     id: 2001,
-    pdf_url: 'https://example.com/contracts/standard_2001.pdf',
     hwp_url: 'https://example.com/contracts/standard_2001.hwp',
     word_url: 'https://example.com/contracts/standard_2001.docx',
     status: 'BEFORE_CONFIRMATION',
+  },
+  integrated_application: {
+    id: 3001,
+    hwp_url: 'https://example.com/applications/integrated_3001.hwp',
+    word_url: 'https://example.com/applications/integrated_3001.docx',
   },
 };
 
@@ -20,7 +24,6 @@ const ApplicationDocumentsPage = () => {
     /*
   integrated_application: {
     id: 3001,
-    pdf_url: 'https://example.com/applications/integrated_3001.pdf',
     hwp_url: 'https://example.com/applications/integrated_3001.hwp',
     word_url: 'https://example.com/applications/integrated_3001.docx',
   },

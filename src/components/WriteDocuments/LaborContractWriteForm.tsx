@@ -19,7 +19,10 @@ import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
 import SignaturePad from '@/components/Document/write/SignaturePad';
 import EmployerInfoSection from '@/components/Document/write/EmployerInfoSection';
-import { usePostStandardLaborContracts } from '@/hooks/api/useDocument';
+import {
+  usePostStandardLaborContracts,
+  usePutStandardLaborContracts,
+} from '@/hooks/api/useDocument';
 
 type LaborContractFormProps = {
   document?: LaborContractDataResponse;
@@ -55,8 +58,9 @@ const LaborContractWriteForm = ({
   const { searchAddress } = useSearchAddress({
     onSuccess: (data) => setAddressSearchResult(data),
   });
-  // 작성된 근로계약서 제출 훅
-  const { mutate } = usePostStandardLaborContracts();
+
+  const { mutate: postDocument } = usePostStandardLaborContracts(); // 작성된 근로계약서 제출 훅
+  const { mutate: updateDocument } = usePutStandardLaborContracts(); // 수정된 근로계약서 제출 훅
   // 문서 편집일 시 페이지 진입과 동시에 기존 내용 자동 입력
   useEffect(() => {
     if (isEdit && document) {
@@ -147,13 +151,20 @@ const LaborContractWriteForm = ({
 
   // 문서 작성 완료 핸들러 함수
   const handleNext = () => {
-    mutate({
+    const finalDocument = {
+      ...newDocumentData,
+      phone_number: formatPhoneNumber(phoneNum),
+    };
+    const payload = {
       id: 1,
-      document: {
-        ...newDocumentData,
-        phone_number: formatPhoneNumber(phoneNum),
-      },
-    }); // TODO: 로그인 연결 후 userId를 넣어야 하는 것으로 추정
+      document: finalDocument, // TODO: 로그인 연결 후 userId를 넣어야 하는 것으로 추정
+    };
+
+    if (isEdit) {
+      updateDocument(payload);
+      return;
+    }
+    postDocument(payload);
   };
   return (
     <div className="w-full p-6 flex flex-col">
@@ -348,7 +359,7 @@ const LaborContractWriteForm = ({
             bgColor="bg-[#fef387]"
             fontColor="text-[#222]"
             isBorder={false}
-            title="Next"
+            title={isEdit ? 'Modify' : 'Create'}
             onClick={handleNext}
           />
         ) : (
@@ -357,7 +368,7 @@ const LaborContractWriteForm = ({
             bgColor="bg-[#F4F4F9]"
             fontColor=""
             isBorder={false}
-            title="Next"
+            title={isEdit ? 'Modify' : 'Create'}
           />
         )}
       </BottomButtonPanel>

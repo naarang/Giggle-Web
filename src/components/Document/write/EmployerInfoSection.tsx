@@ -10,8 +10,7 @@ import {
   LaborContractEmployerInfoProperty,
 } from '@/types/api/document';
 import { Address } from '@/types/api/users';
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import { WorkDayTime } from '../../../types/api/document';
+import { WorkDayTime } from '@/types/api/document';
 import {
   arrayToString,
   getDetailAddress,
@@ -19,34 +18,7 @@ import {
   workDayTimeToString,
 } from '@/utils/document';
 import Tag from '@/components/Common/Tag';
-
-// 회사 주소지 지도로 렌더링하는 함수
-const renderMap = (address: Address) => {
-  return (
-    <>
-      <div className="w-full self-stretch drop-shadow-[0_1px_2px_rgba(107,110,116,0.04)] rounded-xl flex flex-col items-center justify-start py-2.5 pr-3.5 pl-4">
-        <div className="w-full flex-1 relative">{address.address_name}</div>
-      </div>
-      <div className="w-full rounded-xl">
-        <Map
-          center={{
-            lat: Number(address.latitude),
-            lng: Number(address.longitude),
-          }}
-          style={{ width: '100%', height: '200px' }}
-          className="rounded-xl"
-        >
-          <MapMarker
-            position={{
-              lat: Number(address.latitude),
-              lng: Number(address.longitude),
-            }}
-          ></MapMarker>
-        </Map>
-      </div>
-    </>
-  );
-};
+import { renderMap } from '@/utils/map';
 
 const EmployerInfoSection = ({
   employ,

@@ -45,65 +45,12 @@ const SignupPage = () => {
   const handleSignUp = async () => {
     // 임의 로직 API 연동 후 삭제
     handleSignUpClick();
-
-    /*
-    try {
-      const response = await axios.post('/api/v1/auth/sign-up', {
-        id: id,
-        password: password,
-        email: email,
-        account_type: accountType,
-      });
-
-      if (response.status === 200) {
-        // 이메일 인증 요청 성공 시 인증 단계로 이동
-        handleSignUpClick();
-      } else {
-        console.error('이메일 인증 실패:', response.statusText);
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error('이메일 인증 중 오류 발생:', error.message);
-      } else {
-        console.error('예상치 못한 오류 발생:', error);
-      }
-    }
-      */
   };
 
   // API - 2.7 이메일 인증코드 검증
   const handleVerify = async () => {
     // 임의 로직 API 연동 후 삭제
     handleSignUpClick();
-
-    /*
-    try {
-      const response = await axios.patch(
-        '/api/v1/auth/validations/authentication-code',
-        {
-          id: id,
-          password: password,
-          email: email,
-          authentication_code: authenticationCode,
-        },
-      );
-
-      if (response.status === 200) {
-        const { temporary_token } = response.data;
-        console.log('인증 성공, 임시 토큰:', temporary_token);
-        handleSignUpClick();
-      } else {
-        console.error('이메일 인증 실패:', response.statusText);
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error('이메일 인증 중 오류 발생:', error.message);
-        alert('이메일 인증 실패: ' + error.response?.data?.message);
-      } else {
-        console.error('예상치 못한 오류 발생:', error);
-      }
-    }
-      */
   };
 
   return (
