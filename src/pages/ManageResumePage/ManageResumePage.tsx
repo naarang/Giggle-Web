@@ -4,12 +4,12 @@ import BaseHeader from '@/components/Common/Header/BaseHeader';
 import MypageCardSection from '@/components/ManageResume/MypageCardSection';
 import ProfilePicture from '@/components/ManageResume/ProfilePicture';
 import ResumeEditSection from '@/components/ManageResume/ResumeEditSection';
-import useNavigateBack from '@/hooks/useNavigateBack';
 import { ResumeData } from '@/constants/manageResume';
+import { useNavigate } from 'react-router-dom';
 
 const ManageResumePage = () => {
   const [data, setData] = useState<ResumeDetailItemType>();
-  const handleBackButtonClick = useNavigateBack();
+  const navigate = useNavigate();
 
   useEffect(() => {
     // TODO : API - 7.1 (유학생/고용주) 이력서 조회하기
@@ -22,7 +22,7 @@ const ManageResumePage = () => {
         <>
           <BaseHeader
             hasBackButton={true}
-            onClickBackButton={handleBackButtonClick}
+            onClickBackButton={() => navigate('/profile')}
             hasMenuButton={false}
             title="Manage Resume"
           />

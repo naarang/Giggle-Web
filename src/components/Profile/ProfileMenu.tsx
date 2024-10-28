@@ -12,8 +12,8 @@ import ToggleButton from '@/assets/icons/Profile/ToggleButton.svg?react';
 type ProfileMenuProps = {
   title: string;
   iconType: IconType;
-  onClick: () => void;
-  isToggle: boolean;
+  onClick?: () => void;
+  isToggle?: boolean;
 };
 
 const ProfileMenu = ({
