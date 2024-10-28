@@ -15,7 +15,7 @@ import { findCurrentStep } from '@/utils/application';
 import ApplicationDetailStepEtc from '@/components/ApplicationDetail/ApplicationDetailStepEtc';
 
 // 더미데이터
-const APPICATION_DETAIL_DATA: ApplicationDetailItemType = {
+const APPLICATION_DETAIL_DATA: ApplicationDetailItemType = {
   title: 'Job Opportunity',
   icon_img_url: 'https://example.com/icon.png',
   address_name: '123 Example Street, City, Country',
@@ -44,7 +44,6 @@ const APPICATION_DETAIL_DATA: ApplicationDetailItemType = {
   step: 'DOCUMENT_UNDER_REVIEW',
 };
 
-// TODO: enum에 따라서 몇번째 step인지 숫자로 반환하도록 하기! 그에 따른 step과 하단 버튼 구현하기
 const ApplicationDetailPage = () => {
   const navigate = useNavigate();
 
@@ -63,10 +62,10 @@ const ApplicationDetailPage = () => {
       case 6:
         return <ApplicationDetailStep6 />;
       case 7:
-        return <ApplicationDetailStep7 result={APPICATION_DETAIL_DATA.step} />;
+        return <ApplicationDetailStep7 result={APPLICATION_DETAIL_DATA.step} />;
       default:
         return (
-          <ApplicationDetailStepEtc result={APPICATION_DETAIL_DATA.step} />
+          <ApplicationDetailStepEtc result={APPLICATION_DETAIL_DATA.step} />
         );
     }
   };
@@ -80,13 +79,13 @@ const ApplicationDetailPage = () => {
         title="Applicants"
       />
       <div className="w-full flex flex-col gap-[2.25rem] p-[1.5rem]">
-        <ApplicationDetailCard applicationData={APPICATION_DETAIL_DATA} />
-        <ApplicationDetailInfo applicationData={APPICATION_DETAIL_DATA} />
+        <ApplicationDetailCard applicationData={APPLICATION_DETAIL_DATA} />
+        <ApplicationDetailInfo applicationData={APPLICATION_DETAIL_DATA} />
         <ApplicationDetailSteps
-          step={findCurrentStep(APPICATION_DETAIL_DATA.step)}
+          step={findCurrentStep(APPLICATION_DETAIL_DATA.step)}
         />
       </div>
-      {showCurrentStepButton(findCurrentStep(APPICATION_DETAIL_DATA.step))}
+      {showCurrentStepButton(findCurrentStep(APPLICATION_DETAIL_DATA.step))}
     </>
   );
 };

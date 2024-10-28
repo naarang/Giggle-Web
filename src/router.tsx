@@ -11,8 +11,8 @@ import ApplicationDocumentsPage from '@/pages/ApplicationDocuments/ApplicationDo
 import PostSearchPage from '@/pages/PostSearch/PostSearchPage';
 import PostSearchFilterPage from '@/pages/PostSearchFilter/PostSearchFilterPage';
 import ProfilePage from '@/pages/Profile/ProfilePage';
-import LanguageSettingPage from '@/pages/Profile/LanguageSettingPage';
-import EditProfilePage from '@/pages/Profile/EditProfilePage';
+import LanguageSettingPage from '@/pages/LanguageSetting/LanguageSettingPage';
+import EditProfilePage from '@/pages/EditProfile/EditProfilePage';
 import PostDetailPage from '@/pages/PostDetail/PostDetailPage';
 import PostApplyPage from '@/pages/PostApply/PostApplyPage';
 import ApplicationPage from '@/pages/Application/ApplicationPage';
@@ -33,6 +33,10 @@ import DocumentPreview from './pages/WriteDocuments/DocumentPreviewPage';
 import EmployerPostPage from '@/pages/Employer/Post/EmployerPostPage';
 import EmployerApplicantListPage from '@/pages/Employer/ApplicantList/EmployerApplicantListPage';
 import EmployerSignupInfoPage from './pages/Employer/signup/EmployerSignupInfoPage';
+import PostLanguagePage from '@/pages/PostLanguage/PostLanguagePage';
+import EmployerApplicantDetailPage from '@/pages/Employer/ApplicantDetail/EmployerApplicantDetailPage';
+import EmployerApplicantResumePage from '@/pages/Employer/ApplicantResume/EmployerApplicantResumePage';
+import EmployerApplicantResumeAcceptPage from '@/pages/Employer/ApplicantResumeAccept/EmployerApplicantResumeAcceptPage';
 
 const Layout = () => {
   const location = useLocation();
@@ -77,6 +81,7 @@ const Router = () => {
 
           <Route path="/resume/introduction" element={<IntroductionPage />} />
           <Route path="/resume/language" element={<LanguagePage />} />
+          <Route path="/resume/language/add" element={<PostLanguagePage />} />
           <Route path="/resume/scrapped" element={<ScrappedJobPostsPage />} />
           <Route path="/resume/education" element={<PostEducationPage />} />
           <Route
@@ -106,6 +111,18 @@ const Router = () => {
           <Route
             path="/employer/post/:id/applicant"
             element={<EmployerApplicantListPage />}
+          />
+          <Route
+            path="/employer/applicant/:id"
+            element={<EmployerApplicantDetailPage />}
+          />
+          <Route
+            path="/employer/applicant/:id/resume"
+            element={<EmployerApplicantResumePage />}
+          />
+          <Route
+            path="/employer/applicant/:id/resume/accept"
+            element={<EmployerApplicantResumeAcceptPage />}
           />
           <Route path="/write-documents" element={<WriteDocumentsPage />} />
           <Route path="/document-preview" element={<DocumentPreview />} />

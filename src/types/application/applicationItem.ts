@@ -14,7 +14,7 @@ export type ApplicationStepType =
   | 'APPLICATION_REJECTED' // 7
   | 'RESUME_REJECTED'
   | 'PENDING'
-  | 'REGISTRATION_RESULTS';
+  | 'REGISTRATION_RESULTS'; // 6;
 
 export type AppicationItemType = {
   job_posting_id: number;
@@ -81,4 +81,23 @@ export type ApplicantItemType = {
   school_name: string;
   duration_of_days: number;
   step: ApplicationStepType;
+};
+
+// 공고에 대한 지원자 상세조회 리스트
+export type ApplicantDetailItemType = {
+  profile_img_url: string;
+  name: string;
+  nationality: string;
+  gender: string;
+  visa: VisaType;
+  school_name: string;
+  duration_of_days: number;
+  step: ApplicationStepType;
+};
+
+// 지원 상태 단계별 문구
+export type ApplicationStepExplainType = {
+  step: number;
+  title: string;
+  explain: string;
 };
