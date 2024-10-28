@@ -57,7 +57,7 @@ const ApplicationPage = () => {
     ASCENDING_SORT_TYPE.ASCENDING,
   );
   const [selectedStatus, setSelectedStatus] = useState<ApplicationStatusType>(
-    APPLICATION_STATUS_TYPE.INPROGRESS,
+    APPLICATION_STATUS_TYPE.TOTAL,
   );
 
   return (
