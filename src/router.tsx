@@ -37,6 +37,7 @@ import EmployerApplicantDetailPage from '@/pages/Employer/ApplicantDetail/Employ
 import EmployerApplicantResumePage from '@/pages/Employer/ApplicantResume/EmployerApplicantResumePage';
 import EmployerApplicantResumeAcceptPage from '@/pages/Employer/ApplicantResumeAccept/EmployerApplicantResumeAcceptPage';
 import AlarmPage from '@/pages/Alarm/AlarmPage';
+import ChatBotPage from '@/pages/ChatBot/ChatBotPage';
 
 const Layout = () => {
   const location = useLocation();
@@ -61,6 +62,7 @@ const Router = () => {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/chatbot" element={<ChatBotPage />} />
           <Route path="/alarm" element={<AlarmPage />} />
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/signup" element={<SignupPage />} />
