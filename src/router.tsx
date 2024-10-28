@@ -36,6 +36,7 @@ import PostLanguagePage from '@/pages/PostLanguage/PostLanguagePage';
 import EmployerApplicantDetailPage from '@/pages/Employer/ApplicantDetail/EmployerApplicantDetailPage';
 import EmployerApplicantResumePage from '@/pages/Employer/ApplicantResume/EmployerApplicantResumePage';
 import EmployerApplicantResumeAcceptPage from '@/pages/Employer/ApplicantResumeAccept/EmployerApplicantResumeAcceptPage';
+import AlarmPage from '@/pages/Alarm/AlarmPage';
 
 const Layout = () => {
   const location = useLocation();
@@ -60,7 +61,7 @@ const Router = () => {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
-
+          <Route path="/alarm" element={<AlarmPage />} />
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/information" element={<InformationPage />} />
