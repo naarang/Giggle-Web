@@ -34,3 +34,17 @@ export type AdditionalLanguageRequest = {
 	language_name : string;
 	level : number;
 }
+
+
+export type LanguageSummaryType = {
+  id : number;
+  language_name : string;
+  level : number;
+}
+
+export type LanguagesSummariesResponse ={
+  topik_level : number;
+  social_integration_level : number;
+  sejong_institute : number;
+  additional_language : LanguageSummaryType[];
+}
