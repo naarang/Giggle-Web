@@ -60,7 +60,7 @@ const InformationPage = () => {
             >
               Information
             </div>
-            <StepIndicator currentStep={currentStep} />
+            <StepIndicator length={3} currentStep={currentStep} />
           </div>
           <div className="w-full flex justify-center px-6">
             {currentStep === 1 && (

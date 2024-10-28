@@ -85,9 +85,9 @@ export type JobPostingForm = {
   images: File[];
   body: {
     title: string;
-    job_category: JobCategory;
+    job_category: JobCategory | string;
     work_day_times: WorkDayTime[];
-    work_period: WorkPeriod;
+    work_period: WorkPeriod | string;
     hourly_rate: number;
     employment_type: EmploymentType;
     address: Address;
@@ -95,8 +95,8 @@ export type JobPostingForm = {
     recruitment_number: number;
     gender: Gender;
     age_restriction: number;
-    education_level: EducationLevel;
-    visa: Visa;
+    education_level: EducationLevel | string;
+    visa: Visa | string;
     recruiter_name: string;
     recruiter_email: string;
     recruiter_phone_number: string;
@@ -108,37 +108,39 @@ export type JobPostingForm = {
 // Initial State
 export const initialJobPostingState: JobPostingForm = {
   images: [],
-  title: '',
-  job_category: JobCategory.GENERAL_INTERPRETATION_TRANSLATION,
-  work_day_times: [
-    {
-      day_of_week: DayOfWeek.NEGOTIABLE,
-      work_start_time: '',
-      work_end_time: '',
+  body: {
+    title: '',
+    job_category: '',
+    work_day_times: [
+      {
+        day_of_week: DayOfWeek.NEGOTIABLE,
+        work_start_time: '',
+        work_end_time: '',
+      },
+    ],
+    work_period: '',
+    hourly_rate: 0,
+    employment_type: EmploymentType.PARTTIME,
+    address: {
+      address_name: '',
+      region_1depth_name: '',
+      region_2depth_name: '',
+      region_3depth_name: '',
+      region_4depth_name: '',
+      address_detail: '',
+      longitude: 0,
+      latitude: 0,
     },
-  ],
-  work_period: WorkPeriod.ONE_MONTH_TO_THREE_MONTHS,
-  hourly_rate: 0,
-  employment_type: EmploymentType.PARTTIME,
-  address: {
-    address_name: '',
-    region_1depth_name: '',
-    region_2depth_name: '',
-    region_3depth_name: '',
-    region_4depth_name: '',
-    address_detail: '',
-    longitude: 0,
-    latitude: 0,
+    recruitment_dead_line: '',
+    recruitment_number: 1,
+    gender: Gender.MALE,
+    age_restriction: 0,
+    education_level: '',
+    visa: '',
+    recruiter_name: '',
+    recruiter_email: '',
+    recruiter_phone_number: '',
+    description: '',
+    preferred_conditions: '',
   },
-  recruitment_dead_line: '',
-  recruitment_number: 1,
-  gender: Gender.NONE,
-  age_restriction: 0,
-  education_level: EducationLevel.HIGHSCHOOL,
-  visa: Visa.D_2_1,
-  recruiter_name: '',
-  recruiter_email: '',
-  recruiter_phone_number: '',
-  description: '',
-  preferred_conditions: '',
 };
