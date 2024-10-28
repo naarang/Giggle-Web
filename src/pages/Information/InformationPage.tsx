@@ -5,9 +5,11 @@ import AddressStep from '@/components/Information/AddressStep';
 import InformationStep from '@/components/Information/InformationStep';
 import LanguageStep from '@/components/Information/LanguageStep';
 import StepIndicator from '@/components/Information/StepIndicator';
+import { useSignUp } from '@/hooks/api/useAuth';
 //import { useSignUp } from '@/hooks/api/useAuth';
 import {
   initialUserInfoRequestBody,
+  Language,
   UserInfoRequestBody,
 } from '@/types/api/users';
 import { useState } from 'react';
@@ -19,7 +21,7 @@ const InformationPage = () => {
   const [userInfo, setUserInfo] = useState<UserInfoRequestBody>(
     initialUserInfoRequestBody,
   );
-  //const { mutate } = useSignUp();
+  const { mutate } = useSignUp();
   const [isAgreeModal, setIsAgreeModal] = useState(true);
   const [devIsModal, setDevIsModal] = useState(false);
   const [marketingAllowed, setMarketAllowed] = useState(false);
@@ -31,8 +33,14 @@ const InformationPage = () => {
     setCurrentStep((prev) => prev + 1);
   };
   // 최종 완료 시 호출, 서버 api 호출 및 완료 modal 표시
-  const handleSubmit = () => {
-    //mutate({...userInfo, marketing_allowed: marketingAllowed, notification_allowed: false, temporary_token: "", });
+  const handleSubmit = (language: Language) => {
+    mutate({
+      ...userInfo,
+      marketing_allowed: marketingAllowed,
+      notification_allowed: false,
+      temporary_token: '',
+      language: language,
+    });
     setDevIsModal(true);
   };
   return (
@@ -61,9 +69,7 @@ const InformationPage = () => {
             {currentStep === 2 && (
               <AddressStep userInfo={userInfo} onNext={handleNext} />
             )}
-            {currentStep === 3 && (
-              <LanguageStep userInfo={userInfo} onNext={handleSubmit} />
-            )}
+            {currentStep === 3 && <LanguageStep onNext={handleSubmit} />}
           </div>
         </>
       )}
