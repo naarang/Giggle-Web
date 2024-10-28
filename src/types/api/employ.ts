@@ -8,6 +8,11 @@ export type OwnerInfo = {
 };
 
 export type EmployerRegistrationRequest = {
+  image: File | undefined;
+  body: EmployerRegistrationRequestBody;
+};
+
+export type EmployerRegistrationRequestBody = {
   temporary_token: string;
   owner_info: OwnerInfo;
   address: Address;
@@ -16,7 +21,7 @@ export type EmployerRegistrationRequest = {
 };
 
 // Initial State
-export const initialEmployerRegistration: EmployerRegistrationRequest = {
+export const initialEmployerRegistration: EmployerRegistrationRequestBody = {
   temporary_token: '',
   owner_info: {
     company_name: '',
