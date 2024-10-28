@@ -6,8 +6,11 @@ import { UserType } from '@/constants/user';
 import EmailInput from '@/components/Signup/EmailInput';
 import SignupVerification from '@/components/Signup/SignupVerification';
 import VerificationSuccessful from '@/components/Signup/VerificationSuccessful';
+import { useNavigate } from 'react-router-dom';
 
 const SignupPage = () => {
+  const navigate = useNavigate();
+
   // sign up 단계(총 5단계)
   const [currentStep, setCurrentStep] = useState<number>(1);
 
@@ -22,6 +25,9 @@ const SignupPage = () => {
 
   // handler 정의
   const handleSignUpClick = () => {
+    // 고용주 타입을 선택할 경우, 고용주 회원가입 페이지로 이동
+    if (accountType === UserType.OWNER) navigate('/employer/signup');
+    // 유학생 타입을 선택할 경우, 유저 step 이어 진행
     setCurrentStep(currentStep + 1);
   };
   const handleTypeSelect = (type: UserType) => {
