@@ -1,5 +1,10 @@
 export type RESTYPE<T> = {
   success: boolean;
   data: T;
-  error: null | string;
+  error: ErrorType | null;
+};
+
+type ErrorType = {
+  code: number;
+  message: string;
 };

@@ -54,8 +54,6 @@ const SignupPage = () => {
   // API 정의
   // API - 2.4 임시 회원가입 API 호출
   const handleSignUp = () => {
-    console.log(id, password, email, UserType.USER);
-
     tempSignUp(
       { id: id, password: password, email: email, account_type: UserType.USER },
       { onSuccess: handleSignUpClick },

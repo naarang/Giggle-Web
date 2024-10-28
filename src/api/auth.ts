@@ -78,7 +78,7 @@ export const getEmailValidation = async (
 
 // 2.3 유학생/고용주 판단 ** 로그인 이후 호출
 export const getUserType = async (): Promise<RESTYPE<UserTypeResponse>> => {
-  const response = await apiWithoutAuth.get('/auth/briefs');
+  const response = await api.get('/auth/briefs');
   return response.data;
 };
 

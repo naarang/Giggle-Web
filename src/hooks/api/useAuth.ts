@@ -64,7 +64,7 @@ export const useSignIn = () => {
         setRefreshToken(data.data.refresh_token);
         navigate('/splash');
       }
-      console.log('로그인 실패 : ', data.error);
+      console.log('로그인 실패 : ', data.error?.code, data.error?.message);
     },
     onError: () => {
       navigate('/signin');
@@ -83,7 +83,7 @@ export const useLogout = () => {
         deleteRefreshToken();
         navigate('/splash');
       }
-      console.log('로그아웃 실패 : ', data.error);
+      console.log('로그아웃 실패 : ', data.error?.code, data.error?.message);
     },
     onError: () => {
       navigate('/profile');
@@ -100,7 +100,7 @@ export const useReIssueToken = () => {
         setAccessToken(data.data.access_token);
         setRefreshToken(data.data.refresh_token);
       }
-      console.log('JWT 재발급 실패 : ', data.error);
+      console.log('JWT 재발급 실패 : ', data.error?.code, data.error?.message);
     },
   });
 };
@@ -135,7 +135,11 @@ export const useTempSignUp = () => {
     mutationFn: tempSignUp,
     onSuccess: (data: RESTYPE<TempSignUpResponse>) => {
       if (!data.success) {
-        console.log('임시 회원가입 실패 : ', data.error);
+        console.log(
+          '임시 회원가입 실패 : ',
+          data.error?.code,
+          data.error?.message,
+        );
       }
     },
   });
@@ -152,7 +156,7 @@ export const useSignUp = () => {
         setAccessToken(data.data.access_token);
         setRefreshToken(data.data.refresh_token);
       }
-      console.log('회원가입 실패 : ', data.error);
+      console.log('회원가입 실패 : ', data.error?.code, data.error?.message);
     },
     onError: () => {
       navigate('/');
@@ -171,7 +175,7 @@ export const useOwnerSignUp = () => {
         setAccessToken(data.data.access_token);
         setRefreshToken(data.data.refresh_token);
       }
-      console.log('회원가입 실패 : ', data.error);
+      console.log('회원가입 실패 : ', data.error?.code, data.error?.message);
     },
     onError: () => {
       navigate('/');
@@ -189,7 +193,11 @@ export const usePatchAuthentication = () => {
         setTemporaryToken(data.data.temporary_token);
         navigate('/information');
       }
-      console.log('인증코드 검증 실패 : ', data.error);
+      console.log(
+        '인증코드 검증 실패 : ',
+        data.error?.code,
+        data.error?.message,
+      );
     },
     onError: (error) => {
       console.log(error);
@@ -204,7 +212,11 @@ export const useReIssueAuthentication = () => {
     mutationFn: reIssueAuthentication,
     onSuccess: (data: RESTYPE<TempSignUpResponse>) => {
       if (!data.success) {
-        console.log('인증코드 재전송 실패 : ', data.error);
+        console.log(
+          '인증코드 재전송 실패 : ',
+          data.error?.code,
+          data.error?.message,
+        );
       }
     },
     onError: () => {
@@ -223,7 +235,7 @@ export const useWithdraw = () => {
         deleteAccessToken();
         deleteRefreshToken();
       }
-      console.log('탈퇴 실패 : ', data.error);
+      console.log('탈퇴 실패 : ', data.error?.code, data.error?.message);
     },
     onError: () => {
       navigate('/splash');

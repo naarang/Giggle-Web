@@ -1,23 +1,16 @@
 import { UserType } from '@/constants/user';
 import { create } from 'zustand';
 
-type UserTypeStore = {
-  account_type: UserType;
-  updateAccountType: (cnt: UserType) => void;
+type UserStore = {
+  account_type: UserType | undefined; // 계정 유형(유학생, 고용주)
+  name: string; // 이름
+  updateAccountType: (account_type: UserType | undefined) => void; // 계정 유형 업데이트 함수
+  updateName: (name: string) => void; // 이름 업데이트 함수
 };
 
-export const useUserTypeStore = create<UserTypeStore>()((set) => ({
-  account_type: UserType.USER,
-  updateAccountType: (account_type) =>
-    set(() => ({ account_type: account_type })),
-}));
-
-type UserNameStore = {
-  name: string;
-  updateName: (name: string) => void;
-};
-
-export const useUserNameStore = create<UserNameStore>()((set) => ({
+export const useUserStore = create<UserStore>()((set) => ({
+  account_type: undefined,
   name: '',
-  updateName: (name) => set(() => ({ name: name })),
+  updateAccountType: (account_type) => set(() => ({ account_type })),
+  updateName: (name) => set(() => ({ name })),
 }));
