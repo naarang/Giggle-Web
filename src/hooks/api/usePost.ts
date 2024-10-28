@@ -1,6 +1,7 @@
 import {
   deletePost,
   getApplicantList,
+  getApplyPostList,
   getBookmarkPostList,
   getEmployerPostList,
   getInterviewList,
@@ -11,7 +12,7 @@ import {
   getRecommendPostList,
   putPostBookmark,
 } from '@/api/post';
-import { GetPostListReqType } from '@/types/api/post';
+import { GetApplyPostListReqType, GetPostListReqType } from '@/types/api/post';
 import { AscendingSortType } from '@/types/common/sort';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
@@ -92,6 +93,19 @@ export const useGetBookmarkPostList = (page: number, size: number) => {
   return useQuery({
     queryKey: ['post'],
     queryFn: () => getBookmarkPostList(page, size),
+  });
+};
+
+// 6.1 (유학생) 지원한 공고 리스트 조회하기 훅
+export const useGetApplyPostList = ({
+  page,
+  size,
+  sorting,
+  status,
+}: GetApplyPostListReqType) => {
+  return useQuery({
+    queryKey: ['post'],
+    queryFn: () => getApplyPostList({ page, size, sorting, status }),
   });
 };
 

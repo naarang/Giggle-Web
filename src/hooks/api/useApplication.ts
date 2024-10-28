@@ -4,6 +4,13 @@ import {
   patchInterviewFinish,
   patchResumeAccepted,
   getPostValidation,
+  postApplyPost,
+  getApplicationDetail,
+  getRecruiterInfo,
+  getSchoolInfo,
+  patchContactCoordinator,
+  patchApplyHiKorea,
+  patchHiKoreaResult,
 } from '@/api/application';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +20,32 @@ export const useGetPostValidation = (id: number) => {
   return useQuery({
     queryKey: ['application', id],
     queryFn: () => getPostValidation(id),
+  });
+};
+
+// 4.9 (유학생) 공고 지원하기 훅
+export const usePostApplyPost = () => {
+  return useMutation({
+    mutationFn: postApplyPost,
+    onError: (error) => {
+      console.error('공고 지원하기 실패', error);
+    },
+  });
+};
+
+// 6.2 (유학생) 지원 상태 상세 조회하기 훅
+export const useGetApplicationDetail = (id: number) => {
+  return useQuery({
+    queryKey: ['application', id],
+    queryFn: () => getApplicationDetail(id),
+  });
+};
+
+// 6.5 (유학생) 공고 담당자 정보 조회하기 훅
+export const useGetRecruiterInfo = (id: number) => {
+  return useQuery({
+    queryKey: ['application', id],
+    queryFn: () => getRecruiterInfo(id),
   });
 };
 
@@ -56,5 +89,52 @@ export const usePatchInterviewFinish = () => {
     onError: (error) => {
       console.error('인터뷰 완료하기 실패', error);
     },
+  });
+};
+
+// 6.13 (유학생) 유학생 담당자 검토 완료 훅
+export const usePatchContactCoordinator = () => {
+  return useMutation({
+    mutationFn: patchContactCoordinator,
+    onSuccess: () => {
+      window.location.reload();
+    },
+    onError: (error) => {
+      console.error('유학생 담당자 검토 완료 실패', error);
+    },
+  });
+};
+
+// 6.14 (유학생) 하이코리아 지원 훅
+export const usePatchApplyHiKorea = () => {
+  return useMutation({
+    mutationFn: patchApplyHiKorea,
+    onSuccess: () => {
+      window.location.reload();
+    },
+    onError: (error) => {
+      console.error('하이코리아 지원 실패', error);
+    },
+  });
+};
+
+// 6.15 (유학생) 하이코리아 처리결과 등록하기 훅
+export const usePatchHiKoreaResult = () => {
+  return useMutation({
+    mutationFn: patchHiKoreaResult,
+    onSuccess: () => {
+      window.location.reload();
+    },
+    onError: (error) => {
+      console.error('하이코리아 처리결과 등록 실패', error);
+    },
+  });
+};
+
+// 9.2 (유학생) 학교 정보 상세조회하기 훅
+export const useGetSchoolInfo = () => {
+  return useQuery({
+    queryKey: ['application'],
+    queryFn: () => getSchoolInfo(),
   });
 };

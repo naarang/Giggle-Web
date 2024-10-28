@@ -1,6 +1,7 @@
 import { AscendingSortType } from '@/types/common/sort';
 import { api } from '.';
-import { GetPostListReqType } from '@/types/api/post';
+import { GetApplyPostListReqType, GetPostListReqType } from '@/types/api/post';
+import { APPLICATION_STATUS_TYPE } from '@/constants/application';
 
 // 4.2 (게스트) 공고 상세 조회하기
 export const getPostDetailGuest = async (id: number) => {
@@ -65,6 +66,19 @@ export const deletePost = async (id: number) => {
 export const getBookmarkPostList = async (page: number, size: number) => {
   const response = await api.get(
     `/users/book-marks/overviews?page=${page}&size=${size}`,
+  );
+  return response.data;
+};
+
+// 6.1 (유학생) 지원한 공고 리스트 조회하기
+export const getApplyPostList = async ({
+  page,
+  size,
+  sorting,
+  status,
+}: GetApplyPostListReqType) => {
+  const response = await api.get(
+    `/users/user-owner-job-postings/overviews?page=${page}&size=${size}&sorting=${sorting}&${status === APPLICATION_STATUS_TYPE.TOTAL ? '' : `status=${status}`}`,
   );
   return response.data;
 };

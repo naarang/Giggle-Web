@@ -1,4 +1,6 @@
 import { POST_SEARCH_MENU } from '@/constants/postSearch';
+import { ApplicationStatusType } from '../application/applicationStatus';
+import { AscendingSortType } from '../common/sort';
 
 export type GetPostListReqType = {
   page: number;
@@ -17,4 +19,11 @@ export type GetPostListReqType = {
   employment_type: string | null;
   visa: string | null;
   type: POST_SEARCH_MENU | null;
+};
+
+export type GetApplyPostListReqType = {
+  page: number;
+  size: number;
+  sorting: AscendingSortType;
+  status: ApplicationStatusType;
 };
