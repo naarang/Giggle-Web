@@ -34,6 +34,25 @@ export const enum Language {
   ENGLISH = 'ENGLISH',
 }
 
+// Type for API - user_info
+export type UeserInfoRequest = {
+  first_name: string;
+  last_name: string;
+  gender: string;
+  birth: string;
+  nationality: string;
+  visa: string;
+  phone_number: string;
+};
+
+// Type for API - owner_info
+export type OwnerInfoRequest = {
+  company_name: string;
+  owner_name: string;
+  company_registration_number: string;
+  phone_number: string;
+};
+
 // Type for user info with undefinedable fields
 export type UserInfo = {
   id: string | undefined;
@@ -46,7 +65,7 @@ export type UserInfo = {
   nationality: string | undefined;
   visa: string | undefined;
   phone_number: string | undefined;
-}
+};
 
 // Type for address with undefinedable fields
 export type Address = {
@@ -58,7 +77,7 @@ export type Address = {
   address_detail: string | undefined;
   longitude: number | undefined;
   latitude: number | undefined;
-}
+};
 
 // Main type for the API request body with undefinedable fields
 export type UserInfoRequestBody = {
@@ -66,33 +85,33 @@ export type UserInfoRequestBody = {
   user_info: UserInfo;
   address: Address;
   language: Language | undefined;
-}
+};
 
 // Initial state for UserInfo
 export const initialUserInfo: UserInfo = {
   id: undefined,
   email: undefined,
   marketing_allow: undefined,
-  first_name: "",
-  last_name: "",
+  first_name: '',
+  last_name: '',
   gender: 'MALE',
-  birth: "",
-  nationality: "",
-  visa: "",
-  phone_number: "",
-}
+  birth: '',
+  nationality: '',
+  visa: '',
+  phone_number: '',
+};
 
 // Initial state for Address
 export const initialAddress: Address = {
-  address_name: "",
-  region_1depth_name: "",
-  region_2depth_name: "",
-  region_3depth_name: "",
-  region_4depth_name: "",
-  address_detail: "",
+  address_name: '',
+  region_1depth_name: '',
+  region_2depth_name: '',
+  region_3depth_name: '',
+  region_4depth_name: '',
+  address_detail: '',
   longitude: undefined,
   latitude: undefined,
-}
+};
 
 // Initial state for UserInfoRequestBody
 export const initialUserInfoRequestBody: UserInfoRequestBody = {
@@ -100,4 +119,4 @@ export const initialUserInfoRequestBody: UserInfoRequestBody = {
   user_info: initialUserInfo,
   address: initialAddress,
   language: undefined,
-}
+};
