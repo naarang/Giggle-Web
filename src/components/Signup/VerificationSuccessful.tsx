@@ -1,8 +1,11 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import SuccessIcon from '@/assets/icons/Successful.svg?react';
+import { signInputTranclation } from '@/constants/translation';
+import { isEmployer } from '@/utils/signup';
 
 const VerificationSuccessful = () => {
+  const { pathname } = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,7 +20,9 @@ const VerificationSuccessful = () => {
   return (
     <div className="flex flex-col w-full h-full justify-center items-center gap-4">
       <SuccessIcon />
-      <div className="head-2">Verification successful</div>
+      <div className="head-2">
+        {signInputTranclation.successVerify[isEmployer(pathname)]}
+      </div>
     </div>
   );
 };

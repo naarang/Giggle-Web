@@ -1,8 +1,15 @@
+import { signInputTranclation } from '@/constants/translation';
+import { isEmployer } from './signup';
+
 // ID 유효성 검사 함수
-export const validateId = (id: string, setIdError: (error: string | null) => void): boolean => {
+export const validateId = (
+  id: string,
+  setIdError: (error: string | null) => void,
+  pathname: string,
+): boolean => {
   const idRegex = /^[A-Za-z0-9]{1,320}$/;
   if (!idRegex.test(id)) {
-    setIdError('Invalid id format');
+    setIdError(signInputTranclation.invalidId[isEmployer(pathname)]);
     return false;
   }
   setIdError(null);
@@ -10,12 +17,16 @@ export const validateId = (id: string, setIdError: (error: string | null) => voi
 };
 
 // 비밀번호 유효성 검사 함수
-export const validatePassword = (password: string, setPasswordError: (error: string | null) => void): boolean => {
+export const validatePassword = (
+  password: string,
+  setPasswordError: (error: string | null) => void,
+  pathname: string,
+): boolean => {
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   if (!passwordRegex.test(password)) {
     setPasswordError(
-      'Password must be at least 8 characters, including numbers, letters, and symbols.'
+      signInputTranclation.invalidPassword[isEmployer(pathname)],
     );
     return false;
   }
@@ -23,20 +34,43 @@ export const validatePassword = (password: string, setPasswordError: (error: str
   return true;
 };
 
-// 이메일 유효성 검사 함수
-export const validateEmail = (email: string): boolean => {
-  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-  if (!emailRegex.test(email)){
+// 비밀번호 확인 유효성 검사 함수
+export const validatedConfirmPassword = (
+  password: string,
+  confirmPassword: string,
+  setConfirmPasswordError: (error: string | null) => void,
+  pathname: string,
+): boolean => {
+  if (confirmPassword !== password) {
+    setConfirmPasswordError(
+      signInputTranclation.invalidConfirmPassword[isEmployer(pathname)],
+    );
     return false;
-  };
+  }
+  setConfirmPasswordError(null);
+  return true;
+};
+
+// 이메일 유효성 검사 함수
+export const validateEmail = (
+  email: string,
+  setEmailError: (error: string | null) => void,
+  pathname: string,
+): boolean => {
+  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+  if (!emailRegex.test(email)) {
+    setEmailError(signInputTranclation.invalidEmail[isEmployer(pathname)]);
+    return false;
+  }
+  setEmailError(null);
   return true;
 };
 
 // 인증 코드 유횽성 검사 함수
-export const validateCode = (code: string): boolean =>{
-  const codeRegex =  /^\d$/;
-  if(!codeRegex.test(code)){
+export const validateCode = (code: string): boolean => {
+  const codeRegex = /^\d$/;
+  if (!codeRegex.test(code)) {
     return false;
   }
   return true;
-}
+};

@@ -30,6 +30,7 @@ import ApplicationResultPage from '@/pages/ApplicationResult/ApplicationResultPa
 import EmployerPostDetailPage from '@/pages/Employer/PostDetail/EmployerPostDetailPage';
 import EmployerPostPage from '@/pages/Employer/Post/EmployerPostPage';
 import EmployerApplicantListPage from '@/pages/Employer/ApplicantList/EmployerApplicantListPage';
+import EmployerSignupPage from './pages/Employer/Signup/EmployerSignupPage';
 
 const Layout = () => {
   const location = useLocation();
@@ -108,6 +109,8 @@ const Router = () => {
             path="/application/result/:id"
             element={<ApplicationResultPage />}
           />
+
+          <Route path="/employer/signup" element={<EmployerSignupPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

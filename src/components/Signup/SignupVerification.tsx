@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Button from '@/components/Common/Button';
 import { validateCode } from '@/utils/signin';
+import { signInputTranclation } from '@/constants/translation';
+import { isEmployer } from '@/utils/signup';
+import { useLocation } from 'react-router-dom';
 
 type SignupVerificationProps = {
   email: string;
@@ -17,6 +20,7 @@ const SignupVerification = ({
   onAuthCodeChange,
   onSubmit,
 }: SignupVerificationProps) => {
+  const { pathname } = useLocation();
   const [isValid, setIsValid] = useState<boolean>(false);
   const [resendMessage, setResendMessage] = useState<string>(''); // 재전송 메시지 상태
   const [resendDisabled, setResendDisabled] = useState<boolean>(false); // 재전송 비활성화 여부
@@ -138,11 +142,11 @@ const SignupVerification = ({
 
   return (
     <div>
-      <div className="title-1 text-center pt-6 pb-2">Verification</div>
+      <div className="title-1 text-center pt-6 pb-2">
+        {signInputTranclation.verification[isEmployer(pathname)]}
+      </div>
       <div className="body-2 text-[#656565] text-center">
-        Enter the code from the email
-        <br />
-        we sent you
+        {signInputTranclation.enterCode[isEmployer(pathname)]}
       </div>
       <div className="py-[3.125rem] flex flex-col gap-8">
         <div className="flex gap-3">
@@ -160,32 +164,34 @@ const SignupVerification = ({
           ))}
         </div>
         <div className="body-3 text-center text-[#7D8A95]">
-          We will resend the code in 5 mins
+          {signInputTranclation.availabilityTime[isEmployer(pathname)]}
         </div>
       </div>
-      <div className="py-6 flex flex-col items-center gap-2 absolute bottom-[30%]">
+      <div className="w-full py-6 flex flex-col items-center gap-2 absolute bottom-[30%] left-0">
         {resendMessage && (
           <div className="button-2 text-[#7872ED]">{resendMessage}</div>
         )}
-        <Button
-          type="large"
-          bgColor={isValid ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'}
-          fontColor={isValid ? 'text-[#1E1926]' : 'text-[#BDBDBD]'}
-          isBorder={false}
-          title="Verify"
-          onClick={isValid ? handleVerifyClick : undefined}
-        />
+        <div className="w-full px-6">
+          <Button
+            type="large"
+            bgColor={isValid ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'}
+            fontColor={isValid ? 'text-[#1E1926]' : 'text-[#BDBDBD]'}
+            isBorder={false}
+            title={signInputTranclation.verify[isEmployer(pathname)]}
+            onClick={isValid ? handleVerifyClick : undefined}
+          />
+        </div>
         {/* 5회 이내 이메일 재발송 가능 */}
         {!resendDisabled && (
           <div className="flex items-center justify-center gap-2">
             <p className="text-[#7D8A95] text-sm font-normal">
-              Didn’t get a response?
+              {signInputTranclation.requestResend[isEmployer(pathname)]}
             </p>
             <button
               className="text-[#695F96] text-sm font-semibold"
               onClick={handleResendClick} // 이메일 인증코드 재전송 API 호출
             >
-              Resend
+              {signInputTranclation.resend[isEmployer(pathname)]}
             </button>
           </div>
         )}
