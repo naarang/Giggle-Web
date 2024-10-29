@@ -13,7 +13,7 @@ const PostDetailPage = () => {
     <>
       <BaseHeader
         hasBackButton={true}
-        onClickBackButton={() => navigate('/search')}
+        onClickBackButton={() => navigate(-1)}
         hasMenuButton={false}
         title="Detail"
       />

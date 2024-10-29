@@ -4,15 +4,15 @@ import Button from '@/components/Common/Button';
 import { buttonTypeKeys } from '@/constants/components';
 import { useNavigate } from 'react-router-dom';
 
-type PostDetailConfirmBottomSheetType = {
+type LoginBottomSheetPropsType = {
   isShowBottomsheet: boolean;
   setIsShowBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const PostDetailLoginBottomSheet = ({
+const LoginBottomSheet = ({
   isShowBottomsheet,
   setIsShowBottomSheet,
-}: PostDetailConfirmBottomSheetType) => {
+}: LoginBottomSheetPropsType) => {
   const navigate = useNavigate();
 
   return (
@@ -72,4 +72,4 @@ const PostDetailLoginBottomSheet = ({
   );
 };
 
-export default PostDetailLoginBottomSheet;
+export default LoginBottomSheet;

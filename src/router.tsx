@@ -32,12 +32,14 @@ import RequestModifyPage from '@/pages/WriteDocuments/RequestModifyPage';
 import DocumentPreview from '@/pages/WriteDocuments/DocumentPreviewPage';
 import EmployerPostPage from '@/pages/Employer/Post/EmployerPostPage';
 import EmployerApplicantListPage from '@/pages/Employer/ApplicantList/EmployerApplicantListPage';
-import EmployerSignupInfoPage from '@/pages/Employer/signup/EmployerSignupInfoPage';
+import EmployerSignupInfoPage from '@/pages/Employer/Signup/EmployerSignupInfoPage';
 import PostLanguagePage from '@/pages/PostLanguage/PostLanguagePage';
 import EmployerApplicantDetailPage from '@/pages/Employer/ApplicantDetail/EmployerApplicantDetailPage';
 import EmployerApplicantResumePage from '@/pages/Employer/ApplicantResume/EmployerApplicantResumePage';
 import EmployerApplicantResumeAcceptPage from '@/pages/Employer/ApplicantResumeAccept/EmployerApplicantResumeAcceptPage';
 import EmployerCreatePostPage from './pages/Employer/Post/EmployerCreatePostPage';
+import AlarmPage from '@/pages/Alarm/AlarmPage';
+import ChatBotPage from '@/pages/ChatBot/ChatBotPage';
 
 const Layout = () => {
   const location = useLocation();
@@ -62,7 +64,8 @@ const Router = () => {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
-
+          <Route path="/chatbot" element={<ChatBotPage />} />
+          <Route path="/alarm" element={<AlarmPage />} />
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/information" element={<InformationPage />} />
