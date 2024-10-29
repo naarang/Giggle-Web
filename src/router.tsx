@@ -39,20 +39,30 @@ import EmployerApplicantResumePage from '@/pages/Employer/ApplicantResume/Employ
 import EmployerApplicantResumeAcceptPage from '@/pages/Employer/ApplicantResumeAccept/EmployerApplicantResumeAcceptPage';
 import AlarmPage from '@/pages/Alarm/AlarmPage';
 import ChatBotPage from '@/pages/ChatBot/ChatBotPage';
+import { useUserStore } from '@/store/user';
+import { UserType } from '@/constants/user';
+import Splash from '@/components/Splash/Splash';
+import EmployerSignupPage from './pages/Employer/signup/EmployerSignupPage';
 
 const Layout = () => {
   const location = useLocation();
+  const { account_type } = useUserStore();
 
   // Nav bar 컴포넌트가 랜딩되는 페이지
-  const showNavbarPaths = ['/', '/profile', '/search', '/application'];
+  const showNavbarPaths = () => {
+    if (account_type === UserType.OWNER) {
+      return ['/', '/search', '/employer/post', '/employer/profile'];
+    } else return ['/', '/search', '/application', '/profile'];
+  };
 
-  const shouldShowNavbar = showNavbarPaths.includes(location.pathname);
+  const shouldShowNavbar = showNavbarPaths().includes(location.pathname);
 
   return (
     <>
       <ScrollToTop />
       <Outlet />
       {shouldShowNavbar && <Navbar />}
+      {console.log(account_type)}
     </>
   );
 };
@@ -63,6 +73,7 @@ const Router = () => {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/splash" element={<Splash />} />
           <Route path="/chatbot" element={<ChatBotPage />} />
           <Route path="/alarm" element={<AlarmPage />} />
           <Route path="/signin" element={<SigninPage />} />
@@ -102,6 +113,7 @@ const Router = () => {
 
           <Route path="/post/:id" element={<PostDetailPage />} />
           <Route path="/post/apply/:id" element={<PostApplyPage />} />
+          <Route path="/employer/signup" element={<EmployerSignupPage />} />
           <Route
             path="/employer/signup/information"
             element={<EmployerSignupInfoPage />}
