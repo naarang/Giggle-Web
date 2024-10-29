@@ -1,4 +1,4 @@
-import { Language, UserInfoRequestBody } from '@/types/api/users';
+import { Language } from '@/types/api/users';
 import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import { useState } from 'react';
 import Dropdown from '@/components/Common/Dropdown';
@@ -6,11 +6,10 @@ import { languageList } from '@/constants/information';
 import Button from '@/components/Common/Button';
 
 type LanguageStepProps = {
-  userInfo: UserInfoRequestBody;
-  onNext: (newInfo: UserInfoRequestBody) => void;
+  onNext: (language: Language) => void;
 };
 
-const LanguageStep = ({ userInfo, onNext }: LanguageStepProps) => {
+const LanguageStep = ({ onNext }: LanguageStepProps) => {
   const [language, setLanguage] = useState('English');
   return (
     <div className="w-full mx-auto">
@@ -32,12 +31,12 @@ const LanguageStep = ({ userInfo, onNext }: LanguageStepProps) => {
       <BottomButtonPanel>
         {language === '' ? (
           <Button
-          type="large"
-          bgColor="bg-[#F4F4F9]"
-          fontColor=""
-          isBorder={false}
-          title="Next"
-        />
+            type="large"
+            bgColor="bg-[#F4F4F9]"
+            fontColor=""
+            isBorder={false}
+            title="Next"
+          />
         ) : (
           <Button
             type="large"
@@ -45,12 +44,7 @@ const LanguageStep = ({ userInfo, onNext }: LanguageStepProps) => {
             fontColor="text-[#222]"
             isBorder={false}
             title="Next"
-            onClick={() =>
-              onNext({
-                ...userInfo,
-                language: language.toUpperCase() as Language,
-              })
-            }
+            onClick={() => onNext(language.toUpperCase() as Language)}
           />
         )}
       </BottomButtonPanel>

@@ -1,6 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Button from '@/components/Common/Button';
 import { validateCode } from '@/utils/signin';
+import { signInputTranclation } from '@/constants/translation';
+import { isEmployer } from '@/utils/signup';
+import { useLocation } from 'react-router-dom';
+import { useEmailTryCountStore } from '@/store/signup';
+import { useReIssueAuthentication } from '@/hooks/api/useAuth';
 
 type SignupVerificationProps = {
   email: string;
@@ -17,10 +22,15 @@ const SignupVerification = ({
   onAuthCodeChange,
   onSubmit,
 }: SignupVerificationProps) => {
+  const { pathname } = useLocation();
   const [isValid, setIsValid] = useState<boolean>(false);
   const [resendMessage, setResendMessage] = useState<string>(''); // 재전송 메시지 상태
   const [resendDisabled, setResendDisabled] = useState<boolean>(false); // 재전송 비활성화 여부
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const { try_cnt } = useEmailTryCountStore();
+
+  // 이메일 재발송 훅
+  const { mutate: reIssueAuthentication } = useReIssueAuthentication();
 
   // 첫 인증코드 필드에 자동 포커스
   useEffect(() => {
@@ -78,6 +88,7 @@ const SignupVerification = ({
     }
   };
 
+  // 인증번호 전송 버튼
   const handleVerifyClick = () => {
     if (isValid) {
       onSubmit();
@@ -90,59 +101,37 @@ const SignupVerification = ({
       return;
     }
 
-    // 임시 코드 - API 연결 후 삭제
-    onAuthCodeChange('');
-    setIsValid(false);
-    setResendMessage('Verification code has been resent.');
-
-    // 추후 이메일 재요청 횟수 API 적용
-    const try_cnt = 0;
+    // 5회 초과시 재발송 불가
     if (try_cnt >= 5) {
-      setResendMessage(
-        'You have reached the limit. Please try again in 24 hours.',
-      ); // 5회 이상인 경우 메시지
+      setResendMessage(signInputTranclation.limitCounts[isEmployer(pathname)]); // 5회 이상인 경우 메시지
       setResendDisabled(true); // 재전송 버튼 비활성화
     }
-
-    /*
     try {
-      const response = await axios.patch(
-        '/api/v1/auth/validations/resend-code',
+      // 5회 이내 재발송 가능
+      reIssueAuthentication(
+        { id: id, email: email },
         {
-          id: id,
-          email: email,
+          onSuccess: () => {
+            onAuthCodeChange('');
+            setIsValid(false);
+            setResendMessage(
+              signInputTranclation.resentMessage[isEmployer(pathname)], // 인증코드 재전송 성공 메시지
+            );
+          },
         },
       );
-
-      if (response.status === 200 && response.data.success) {
-        onAuthCodeChange('');
-        setIsValid(false);
-        const { try_cnt } = response.data.data;
-
-        if (try_cnt >= 5) {
-          setResendMessage(
-            'You have reached the limit. Please try again in 24 hours.',
-          ); // 5회 이상인 경우 메시지
-          setResendDisabled(true); // 재전송 버튼 비활성화
-        } else {
-          setResendMessage('Verification code has been resent.'); // 성공 메시지
-        }
-      } else {
-        console.error('인증 코드 재전송 실패:', response.statusText);
-      }
     } catch (error) {
-      console.error('인증 코드 재전송 중 오류 발생:', error);
+      setResendMessage('오류가 발생했습니다.');
     }
-      */
   };
 
   return (
     <div>
-      <div className="title-1 text-center pt-6 pb-2">Verification</div>
+      <div className="title-1 text-center pt-6 pb-2">
+        {signInputTranclation.verification[isEmployer(pathname)]}
+      </div>
       <div className="body-2 text-[#656565] text-center">
-        Enter the code from the email
-        <br />
-        we sent you
+        {signInputTranclation.enterCode[isEmployer(pathname)]}
       </div>
       <div className="py-[3.125rem] flex flex-col gap-8">
         <div className="flex gap-3">
@@ -160,32 +149,34 @@ const SignupVerification = ({
           ))}
         </div>
         <div className="body-3 text-center text-[#7D8A95]">
-          We will resend the code in 5 mins
+          {signInputTranclation.availabilityTime[isEmployer(pathname)]}
         </div>
       </div>
-      <div className="py-6 flex flex-col items-center gap-2 absolute bottom-[30%]">
+      <div className="w-full py-6 flex flex-col items-center gap-2 absolute bottom-[30%] left-0">
         {resendMessage && (
           <div className="button-2 text-[#7872ED]">{resendMessage}</div>
         )}
-        <Button
-          type="large"
-          bgColor={isValid ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'}
-          fontColor={isValid ? 'text-[#1E1926]' : 'text-[#BDBDBD]'}
-          isBorder={false}
-          title="Verify"
-          onClick={isValid ? handleVerifyClick : undefined}
-        />
+        <div className="w-full px-6">
+          <Button
+            type="large"
+            bgColor={isValid ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'}
+            fontColor={isValid ? 'text-[#1E1926]' : 'text-[#BDBDBD]'}
+            isBorder={false}
+            title={signInputTranclation.verify[isEmployer(pathname)]}
+            onClick={isValid ? handleVerifyClick : undefined}
+          />
+        </div>
         {/* 5회 이내 이메일 재발송 가능 */}
         {!resendDisabled && (
           <div className="flex items-center justify-center gap-2">
             <p className="text-[#7D8A95] text-sm font-normal">
-              Didn’t get a response?
+              {signInputTranclation.requestResend[isEmployer(pathname)]}
             </p>
             <button
               className="text-[#695F96] text-sm font-semibold"
               onClick={handleResendClick} // 이메일 인증코드 재전송 API 호출
             >
-              Resend
+              {signInputTranclation.resend[isEmployer(pathname)]}
             </button>
           </div>
         )}

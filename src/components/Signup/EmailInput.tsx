@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Input from '@/components/Common/Input';
 import Button from '@/components/Common/Button';
 import SigninSocialButtons from '@/components/Signin/SigninSocialButtons';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { validateEmail } from '@/utils/signin';
+import { signInputTranclation } from '@/constants/translation';
+import { isEmployer } from '@/utils/signup';
+import { useGetEmailValidation } from '@/hooks/api/useAuth';
 
 type EmailInputProps = {
   email: string;
@@ -13,44 +16,30 @@ type EmailInputProps = {
 
 const EmailInput = ({ email, onEmailChange, onSubmit }: EmailInputProps) => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [emailError, setEmailError] = useState<string | null>(null);
   const [isValid, setIsValid] = useState<boolean>(false);
+
+  const { data: ValidationResponse } = useGetEmailValidation(email);
 
   // ===== handler =====
   const handleEmailChange = async (value: string) => {
     onEmailChange(value);
 
     // 이메일 형식 유효성 검사
-    if (!validateEmail(value)) {
-      setEmailError('Invalid email format');
+    if (!validateEmail(value, setEmailError, pathname)) {
       setIsValid(false); // 유효성 검사 실패 시 버튼 비활성화
       return;
-    } else {
-      setEmailError(null);
     }
 
-    // 이메일 중복 검사 API - 유효성 검사
-    // 테스트 코드
-    setEmailError(null);
-    setIsValid(true);
-    /*
-    try {
-      const response = await fetch(
-        `/api/v1/auth/validations/email?email=${value}`,
-      );
-      const data = await response.json();
-      if (data.is_valid) {
-        setEmailError(null); // 중복되지 않은 경우 오류 초기화
-        setIsValid(true); // 이메일이 중복되지 않으면 버튼 활성화
-      } else {
-        setEmailError('This email already exists'); // 중복된 경우 오류 메시지 설정
-        setIsValid(false); // 중복된 경우 버튼 비활성화
-      }
-    } catch (error) {
-      console.error('이메일 중복 확인 오류:', error);
-      setIsValid(false); // 오류 발생 시 버튼 비활성화
+    // 이메일 중복 검사 API 호출 결과 처리
+    if (ValidationResponse && ValidationResponse.data.is_valid) {
+      setEmailError(null); // email 중복 오류 메시지 초기화
+      setIsValid(true); // 중복 검사 통과 시 버튼 활성화
+    } else {
+      setEmailError(signInputTranclation.invalidEmail[isEmployer(pathname)]); // email 중복 오류 메시지
+      setIsValid(false); // 중복 검사 실패 시 버튼 비활성화
     }
-    */
   };
 
   const handleSignupClick = () => {
@@ -58,26 +47,23 @@ const EmailInput = ({ email, onEmailChange, onSubmit }: EmailInputProps) => {
     onSubmit();
   };
 
-  // 이메일과 유효성 검사 상태에 따라 버튼 비활성화 상태를 관리
-  useEffect(() => {
-    setIsValid(email !== '' && !emailError); // 이메일 값이 있고 오류가 없으면 유효
-  }, [email, emailError]);
-
   return (
     <>
-      <div className="title-1 text-center py-6">Sign Up</div>
+      <div className="title-1 text-center py-6">
+        {signInputTranclation.signup[isEmployer(pathname)]}
+      </div>
       <div className="w-[20.5rem] flex flex-col py-6">
         <div>
           <p className="py-2 px-1 text-sm font-normal text-[#171719]">
-            Email Address
+            {signInputTranclation.email[isEmployer(pathname)]}
           </p>
           <Input
             inputType="TEXT"
-            placeholder="Enter email address"
+            placeholder={signInputTranclation.enterEmail[isEmployer(pathname)]}
             value={email}
             onChange={handleEmailChange}
             canDelete={false}
-            isInvalid={!!emailError}
+            isInvalid={!isValid}
           />
           {emailError && (
             <p className="text-[#FF6F61] text-xs p-2">{emailError}</p>
@@ -90,19 +76,19 @@ const EmailInput = ({ email, onEmailChange, onSubmit }: EmailInputProps) => {
           bgColor={isValid ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'}
           fontColor={isValid ? 'text-[#1E1926]' : 'text-[#BDBDBD]'}
           isBorder={false}
-          title="Continue"
+          title={signInputTranclation.continue[isEmployer(pathname)]}
           onClick={isValid ? handleSignupClick : undefined}
         />
         <div className="flex items-center justify-center gap-2 pb-2">
           <p className="text-[#7D8A95] text-sm font-normal">
-            Already have an account?
+            {signInputTranclation.haveAccount[isEmployer(pathname)]}
           </p>
           {/* 로그인 화면 이동 */}
           <button
             className="text-[#1E1926] text-sm font-semibold"
             onClick={() => navigate('/signin')}
           >
-            Sign In
+            {signInputTranclation.signin[isEmployer(pathname)]}
           </button>
         </div>
         <SigninSocialButtons />
