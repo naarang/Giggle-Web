@@ -70,7 +70,7 @@ const ProfilePage = () => {
       meta_data: {
         weekend_work_hour: 20,
         weekday_work_hour: 30,
-        is_topik_4_or_more: true,
+        is_language_skill_4_or_more: true,
         is_metropolitan_area: true,
       },
     });

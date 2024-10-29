@@ -26,7 +26,7 @@ export type LanguageLevelType = {
 export type MetaDataType = {
   weekend_work_hour: number;
   weekday_work_hour: number;
-  is_topik_4_or_more: boolean;
+  is_language_skill_4_or_more: boolean;
   is_metropolitan_area: boolean;
 };
 
@@ -67,7 +67,13 @@ export type UserProfileDetailDataType = {
 };
 
 // 고용주 프로필
-export type EmployerCountsInfoType = {
+export type EmployerProfileResponse = {
+  icon_img_url: string;
+  company_name: string;
+  is_notification_allowed: boolean;
+};
+
+export type EmployerCountsInfoResponse = {
   job_postings_counts: number;
   applicants_counts: number;
   successful_hire_counts: number;
