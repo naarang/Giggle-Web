@@ -146,7 +146,6 @@ export const useSignUp = () => {
   return useMutation({
     mutationFn: signUp,
     onSuccess: (data: RESTYPE<SignInResponse>) => {
-      console.log(data);
       deleteTemporaryToken();
       setAccessToken(data.data.access_token);
       setRefreshToken(data.data.refresh_token);
