@@ -67,11 +67,13 @@ export const useGetPostSummary = (id: number) => {
 // 4.10 (고용주) 공고 등록하기 훅
 export const useCreatePost = () => {
   const navigate = useNavigate();
+
   return useMutation({
     mutationFn: createPost,
-    onSuccess: () => {
-      // TODO: 고용주 공고 - 작성한 공고 조회 페이지로 이동하기
-      navigate('/employer/post');
+    onSuccess: (response) => {
+      // response는 API 응답 데이터
+      // { success: true, data: { id: Long }, error: null }
+      navigate(`/employer/post/${response.data.id}`);
     },
     onError: (error) => {
       console.error('공고 등록하기 실패', error);
