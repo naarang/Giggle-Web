@@ -1,8 +1,10 @@
 import BottomSheetLayout from '@/components/Common/BottomSheetLayout';
 import Button from '@/components/Common/Button';
 import { buttonTypeKeys } from '@/constants/components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TimePicker from '@/components/Common/TimePicker';
+import { DayOfWeek, WorkDayTime } from '@/types/api/document';
+import { workerData } from 'worker_threads';
 
 // TODO: 나중에 constant로 분리해주세요!
 const DAYS = {
@@ -18,15 +20,14 @@ const DAYS = {
 type DayType = (typeof DAYS)[keyof typeof DAYS];
 
 // api에게 보낼 데이터 형식
-type WorkDayTimeItemType = {
-  day_of_week: DayType | 'NEGOTIABLE';
-  work_start_time: string | null;
-  work_end_time: string | null;
-};
 
-const WorkDayTimeBottomSheet = () => {
-  const [isShowBottomsheet, setisShowBottomsheet] = useState<boolean>(true);
-
+const WorkDayTimeBottomSheet = ({
+  onClose,
+  isShowBottomsheet,
+}: {
+  onClose: (value: WorkDayTime[]) => void;
+  isShowBottomsheet: boolean;
+}) => {
   const [isCheckAllWeek, setIsCheckAllWeek] = useState<boolean>(false);
   const [isCheckAllTime, setIsCheckAllTime] = useState<boolean>(false);
 
@@ -57,31 +58,34 @@ const WorkDayTimeBottomSheet = () => {
     return false;
   };
 
-  const onClickSubmit = () => {
+  useEffect(() => {
+    console.log(workStartTime)
+    console.log(workerData)
+  }, [workStartTime])
+
+  const returnResult = () => {
     if (!isAvailableSubmit()) return;
 
     if (isCheckAllWeek) {
-      const result: WorkDayTimeItemType[] = [
+      const result: WorkDayTime[] = [
         {
-          day_of_week: 'NEGOTIABLE',
+          day_of_week: DayOfWeek.NEGOTIABLE,
           work_start_time: isCheckAllTime ? null : workStartTime,
           work_end_time: isCheckAllTime ? null : workEndTime,
         },
       ];
-
-      console.log(result); // TODO: API에 보낼 형식 맞춰놨쓔!
+      return result; // TODO: API에 보낼 형식 맞춰놨쓔!
     } else {
-      const result: WorkDayTimeItemType[] = dayOfWeek.map((day) => {
+      const result: WorkDayTime[] = dayOfWeek.map((day) => {
         return {
-          day_of_week: DAYS[day as keyof typeof DAYS],
+          day_of_week: DAYS[day as keyof typeof DAYS] as DayOfWeek,
           work_start_time: isCheckAllTime ? null : workStartTime,
           work_end_time: isCheckAllTime ? null : workEndTime,
         };
       });
-
-      console.log(result); // TODO: API에 보낼 형식 맞춰놨쓔!
+      console.log(result);
+      return result; // TODO: API에 보낼 형식 맞춰놨쓔!
     }
-    setisShowBottomsheet(false);
   };
 
   return (
@@ -154,7 +158,7 @@ const WorkDayTimeBottomSheet = () => {
           fontColor={isAvailableSubmit() ? `text-[#1E1926]` : `text-[#BDBDBD]`}
           isBorder={false}
           title={'추가하기'}
-          onClick={onClickSubmit}
+          onClick={() => onClose(returnResult() as WorkDayTime[])}
         />
       </div>
     </BottomSheetLayout>
