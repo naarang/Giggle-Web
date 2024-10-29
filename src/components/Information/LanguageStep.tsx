@@ -29,24 +29,18 @@ const LanguageStep = ({ onNext }: LanguageStepProps) => {
       </div>
       {/* 다음 step 이동 버튼 포함한 Bottom Panel */}
       <BottomButtonPanel>
-        {language === '' ? (
-          <Button
-            type="large"
-            bgColor="bg-[#F4F4F9]"
-            fontColor=""
-            isBorder={false}
-            title="Next"
-          />
-        ) : (
-          <Button
-            type="large"
-            bgColor="bg-[#fef387]"
-            fontColor="text-[#222]"
-            isBorder={false}
-            title="Next"
-            onClick={() => onNext(language.toUpperCase() as Language)}
-          />
-        )}
+        <Button
+          type="large"
+          bgColor={language === '' ? 'bg-[#F4F4F9]' : 'bg-[#fef387]'}
+          fontColor={language === '' ? '' : 'text-[#222]'}
+          isBorder={false}
+          title="Next"
+          onClick={
+            language === ''
+              ? undefined
+              : () => onNext(language.toUpperCase() as Language)
+          }
+        />
       </BottomButtonPanel>
     </div>
   );

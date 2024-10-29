@@ -159,29 +159,26 @@ const AddressStep = ({ userInfo, onNext }: AddressStepProps) => {
       </div>
       {/* 다음 step 이동 버튼 포함한 Bottom Panel */}
       <BottomButtonPanel>
-        {newAddress.region_1depth_name === '' ? (
-          <Button
-            type="large"
-            bgColor="bg-[#F4F4F9]"
-            fontColor=""
-            isBorder={false}
-            title="Next"
-          />
-        ) : (
-          <Button
-            type="large"
-            bgColor="bg-[#fef387]"
-            fontColor=""
-            isBorder={false}
-            title="Next"
-            onClick={() =>
-              onNext({
-                ...userInfo,
-                address: newAddress,
-              })
-            }
-          />
-        )}
+        <Button
+          type="large"
+          bgColor={
+            newAddress.region_1depth_name === ''
+              ? 'bg-[#F4F4F9]'
+              : 'bg-[#fef387]'
+          }
+          fontColor={newAddress.region_1depth_name === '' ? '' : 'text-[#222]'}
+          isBorder={false}
+          title="Next"
+          onClick={
+            newAddress.region_1depth_name === ''
+              ? undefined
+              : () =>
+                  onNext({
+                    ...userInfo,
+                    address: newAddress,
+                  })
+          }
+        />
       </BottomButtonPanel>
     </div>
   );

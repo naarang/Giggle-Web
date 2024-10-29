@@ -135,37 +135,30 @@ const Step1 = ({
       </div>
       <BottomButtonPanel>
         {/* 정보 입력 시마다 유효성을 검사해 모든 값이 유효하면 버튼이 활성화 */}
-        {isInvalid ? (
-          <Button
-            type="large"
-            bgColor="bg-[#F4F4F9]"
-            fontColor=""
-            isBorder={false}
-            title="다음"
-          />
-        ) : (
-          <Button
-            type="large"
-            bgColor="bg-[#fef387]"
-            fontColor="text-[#222]"
-            isBorder={false}
-            title="다음"
-            onClick={() =>
-              onNext({
-                ...postInfo,
-                body: {
-                  ...newPostInfo.body,
-                  job_category: String(
-                    findJobCategoryByNameStrict(
-                      newPostInfo.body.job_category as JobCategoryNames,
-                    ),
-                  ),
-                  hourly_rate: extractNumbersAsNumber(hourlyRate),
-                },
-              })
-            }
-          />
-        )}
+        <Button
+          type="large"
+          bgColor={isInvalid ? 'bg-[#fef387]' : 'bg-[#F4F4F9]'}
+          fontColor={isInvalid ? 'text-[#222]' : ''}
+          isBorder={false}
+          title="다음"
+          onClick={
+            isInvalid
+              ? () =>
+                  onNext({
+                    ...postInfo,
+                    body: {
+                      ...newPostInfo.body,
+                      job_category: String(
+                        findJobCategoryByNameStrict(
+                          newPostInfo.body.job_category as JobCategoryNames,
+                        ),
+                      ),
+                      hourly_rate: extractNumbersAsNumber(hourlyRate),
+                    },
+                  })
+              : undefined
+          }
+        />
       </BottomButtonPanel>
     </div>
   );
