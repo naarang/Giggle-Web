@@ -1,5 +1,3 @@
-import BottomSheetLayout from '@/components/Common/BottomSheetLayout';
-import Button from '@/components/Common/Button';
 import EmployerJobInfo from '@/components/Employer/Profile/EmployerJobInfo';
 import EmployerProfileCard from '@/components/Employer/Profile/EmployerProfileCard';
 import EmployerProfileMenuList from '@/components/Employer/Profile/EmployerProfileMenuList';
@@ -7,30 +5,40 @@ import DeleteAccount from '@/components/Profile/DeleteAccount';
 import DeleteModal from '@/components/Profile/DeleteModal';
 import LogoutBottomSheet from '@/components/Profile/LogoutBottomSheet';
 import ProfileHeader from '@/components/Profile/ProfileHeader';
-import { useLogout, useWithdraw } from '@/hooks/api/useAuth';
-import { useState } from 'react';
+import { useLogout } from '@/hooks/api/useAuth';
+import { useEffect, useState } from 'react';
 
 const EmployerProfilePage = () => {
   const [withdrawModal, setWithdrawModal] = useState(false);
   const [logoutBottomSheet, setLogoutBottomSheet] = useState(false);
-  const { mutate: withdraw } = useWithdraw();
   const { mutate: logout } = useLogout();
 
-  const handleAccountDelete = () => {
-    withdraw;
+  const handleLogout = () => {
+    logout();
+  };
+  const handleBottomSheetOpen = () => {
+    setLogoutBottomSheet(true);
   };
 
-  const handleLogout = () => {
-    logout;
-  };
+  useEffect(() => {
+    // 모달 열려있을 때 스크롤 비활성화
+    if (withdrawModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    // 컴포넌트 언마운트 시에도 원래 상태로 복원
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [withdrawModal]);
 
   return (
     <>
       {/* 계정 탈퇴 모달 */}
       {withdrawModal && (
         <DeleteModal
-          onDeleteButton={setWithdrawModal} // 삭제 취소 버튼
-          onAccountDelete={handleAccountDelete} // 삭제 버튼
+          onDeleteButton={setWithdrawModal} // 계정 탈퇴 취소 버튼
         />
       )}
       {/* 로그아웃 바텀시트 */}
@@ -47,7 +55,11 @@ const EmployerProfilePage = () => {
             <EmployerProfileCard />
             <EmployerJobInfo />
           </div>
-          <EmployerProfileMenuList />
+          <EmployerProfileMenuList
+            handleBottomSheetOpen={handleBottomSheetOpen}
+          />
+        </div>
+        <div className="mt-32">
           <DeleteAccount onDeleteButton={setWithdrawModal} />
         </div>
       </div>

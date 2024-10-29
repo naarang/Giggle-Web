@@ -38,6 +38,7 @@ import PostLanguagePage from '@/pages/PostLanguage/PostLanguagePage';
 import EmployerApplicantDetailPage from '@/pages/Employer/ApplicantDetail/EmployerApplicantDetailPage';
 import EmployerApplicantResumePage from '@/pages/Employer/ApplicantResume/EmployerApplicantResumePage';
 import EmployerApplicantResumeAcceptPage from '@/pages/Employer/ApplicantResumeAccept/EmployerApplicantResumeAcceptPage';
+import EmployerEditProfilePage from '@/pages/Employer/EditProfile/EmployerEditProfilePage';
 
 const Layout = () => {
   const location = useLocation();
@@ -138,6 +139,10 @@ const Router = () => {
         </Route>
 
         <Route path="/employer/profile" element={<EmployerProfilePage />} />
+        <Route
+          path="/employer/profile/edit"
+          element={<EmployerEditProfilePage />}
+        />
       </Routes>
     </BrowserRouter>
   );

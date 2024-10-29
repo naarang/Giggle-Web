@@ -1,6 +1,6 @@
 import { RESTYPE } from '@/types/api/common';
 import { api } from '.';
-import { UserLanguageRequest, UserProfileBody } from '@/types/api/mypage';
+import { UserLanguageRequest } from '@/types/api/mypage';
 import {
   ApplicationCountType,
   BookmarkCountType,

@@ -54,3 +54,31 @@ export const EmployerInfoData = {
     successful_hire_counts: 10,
   },
 };
+
+export const UserProfileSummaryData = {
+  success: true,
+  data: {
+    user_information: {
+      profile_img_url:
+        'https://images.pexels.com/photos/1458926/pexels-photo-1458926.jpeg?cs=srgb&dl=pexels-poodles2doodles-1458926.jpg&fm=jpg',
+      first_name: 'Hyeona',
+      last_name: 'Seol',
+      birth: '0000-00-00',
+      school_name: 'Dongguk University',
+      grade: 3,
+      gpa: 3.5,
+      is_notification_allowed: true,
+    },
+    language_level: {
+      topik_level: 4,
+      kiip_level: 4,
+      sejong_level: 4,
+    },
+    meta_data: {
+      weekend_work_hour: 20,
+      weekday_work_hour: 30,
+      is_language_skill_4_or_more: true,
+      is_metropolitan_area: true,
+    },
+  },
+};
