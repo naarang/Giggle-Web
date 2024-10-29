@@ -2,9 +2,11 @@ import {
   getApplicationCounts,
   getBookmarksCounts,
   getOwnerApplicationCounts,
+  getOwnerProfile,
   getOwnerSummaries,
   getUserProfile,
   getUserSummaries,
+  patchOwnerProfile,
   patchUserProfile,
 } from '@/api/mypage';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -15,6 +17,14 @@ export const useGetUserProfile = () => {
   return useQuery({
     queryKey: ['userProfile'],
     queryFn: getUserProfile,
+  });
+};
+
+// 3.2 (고용주) 회사 정보 조회하기
+export const useGetOwnerProfile = () => {
+  return useQuery({
+    queryKey: ['ownerProfile'],
+    queryFn: getOwnerProfile,
   });
 };
 
@@ -43,7 +53,21 @@ export const usePatchUserProfile = () => {
       navigate('/profile');
     },
     onError: (error) => {
-      console.error('프로필 조회 실패', error);
+      console.error('프로필 수정 실패', error);
+    },
+  });
+};
+
+// 3.5 (유학생) 프로필 수정
+export const usePatchOwnerProfile = () => {
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: patchOwnerProfile,
+    onSuccess: () => {
+      navigate('/employer/profile');
+    },
+    onError: (error) => {
+      console.error('프로필 수정 실패', error);
     },
   });
 };

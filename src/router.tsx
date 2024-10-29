@@ -39,6 +39,7 @@ import EmployerApplicantDetailPage from '@/pages/Employer/ApplicantDetail/Employ
 import EmployerApplicantResumePage from '@/pages/Employer/ApplicantResume/EmployerApplicantResumePage';
 import EmployerApplicantResumeAcceptPage from '@/pages/Employer/ApplicantResumeAccept/EmployerApplicantResumeAcceptPage';
 import EmployerEditProfilePage from '@/pages/Employer/EditProfile/EmployerEditProfilePage';
+import EmployerSignupPage from '@/pages/Employer/Signup/EmployerSignupPage';
 
 const Layout = () => {
   const location = useLocation();
@@ -101,6 +102,8 @@ const Router = () => {
 
           <Route path="/post/:id" element={<PostDetailPage />} />
           <Route path="/post/apply/:id" element={<PostApplyPage />} />
+
+          <Route path="/employer/signup" element={<EmployerSignupPage />} />
           <Route
             path="/employer/signup/information"
             element={<EmployerSignupInfoPage />}

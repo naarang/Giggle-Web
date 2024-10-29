@@ -5,6 +5,8 @@ import {
   ApplicationCountType,
   BookmarkCountType,
   EmployerCountsInfoResponse,
+  EmployerProfileDetailResponse,
+  EmployerProfileRequest,
   EmployerProfileResponse,
   UserEditBodyRequest,
   UserProfileResponse,
@@ -16,6 +18,14 @@ export const getUserProfile = async (): Promise<
   RESTYPE<UserProfileResponse>
 > => {
   const response = await api.get('/users/details');
+  return response.data;
+};
+
+// 3.2 (고용주) 회사 정보 조회하기
+export const getOwnerProfile = async (): Promise<
+  RESTYPE<EmployerProfileDetailResponse>
+> => {
+  const response = await api.get('/owners/details');
   return response.data;
 };
 
@@ -57,6 +67,14 @@ export const patchUserProfile = async ({
   formData.append('body', jsonBlob);
 
   const response = await api.patch('/users', formData);
+  return response.data;
+};
+
+// 3.6 (고용주) 회사 정보 수정하기
+export const patchOwnerProfile = async (
+  ownerProfile: EmployerProfileRequest,
+) => {
+  const response = await api.patch('/owners', ownerProfile);
   return response.data;
 };
 

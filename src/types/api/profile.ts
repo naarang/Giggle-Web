@@ -1,4 +1,6 @@
 import { GenderType, VisaType } from '@/constants/profile';
+import { OwnerInfo } from './employ';
+import { Address } from './users';
 
 export type LanguageLevelType = {
   topik_level: number;
@@ -67,6 +69,26 @@ export type UserProfileDetailDataType = {
 };
 
 // 고용주 프로필
+export type AddressResponse = {
+  address_name: string;
+  region_1depth_name: string;
+  region_2depth_name: string;
+  region_3depth_name: string;
+  region_4depth_name: string;
+  address_detail: string;
+  longitude: number;
+  latitude: number;
+};
+
+export type EmployerProfileDetailResponse = {
+  company_name: string;
+  owner_name: string;
+  address: AddressResponse;
+  company_registration_number: string;
+  phone_number: string;
+  logo_img_url: string;
+};
+
 export type EmployerProfileResponse = {
   icon_img_url: string;
   company_name: string;
@@ -77,4 +99,60 @@ export type EmployerCountsInfoResponse = {
   job_postings_counts: number;
   applicants_counts: number;
   successful_hire_counts: number;
+};
+
+export type EmployerProfileRequestBody = {
+  owner_info: OwnerInfo;
+  address: Address;
+  is_icon_img_changed: boolean;
+};
+
+export type EmployerProfileRequest = {
+  image: File | undefined;
+  body: EmployerProfileRequestBody;
+};
+
+// Initial State
+export const initialEmployerProfile: EmployerProfileRequestBody = {
+  owner_info: {
+    company_name: '',
+    owner_name: '',
+    company_registration_number: '',
+    phone_number: '',
+  },
+  address: {
+    address_name: '',
+    region_1depth_name: '',
+    region_2depth_name: '',
+    region_3depth_name: '',
+    region_4depth_name: '',
+    address_detail: '',
+    longitude: 0,
+    latitude: 0,
+  },
+  is_icon_img_changed: false,
+};
+
+export const mapResponseToRequest = (
+  data: EmployerProfileDetailResponse,
+): EmployerProfileRequestBody => {
+  return {
+    owner_info: {
+      company_name: data.company_name,
+      owner_name: data.owner_name,
+      company_registration_number: data.company_registration_number,
+      phone_number: data.phone_number,
+    },
+    address: {
+      address_name: data.address.address_name,
+      region_1depth_name: data.address.region_1depth_name,
+      region_2depth_name: data.address.region_2depth_name,
+      region_3depth_name: data.address.region_3depth_name,
+      region_4depth_name: data.address.region_4depth_name,
+      address_detail: data.address.address_detail,
+      longitude: data.address.longitude,
+      latitude: data.address.latitude,
+    },
+    is_icon_img_changed: false,
+  };
 };
