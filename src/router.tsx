@@ -32,7 +32,7 @@ import RequestModifyPage from '@/pages/WriteDocuments/RequestModifyPage';
 import DocumentPreview from '@/pages/WriteDocuments/DocumentPreviewPage';
 import EmployerPostPage from '@/pages/Employer/Post/EmployerPostPage';
 import EmployerApplicantListPage from '@/pages/Employer/ApplicantList/EmployerApplicantListPage';
-import EmployerSignupInfoPage from '@/pages/Employer/Signup/EmployerSignupInfoPage';
+import EmployerSignupInfoPage from '@/pages/Employer/signup/EmployerSignupInfoPage';
 import PostLanguagePage from '@/pages/PostLanguage/PostLanguagePage';
 import EmployerApplicantDetailPage from '@/pages/Employer/ApplicantDetail/EmployerApplicantDetailPage';
 import EmployerApplicantResumePage from '@/pages/Employer/ApplicantResume/EmployerApplicantResumePage';
