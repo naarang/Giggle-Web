@@ -96,8 +96,8 @@ const ProfilePage = () => {
           {/* bottom sheet */}
           {bottomSheetOpen && (
             <BottomSheetLayout
-              hasHandlebar={false}
-              isAvailableHidden={false}
+              hasHandlebar={true}
+              isAvailableHidden={true}
               isShowBottomsheet={true}
             >
               <div className="w-full flex flex-col py-10">
@@ -128,7 +128,7 @@ const ProfilePage = () => {
           <div className="w-full h-full min-h-[100vh] bg-profilePageGradient">
             {/* Profile 페이지 시작 */}
             <ProfileHeader />
-            <div className="flex flex-col px-6 gap-9 pb-24">
+            <div className="flex flex-col px-6 gap-9 pb-12">
               <ProfileCard data={userData.user_information} />
               <ApplicationStatus />
               <LicenseCard

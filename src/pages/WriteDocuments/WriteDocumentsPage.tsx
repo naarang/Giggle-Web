@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const WriteDocumentsPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { type } = location.state || {};
+  const { type, isEdit } = location.state || {};
   return (
     <div>
       <BaseHeader
@@ -17,7 +17,7 @@ const WriteDocumentsPage = () => {
         onClickBackButton={() => navigate('/application-documents')}
       />
       <DocumentSubHeader type={type as DocumentType} />
-      <DocumentFormDispenser type={type as DocumentType} isEdit={false} />
+      <DocumentFormDispenser type={type as DocumentType} isEdit={isEdit} />
     </div>
   );
 };

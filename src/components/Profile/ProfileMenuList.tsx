@@ -19,8 +19,9 @@ const ProfileMenuList = ({
   const handleManageClick = () => {
     navigate('/profile/manage-resume');
   };
-  const handleScrappedClick = () => {};
-  const handleNotificationClick = () => {};
+  const handleScrappedClick = () => {
+    navigate('/resume/scrapped');
+  };
   const handleLanguageClick = () => {
     // API - 언어 설정(추후 적용 예정)
     navigate('/profile/language');
@@ -33,40 +34,34 @@ const ProfileMenuList = ({
           title="Edit Profile"
           iconType={IconType.PROFILE}
           onClick={handleEditProfileClick}
-          isToggle={false}
         />
         <ProfileMenu
           title="Manage Resume"
           iconType={IconType.MANAGE}
           onClick={handleManageClick}
-          isToggle={false}
         />
         <ProfileMenu
           title="Scrapped Job Posts"
           iconType={IconType.SCRAPPED}
           onClick={handleScrappedClick}
-          isToggle={false}
         />
       </div>
       <div className="flex flex-col gap-4">
         <ProfileMenu
           title="Notifications"
           iconType={IconType.NOTIFICATION}
-          onClick={handleNotificationClick}
           isToggle={isNotificationAllowed}
         />
         <ProfileMenu
           title="Language"
           iconType={IconType.LANGUAGE}
           onClick={handleLanguageClick}
-          isToggle={false}
         />
       </div>
       <ProfileMenu
         title="Log out"
         iconType={IconType.LOGOUT}
         onClick={onLogoutClick}
-        isToggle={false}
       />
     </div>
   );

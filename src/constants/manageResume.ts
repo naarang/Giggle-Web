@@ -1,6 +1,8 @@
-import { School } from "@/types/api/document";
-import { ResumeDetailItemType } from "@/types/postApply/resumeDetailItem";
-import { GetEducationType } from "@/types/postResume/postEducation";
+import { LanguagesSummariesResponse } from '@/types/api/resumes';
+import { ResumeDetailItemType } from '@/types/postApply/resumeDetailItem';
+import { School } from '@/types/api/document';
+import { GetEducationType } from '@/types/postResume/postEducation';
+import { JobPostingItemType } from '@/types/common/jobPostingItem';
 
 export const enum ManageResumeType {
   VISA = 'VISA',
@@ -11,7 +13,7 @@ export const enum ManageResumeType {
   LANGUAGE = 'Language',
 }
 
-export const EducationLevels = ['BACHELOR','ASSOCIATE', 'HIGHSCHOOL'];
+export const EducationLevels = ['BACHELOR', 'ASSOCIATE', 'HIGHSCHOOL'];
 
 // 더미데이터 - TODO : 연결 후 삭제
 export const ResumeData: ResumeDetailItemType = {
@@ -89,6 +91,26 @@ export const ResumeData: ResumeDetailItemType = {
   },
 };
 
+// 언어 더미데이터
+export const LanguageData: LanguagesSummariesResponse = {
+  topik_level: 3,
+  social_integration_level: 2,
+  sejong_institute: 3,
+  additional_language: [
+    {
+      id: 1,
+      language_name: 'English',
+      level: 5,
+    },
+    {
+      id: 2,
+      language_name: 'Japanese',
+      level: 5,
+    },
+  ],
+};
+
+// 학교 더미데이터
 export const SearchSchollsList: School[] = [
   { id: 1, name: 'University of Oxford', phone_number: '000-0000' },
   {
@@ -118,12 +140,13 @@ export const SearchSchollsList: School[] = [
   { id: 10, name: 'University of Birmingham School', phone_number: '000-0000' },
 ];
 
+// 학력 더미데이터
 export const GetEducationData: GetEducationType = {
   education_level: 'BACHELOR', // Enum(BACHELOR, ASSOCIATE, HIGHSCHOOL),
-  school:{
+  school: {
     id: 1,
     name: 'University of Chester Academy Northwich',
-    phone_number: '000-0000'
+    phone_number: '000-0000',
   },
   major: 'Department of Computer Engineering',
   gpa: 3.5,
@@ -131,3 +154,102 @@ export const GetEducationData: GetEducationType = {
   end_date: '2026-03-01', // yyyy-MM-dd
   grade: 4,
 };
+
+// 북마크 공고 더미데이터
+export const ScrappedJobPostsData: JobPostingItemType[] = [
+  {
+    id: 1,
+    icon_img_url:
+      'https://images.mypetlife.co.kr/content/uploads/2022/12/16162807/IMG_1666-edited-scaled.jpg', // 회사 로고
+    title: 'Coffee shop', // 공고 제목
+    summaries: {
+      address: 'Yeoksam-dong, Seoul', // 위치 정보
+      work_period: '3 months', // 근무 기간
+      work_days_per_week: 3, // // 근무 일자
+    },
+    tags: {
+      is_recruiting: true, // “모집중/마감"
+      visa: 'D_1_1', // “비자종류"
+      job_category: 'Industry', // “업직종종류",
+    },
+    hourly_rate: 10000, // 시급
+    recruitment_dead_line: '2024-11-12', // 마감일자
+    created_at: '2024-10-28T00:40:00', // 등록일자
+  },
+  {
+    id: 2,
+    icon_img_url:
+      'https://images.mypetlife.co.kr/content/uploads/2022/12/16162807/IMG_1666-edited-scaled.jpg', // 회사 로고
+    title: 'lala shop', // 공고 제목
+    summaries: {
+      address: 'Yeoksam-dong, Seoul', // 위치 정보
+      work_period: '3 months', // 근무 기간
+      work_days_per_week: 4, // // 근무 일자
+    },
+    tags: {
+      is_recruiting: true, // “모집중/마감"
+      visa: 'D_1_1', // “비자종류"
+      job_category: 'Industry', // “업직종종류",
+    },
+    hourly_rate: 10000, // 시급
+    recruitment_dead_line: '2024-11-30', // 마감일자
+    created_at: '2024-10-28T00:10:00', // 등록일자
+  },
+  {
+    id: 3,
+    icon_img_url:
+      'https://images.mypetlife.co.kr/content/uploads/2022/12/16162807/IMG_1666-edited-scaled.jpg', // 회사 로고
+    title: 'Coffee shop', // 공고 제목
+    summaries: {
+      address: 'Yeoksam-dong, Seoul', // 위치 정보
+      work_period: '3 months', // 근무 기간
+      work_days_per_week: 1, // // 근무 일자
+    },
+    tags: {
+      is_recruiting: true, // “모집중/마감"
+      visa: 'D_1_1', // “비자종류"
+      job_category: 'Industry', // “업직종종류",
+    },
+    hourly_rate: 12000, // 시급
+    recruitment_dead_line: '2024-11-30', // 마감일자
+    created_at: '2024-10-28T00:38:00', // 등록일자
+  },
+  {
+    id: 4,
+    icon_img_url:
+      'https://images.mypetlife.co.kr/content/uploads/2022/12/16162807/IMG_1666-edited-scaled.jpg', // 회사 로고
+    title: 'Coffee shop', // 공고 제목
+    summaries: {
+      address: 'Yeoksam-dong, Seoul', // 위치 정보
+      work_period: '3 months', // 근무 기간
+      work_days_per_week: 5, // // 근무 일자
+    },
+    tags: {
+      is_recruiting: true, // “모집중/마감"
+      visa: 'D_1_1', // “비자종류"
+      job_category: 'Industry', // “업직종종류",
+    },
+    hourly_rate: 10000, // 시급
+    recruitment_dead_line: '2024-11-12', // 마감일자
+    created_at: '2024-10-28T00:30:00', // 등록일자
+  },
+  {
+    id: 5,
+    icon_img_url:
+      'https://images.mypetlife.co.kr/content/uploads/2022/12/16162807/IMG_1666-edited-scaled.jpg', // 회사 로고
+    title: 'Coffee shop', // 공고 제목
+    summaries: {
+      address: 'Yeoksam-dong, Seoul', // 위치 정보
+      work_period: '3 months', // 근무 기간
+      work_days_per_week: 3, // // 근무 일자
+    },
+    tags: {
+      is_recruiting: true, // “모집중/마감"
+      visa: 'D_1_1', // “비자종류"
+      job_category: 'Industry', // “업직종종류",
+    },
+    hourly_rate: 10000, // 시급
+    recruitment_dead_line: '2024-11-12', // 마감일자
+    created_at: '2024-10-28T00:03:00', // 등록일자
+  },
+];

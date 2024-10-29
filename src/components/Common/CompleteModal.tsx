@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 type CompleteModalProps = {
   title: string;
-  content: string;
+  content?: string;
   onNext: () => void;
 };
 

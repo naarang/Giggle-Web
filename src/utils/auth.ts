@@ -1,5 +1,13 @@
 export const setAccessToken = (token: string | null) => {
-  localStorage.setItem('authorization', token || '');
+  localStorage.setItem('access_token', token || '');
+};
+
+export const setRefreshToken = (token: string | null) => {
+  localStorage.setItem('refresh_token', token || '');
+};
+
+export const setTemporaryToken = (token: string | null) => {
+  localStorage.setItem('temporary_token', token || '');
 };
 
 /**
@@ -13,11 +21,28 @@ export const setAccessToken = (token: string | null) => {
  * 토큰이 없는 경우 null을 반환합니다.
  */
 // @utils/auth.ts
+
 export const getAccessToken = () => {
-  return localStorage.getItem('authorization');
+  return localStorage.getItem('access_token');
 };
 
+export const getRefreshToken = () => {
+  return localStorage.getItem('refresh_token');
+};
 
+export const getTemporaryToken = () => {
+  return localStorage.getItem('temporary_token');
+};
+
+// 로컬 스토리지의 인증 토큰을 삭제하는 함수
 export const deleteAccessToken = () => {
-  localStorage.removeItem('authorization');
+  localStorage.removeItem('access_token');
+};
+
+export const deleteRefreshToken = () => {
+  localStorage.removeItem('refresh_token');
+};
+
+export const deleteTemporaryToken = () => {
+  localStorage.removeItem('temporary_token');
 };

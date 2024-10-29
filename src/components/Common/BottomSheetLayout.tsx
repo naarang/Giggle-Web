@@ -50,7 +50,7 @@ const BottomSheetLayout = ({
   return (
     <>
       {isShowBottomsheet && (
-        <div className="fixed top-0 bottom-0 left-0 right-0 bg-[rgba(0,0,0,0.3)] z-30"></div>
+        <div className="fixed w-screen h-screen top-0 bottom-0 left-0 right-0 bg-[rgba(0,0,0,0.3)] z-30"></div>
       )}
       <motion.div
         drag="y"

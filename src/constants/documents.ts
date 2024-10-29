@@ -52,6 +52,44 @@ export const DocumentSubTitleContent = {
   },
 } as const;
 
+// 시간제 근무 enum 정의
+export enum PartTimePermitFormProperty {
+  FIRST_NAME = 'first_name',
+  LAST_NAME = 'last_name',
+  MAJOR = 'major',
+  TERM_OF_COMPLETION = 'term_of_completion',
+  PHONE_NUMBER = 'phone_number',
+  EMAIL = 'email',
+}
+
+// 시간제 근무 매핑 객체
+export const PartTimePermitFormInfo = {
+  [PartTimePermitFormProperty.FIRST_NAME]: {
+    name: 'First name',
+    key: 'first_name',
+  },
+  [PartTimePermitFormProperty.LAST_NAME]: {
+    name: 'Last name',
+    key: 'last_name',
+  },
+  [PartTimePermitFormProperty.MAJOR]: {
+    name: 'Major',
+    key: 'major',
+  },
+  [PartTimePermitFormProperty.TERM_OF_COMPLETION]: {
+    name: 'Term of completion',
+    key: 'term_of_completion',
+  },
+  [PartTimePermitFormProperty.PHONE_NUMBER]: {
+    name: 'Phone number',
+    key: 'phone_number',
+  },
+  [PartTimePermitFormProperty.EMAIL]: {
+    name: 'Email',
+    key: 'email',
+  },
+} as const;
+
 // 시간제근무 허가 신청서 초기 state
 export const initialPartTimePermitForm: PartTimePermitFormRequest = {
   first_name: '',
@@ -61,6 +99,15 @@ export const initialPartTimePermitForm: PartTimePermitFormRequest = {
   phone_number: '000-0000-0000',
   email: '',
 };
+// 시간제 근무 허가 신청서 mock data
+export const mockPartTimePermitForm: PartTimePermitFormRequest = {
+  first_name: '길동',
+  last_name: '홍',
+  major: '컴퓨터공학과',
+  term_of_completion: 4,
+  phone_number: '010-1234-5678',
+  email: 'gildong.hong@example.com',
+ };
 
 // 시간제 근무 허가서 내 고용주 입력 정보 속성과 이름 mapping
 export const PartTimeEmployPermitEmployerInfo = {
@@ -75,6 +122,10 @@ export const PartTimeEmployPermitEmployerInfo = {
   [EmployerInfoProperty.JOB_TYPE]: {
     name: 'Industry',
     key: 'job_type',
+  },
+  [EmployerInfoProperty.SIGNATURE_BASE64]: {
+    name: "Representative's signature",
+    key: 'signature_base64',
   },
   [EmployerInfoProperty.ADDRESS]: {
     name: 'Address in Korea',
@@ -155,6 +206,7 @@ export const mockEmployerInformation: EmployerInformation = {
   company_name: '테크스타트 주식회사',
   company_registration_number: '123-45-67890',
   job_type: '정보통신업',
+  signature_base64: '',
   address: {
     address_name: '서울 강남구 테헤란로 401 팁스타운',
     region_1depth_name: '서울',
@@ -166,6 +218,39 @@ export const mockEmployerInformation: EmployerInformation = {
     latitude: 37.5051374,
   },
 };
+
+// 표준 계약서 property enum
+export enum LaborContractEmployeeInfoProperty {
+  FIRST_NAME = 'first_name',
+  LAST_NAME = 'last_name',
+  ADDRESS = 'address',
+  PHONE_NUMBER = 'phone_number',
+  SIGNATURE_BASE64 = 'signature_base64',
+}
+
+// 표준계약서 정보 매핑
+export const LaborContractEmployeeFormInfo = {
+  [LaborContractEmployeeInfoProperty.FIRST_NAME]: {
+    name: 'First name',
+    key: 'first_name',
+  },
+  [LaborContractEmployeeInfoProperty.LAST_NAME]: {
+    name: 'Last name',
+    key: 'last_name',
+  },
+  [LaborContractEmployeeInfoProperty.PHONE_NUMBER]: {
+    name: 'Phone number',
+    key: 'phone_number',
+  },
+  [LaborContractEmployeeInfoProperty.SIGNATURE_BASE64]: {
+    name: 'Signature',
+    key: 'signature_base64',
+  },
+  [LaborContractEmployeeInfoProperty.ADDRESS]: {
+    name: 'Address',
+    key: 'address',
+  },
+} as const;
 
 // 표준계약서 초기 state
 export const initialLaborContractEmployeeInfo: LaborContractEmployeeInfo = {
@@ -183,6 +268,24 @@ export const initialLaborContractEmployeeInfo: LaborContractEmployeeInfo = {
   },
   phone_number: '010-0000-0000',
   signature_base64: '',
+};
+
+// 표준계약서 mock data
+export const mockLaborContractEmployeeInfo: LaborContractEmployeeInfo = {
+  first_name: '영희',
+  last_name: '박',
+  address: {
+    address_name: '경기도 성남시 분당구 판교역로 235',
+    region_1depth_name: '경기도',
+    region_2depth_name: '성남시',
+    region_3depth_name: '분당구 판교역로',
+    region_4depth_name: '235',
+    address_detail: '에이치스퀘어 N동 8층',
+    longitude: 127.1086228,
+    latitude: 37.4020909,
+  },
+  phone_number: '010-9876-5432',
+  signature_base64: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAA...',
 };
 
 // 근로계약서 고용주 mock data
@@ -281,8 +384,38 @@ export const initialIntegratedApplication: IntegratedApplicationData = {
   },
 };
 
+export const mockIntegratedApplication: IntegratedApplicationData = {
+  first_name: '길동',
+  last_name: '홍',
+  birth: '1990-01-01',
+  gender: Gender.MALE,
+  nationality: '대한민국',
+  tele_phone_number: '02-1234-5678',
+  cell_phone_number: '010-1234-5678',
+  is_accredited: true,
+  school_name: '서울대학교',
+  school_phone_number: '02-880-5114',
+  new_work_place_name: '(주)테크컴퍼니',
+  new_work_place_registration_number: '123-45-67890',
+  new_work_place_phone_number: '02-3456-7890',
+  annual_income_amount: 50000000,
+  occupation: '소프트웨어 엔지니어',
+  email: 'gildong.hong@example.com',
+  signature_base64: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...',
+  address: {
+    address_name: '서울특별시 강남구 테헤란로 123',
+    region_1depth_name: '서울특별시',
+    region_2depth_name: '강남구',
+    region_3depth_name: '테헤란로',
+    region_4depth_name: '123',
+    address_detail: '테크빌딩 15층',
+    longitude: 127.0495556,
+    latitude: 37.5063889,
+  },
+};
+
 // 학교 검색 api 연결 전 사용할 학교 mock data
-export const schoolMockData = [ 
+export const schoolMockData = [
   {
     id: 1,
     name: '서울대학교',
@@ -318,4 +451,4 @@ export const schoolMockData = [
     name: '중앙대학교',
     phone_number: '02-820-5114',
   },
-]
+];

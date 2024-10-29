@@ -1,9 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import SplashIcon from '@/assets/icons/Splash.svg?react';
+import { getAccessToken, getRefreshToken } from '@/utils/auth';
+import { useGetUserType, useReIssueToken } from '@/hooks/api/useAuth';
+import { useUserStore } from '@/store/user';
 
 const Splash = () => {
   const navigate = useNavigate();
+  // 계정 타입(유학생, 고용주), 유저 이름 업데이트 함수
+  const { updateAccountType, updateName } = useUserStore();
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -13,70 +18,59 @@ const Splash = () => {
     return () => clearTimeout(timeoutId);
   }, []);
 
-  const handleApiCall = async () => {
-    const access = localStorage.getItem('access_token');
-    const refresh = localStorage.getItem('refresh_token');
+  const { data: UserTypeResponse } = useGetUserType();
+  const { mutate: reIssueToken } = useReIssueToken();
 
-    // 1-1. access, refresh 모두 없는 경우
-    if (!access && !refresh) {
-      navigate('/'); // 비로그인 상태일 때 메인 C로 이동
-    }
-    // 1-2. access, refresh 모두 있는 경우
-    /*
-    else {
-      try {
-        const response = await fetch('/api/', {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${access}`,
-          },
-        });
-
-        if (response.status === 401) {
-          const newAccess = await refreshAccessToken(refresh);
-          if (newAccess) {
-            localStorage.setItem('access_token', newAccess);
-            await handleApiCall(); // 재시도
-          }
-        } else if (response.ok) {
-          const data = await response.json();
-          const { type, name } = data;
-
-          // 전역 상태 업데이트 후 페이지 이동
-          setGlobalState({ type, name });
-
-          if (type === 'USER') {
-            navigate('/'); // 유학생 로그인 상태
-          } else if (type === 'OWNER') {
-            navigate('/owner'); // 고용주 로그인 상태
-          }
-        }
-      } catch (error) {
-        console.error('API 호출 오류:', error);
-      }
+  // 유저 타입 판단 함수
+  const handleGetUserType = () => {
+    if (UserTypeResponse && UserTypeResponse.success) {
+      const { account_type, name } = UserTypeResponse.data;
+      updateAccountType(account_type);
+      updateName(name);
+      navigate('/');
     }
   };
 
-  const refreshAccessToken = async (refreshToken: string) => {
+  // 비로그인 상태 설정 함수
+  const setGuest = () => {
+    updateAccountType(undefined);
+    updateName('');
+  };
+
+  // API 호출 핸들러
+  const handleApiCall = async () => {
+    const access = getAccessToken();
+    const refresh = getRefreshToken();
+
     try {
-      const response = await fetch('/api/v1/auth/reissue/token', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ refresh: refreshToken }),
-      });
-      if (response.ok) {
-        const { access } = await response.json();
-        return access;
-      } else {
-        navigate('/login'); // 로그인 페이지로 이동
+      // 1. access, refresh 모두 없는 경우
+      if (!access && !refresh) {
+        setGuest();
+        navigate('/'); // 비로그인 상태로 메인 이동
+        return;
+      }
+
+      // 2. access, refresh 모두 있는 경우
+      if (access && refresh) {
+        // 2-1. user type 응답 성공
+        if (UserTypeResponse) {
+          handleGetUserType(); // 유저 타입을 처리하는 함수 호출
+
+          // 2-2. access 토큰이 만료되었을 경우(401)
+          if (UserTypeResponse.error?.code == 401) {
+            setGuest();
+            // 2-2-1. API 호출 JWT 재발급
+            reIssueToken(); // 토큰 재발급을 기다림
+          }
+        } else {
+          // UserTypeResponse가 정의되지 않은 경우
+          setGuest();
+        }
       }
     } catch (error) {
-      console.error('토큰 재발급 오류:', error);
-      navigate('/login');
+      setGuest();
+      navigate('/'); // 비로그인 상태로 메인 이동
     }
-    */
   };
 
   return (

@@ -1,9 +1,16 @@
 import { useEffect, useState } from 'react';
 import Input from '@/components/Common/Input';
 import Button from '@/components/Common/Button';
-import { useNavigate } from 'react-router-dom';
-import { validateId, validatePassword } from '@/utils/signin';
+import { useLocation, useNavigate } from 'react-router-dom';
+import {
+  validatedConfirmPassword,
+  validateId,
+  validatePassword,
+} from '@/utils/signin';
 import SigninSocialButtons from '@/components/Signin/SigninSocialButtons';
+import { isEmployer } from '@/utils/signup';
+import { signInputTranclation } from '@/constants/translation';
+import { useGetIdValidation } from '@/hooks/api/useAuth';
 
 type signupInputProps = {
   id: string;
@@ -21,6 +28,7 @@ const SignupInput = ({
   onPasswordChange,
 }: signupInputProps) => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   // // ===== state =====
   const [confirmPasswordValue, setConfirmPasswordValue] = useState<string>('');
@@ -31,45 +39,43 @@ const SignupInput = ({
   >(null);
   const [isValid, setIsValid] = useState(false);
 
+  const { data: validationResponse } = useGetIdValidation(id);
+
   // ===== handler =====
   const handleIdChange = async (value: string) => {
     onIdChange(value);
-    // ID 중복 검사 API 호출 - 유효성 검사
-    if (validateId(value, setIdError)) {
-      try {
-        const response = await fetch(`/api/v1/auth/validations/id?id=${value}`);
-        const data = await response.json();
-        if (data.is_valid) {
-          setIdError(null); // 중복되지 않은 경우 오류 초기화
-        } else {
-          setIdError('This email already exists'); // 중복된 경우 오류 메시지 설정
-        }
-      } catch (error) {
-        console.error('ID 중복 확인 오류:', error);
+
+    // ID 유효성 검사
+    if (validateId(value, setIdError, pathname)) {
+      // ID 중복 검사 API 호출 결과 처리
+      if (validationResponse && validationResponse.data.is_valid) {
+        setIdError(null); // ID 중복 오류 메시지 초기화
+      } else {
+        setIdError(signInputTranclation.invalidId[isEmployer(pathname)]); // ID 중복 오류 메시지
       }
     }
   };
 
   const handlePasswordChange = (value: string) => {
     onPasswordChange(value);
-    validatePassword(value, setPasswordError); // 비밀번호 입력 시 유효성 검사
+    validatePassword(value, setPasswordError, pathname); // 비밀번호 입력 시 유효성 검사
   };
 
   const handleConfirmPasswordChange = (value: string) => {
     setConfirmPasswordValue(value);
-    if (value !== password) {
-      // 비밀번호 재입력 일치 여부 검사
-      setConfirmPasswordError('Password does not match');
-    } else {
-      setConfirmPasswordError(null);
-    }
+    validatedConfirmPassword(
+      password,
+      value,
+      setConfirmPasswordError,
+      pathname,
+    );
   };
 
   // 모든 필드의 유효성 검사 후, Continue 버튼 활성화
   useEffect(() => {
     if (
-      validateId(id, setIdError) &&
-      validatePassword(password, setPasswordError) &&
+      validateId(id, setIdError, pathname) &&
+      validatePassword(password, setPasswordError, pathname) &&
       confirmPasswordValue == password
     ) {
       setIsValid(true);
@@ -78,14 +84,18 @@ const SignupInput = ({
 
   return (
     <>
-      <div className="title-1 text-center py-6">Sign Up</div>
+      <div className="title-1 text-center py-6">
+        {signInputTranclation.signup[isEmployer(pathname)]}
+      </div>
       <div className="flex flex-col gap-2">
         <div className="w-[20.5rem] flex flex-col">
           <div>
-            <p className="py-2 px-1 text-sm font-normal text-[#171719]">ID</p>
+            <p className="py-2 px-1 body-2 text-[#656565]">
+              {signInputTranclation.id[isEmployer(pathname)]}
+            </p>
             <Input
               inputType="TEXT"
-              placeholder="Enter ID"
+              placeholder={signInputTranclation.enterId[isEmployer(pathname)]}
               value={id}
               onChange={handleIdChange}
               canDelete={false}
@@ -94,12 +104,14 @@ const SignupInput = ({
             {idError && <p className="text-[#FF6F61] text-xs p-2">{idError}</p>}
           </div>
           <div>
-            <p className="py-2 px-1 text-sm font-normal text-[#171719]">
-              Password
+            <p className="py-2 px-1 body-2 text-[#656565]">
+              {signInputTranclation.password[isEmployer(pathname)]}
             </p>
             <Input
               inputType="PASSWORD"
-              placeholder="Enter password"
+              placeholder={
+                signInputTranclation.enterPassword[isEmployer(pathname)]
+              }
               value={password}
               onChange={handlePasswordChange}
               canDelete={false}
@@ -110,12 +122,14 @@ const SignupInput = ({
             )}
           </div>
           <div>
-            <p className="py-2 px-1 text-sm font-normal text-[#171719]">
-              Confirm Password
+            <p className="py-2 px-1 body-2 text-[#656565]">
+              {signInputTranclation.confirmPassword[isEmployer(pathname)]}
             </p>
             <Input
               inputType="PASSWORD"
-              placeholder="Confirm password"
+              placeholder={
+                signInputTranclation.enterConfirmPassword[isEmployer(pathname)]
+              }
               value={confirmPasswordValue}
               onChange={handleConfirmPasswordChange}
               canDelete={false}
@@ -134,19 +148,19 @@ const SignupInput = ({
             bgColor={isValid ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'}
             fontColor={isValid ? 'text-[#1E1926]' : 'text-[#BDBDBD]'}
             isBorder={false}
-            title="Continue"
+            title={signInputTranclation.continue[isEmployer(pathname)]}
             onClick={isValid ? onSignUpClick : undefined}
           />
           <div className="flex items-center justify-center gap-2">
-            <p className="text-[#7D8A95] text-sm font-normal">
-              Already have an account?
+            <p className="text-[#7D8A95] body-2">
+              {signInputTranclation.haveAccount[isEmployer(pathname)]}
             </p>
             {/* 로그인 화면 이동 */}
             <button
-              className="text-[#1E1926] text-sm font-semibold"
+              className="text-[#695F96] text-sm font-semibold"
               onClick={() => navigate('/signin')}
             >
-              Sign In
+              {signInputTranclation.signin[isEmployer(pathname)]}
             </button>
           </div>
         </div>
