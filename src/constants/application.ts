@@ -18,6 +18,7 @@ export const enum APPLICATION_STEP {
 }
 
 export const APPLICATION_STATUS_TYPE = {
+  TOTAL: 'Total',
   INPROGRESS: 'Inprogress',
   APPLICATION_SUCCESSFUL: 'Applicatioin successful',
   APPLICATION_REJECTED: 'Applicatioin rejected',
@@ -26,6 +27,7 @@ export const APPLICATION_STATUS_TYPE = {
 } as const;
 
 export const KO_APPLICATION_STATUS_TYPE = {
+  TOTAL: '전체',
   INPROGRESS: '진행중',
   APPLICATION_SUCCESSFUL: '계약 성공',
   APPLICATION_REJECTED: '시간제취업허가 실패',

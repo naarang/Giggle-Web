@@ -1,4 +1,7 @@
+import { useNavigate } from 'react-router-dom';
+
 const HomeGuestBanner = () => {
+  const navigate = useNavigate();
   return (
     <section className="w-full px-[1.5rem] pb-[2.75rem] bg-[#FEF387]">
       <div className="flex flex-col justify-center items-center gap-[0.25rem] relative px-[2.5rem] pt-[1rem] pb-[2rem] rounded-t-[1.5rem] bg-cover bg-center bg-[url('/src/assets/images/yellowGradient.png')]">
@@ -10,7 +13,10 @@ const HomeGuestBanner = () => {
           Get personalized job recommendations, track your applications, and
           access exclusive opportunities. Sign in now to get started!
         </p>
-        <button className="absolute bottom-[-1.25rem] left-0 w-full py-[0.75rem] rounded-[1.25rem] text-center text-white button-2 bg-[#1E1926]">
+        <button
+          className="absolute bottom-[-1.25rem] left-0 w-full py-[0.75rem] rounded-[1.25rem] text-center text-white button-2 bg-[#1E1926]"
+          onClick={() => navigate('/signin')}
+        >
           Sign In
         </button>
       </div>

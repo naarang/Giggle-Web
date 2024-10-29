@@ -1,6 +1,7 @@
 import MessageIcon from '@/assets/icons/Home/MessageIcon.svg?react';
 import HomeRecommendPostCard from '@/components/Home/HomeRecommendPostCard';
 import { RecommendJobPostingItemType } from '@/types/home/recommendJobPostingItem';
+import { useNavigate } from 'react-router-dom';
 
 // 추천 공고 목록 더미데이터
 const RECOMMEND_JOB_POSTING_LIST: RecommendJobPostingItemType[] = [
@@ -19,7 +20,10 @@ const RECOMMEND_JOB_POSTING_LIST: RecommendJobPostingItemType[] = [
 ];
 
 const HomeRecommendPost = () => {
+  const navigate = useNavigate();
+
   const hasProfile = true; // 이력서 등록여부
+
   return (
     <section className="w-full flex gap-[0.5rem] px-[1.25rem] overflow-x-scroll no-scrollbar whitespace-nowrap bg-[#FEF387]">
       {hasProfile ? (
@@ -34,7 +38,10 @@ const HomeRecommendPost = () => {
       ) : (
         // 이력서 미등록 -> 추가 메뉴 보여주기
         <>
-          <article className="flex flex-col justify-between min-w-[11.25rem] w-[11.25rem] h-[8.75rem] pt-[0.75rem] pb-[1.125rem] px-[1.125rem] rounded-[1.5rem] border-[0.031rem] border-[#F4F4F9] shadow-cardShadow bg-cover bg-center bg-[url('/src/assets/images/blueGradient.png')]">
+          <article
+            className="flex flex-col justify-between min-w-[11.25rem] w-[11.25rem] h-[8.75rem] pt-[0.75rem] pb-[1.125rem] px-[1.125rem] rounded-[1.5rem] border-[0.031rem] border-[#F4F4F9] shadow-cardShadow bg-cover bg-center bg-[url('/src/assets/images/blueGradient.png')]"
+            onClick={() => navigate('/profile/manage-resume')}
+          >
             <MessageIcon />
             <div>
               <p className="pb-[0.5rem] caption-1 text-[#656565]">
@@ -45,7 +52,10 @@ const HomeRecommendPost = () => {
               </div>
             </div>
           </article>
-          <article className="flex flex-col justify-between min-w-[11.25rem] w-[11.25rem] h-[8.75rem] pt-[0.75rem] pb-[1.125rem] px-[1.125rem] rounded-[1.5rem] border-[0.031rem] border-[#F4F4F9] shadow-cardShadow bg-cover bg-center bg-[url('/src/assets/images/yellowGradient.png')]">
+          <article
+            className="flex flex-col justify-between min-w-[11.25rem] w-[11.25rem] h-[8.75rem] pt-[0.75rem] pb-[1.125rem] px-[1.125rem] rounded-[1.5rem] border-[0.031rem] border-[#F4F4F9] shadow-cardShadow bg-cover bg-center bg-[url('/src/assets/images/yellowGradient.png')]"
+            onClick={() => navigate('/search')}
+          >
             <MessageIcon />
             <div>
               <p className="pb-[0.5rem] caption-1 text-[#656565]">
