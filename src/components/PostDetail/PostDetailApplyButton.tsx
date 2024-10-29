@@ -1,7 +1,7 @@
 import Button from '@/components/Common/Button';
 import { buttonTypeKeys } from '@/constants/components';
 import PostDetailConfirmBottomSheet from '@/components/PostDetail/PostDetailConfirmBottomSheet';
-import PostDetailLoginBottomSheet from '@/components/PostDetail/PostDetailLoginBottomSheet';
+import LoginBottomSheet from '@/components/Common/LoginBottomSheet';
 import BookmarkIcon from '@/assets/icons/BookmarkIcon.svg?react';
 import BookmarkCheckedIcon from '@/assets/icons/BookmarkCheckedIcon.svg?react';
 import { useState } from 'react';
@@ -35,7 +35,7 @@ const PostDetailApplyButton = () => {
         isShowBottomsheet={isOpenConfirmBottomSheet}
         setIsShowBottomSheet={setIsOpenConfirmBottomSheet}
       />
-      <PostDetailLoginBottomSheet
+      <LoginBottomSheet
         isShowBottomsheet={isOpenLoginBottomSheet}
         setIsShowBottomSheet={setIsOpenLoginBottomSheet}
       />

@@ -3,6 +3,9 @@ import { JobPostingItemType } from '@/types/common/jobPostingItem';
 import RightArrowIcon from '@/assets/icons/Home/RightArrowIcon.svg?react';
 import Tag from '@/components/Common/Tag';
 import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { POST_SEARCH_MENU } from '@/constants/postSearch';
+import { usePostSearchStore } from '@/store/postSearch';
 
 // 공고 목록 더미데이터
 const JOB_POSTING_LIST: JobPostingItemType[] = [
@@ -44,18 +47,16 @@ const JOB_POSTING_LIST: JobPostingItemType[] = [
   },
 ];
 
-const enum Menu {
-  POPULAR = 'POPULAR',
-  RECENT = 'RECENT',
-  BOOKMARKS = 'BOOKMARKS',
-}
-
 const HomeJobPostingList = () => {
+  const { updateSortType } = usePostSearchStore();
+  const navigate = useNavigate();
   const scrollRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  const [selectedMenu, setSelectedMenu] = useState<Menu>(Menu.POPULAR);
+  const [selectedMenu, setSelectedMenu] = useState<POST_SEARCH_MENU>(
+    POST_SEARCH_MENU.POPULAR,
+  );
 
-  const scrollToSelectedMenu = (menu: Menu) => {
+  const scrollToSelectedMenu = (menu: POST_SEARCH_MENU) => {
     const scrollIndex: { [key: string]: number } = {
       POPULAR: 0,
       RECENT: 1,
@@ -68,42 +69,51 @@ const HomeJobPostingList = () => {
     setSelectedMenu(menu);
   };
 
+  const goToSearchPage = (type: POST_SEARCH_MENU) => {
+    updateSortType(type);
+    navigate('/search');
+  };
+
   return (
     <section className="w-full bg-[#FEF387]">
       <nav className="flex gap-[0.5rem] w-full py-[1rem] px-[2rem] rounded-t-[1rem] bg-white">
-        <button onClick={() => scrollToSelectedMenu(Menu.POPULAR)}>
+        <button onClick={() => scrollToSelectedMenu(POST_SEARCH_MENU.POPULAR)}>
           <Tag
             value={'🔥 Popular'}
             padding="0.5rem 1rem"
             isRounded={true}
             hasCheckIcon={false}
             backgroundColor={
-              selectedMenu === Menu.POPULAR ? '#FEF387' : 'white'
+              selectedMenu === POST_SEARCH_MENU.POPULAR ? '#FEF387' : 'white'
             }
             color="#1E1926A6"
             fontStyle="button-2"
           />
         </button>
-        <button onClick={() => scrollToSelectedMenu(Menu.RECENT)}>
+        <button onClick={() => scrollToSelectedMenu(POST_SEARCH_MENU.RECENT)}>
           <Tag
             value={'🌟 Recent'}
             padding="0.5rem 1rem"
             isRounded={true}
             hasCheckIcon={false}
-            backgroundColor={selectedMenu === Menu.RECENT ? '#FEF387' : 'white'}
+            backgroundColor={
+              selectedMenu === POST_SEARCH_MENU.RECENT ? '#FEF387' : 'white'
+            }
             color="#1E1926A6"
             fontStyle="button-2"
           />
         </button>
         {/* 로그인 시에만 존재하는 메뉴 */}
-        <button onClick={() => scrollToSelectedMenu(Menu.BOOKMARKS)}>
+        <button
+          onClick={() => scrollToSelectedMenu(POST_SEARCH_MENU.BOOKMARKS)}
+        >
           <Tag
             value={'🌟 Bookmarks'}
             padding="0.5rem 1rem"
             isRounded={true}
             hasCheckIcon={false}
             backgroundColor={
-              selectedMenu === Menu.BOOKMARKS ? '#FEF387' : 'white'
+              selectedMenu === POST_SEARCH_MENU.BOOKMARKS ? '#FEF387' : 'white'
             }
             color="#1E1926A6"
             fontStyle="button-2"
@@ -117,7 +127,10 @@ const HomeJobPostingList = () => {
         >
           <div className="flex justify-between items-end">
             <h3 className="head-3 text-black">🔥 Popular Job Lists for You</h3>
-            <button className="flex items-center gap-[0.625rem] button-2 text-[#1E1926]">
+            <button
+              className="flex items-center gap-[0.625rem] button-2 text-[#1E1926]"
+              onClick={() => goToSearchPage(POST_SEARCH_MENU.POPULAR)}
+            >
               See more <RightArrowIcon />
             </button>
           </div>
@@ -131,7 +144,10 @@ const HomeJobPostingList = () => {
         >
           <div className="flex justify-between items-end">
             <h3 className="head-3 text-black">🌟 Recently Added Job</h3>
-            <button className="flex items-center gap-[0.625rem] button-2 text-[#1E1926]">
+            <button
+              className="flex items-center gap-[0.625rem] button-2 text-[#1E1926]"
+              onClick={() => goToSearchPage(POST_SEARCH_MENU.RECENT)}
+            >
               See more <RightArrowIcon />
             </button>
           </div>
@@ -145,7 +161,10 @@ const HomeJobPostingList = () => {
         >
           <div className="flex justify-between items-end">
             <h3 className="head-3 text-black">🌟 My Bookmarks</h3>
-            <button className="flex items-center gap-[0.625rem] button-2 text-[#1E1926]">
+            <button
+              className="flex items-center gap-[0.625rem] button-2 text-[#1E1926]"
+              onClick={() => navigate('/resume/scrapped')}
+            >
               See more <RightArrowIcon />
             </button>
           </div>

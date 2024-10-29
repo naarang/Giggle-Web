@@ -1,5 +1,12 @@
 import { PostSearchFilterItemType } from '@/types/PostSearchFilter/PostSearchFilterItem';
 
+export const enum POST_SEARCH_MENU {
+  POPULAR = 'POPULAR',
+  RECENT = 'RECENT',
+  BOOKMARKS = 'BOOKMARKS',
+  RECOMMEND = 'RECOMMEND',
+}
+
 export const enum FILTER_CATEGORY {
   REGION_1DEPTH = 'Region 1depth', // 시, 도
   REGION_2DEPTH = 'Region 2depth', // 구
