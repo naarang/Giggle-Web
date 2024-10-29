@@ -1,7 +1,7 @@
 import BottomSheetLayout from '@/components/Common/BottomSheetLayout';
 import Button from '@/components/Common/Button';
 import { buttonTypeKeys } from '@/constants/components';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import TimePicker from '@/components/Common/TimePicker';
 import { DayOfWeek, WorkDayTime } from '@/types/api/document';
 
@@ -56,11 +56,6 @@ const WorkDayTimeBottomSheet = ({
       return true;
     return false;
   };
-
-  useEffect(() => {
-    console.log(workStartTime);
-    console.log(workEndTime);
-  }, [workStartTime]);
 
   const returnResult = () => {
     if (!isAvailableSubmit()) return;
@@ -156,7 +151,7 @@ const WorkDayTimeBottomSheet = ({
           fontColor={isAvailableSubmit() ? `text-[#1E1926]` : `text-[#BDBDBD]`}
           isBorder={false}
           title={'추가하기'}
-          onClick={() => returnResult() as WorkDayTime[]}
+          onClick={() => returnResult()}
         />
       </div>
     </BottomSheetLayout>
