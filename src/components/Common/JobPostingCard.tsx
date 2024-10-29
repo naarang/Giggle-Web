@@ -9,17 +9,29 @@ import { calculateTimeAgo } from '@/utils/calculateTimeAgo';
 import { calculateDDay } from '@/utils/calculateDDay';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { usePutPostBookmark } from '@/hooks/api/usePost';
+import { useUserStore } from '@/store/user';
 
 type JobPostingCardProps = {
   jobPostingData: JobPostingItemType;
 };
 
 const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
+  const { account_type } = useUserStore();
+  const { mutateAsync } = usePutPostBookmark();
+
   const navigate = useNavigate();
 
   const [isBookmarked, setIsBookmarked] = useState<boolean>(
     jobPostingData?.is_book_marked ?? false,
   );
+
+  const onClickBookmark = async () => {
+    if (!account_type) return;
+
+    const result = await mutateAsync(jobPostingData.id);
+    if (result?.success) setIsBookmarked(!isBookmarked);
+  };
 
   return (
     <article
@@ -66,9 +78,9 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
             fontStyle="button-2"
           />
           {isBookmarked ? (
-            <BookmarkCheckedIcon onClick={() => setIsBookmarked(false)} />
+            <BookmarkCheckedIcon onClick={onClickBookmark} />
           ) : (
-            <BookmarkIcon onClick={() => setIsBookmarked(true)} />
+            <BookmarkIcon onClick={onClickBookmark} />
           )}
         </div>
       </div>

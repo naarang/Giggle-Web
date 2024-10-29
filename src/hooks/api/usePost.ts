@@ -8,6 +8,7 @@ import {
   getPostDetail,
   getPostDetailGuest,
   getPostList,
+  getPostListGuest,
   getPostSummary,
   getRecommendPostList,
   putPostBookmark,
@@ -16,6 +17,18 @@ import { GetApplyPostListReqType, GetPostListReqType } from '@/types/api/post';
 import { AscendingSortType } from '@/types/common/sort';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+
+// 4.1 (게스트) 공고 리스트 조회 훅
+export const useGetPostGuestList = (
+  req: GetPostListReqType,
+  isEnabled: boolean,
+) => {
+  return useQuery({
+    queryKey: ['post'],
+    queryFn: () => getPostListGuest(req),
+    enabled: isEnabled,
+  });
+};
 
 // 4.2 (게스트) 공고 상세 조회하기 훅
 export const useGetPostDetailGuest = (id: number) => {
@@ -26,8 +39,12 @@ export const useGetPostDetailGuest = (id: number) => {
 };
 
 // 4.3 (유학생/고용주) 공고 리스트 조회 훅
-export const useGetPostList = (req: GetPostListReqType) => {
-  return useQuery({ queryKey: ['post'], queryFn: () => getPostList(req) });
+export const useGetPostList = (req: GetPostListReqType, isEnabled: boolean) => {
+  return useQuery({
+    queryKey: ['post'],
+    queryFn: () => getPostList(req),
+    enabled: isEnabled,
+  });
 };
 
 // 4.4 (유학생/고용주) 공고 상세 조회하기 훅

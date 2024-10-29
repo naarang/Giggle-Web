@@ -2,9 +2,10 @@ import { PostSearchFilterItemType } from '@/types/PostSearchFilter/PostSearchFil
 
 export const enum POST_SEARCH_MENU {
   POPULAR = 'POPULAR',
-  RECENT = 'RECENT',
-  BOOKMARKS = 'BOOKMARKS',
+  RECENTLY = 'RECENTLY',
+  BOOKMARKED = 'BOOKMARKED',
   RECOMMEND = 'RECOMMEND',
+  TRENDING = 'TRENDING',
 }
 
 export const enum FILTER_CATEGORY {

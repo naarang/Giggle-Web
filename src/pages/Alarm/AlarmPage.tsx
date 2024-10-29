@@ -1,28 +1,31 @@
 import AlarmCard from '@/components/Alarm/AlarmCard';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
-import { ALARM_LIST_DATA } from '@/constants/alarm';
+import { useGetAlarms, usePatchReadAlarm } from '@/hooks/api/useAlarm';
 import { AlarmItemType } from '@/types/api/alarm';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const AlarmPage = () => {
+  // TODO: 우선은 한 페이지에 10개까지 보여주도록 설정
+  const { data } = useGetAlarms(1, 10, true);
+  const { mutateAsync } = usePatchReadAlarm();
+
   const navigate = useNavigate();
 
   const [alarmList, setAlarmList] = useState<AlarmItemType[]>([]);
 
   useEffect(() => {
-    // TODO: 10.1로 조회
-    setAlarmList(ALARM_LIST_DATA);
-  }, []);
+    setAlarmList(data?.data?.notification_list ?? []);
+  }, [data]);
 
-  const readAlarm = (id: number) => {
-    // TODO: 10.2 호출하기
-    // 성공 시 색상 변경
-    setAlarmList([
-      ...alarmList.map((data) =>
-        data.id === id ? { ...data, is_read: true } : data,
-      ),
-    ]);
+  const readAlarm = async (id: number) => {
+    const result = await mutateAsync(id);
+    if (result?.success)
+      setAlarmList([
+        ...alarmList.map((data) =>
+          data.id === id ? { ...data, is_read: true } : data,
+        ),
+      ]);
   };
 
   return (

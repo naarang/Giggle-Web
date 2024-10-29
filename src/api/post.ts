@@ -3,6 +3,14 @@ import { api } from '.';
 import { GetApplyPostListReqType, GetPostListReqType } from '@/types/api/post';
 import { APPLICATION_STATUS_TYPE } from '@/constants/application';
 
+// 4.1 (게스트) 공고 리스트 조회
+export const getPostListGuest = async (req: GetPostListReqType) => {
+  const response = await api.get(`/guests/job-postings/overviews`, {
+    params: req,
+  });
+  return response.data;
+};
+
 // 4.2 (게스트) 공고 상세 조회하기
 export const getPostDetailGuest = async (id: number) => {
   const response = await api.get(`/guests/job-postings/${id}/details`);
@@ -11,9 +19,7 @@ export const getPostDetailGuest = async (id: number) => {
 
 // 4.3 (유학생/고용주) 공고 리스트 조회
 export const getPostList = async (req: GetPostListReqType) => {
-  const response = await api.get(
-    `/job-postings/overviews?page=${req.page}&size=${req.size}&search=${req.search}&sorting=${req.sorting}&region_1depth=${req.region_1depth}&region_2depth=${req.region_2depth}&region_3depth=${req.region_3depth}&industry=${req.industry}&work_period=${req.work_period}&work_days_per_week=${req.work_days_per_week}&working_day=${req.working_day}&working_hours=${req.working_hours}&recruitment_period=${req.recruitment_period}&employment_type=${req.employment_type}&visa=${req.visa}&type=${req.type}`,
-  );
+  const response = await api.get(`/job-postings/overviews`, { params: req });
   return response.data;
 };
 
