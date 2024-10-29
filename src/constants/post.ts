@@ -1,7 +1,7 @@
 import { EmployerPostItemType } from '@/types/post/employerPostItem';
 import { PostSummaryItemType } from '@/types/post/postSummaryItem';
-import { JobCategory } from '@/types/postCreate/postCreate';
-import { JobCategoryNames } from '@/utils/post';
+import { EducationLevel, JobCategory, VisaGroup } from '@/types/postCreate/postCreate';
+import { EducationCategoryNames, JobCategoryNames } from '@/utils/post';
 
 // 더미데이터
 export const EMPLOYER_POST_LIST: EmployerPostItemType[] = [
@@ -94,3 +94,50 @@ export const JobCategoryList: JobCategoryNames[] = [
   '관광안내보조 및 면세점판매보조',
   '제조업',
 ];
+
+export const EducationList: EducationCategoryNames[] = [
+  '대학(4년제)',
+  '대학(2년제)',
+  '고등학교졸업',
+  '무관',
+];
+
+export const EducationLevelInfo = {
+  [EducationLevel.BACHELOR]: {
+    name: '대학(4년제)',
+    key: 'BACHELOR',
+  },
+  [EducationLevel.ASSOCIATE]: {
+    name: '대학(2년제)',
+    key: 'ASSOCIATE',
+  },
+  [EducationLevel.HIGHSCHOOL]: {
+    name: '고등학교졸업',
+    key: 'HIGHSCHOOL',
+  },
+  [EducationLevel.NONE]: {
+    name: '무관',
+    key: 'NONE',
+  },
+} as const;
+
+export const VisaList = [
+  'D-2(외국인유학생)',
+  'D-4(어학연수)',
+  'F-2(취업)',
+];
+
+export const VisaInfo = {
+  [VisaGroup.D_2]: {
+    name: 'D-2(외국인유학생)',
+    key: 'D_2',
+  },
+  [VisaGroup.D_4]: {
+    name: 'D-4(어학연수)',
+    key: 'D_4',
+  },
+  [VisaGroup.F_2]: {
+    name: 'F-2(취업)',
+    key: 'F_2',
+  },
+} as const;
