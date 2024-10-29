@@ -11,8 +11,8 @@ import ApplicationDocumentsPage from '@/pages/ApplicationDocuments/ApplicationDo
 import PostSearchPage from '@/pages/PostSearch/PostSearchPage';
 import PostSearchFilterPage from '@/pages/PostSearchFilter/PostSearchFilterPage';
 import ProfilePage from '@/pages/Profile/ProfilePage';
-import LanguageSettingPage from '@/pages/Profile/LanguageSettingPage';
-import EditProfilePage from '@/pages/Profile/EditProfilePage';
+import LanguageSettingPage from '@/pages/LanguageSetting/LanguageSettingPage';
+import EditProfilePage from '@/pages/EditProfile/EditProfilePage';
 import PostDetailPage from '@/pages/PostDetail/PostDetailPage';
 import PostApplyPage from '@/pages/PostApply/PostApplyPage';
 import ApplicationPage from '@/pages/Application/ApplicationPage';
@@ -28,10 +28,12 @@ import PatchWorkExperiencePage from '@/pages/SetWorkExperience/PatchWorkExperien
 import ApplicationDetailPage from '@/pages/ApplicationDetail/ApplicationDetailPage';
 import ApplicationResultPage from '@/pages/ApplicationResult/ApplicationResultPage';
 import EmployerPostDetailPage from '@/pages/Employer/PostDetail/EmployerPostDetailPage';
-import RequestModifyPage from './pages/WriteDocuments/RequestModifyPage';
-import DocumentPreview from './pages/WriteDocuments/DocumentPreviewPage';
+import RequestModifyPage from '@/pages/WriteDocuments/RequestModifyPage';
+import DocumentPreview from '@/pages/WriteDocuments/DocumentPreviewPage';
 import EmployerPostPage from '@/pages/Employer/Post/EmployerPostPage';
 import EmployerApplicantListPage from '@/pages/Employer/ApplicantList/EmployerApplicantListPage';
+import EmployerSignupInfoPage from '@/pages/Employer/signup/EmployerSignupInfoPage';
+import PostLanguagePage from '@/pages/PostLanguage/PostLanguagePage';
 import EmployerApplicantDetailPage from '@/pages/Employer/ApplicantDetail/EmployerApplicantDetailPage';
 import EmployerApplicantResumePage from '@/pages/Employer/ApplicantResume/EmployerApplicantResumePage';
 import EmployerApplicantResumeAcceptPage from '@/pages/Employer/ApplicantResumeAccept/EmployerApplicantResumeAcceptPage';
@@ -79,6 +81,7 @@ const Router = () => {
 
           <Route path="/resume/introduction" element={<IntroductionPage />} />
           <Route path="/resume/language" element={<LanguagePage />} />
+          <Route path="/resume/language/add" element={<PostLanguagePage />} />
           <Route path="/resume/scrapped" element={<ScrappedJobPostsPage />} />
           <Route path="/resume/education" element={<PostEducationPage />} />
           <Route
@@ -96,6 +99,10 @@ const Router = () => {
 
           <Route path="/post/:id" element={<PostDetailPage />} />
           <Route path="/post/apply/:id" element={<PostApplyPage />} />
+          <Route
+            path="/employer/signup/information"
+            element={<EmployerSignupInfoPage />}
+          />
           <Route path="/employer/post" element={<EmployerPostPage />} />
           <Route
             path="/employer/post/:id"

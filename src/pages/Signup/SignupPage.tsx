@@ -6,8 +6,12 @@ import { UserType } from '@/constants/user';
 import EmailInput from '@/components/Signup/EmailInput';
 import SignupVerification from '@/components/Signup/SignupVerification';
 import VerificationSuccessful from '@/components/Signup/VerificationSuccessful';
+import { useNavigate } from 'react-router-dom';
+import { usePatchAuthentication, useTempSignUp } from '@/hooks/api/useAuth';
 
 const SignupPage = () => {
+  const navigate = useNavigate();
+
   // sign up 단계(총 5단계)
   const [currentStep, setCurrentStep] = useState<number>(1);
 
@@ -20,8 +24,15 @@ const SignupPage = () => {
   // authentication-code Field 상태 관리
   const [authenticationCode, setAuthenticationCode] = useState<string>('');
 
+  // mutate 관리
+  const { mutate: tempSignUp } = useTempSignUp();
+  const { mutate: verifyAuthCode } = usePatchAuthentication();
+
   // handler 정의
   const handleSignUpClick = () => {
+    // 고용주 타입을 선택할 경우, 고용주 회원가입 페이지로 이동
+    if (accountType === UserType.OWNER) navigate('/employer/signup');
+    // 유학생 타입을 선택할 경우, 유저 step 이어 진행
     setCurrentStep(currentStep + 1);
   };
   const handleTypeSelect = (type: UserType) => {
@@ -42,15 +53,19 @@ const SignupPage = () => {
 
   // API 정의
   // API - 2.4 임시 회원가입 API 호출
-  const handleSignUp = async () => {
-    // 임의 로직 API 연동 후 삭제
-    handleSignUpClick();
+  const handleSignUp = () => {
+    tempSignUp(
+      { id: id, password: password, email: email, account_type: UserType.USER },
+      { onSuccess: handleSignUpClick },
+    );
   };
 
   // API - 2.7 이메일 인증코드 검증
-  const handleVerify = async () => {
-    // 임의 로직 API 연동 후 삭제
-    handleSignUpClick();
+  const handleVerify = () => {
+    verifyAuthCode(
+      { id: id, email: email, authentication_code: authenticationCode },
+      { onSuccess: () => setCurrentStep(currentStep + 1) },
+    );
   };
 
   return (
@@ -67,7 +82,7 @@ const SignupPage = () => {
           <Stroke stroke={currentStep === 4 ? '#1E1926' : '#FFF'} />
         </div>
       )}
-      <div className="grow px-6">
+      <div className="grow px-6 flex flex-col items-center">
         {currentStep === 1 && (
           <FindJourney
             onSignUpClick={handleSignUpClick}
