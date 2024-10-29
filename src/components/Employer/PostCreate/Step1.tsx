@@ -3,10 +3,14 @@ import Input from '@/components/Common/Input';
 import RadioButton from '@/components/Information/RadioButton';
 import InputLayout from '@/components/WorkExperience/InputLayout';
 import { InputType } from '@/types/common/input';
-import { EmploymentType, JobPostingForm } from '@/types/postCreate/postCreate';
+import {
+  EmploymentType,
+  JobCategory,
+  JobPostingForm,
+} from '@/types/postCreate/postCreate';
 import { useEffect, useState } from 'react';
 import AddTimeIcon from '@/assets/icons/FileAddIcon.svg?react';
-import { JobCategoryList } from '@/constants/post';
+import { JobCategoryInfo, JobCategoryList } from '@/constants/post';
 import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
 import {
@@ -39,7 +43,6 @@ const Step1 = ({
       job_category !== '' &&
       // work_day_times.length &&
       extractNumbersAsNumber(hourlyRate) !== 0;
-    console.log(extractNumbersAsNumber(hourlyRate));
     setIsInvalid(!isFormValid);
   }, [newPostInfo, hourlyRate]);
 
@@ -64,13 +67,23 @@ const Step1 = ({
         {/* 업직종 입력 */}
         <InputLayout title="업직종" isEssential>
           <Dropdown
-            value={newPostInfo.body.job_category}
+            value={
+              newPostInfo.body.job_category === ''
+                ? newPostInfo.body.job_category
+                : JobCategoryInfo[newPostInfo.body.job_category as JobCategory]
+                    .name
+            }
             placeholder="업직종을 선택해주세요"
             options={JobCategoryList}
             setValue={(value) =>
               setNewPostInfo({
                 ...newPostInfo,
-                body: { ...newPostInfo.body, job_category: value },
+                body: {
+                  ...newPostInfo.body,
+                  job_category: String(
+                    findJobCategoryByNameStrict(value as JobCategoryNames),
+                  ),
+                },
               })
             }
           />
@@ -137,26 +150,21 @@ const Step1 = ({
         {/* 정보 입력 시마다 유효성을 검사해 모든 값이 유효하면 버튼이 활성화 */}
         <Button
           type="large"
-          bgColor={isInvalid ? 'bg-[#fef387]' : 'bg-[#F4F4F9]'}
-          fontColor={isInvalid ? 'text-[#222]' : ''}
+          bgColor={isInvalid ? 'bg-[#F4F4F9]' : 'bg-[#fef387]'}
+          fontColor={isInvalid ? '' : 'text-[#222]'}
           isBorder={false}
           title="다음"
           onClick={
             isInvalid
-              ? () =>
+              ? undefined
+              : () =>
                   onNext({
                     ...postInfo,
                     body: {
                       ...newPostInfo.body,
-                      job_category: String(
-                        findJobCategoryByNameStrict(
-                          newPostInfo.body.job_category as JobCategoryNames,
-                        ),
-                      ),
                       hourly_rate: extractNumbersAsNumber(hourlyRate),
                     },
                   })
-              : undefined
           }
         />
       </BottomButtonPanel>
