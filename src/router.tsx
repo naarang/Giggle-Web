@@ -32,13 +32,11 @@ import RequestModifyPage from '@/pages/WriteDocuments/RequestModifyPage';
 import DocumentPreview from '@/pages/WriteDocuments/DocumentPreviewPage';
 import EmployerPostPage from '@/pages/Employer/Post/EmployerPostPage';
 import EmployerApplicantListPage from '@/pages/Employer/ApplicantList/EmployerApplicantListPage';
-import EmployerSignupInfoPage from '@/pages/Employer/Signup/EmployerSignupInfoPage';
+import EmployerSignupInfoPage from '@/pages/Employer/signup/EmployerSignupInfoPage';
 import PostLanguagePage from '@/pages/PostLanguage/PostLanguagePage';
 import EmployerApplicantDetailPage from '@/pages/Employer/ApplicantDetail/EmployerApplicantDetailPage';
 import EmployerApplicantResumePage from '@/pages/Employer/ApplicantResume/EmployerApplicantResumePage';
 import EmployerApplicantResumeAcceptPage from '@/pages/Employer/ApplicantResumeAccept/EmployerApplicantResumeAcceptPage';
-import EmployerSignupPage from '@/pages/Employer/Signup/EmployerSignupPage';
-import Splash from '@/components/Splash/Splash';
 
 const Layout = () => {
   const location = useLocation();
@@ -63,7 +61,6 @@ const Router = () => {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
-          <Route path="/splash" element={<Splash />} />
 
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/signup" element={<SignupPage />} />
@@ -137,8 +134,6 @@ const Router = () => {
             path="/application/result/:id"
             element={<ApplicationResultPage />}
           />
-
-          <Route path="/employer/signup" element={<EmployerSignupPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
