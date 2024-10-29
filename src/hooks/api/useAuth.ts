@@ -156,25 +156,7 @@ export const useSignUp = () => {
     },
   });
 };
-/*
-// 2.6 기본 고용주 회원가입 훅
-export const useOwnerSignUp = () => {
-  const navigate = useNavigate();
-  return useMutation({
-    mutationFn: ownerSignUp,
-    onSuccess: (data: RESTYPE<SignInResponse>) => {
-      if (data.success) {
-        deleteTemporaryToken();
-        setAccessToken(data.data.access_token);
-        setRefreshToken(data.data.refresh_token);
-      }
-    },
-    onError: () => {
-      navigate('/');
-    },
-  });
-};
-*/
+
 // 2.7 이메일 인증코드 검증 훅
 export const usePatchAuthentication = () => {
   const navigate = useNavigate();
