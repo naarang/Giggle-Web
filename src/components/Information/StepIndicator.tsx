@@ -14,17 +14,15 @@ const StepIndicator = ({
   length = 3,
   currentStep = 1,
   mainColor = '#FEF387',
-  backgroundColor = '#FFFFFF',
+  backgroundColor = '#F4F4F9',
   borderColor = '#F4F4F9',
-  textColor = '#464646',
-  inactiveTextColor = '#BDBDBD',
+  textColor = '#ffffff',
 }: StepIndicatorProps) => {
   const steps = Array.from({ length }, (_, i) => i + 1);
 
   return (
     <div
       className="relative w-full flex flex-row items-center justify-center text-center body-3"
-      style={{ color: inactiveTextColor }}
     >
       {steps.map((step, index) => (
         <React.Fragment key={step}>
@@ -32,7 +30,7 @@ const StepIndicator = ({
           <div
             className="relative flex items-center justify-center w-6 h-6"
             style={{
-              color: currentStep >= step ? textColor : inactiveTextColor,
+              color: textColor ,
             }}
           >
             <div
