@@ -8,6 +8,8 @@ export type VisaType =
   | 'D_2_8'
   | 'D_4_1'
   | 'D_4_7'
+  | 'D_2'
+  | 'D_4'
   | 'F_2';
 
 export type JobCategoryType =
