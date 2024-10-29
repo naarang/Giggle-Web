@@ -4,7 +4,6 @@ import { buttonTypeKeys } from '@/constants/components';
 import { useEffect, useState } from 'react';
 import TimePicker from '@/components/Common/TimePicker';
 import { DayOfWeek, WorkDayTime } from '@/types/api/document';
-import { workerData } from 'worker_threads';
 
 // TODO: 나중에 constant로 분리해주세요!
 const DAYS = {
@@ -59,9 +58,9 @@ const WorkDayTimeBottomSheet = ({
   };
 
   useEffect(() => {
-    console.log(workStartTime)
-    console.log(workerData)
-  }, [workStartTime])
+    console.log(workStartTime);
+    console.log(workEndTime);
+  }, [workStartTime]);
 
   const returnResult = () => {
     if (!isAvailableSubmit()) return;
