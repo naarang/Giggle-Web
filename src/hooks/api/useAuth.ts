@@ -27,8 +27,8 @@ import {
 } from '@/utils/auth';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { RESTYPE } from '@/types/api/common';
 import { useEmailTryCountStore } from '@/store/signup';
+import { useUserStore } from '@/store/user';
 
 /**
  * 로그인 프로세스를 처리하는 커스텀 훅
@@ -59,12 +59,10 @@ export const useSignIn = () => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: signIn,
-    onSuccess: (data: RESTYPE<SignInResponse>) => {
-      if (data.success) {
-        setAccessToken(data.data.access_token);
-        setRefreshToken(data.data.refresh_token);
-        navigate('/splash');
-      }
+    onSuccess: (data) => {
+      setAccessToken(data.access_token);
+      setRefreshToken(data.refresh_token);
+      navigate('/splash');
     },
     onError: () => {
       navigate('/signin');
@@ -75,14 +73,18 @@ export const useSignIn = () => {
 // 1.2 사용자 로그아웃 훅
 export const useLogout = () => {
   const navigate = useNavigate();
+  const { updateAccountType, updateName } = useUserStore();
   return useMutation({
     mutationFn: logout,
-    onSuccess: (data: RESTYPE<null>) => {
-      if (data.success) {
-        deleteAccessToken();
-        deleteRefreshToken();
-        navigate('/splash');
-      }
+    onSuccess: () => {
+      // 토큰 삭제
+      deleteAccessToken();
+      deleteRefreshToken();
+      // 유저 타입 전역 변수 초기화
+      updateAccountType(undefined);
+      updateName('');
+      // 스플래시 이동
+      navigate('/splash');
     },
     onError: () => {
       navigate('/profile');
@@ -92,13 +94,13 @@ export const useLogout = () => {
 
 // 1.3 JWT 재발급 훅
 export const useReIssueToken = () => {
+  const navigate = useNavigate();
   return useMutation({
     mutationFn: reIssueToken,
-    onSuccess: (data: RESTYPE<SignInResponse>) => {
-      if (data.success) {
-        setAccessToken(data.data.access_token);
-        setRefreshToken(data.data.refresh_token);
-      }
+    onSuccess: (data: SignInResponse) => {
+      setAccessToken(data.access_token);
+      setRefreshToken(data.refresh_token);
+      navigate('/splash'); // 재발급 후 유형 확인
     },
   });
 };
@@ -131,10 +133,8 @@ export const useGetUserType = () => {
 export const useTempSignUp = () => {
   return useMutation({
     mutationFn: tempSignUp,
-    onSuccess: (data: RESTYPE<TempSignUpResponse>) => {
-      if (!data.success) {
-        console.log('임시 회원가입 실패 : ', data.error?.message);
-      }
+    onError: (error) => {
+      console.log('임시 회원가입 실패 : ', error.message);
     },
   });
 };
@@ -144,12 +144,10 @@ export const useSignUp = () => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: signUp,
-    onSuccess: (data: RESTYPE<SignInResponse>) => {
-      if (data.success) {
-        deleteTemporaryToken();
-        setAccessToken(data.data.access_token);
-        setRefreshToken(data.data.refresh_token);
-      }
+    onSuccess: (data: SignInResponse) => {
+      deleteTemporaryToken();
+      setAccessToken(data.access_token);
+      setRefreshToken(data.refresh_token);
     },
     onError: () => {
       navigate('/');
@@ -162,11 +160,9 @@ export const usePatchAuthentication = () => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: patchAuthentication,
-    onSuccess: (data: RESTYPE<AuthenticationResponse>) => {
-      if (data.success) {
-        setTemporaryToken(data.data.temporary_token);
-        navigate('/information');
-      }
+    onSuccess: (data: AuthenticationResponse) => {
+      setTemporaryToken(data.temporary_token);
+      navigate('/information');
     },
     onError: (error) => {
       console.log(error);
@@ -180,11 +176,9 @@ export const useReIssueAuthentication = () => {
   const { updateTryCnt } = useEmailTryCountStore();
   return useMutation({
     mutationFn: reIssueAuthentication,
-    onSuccess: (data: RESTYPE<TempSignUpResponse>) => {
-      if (data.success) {
-        // 이메일 재발송 횟수 업데이트
-        updateTryCnt(data.data.try_cnt);
-      }
+    onSuccess: (data: TempSignUpResponse) => {
+      // 이메일 재발송 횟수 업데이트
+      updateTryCnt(data.try_cnt);
     },
     onError: () => {
       navigate('/signup');
@@ -195,13 +189,18 @@ export const useReIssueAuthentication = () => {
 // 2.9 탈퇴하기 훅
 export const useWithdraw = () => {
   const navigate = useNavigate();
+  const { updateAccountType, updateName } = useUserStore();
   return useMutation({
     mutationFn: withdraw,
-    onSuccess: (data: RESTYPE<null>) => {
-      if (data.success) {
-        deleteAccessToken();
-        deleteRefreshToken();
-      }
+    onSuccess: () => {
+      // 토큰 삭제
+      deleteAccessToken();
+      deleteRefreshToken();
+      // 유저 타입 전역 변수 초기화
+      updateAccountType(undefined);
+      updateName('');
+      // 스플래시 이동
+      navigate('/splash');
     },
     onError: () => {
       navigate('/splash');
