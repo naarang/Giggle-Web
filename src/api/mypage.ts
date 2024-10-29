@@ -1,15 +1,37 @@
+import { RESTYPE } from '@/types/api/common';
 import { api } from '.';
 import { UserLanguageRequest, UserProfileBody } from '@/types/api/mypage';
+import {
+  ApplicationCountType,
+  BookmarkCountType,
+  EmployerCountsInfoResponse,
+  EmployerProfileResponse,
+  UserEditBodyRequest,
+  UserProfileResponse,
+  UserProfileSummaryResponse,
+} from '@/types/api/profile';
 
 // 3.1 (유학생) 유저 프로필 조회하기
-export const getUserProfile = async () => {
+export const getUserProfile = async (): Promise<
+  RESTYPE<UserProfileResponse>
+> => {
   const response = await api.get('/users/details');
   return response.data;
 };
 
 // 3.3 (유학생) 유저 요약 정보 조회하기
-export const getUserSummaries = async () => {
+export const getUserSummaries = async (): Promise<
+  RESTYPE<UserProfileSummaryResponse>
+> => {
   const response = await api.get('/users/summaries');
+  return response.data;
+};
+
+// 3.4 (고용주) 고용주 간단 정보 조회하기
+export const getOwnerSummaries = async (): Promise<
+  RESTYPE<EmployerProfileResponse>
+> => {
+  const response = await api.get('/owners/briefs');
   return response.data;
 };
 
@@ -19,7 +41,7 @@ export const patchUserProfile = async ({
   userProfile,
 }: {
   image?: File;
-  userProfile: UserProfileBody;
+  userProfile: UserEditBodyRequest;
 }) => {
   const formData = new FormData();
 
@@ -69,13 +91,25 @@ export const getBookmarks = async ({
 };
 
 // 5.2 (유학생) 북마크 현황(개수) 확인하기
-export const getBookmarksCounts = async () => {
+export const getBookmarksCounts = async (): Promise<
+  RESTYPE<BookmarkCountType>
+> => {
   const response = await api.get('/users/book-marks/counts');
   return response.data;
 };
 
 // 6.4 (유학생) 지원 현황(개수) 확인하기
-export const getApplicationCounts = async () => {
+export const getApplicationCounts = async (): Promise<
+  RESTYPE<ApplicationCountType>
+> => {
   const response = await api.get('/users/user-owner-job-postings/counts');
+  return response.data;
+};
+
+// 6.9 (고용주) 지원 현황(개수) 확인하기
+export const getOwnerApplicationCounts = async (): Promise<
+  RESTYPE<EmployerCountsInfoResponse>
+> => {
+  const response = await api.get('/owners/user-owner-job-postings/counts');
   return response.data;
 };

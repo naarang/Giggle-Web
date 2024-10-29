@@ -1,4 +1,12 @@
-import { getApplicationCounts, getBookmarksCounts, getUserProfile, getUserSummaries, patchUserProfile } from '@/api/mypage';
+import {
+  getApplicationCounts,
+  getBookmarksCounts,
+  getOwnerApplicationCounts,
+  getOwnerSummaries,
+  getUserProfile,
+  getUserSummaries,
+  patchUserProfile,
+} from '@/api/mypage';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
@@ -18,19 +26,11 @@ export const useGetUserSummaries = () => {
   });
 };
 
-// 6.4 (유학생) 지원 현황(개수) 확인하기
-export const useGetApplicationCounts = () => {
+// 3.4 (고용주) 고용주 간단 정보 조회하기
+export const usegetOwnerSummaries = () => {
   return useQuery({
-    queryKey: ['applicationCounts'],
-    queryFn: getApplicationCounts,
-  });
-}
-
-// 5.2 (유학생) 북마크 현황(개수) 확인하기
-export const userGetBookmarksCounts = () => {
-  return useQuery({
-    queryKey: ['bookmarksCounts'],
-    queryFn: getBookmarksCounts,
+    queryKey: ['ownerSummaries'],
+    queryFn: getOwnerSummaries,
   });
 };
 
@@ -42,8 +42,32 @@ export const usePatchUserProfile = () => {
     onSuccess: () => {
       navigate('/profile');
     },
-    onError: (error) =>{
+    onError: (error) => {
       console.error('프로필 조회 실패', error);
     },
+  });
+};
+
+// 5.2 (유학생) 북마크 현황(개수) 확인하기
+export const userGetBookmarksCounts = () => {
+  return useQuery({
+    queryKey: ['bookmarksCounts'],
+    queryFn: getBookmarksCounts,
+  });
+};
+
+// 6.4 (유학생) 지원 현황(개수) 확인하기
+export const useGetApplicationCounts = () => {
+  return useQuery({
+    queryKey: ['applicationCounts'],
+    queryFn: getApplicationCounts,
+  });
+};
+
+// 6.9 (고용주) 지원 현황(개수) 확인하기
+export const useGetOwnerApplicationCounts = () => {
+  return useQuery({
+    queryKey: ['ownerApplicationCounts'],
+    queryFn: getOwnerApplicationCounts,
   });
 };

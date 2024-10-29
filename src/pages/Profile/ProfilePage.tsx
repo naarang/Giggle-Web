@@ -7,13 +7,14 @@ import LicenseCard from '@/components/Profile/LicenseCard';
 import ProfileCard from '@/components/Profile/ProfileCard';
 import ProfileHeader from '@/components/Profile/ProfileHeader';
 import ProfileMenuList from '@/components/Profile/ProfileMenuList';
-import { UserProfileData } from '@/types/api/profile';
+import { UserProfileResponse } from '@/types/api/profile';
 import BottomSheetLayout from '@/components/Common/BottomSheetLayout';
 import Button from '@/components/Common/Button';
+import LogoutBottomSheet from '@/components/Profile/LogoutBottomSheet';
 
 const ProfilePage = () => {
   const navigate = useNavigate();
-  const [userData, setUserData] = useState<UserProfileData>();
+  const [userData, setUserData] = useState<UserProfileResponse>();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [bottomSheetOpen, setBottomSheetOpen] = useState<boolean>(false);
 
@@ -51,28 +52,15 @@ const ProfilePage = () => {
     }
     // API 연결 - 3.3 (유학생) 유저 요약 정보 조회하기
     setUserData({
-      user_information: {
-        profile_img_url:
-          'https://images.pexels.com/photos/1458926/pexels-photo-1458926.jpeg?cs=srgb&dl=pexels-poodles2doodles-1458926.jpg&fm=jpg',
-        first_name: 'Hyeona',
-        last_name: 'Seol',
-        birth: '0000-00-00',
-        school_name: 'Dongguk University',
-        grade: 3,
-        gpa: 3.5,
-        is_notification_allowed: true,
-      },
-      language_level: {
-        topik_level: 4,
-        kiip_level: 4,
-        sejong_level: 4,
-      },
-      meta_data: {
-        weekend_work_hour: 20,
-        weekday_work_hour: 30,
-        is_language_skill_4_or_more: true,
-        is_metropolitan_area: true,
-      },
+      profile_img_url:
+        'https://images.pexels.com/photos/1458926/pexels-photo-1458926.jpeg?cs=srgb&dl=pexels-poodles2doodles-1458926.jpg&fm=jpg',
+      first_name: 'Hyeona',
+      last_name: 'Seol',
+      birth: '0000-00-00',
+      school_name: 'Dongguk University',
+      grade: 3,
+      gpa: 3.5,
+      is_notification_allowed: true,
     });
 
     // 컴포넌트 언마운트 시에도 원래 상태로 복원
@@ -95,35 +83,10 @@ const ProfilePage = () => {
           )}
           {/* bottom sheet */}
           {bottomSheetOpen && (
-            <BottomSheetLayout
-              hasHandlebar={true}
-              isAvailableHidden={true}
-              isShowBottomsheet={true}
-            >
-              <div className="w-full flex flex-col py-10">
-                <div className="head-2 text-[#1E1926] py-3 px-12 text-center">
-                  Are you sure you want to leave?
-                </div>
-                <div className="flex flex-col gap-2">
-                  <Button
-                    type="large"
-                    title="Yes"
-                    isBorder={false}
-                    bgColor="bg-[#FEF387]"
-                    fontColor="text-[#1E1926]"
-                    onClick={handleLogout}
-                  />
-                  <Button
-                    type="large"
-                    title="No"
-                    isBorder={false}
-                    bgColor="bg-[#F4F4F9]"
-                    fontColor="text-[#BDBDBD]"
-                    onClick={handleLogoutCancel}
-                  />
-                </div>
-              </div>
-            </BottomSheetLayout>
+            <LogoutBottomSheet
+              handleLogout={handleLogout}
+              handleLogoutCancel={handleLogoutCancel}
+            />
           )}
           <div className="w-full h-full min-h-[100vh] bg-profilePageGradient">
             {/* Profile 페이지 시작 */}
