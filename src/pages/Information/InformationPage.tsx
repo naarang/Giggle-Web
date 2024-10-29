@@ -12,6 +12,7 @@ import {
   Language,
   UserInfoRequestBody,
 } from '@/types/api/users';
+import { getTemporaryToken } from '@/utils/auth';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -38,7 +39,7 @@ const InformationPage = () => {
       ...userInfo,
       marketing_allowed: marketingAllowed,
       notification_allowed: false,
-      temporary_token: '',
+      temporary_token: String(getTemporaryToken()),
       language: language,
     });
     setDevIsModal(true);
