@@ -1,6 +1,11 @@
+import { Gender } from '@/types/api/users';
 import { EmployerPostItemType } from '@/types/post/employerPostItem';
 import { PostSummaryItemType } from '@/types/post/postSummaryItem';
-import { EducationLevel, JobCategory, VisaGroup } from '@/types/postCreate/postCreate';
+import {
+  EducationLevel,
+  JobCategory,
+  VisaGroup,
+} from '@/types/postCreate/postCreate';
 import { EducationCategoryNames, JobCategoryNames } from '@/utils/post';
 
 // 더미데이터
@@ -121,11 +126,7 @@ export const EducationLevelInfo = {
   },
 } as const;
 
-export const VisaList = [
-  'D-2(외국인유학생)',
-  'D-4(어학연수)',
-  'F-2(취업)',
-];
+export const VisaList = ['D-2(외국인유학생)', 'D-4(어학연수)', 'F-2(취업)'];
 
 export const VisaInfo = {
   [VisaGroup.D_2]: {
@@ -141,3 +142,20 @@ export const VisaInfo = {
     key: 'F_2',
   },
 } as const;
+
+export const GenderList = ['남', '여', '무관'];
+
+export const genderInfo = {
+  [Gender.MALE]: {
+    name: '남',
+    key: 'MALE'
+  },
+  [Gender.FEMALE]: {
+    name: '여',
+    key: 'FEMALE'
+  },
+  [Gender.NONE]: {
+    name: '무관',
+    key: 'NONE'
+  }
+ } as const;

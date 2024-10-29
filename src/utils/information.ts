@@ -36,3 +36,12 @@ export const formatPhoneNumber = (phone: {
   middle: string;
   end: string;
 }) => `${phone.start}-${phone.middle}-${phone.end}`;
+
+export const parsePhoneNumber = (phoneNumber: string) => {
+  const [start, middle, end] = phoneNumber.split('-');
+  return {
+    start,
+    middle,
+    end,
+  };
+};

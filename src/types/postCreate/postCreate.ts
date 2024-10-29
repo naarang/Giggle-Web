@@ -81,7 +81,7 @@ export type JobPostingForm = {
     hourly_rate: number;
     employment_type: EmploymentType;
     address: Address;
-    recruitment_dead_line?: string;
+    recruitment_dead_line?: string | null;
     recruitment_number: number;
     gender: Gender;
     age_restriction: number | null;
@@ -121,7 +121,7 @@ export const initialJobPostingState: JobPostingForm = {
       longitude: 0,
       latitude: 0,
     },
-    recruitment_dead_line: undefined,
+    recruitment_dead_line: null,
     recruitment_number: 1,
     gender: Gender.MALE,
     age_restriction: 0,
