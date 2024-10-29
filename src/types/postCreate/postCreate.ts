@@ -1,4 +1,5 @@
 import { Gender } from '@/types/api/users';
+import { WorkDayTime } from '../api/document';
 
 // Enums
 export enum JobCategory {
@@ -54,11 +55,6 @@ export enum VisaGroup {
 }
 
 // Types
-export type WorkDayTime = {
-  day_of_week: DayOfWeek;
-  work_start_time?: string;
-  work_end_time?: string;
-};
 
 export type Address = {
   address_name: string;
