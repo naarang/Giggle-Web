@@ -1,5 +1,7 @@
 import { EmployerPostItemType } from '@/types/post/employerPostItem';
 import { PostSummaryItemType } from '@/types/post/postSummaryItem';
+import { JobCategory } from '@/types/postCreate/postCreate';
+import { JobCategoryNames } from '@/utils/post';
 
 // 더미데이터
 export const EMPLOYER_POST_LIST: EmployerPostItemType[] = [
@@ -46,3 +48,49 @@ export const POST_SUMMARY_ITEM: PostSummaryItemType = {
     work_days_per_week: 5,
   },
 };
+
+export const JobCategoryInfo = {
+  [JobCategory.GENERAL_INTERPRETATION_TRANSLATION]: {
+    name: '일반통역/번역',
+    key: 'GENERAL_INTERPRETATION_TRANSLATION',
+  },
+  [JobCategory.FOOD_SERVICE_ASSISTANT]: {
+    name: '음식업보조',
+    key: 'FOOD_SERVICE_ASSISTANT',
+  },
+  [JobCategory.GENERAL_ADMINISTRATIVE_SUPPORT]: {
+    name: '일반 사무보조',
+    key: 'GENERAL_ADMINISTRATIVE_SUPPORT',
+  },
+  [JobCategory.ENGLISH_KIDS_CAFE]: {
+    name: '영어키즈카페',
+    key: 'ENGLISH_KIDS_CAFE',
+  },
+  [JobCategory.GENERAL_CAFE]: {
+    name: '일반카페',
+    key: 'GENERAL_CAFE',
+  },
+  [JobCategory.PART_TIME_WORK]: {
+    name: '놀이보조',
+    key: 'PART_TIME_WORK',
+  },
+  [JobCategory.TOUR_GUIDE_AND_DUTY_FREE_ASSISTANT]: {
+    name: '관광안내보조 및 면세점판매보조',
+    key: 'TOUR_GUIDE_AND_DUTY_FREE_ASSISTANT',
+  },
+  [JobCategory.MANUFACTURING]: {
+    name: '제조업',
+    key: 'MANUFACTURING',
+  },
+} as const;
+
+export const JobCategoryList: JobCategoryNames[] = [
+  '일반통역/번역',
+  '음식업보조',
+  '일반 사무보조',
+  '영어키즈카페',
+  '일반카페',
+  '놀이보조',
+  '관광안내보조 및 면세점판매보조',
+  '제조업',
+];
