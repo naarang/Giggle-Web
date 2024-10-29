@@ -159,7 +159,6 @@ export const GetEducationData: GetEducationType = {
 export const ScrappedJobPostsData: JobPostingItemType[] = [
   {
     id: 1,
-    is_book_marked: true, // 북마크 여부
     icon_img_url:
       'https://images.mypetlife.co.kr/content/uploads/2022/12/16162807/IMG_1666-edited-scaled.jpg', // 회사 로고
     title: 'Coffee shop', // 공고 제목
@@ -179,7 +178,6 @@ export const ScrappedJobPostsData: JobPostingItemType[] = [
   },
   {
     id: 2,
-    is_book_marked: true, // 북마크 여부
     icon_img_url:
       'https://images.mypetlife.co.kr/content/uploads/2022/12/16162807/IMG_1666-edited-scaled.jpg', // 회사 로고
     title: 'lala shop', // 공고 제목
@@ -199,7 +197,6 @@ export const ScrappedJobPostsData: JobPostingItemType[] = [
   },
   {
     id: 3,
-    is_book_marked: true, // 북마크 여부
     icon_img_url:
       'https://images.mypetlife.co.kr/content/uploads/2022/12/16162807/IMG_1666-edited-scaled.jpg', // 회사 로고
     title: 'Coffee shop', // 공고 제목
@@ -219,7 +216,6 @@ export const ScrappedJobPostsData: JobPostingItemType[] = [
   },
   {
     id: 4,
-    is_book_marked: true, // 북마크 여부
     icon_img_url:
       'https://images.mypetlife.co.kr/content/uploads/2022/12/16162807/IMG_1666-edited-scaled.jpg', // 회사 로고
     title: 'Coffee shop', // 공고 제목
@@ -239,7 +235,6 @@ export const ScrappedJobPostsData: JobPostingItemType[] = [
   },
   {
     id: 5,
-    is_book_marked: true, // 북마크 여부
     icon_img_url:
       'https://images.mypetlife.co.kr/content/uploads/2022/12/16162807/IMG_1666-edited-scaled.jpg', // 회사 로고
     title: 'Coffee shop', // 공고 제목

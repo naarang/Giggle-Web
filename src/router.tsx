@@ -28,10 +28,11 @@ import PatchWorkExperiencePage from '@/pages/SetWorkExperience/PatchWorkExperien
 import ApplicationDetailPage from '@/pages/ApplicationDetail/ApplicationDetailPage';
 import ApplicationResultPage from '@/pages/ApplicationResult/ApplicationResultPage';
 import EmployerPostDetailPage from '@/pages/Employer/PostDetail/EmployerPostDetailPage';
-import RequestModifyPage from './pages/WriteDocuments/RequestModifyPage';
-import DocumentPreview from './pages/WriteDocuments/DocumentPreviewPage';
+import RequestModifyPage from '@/pages/WriteDocuments/RequestModifyPage';
+import DocumentPreview from '@/pages/WriteDocuments/DocumentPreviewPage';
 import EmployerPostPage from '@/pages/Employer/Post/EmployerPostPage';
 import EmployerApplicantListPage from '@/pages/Employer/ApplicantList/EmployerApplicantListPage';
+import EmployerSignupInfoPage from '@/pages/Employer/signup/EmployerSignupInfoPage';
 import PostLanguagePage from '@/pages/PostLanguage/PostLanguagePage';
 import EmployerApplicantDetailPage from '@/pages/Employer/ApplicantDetail/EmployerApplicantDetailPage';
 import EmployerApplicantResumePage from '@/pages/Employer/ApplicantResume/EmployerApplicantResumePage';
@@ -98,6 +99,10 @@ const Router = () => {
 
           <Route path="/post/:id" element={<PostDetailPage />} />
           <Route path="/post/apply/:id" element={<PostApplyPage />} />
+          <Route
+            path="/employer/signup/information"
+            element={<EmployerSignupInfoPage />}
+          />
           <Route path="/employer/post" element={<EmployerPostPage />} />
           <Route
             path="/employer/post/:id"

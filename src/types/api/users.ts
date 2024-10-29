@@ -36,8 +36,6 @@ export const enum Language {
 
 // Type for user info with undefinedable fields
 export type UserInfo = {
-  id: string | undefined;
-  email: string | undefined;
   marketing_allow: boolean | undefined;
   first_name: string | undefined;
   last_name: string | undefined;
@@ -46,7 +44,7 @@ export type UserInfo = {
   nationality: string | undefined;
   visa: string | undefined;
   phone_number: string | undefined;
-}
+};
 
 // Type for address with undefinedable fields
 export type Address = {
@@ -58,7 +56,7 @@ export type Address = {
   address_detail: string | undefined;
   longitude: number | undefined;
   latitude: number | undefined;
-}
+};
 
 // Main type for the API request body with undefinedable fields
 export type UserInfoRequestBody = {
@@ -66,33 +64,31 @@ export type UserInfoRequestBody = {
   user_info: UserInfo;
   address: Address;
   language: Language | undefined;
-}
+};
 
 // Initial state for UserInfo
 export const initialUserInfo: UserInfo = {
-  id: undefined,
-  email: undefined,
   marketing_allow: undefined,
-  first_name: "",
-  last_name: "",
+  first_name: '',
+  last_name: '',
   gender: 'MALE',
-  birth: "",
-  nationality: "",
-  visa: "",
-  phone_number: "",
-}
+  birth: '',
+  nationality: '',
+  visa: '',
+  phone_number: '',
+};
 
 // Initial state for Address
 export const initialAddress: Address = {
-  address_name: "",
-  region_1depth_name: "",
-  region_2depth_name: "",
-  region_3depth_name: "",
-  region_4depth_name: "",
-  address_detail: "",
+  address_name: '',
+  region_1depth_name: '',
+  region_2depth_name: '',
+  region_3depth_name: '',
+  region_4depth_name: '',
+  address_detail: '',
   longitude: undefined,
   latitude: undefined,
-}
+};
 
 // Initial state for UserInfoRequestBody
 export const initialUserInfoRequestBody: UserInfoRequestBody = {
@@ -100,4 +96,4 @@ export const initialUserInfoRequestBody: UserInfoRequestBody = {
   user_info: initialUserInfo,
   address: initialAddress,
   language: undefined,
-}
+};
