@@ -4,6 +4,7 @@ import {
   JobCategoryInfo,
   VisaInfo,
 } from '@/constants/post';
+import { DayOfWeek, WorkDayTime } from '@/types/api/document';
 import { Gender } from '@/types/api/users';
 import {
   EducationLevel,
@@ -71,4 +72,48 @@ export const findGenderByNameStrict = (
     ([_, value]) => value.name === name,
   );
   return entry ? (entry[1].key as Gender) : undefined;
+};
+
+const dayOfWeekToKorean = (day: DayOfWeek): string => {
+  switch (day) {
+    case DayOfWeek.MONDAY:
+      return '월';
+    case DayOfWeek.TUESDAY:
+      return '화';
+    case DayOfWeek.WEDNESDAY:
+      return '수';
+    case DayOfWeek.THURSDAY:
+      return '목';
+    case DayOfWeek.FRIDAY:
+      return '금';
+    case DayOfWeek.SATURDAY:
+      return '토';
+    case DayOfWeek.SUNDAY:
+      return '일';
+    case DayOfWeek.WEEKDAYS:
+      return '월/화/수/목/금';
+    case DayOfWeek.WEEKEND:
+      return '토/일';
+    case DayOfWeek.NEGOTIABLE:
+      return '요일무관';
+    default:
+      return '';
+  }
+};
+
+export const workDayTimeToString = (workDayTime: WorkDayTime): string => {
+  const days = dayOfWeekToKorean(workDayTime.day_of_week);
+
+  // 시간이 모두 null인 경우
+  if (!workDayTime.work_start_time && !workDayTime.work_end_time) {
+    return `${days} / 시간무관`;
+  }
+
+  // 요일무관인 경우
+  if (workDayTime.day_of_week === DayOfWeek.NEGOTIABLE) {
+    return `요일무관 / ${workDayTime.work_start_time} - ${workDayTime.work_end_time}`;
+  }
+
+  // 일반적인 경우
+  return `${days} / ${workDayTime.work_start_time} - ${workDayTime.work_end_time}`;
 };
