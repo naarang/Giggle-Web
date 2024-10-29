@@ -7,3 +7,9 @@ export const getAlarms = async (page: number, size: number) => {
   );
   return response.data;
 };
+
+// 10.2 (유학생/고용주) 알림 읽음 상태 변경
+export const patchReadAlarm = async (id: number) => {
+  const response = await api.patch(`/notifications/${id}/is-read`);
+  return response.data;
+};
