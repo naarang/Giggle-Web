@@ -1,3 +1,5 @@
+import { Gender } from '@/types/api/users';
+
 // Enums
 export enum JobCategory {
   GENERAL_INTERPRETATION_TRANSLATION = 'GENERAL_INTERPRETATION_TRANSLATION',
@@ -38,28 +40,16 @@ export enum EmploymentType {
   INTERNSHIP = 'INTERNSHIP',
 }
 
-export enum Gender {
-  MALE = 'MALE',
-  FEMALE = 'FEMALE',
-  NONE = 'NONE',
-}
-
 export enum EducationLevel {
   BACHELOR = 'BACHELOR',
   ASSOCIATE = 'ASSOCIATE',
   HIGHSCHOOL = 'HIGHSCHOOL',
+  NONE = 'NONE',
 }
 
-export enum Visa {
-  D_2_1 = 'D_2_1',
-  D_2_2 = 'D_2_2',
-  D_2_3 = 'D_2_3',
-  D_2_4 = 'D_2_4',
-  D_2_6 = 'D_2_6',
-  D_2_7 = 'D_2_7',
-  D_2_8 = 'D_2_8',
-  D_4_1 = 'D_4_1',
-  D_4_7 = 'D_4_7',
+export enum VisaGroup {
+  D_2 = 'D_2',
+  D_4 = 'D_4',
   F_2 = 'F_2',
 }
 
@@ -94,9 +84,9 @@ export type JobPostingForm = {
     recruitment_dead_line?: string;
     recruitment_number: number;
     gender: Gender;
-    age_restriction: number;
+    age_restriction: number | null;
     education_level: EducationLevel | string;
-    visa: Visa | string;
+    visa: VisaGroup | string;
     recruiter_name: string;
     recruiter_email: string;
     recruiter_phone_number: string;
@@ -131,7 +121,7 @@ export const initialJobPostingState: JobPostingForm = {
       longitude: 0,
       latitude: 0,
     },
-    recruitment_dead_line: '',
+    recruitment_dead_line: undefined,
     recruitment_number: 1,
     gender: Gender.MALE,
     age_restriction: 0,
