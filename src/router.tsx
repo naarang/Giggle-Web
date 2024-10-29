@@ -30,6 +30,7 @@ import ApplicationResultPage from '@/pages/ApplicationResult/ApplicationResultPa
 import EmployerPostDetailPage from '@/pages/Employer/PostDetail/EmployerPostDetailPage';
 import EmployerPostPage from '@/pages/Employer/Post/EmployerPostPage';
 import EmployerApplicantListPage from '@/pages/Employer/ApplicantList/EmployerApplicantListPage';
+import EmployerProfilePage from '@/pages/Employer/Profile/EmployerProfilePage';
 
 const Layout = () => {
   const location = useLocation();
@@ -109,6 +110,8 @@ const Router = () => {
             element={<ApplicationResultPage />}
           />
         </Route>
+
+        <Route path="/employer/profile" element={<EmployerProfilePage />} />
       </Routes>
     </BrowserRouter>
   );
