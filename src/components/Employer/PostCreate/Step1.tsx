@@ -17,7 +17,10 @@ import {
   extractNumbersAsNumber,
   findJobCategoryByNameStrict,
   JobCategoryNames,
+  workDayTimeToString,
 } from '../../../utils/post';
+import WorkDayTimeBottomSheet from '@/components/Common/WorkDayTimeBottomSheet';
+import { WorkDayTime } from '@/types/api/document';
 
 const Step1 = ({
   postInfo,
@@ -33,6 +36,8 @@ const Step1 = ({
   );
   // 버튼 활성화 여부를 위한 플래그
   const [isInvalid, setIsInvalid] = useState(true);
+  // 근무 시간 모달 활성화 여부 위한 플래그
+  const [isModal, setIsModal] = useState(false);
 
   /* 정보 입력 시마다 유효성을 검사해 모든 값이 유효하면 버튼이 활성화 */
   useEffect(() => {
@@ -93,7 +98,26 @@ const Step1 = ({
           <div className="w-full relative body-3 px-1 pb-1.5 text-[#222] text-left">
             원하는 근무 시간을 추가해주세요.
           </div>
-          <div className="w-full flex gap-2 items-center justify-center text-left body-2 border rounded-xl shadow-sm border-[#eae9f6] [--input-color:#bdbdbd] bg-white py-[10px] pl-4 pr-[14px]">
+          <div className="w-full h-8">
+            <div className="w-full h-full overflow-x-auto flex items-center gap-2">
+              {newPostInfo.body.work_day_times.length > 0 &&
+                newPostInfo.body.work_day_times.map((workdaytime, index) => (
+                  <div
+                    key={index}
+                    className="flex-shrink-0"
+                    style={{ width: '124px' }}
+                  >
+                    <div className="w-full h-6 flex items-center justify-center px-3 py-1 bg-[#FEF387] button-2 rounded-[1.125rem] whitespace-nowrap">
+                      {workDayTimeToString(workdaytime)}
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+          <div
+            className="w-full flex gap-2 items-center justify-center text-left body-2 border rounded-xl shadow-sm border-[#eae9f6] [--input-color:#bdbdbd] bg-white py-[10px] pl-4 pr-[14px]"
+            onClick={() => setIsModal(true)}
+          >
             <AddTimeIcon />
           </div>
         </InputLayout>
@@ -168,6 +192,18 @@ const Step1 = ({
           }
         />
       </BottomButtonPanel>
+      {isModal && (
+        <WorkDayTimeBottomSheet
+          onClose={(value: WorkDayTime[]) => {
+            setNewPostInfo({
+              ...newPostInfo,
+              body: { ...newPostInfo.body, work_day_times: value },
+            });
+            setIsModal(false);
+          }}
+          isShowBottomsheet={isModal}
+        />
+      )}
     </div>
   );
 };
