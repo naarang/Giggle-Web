@@ -10,8 +10,8 @@ import {
   EmployerProfileDetailResponse,
   EmployerProfileRequestBody,
   initialEmployerProfile,
-  mapResponseToRequest,
 } from '@/types/api/profile';
+import { transformToEmployerProfileRequest } from '@/utils/editProfileData';
 import { isValidEmployerProfile } from '@/utils/employerProfile';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -35,7 +35,7 @@ const EmployerEditProfilePage = () => {
       setOriginalData(data.data); // 수정 전 데이터
 
       // get 타입에서 patch 타입으로 변환
-      setNewEmployData(mapResponseToRequest(data.data)); // 수정 데이터
+      setNewEmployData(transformToEmployerProfileRequest(data.data)); // 수정 데이터
     }
   }, []);
 

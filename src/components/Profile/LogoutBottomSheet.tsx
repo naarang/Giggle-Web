@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
-import BottomSheetLayout from '../Common/BottomSheetLayout';
-import Button from '../Common/Button';
+import BottomSheetLayout from '@/components/Common/BottomSheetLayout';
+import Button from '@/components/Common/Button';
 import { profileTranslation } from '@/constants/translation';
 import { isEmployer } from '@/utils/signup';
 

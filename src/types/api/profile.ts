@@ -1,6 +1,6 @@
 import { GenderType, VisaType } from '@/constants/profile';
-import { OwnerInfo } from './employ';
-import { Address } from './users';
+import { OwnerInfo } from '@/types/api/employ';
+import { Address } from '@/types/api/users';
 
 export type LanguageLevelType = {
   topik_level: number;
@@ -131,28 +131,4 @@ export const initialEmployerProfile: EmployerProfileRequestBody = {
     latitude: 0,
   },
   is_icon_img_changed: false,
-};
-
-export const mapResponseToRequest = (
-  data: EmployerProfileDetailResponse,
-): EmployerProfileRequestBody => {
-  return {
-    owner_info: {
-      company_name: data.company_name,
-      owner_name: data.owner_name,
-      company_registration_number: data.company_registration_number,
-      phone_number: data.phone_number,
-    },
-    address: {
-      address_name: data.address.address_name,
-      region_1depth_name: data.address.region_1depth_name,
-      region_2depth_name: data.address.region_2depth_name,
-      region_3depth_name: data.address.region_3depth_name,
-      region_4depth_name: data.address.region_4depth_name,
-      address_detail: data.address.address_detail,
-      longitude: data.address.longitude,
-      latitude: data.address.latitude,
-    },
-    is_icon_img_changed: false,
-  };
 };
