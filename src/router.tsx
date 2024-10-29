@@ -62,7 +62,6 @@ const Layout = () => {
       <ScrollToTop />
       <Outlet />
       {shouldShowNavbar && <Navbar />}
-      {console.log(account_type)}
     </>
   );
 };

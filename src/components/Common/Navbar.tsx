@@ -31,7 +31,7 @@ const Navbar = () => {
               );
             })}
           {/* 고용자 유저일 경우 nav bar */}
-          {account_type === UserType.USER &&
+          {account_type === UserType.OWNER &&
             employerRoutes.map((route, index) => {
               const IconComponent = route.svg;
               return (

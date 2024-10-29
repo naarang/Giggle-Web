@@ -29,6 +29,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useEmailTryCountStore } from '@/store/signup';
 import { useUserStore } from '@/store/user';
+import { RESTYPE } from '@/types/api/common';
 
 /**
  * 로그인 프로세스를 처리하는 커스텀 훅
@@ -59,9 +60,9 @@ export const useSignIn = () => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: signIn,
-    onSuccess: (data) => {
-      setAccessToken(data.access_token);
-      setRefreshToken(data.refresh_token);
+    onSuccess: (data: RESTYPE<SignInResponse>) => {
+      setAccessToken(data.data.access_token);
+      setRefreshToken(data.data.refresh_token);
       navigate('/splash');
     },
     onError: () => {
@@ -97,9 +98,9 @@ export const useReIssueToken = () => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: reIssueToken,
-    onSuccess: (data: SignInResponse) => {
-      setAccessToken(data.access_token);
-      setRefreshToken(data.refresh_token);
+    onSuccess: (data: RESTYPE<SignInResponse>) => {
+      setAccessToken(data.data.access_token);
+      setRefreshToken(data.data.refresh_token);
       navigate('/splash'); // 재발급 후 유형 확인
     },
   });
@@ -144,10 +145,11 @@ export const useSignUp = () => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: signUp,
-    onSuccess: (data: SignInResponse) => {
+    onSuccess: (data: RESTYPE<SignInResponse>) => {
+      console.log(data);
       deleteTemporaryToken();
-      setAccessToken(data.access_token);
-      setRefreshToken(data.refresh_token);
+      setAccessToken(data.data.access_token);
+      setRefreshToken(data.data.refresh_token);
     },
     onError: () => {
       navigate('/');
@@ -160,8 +162,8 @@ export const usePatchAuthentication = () => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: patchAuthentication,
-    onSuccess: (data: AuthenticationResponse) => {
-      setTemporaryToken(data.temporary_token);
+    onSuccess: (data: RESTYPE<AuthenticationResponse>) => {
+      setTemporaryToken(data.data.temporary_token);
       navigate('/information');
     },
     onError: (error) => {
@@ -176,9 +178,9 @@ export const useReIssueAuthentication = () => {
   const { updateTryCnt } = useEmailTryCountStore();
   return useMutation({
     mutationFn: reIssueAuthentication,
-    onSuccess: (data: TempSignUpResponse) => {
+    onSuccess: (data: RESTYPE<TempSignUpResponse>) => {
       // 이메일 재발송 횟수 업데이트
-      updateTryCnt(data.try_cnt);
+      updateTryCnt(data.data.try_cnt);
     },
     onError: () => {
       navigate('/signup');
