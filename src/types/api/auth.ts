@@ -1,10 +1,5 @@
 import { UserType } from '@/constants/user';
-import {
-  Address,
-  Language,
-  OwnerInfoRequest,
-  UeserInfoRequest,
-} from '@/types/api/users';
+import { Address, Language, UserInfo } from '@/types/api/users';
 
 export type SignInRequest = {
   serial_id: string;
@@ -34,13 +29,13 @@ export type TempSignUpResponse = {
 
 export type SignUpRequest = {
   temporary_token: string;
-  user_info: UeserInfoRequest;
+  user_info: UserInfo;
   address: Address;
   marketing_allowed: boolean;
   notification_allowed: boolean;
   language: Language;
 };
-
+/*
 export type OwnerSignUpRequest = {
   temporary_token: String;
   owner_info: OwnerInfoRequest;
@@ -48,6 +43,7 @@ export type OwnerSignUpRequest = {
   marketing_allowed: Boolean;
   notification_allowed: Boolean;
 };
+*/
 
 export type SignUpResponse = {
   access_token: string;

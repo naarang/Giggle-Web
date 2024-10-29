@@ -1,7 +1,7 @@
 import {
   JobPostingSummariesType,
   JobPostingTagType,
-} from '../common/jobPostingItem';
+} from '@/types/common/jobPostingItem';
 
 export type UserLanguageRequest = {
   language: 'KOREAN' | 'VIETNAMESE' | 'UZBEK' | 'TURKISH' | 'ENGLISH';

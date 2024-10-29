@@ -13,7 +13,6 @@ import {
 } from '@/types/api/auth';
 import { api } from '@/api/index.ts';
 import { apiWithoutAuth } from '@/api/index.ts';
-import { OwnerInfoRequest } from '@/types/api/users';
 import { RESTYPE } from '@/types/api/common';
 import { EmployerRegistrationRequest } from '@/types/api/employ';
 
@@ -100,6 +99,7 @@ export const signUp = async (
 };
 
 // 2.6 기본 고용주 회원가입
+/*
 export const ownerSignUp = async (
   signupInfo: OwnerInfoRequest,
   logoImage?: File,
@@ -113,6 +113,7 @@ export const ownerSignUp = async (
   const response = await apiWithoutAuth.post('/auth/owners', formData);
   return response.data;
 };
+*/
 
 // 2.7 이메일 인증코드 검증
 export const patchAuthentication = async (

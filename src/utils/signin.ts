@@ -1,5 +1,5 @@
 import { signInputTranclation } from '@/constants/translation';
-import { isEmployer } from './signup';
+import { isEmployer } from '@/utils/signup';
 
 // ID 유효성 검사 함수
 export const validateId = (

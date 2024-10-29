@@ -3,7 +3,6 @@ import {
   getIdValidation,
   getUserType,
   logout,
-  ownerSignUp,
   patchAuthentication,
   reIssueAuthentication,
   reIssueToken,
@@ -157,7 +156,7 @@ export const useSignUp = () => {
     },
   });
 };
-
+/*
 // 2.6 기본 고용주 회원가입 훅
 export const useOwnerSignUp = () => {
   const navigate = useNavigate();
@@ -175,7 +174,7 @@ export const useOwnerSignUp = () => {
     },
   });
 };
-
+*/
 // 2.7 이메일 인증코드 검증 훅
 export const usePatchAuthentication = () => {
   const navigate = useNavigate();

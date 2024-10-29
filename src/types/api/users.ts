@@ -34,25 +34,6 @@ export const enum Language {
   ENGLISH = 'ENGLISH',
 }
 
-// Type for API - user_info
-export type UeserInfoRequest = {
-  first_name: string;
-  last_name: string;
-  gender: string;
-  birth: string;
-  nationality: string;
-  visa: string;
-  phone_number: string;
-};
-
-// Type for API - owner_info
-export type OwnerInfoRequest = {
-  company_name: string;
-  owner_name: string;
-  company_registration_number: string;
-  phone_number: string;
-};
-
 // Type for user info with undefinedable fields
 export type UserInfo = {
   marketing_allow: boolean | undefined;
