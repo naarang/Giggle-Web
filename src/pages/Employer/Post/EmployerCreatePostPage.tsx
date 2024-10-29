@@ -1,7 +1,12 @@
 import CompleteModal from '@/components/Common/CompleteModal';
+import BaseHeader from '@/components/Common/Header/BaseHeader';
+import Step1 from '@/components/Employer/PostCreate/Step1';
 import StepIndicator from '@/components/Information/StepIndicator';
 import { useCreatePost } from '@/hooks/api/usePost';
-import { initialJobPostingState, JobPostingForm } from '@/types/postCreate/postCreate';
+import {
+  initialJobPostingState,
+  JobPostingForm,
+} from '@/types/postCreate/postCreate';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -28,6 +33,7 @@ const EmployerCreatePostPage = () => {
   };
   return (
     <div>
+      <BaseHeader hasBackButton hasMenuButton title="공고등록" />
       {devIsModal ? (
         <CompleteModal
           title="공고 등록이 완료되었습니다."
@@ -36,24 +42,28 @@ const EmployerCreatePostPage = () => {
         />
       ) : (
         <>
-          <div className="w-full flex flex-row py-6 items-center justify-between">
+          <div className="w-full flex flex-row p-6 items-center justify-between">
             <div
-              className="relative w-full flex items-center justify-center title-1 text-[#1e1926] text-left"
+              className="relative w-full flex items-center justify-start title-1 text-[#1e1926] text-left"
               onClick={() => setCurrentStep(currentStep + 1)}
             >
               공고등록
             </div>
-            <StepIndicator length={5} currentStep={currentStep} mainColor='#1E1926'/>
+            <StepIndicator
+              length={5}
+              currentStep={currentStep}
+              mainColor="#1E1926"
+            />
           </div>
           <div className="w-full flex justify-center px-6">
             {currentStep === 1 && (
-              <Step1 postInfo={userInfo} onNext={handleNext} />
+              <Step1 postInfo={postInfo} onNext={handleNext} />
             )}
           </div>
         </>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default EmployerCreatePostPage
+export default EmployerCreatePostPage;
