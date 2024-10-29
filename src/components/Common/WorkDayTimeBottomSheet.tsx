@@ -73,7 +73,7 @@ const WorkDayTimeBottomSheet = ({
           work_end_time: isCheckAllTime ? null : workEndTime,
         },
       ];
-      return result; // TODO: API에 보낼 형식 맞춰놨쓔!
+      onClose(result);
     } else {
       const result: WorkDayTime[] = dayOfWeek.map((day) => {
         return {
@@ -82,8 +82,7 @@ const WorkDayTimeBottomSheet = ({
           work_end_time: isCheckAllTime ? null : workEndTime,
         };
       });
-      console.log(result);
-      return result; // TODO: API에 보낼 형식 맞춰놨쓔!
+      onClose(result);
     }
   };
 
@@ -157,7 +156,7 @@ const WorkDayTimeBottomSheet = ({
           fontColor={isAvailableSubmit() ? `text-[#1E1926]` : `text-[#BDBDBD]`}
           isBorder={false}
           title={'추가하기'}
-          onClick={() => onClose(returnResult() as WorkDayTime[])}
+          onClick={() => returnResult() as WorkDayTime[]}
         />
       </div>
     </BottomSheetLayout>
