@@ -16,10 +16,11 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 // 4.8 (유학생) 공고 지원 자격 확인하기 훅
-export const useGetPostValidation = (id: number) => {
+export const useGetPostValidation = (id: number, isEnabled: boolean) => {
   return useQuery({
     queryKey: ['application', id],
     queryFn: () => getPostValidation(id),
+    enabled: isEnabled,
   });
 };
 

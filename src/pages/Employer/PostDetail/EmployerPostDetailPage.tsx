@@ -3,11 +3,29 @@ import EmployerPostDetailButton from '@/components/Employer/PostDetail/EmployerP
 import PostDetailCompanyImageList from '@/components/PostDetail/PostDetailCompanyImageList';
 import PostDetailContent from '@/components/PostDetail/PostDetailContent';
 import PostDetailTitle from '@/components/PostDetail/PostDetailTitle';
-import { POST_DETAIL_DATA } from '@/constants/postDetail';
-import { useNavigate } from 'react-router-dom';
+import { UserType } from '@/constants/user';
+import { useGetPostDetail } from '@/hooks/api/usePost';
+import { useUserStore } from '@/store/user';
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const EmployerPostDetailPage = () => {
+  const { account_type } = useUserStore();
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  const { data, refetch } = useGetPostDetail(
+    parseInt(id!, 10),
+    account_type === UserType.OWNER && typeof parseInt(id!, 10) === 'number'
+      ? true
+      : false,
+  );
+
+  useEffect(() => {
+    if (typeof parseInt(id!, 10) === 'number') refetch();
+  }, [id, refetch]);
+
+  if (!data?.data) return <></>;
 
   return (
     <>
@@ -18,10 +36,10 @@ const EmployerPostDetailPage = () => {
         title="Detail"
       />
       <PostDetailCompanyImageList
-        companyImageData={POST_DETAIL_DATA.company_img_url_list}
+        companyImageData={data.data?.company_img_url_list}
       />
-      <PostDetailTitle postDetailData={POST_DETAIL_DATA} />
-      <PostDetailContent postDetailData={POST_DETAIL_DATA} />
+      <PostDetailTitle postDetailData={data.data} />
+      <PostDetailContent postDetailData={data.data} />
       <EmployerPostDetailButton />
     </>
   );

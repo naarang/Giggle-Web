@@ -31,10 +31,12 @@ export const useGetPostGuestList = (
 };
 
 // 4.2 (게스트) 공고 상세 조회하기 훅
-export const useGetPostDetailGuest = (id: number) => {
+export const useGetPostDetailGuest = (id: number, isEnabled: boolean) => {
+  console.log('id: ', id, 'enabled: ', isEnabled);
   return useQuery({
     queryKey: ['post', id],
     queryFn: () => getPostDetailGuest(id),
+    enabled: isEnabled,
   });
 };
 
@@ -48,8 +50,12 @@ export const useGetPostList = (req: GetPostListReqType, isEnabled: boolean) => {
 };
 
 // 4.4 (유학생/고용주) 공고 상세 조회하기 훅
-export const useGetPostDetail = (id: number) => {
-  return useQuery({ queryKey: ['post', id], queryFn: () => getPostDetail(id) });
+export const useGetPostDetail = (id: number, isEnabled: boolean) => {
+  return useQuery({
+    queryKey: ['post', id],
+    queryFn: () => getPostDetail(id),
+    enabled: isEnabled,
+  });
 };
 
 // 4.5 (유학생) 추천 공고 리스트 조회하기 훅

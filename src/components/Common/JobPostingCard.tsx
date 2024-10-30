@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePutPostBookmark } from '@/hooks/api/usePost';
 import { useUserStore } from '@/store/user';
+import { UserType } from '@/constants/user';
 
 type JobPostingCardProps = {
   jobPostingData: JobPostingItemType;
@@ -33,10 +34,18 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
     if (result?.success) setIsBookmarked(!isBookmarked);
   };
 
+  const goToPostDetailPage = () => {
+    if (account_type === UserType.OWNER) {
+      navigate(`/employer/post/${jobPostingData.id}`);
+    } else {
+      navigate(`/post/${jobPostingData.id}`);
+    }
+  };
+
   return (
     <article
       className="flex flex-col gap-[1rem] w-full px-[1.125rem] pt-[1.125rem] pb-[0.75rem] border-[0.5px] border-solid border-[#1E19263D] rounded-[1.125rem]"
-      onClick={() => navigate(`/post/${jobPostingData.id}`)}
+      onClick={goToPostDetailPage}
     >
       <div className="w-full flex justify-between items-start">
         <div>
