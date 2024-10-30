@@ -8,8 +8,8 @@ export const enum IconType {
 }
 
 export const enum GenderType {
-  MALE = 'Maile',
-  FEMALE = 'Femail',
+  MALE = 'Male',
+  FEMALE = 'Female',
   NONE = 'None',
 }
 
