@@ -5,16 +5,19 @@ import Dropdown from '@/components/Common/Dropdown';
 import { languageList } from '@/constants/information';
 import { useState } from 'react';
 import useNavigateBack from '@/hooks/useNavigateBack';
+import { usePatchUserLanguage } from '@/hooks/api/useSetting';
+import { UserLanguageRequest } from '@/types/api/mypage';
 
 const LanguageSettingPage = () => {
-  const [language, setLanguage] = useState<string>('English');
-  const navigate = useNavigate();
+  const [language, setLanguage] = useState<string>('Select Language');
+
+  const { mutate } = usePatchUserLanguage();
 
   const handleBackButtonClick = useNavigateBack();
 
   const handleSaveButton = () => {
     // API - 3.8 (유학생) 앱 내 언어 수정
-    navigate('/profile');
+    mutate({ language: language.toUpperCase() } as UserLanguageRequest);
   };
 
   return (
