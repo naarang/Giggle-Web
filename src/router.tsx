@@ -7,7 +7,7 @@ import ScrollToTop from '@/components/Common/ScrollToTop';
 import Navbar from '@/components/Common/Navbar';
 import HomePage from '@/pages/Home/HomePage';
 import SigninPage from '@/pages/Signin/SigninPage';
-import SignupPage from '@/pages/signup/SignupPage';
+import SignupPage from '@/pages/Signup/SignupPage';
 import InformationPage from '@/pages/Information/InformationPage';
 import ApplicationDocumentsPage from '@/pages/ApplicationDocuments/ApplicationDocumentsPage';
 import PostSearchPage from '@/pages/PostSearch/PostSearchPage';
@@ -41,7 +41,7 @@ import EmployerApplicantDetailPage from '@/pages/Employer/ApplicantDetail/Employ
 import EmployerApplicantResumePage from '@/pages/Employer/ApplicantResume/EmployerApplicantResumePage';
 import EmployerApplicantResumeAcceptPage from '@/pages/Employer/ApplicantResumeAccept/EmployerApplicantResumeAcceptPage';
 import EmployerEditProfilePage from '@/pages/Employer/EditProfile/EmployerEditProfilePage';
-import EmployerSignupPage from '@/pages/Employer/signup/EmployerSignupPage';
+import EmployerSignupPage from '@/pages/Employer/Signup/EmployerSignupPage';
 import AlarmPage from '@/pages/Alarm/AlarmPage';
 import ChatBotPage from '@/pages/ChatBot/ChatBotPage';
 import Splash from '@/components/Splash/Splash';
