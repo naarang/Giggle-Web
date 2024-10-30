@@ -65,6 +65,7 @@ const Splash = () => {
         } else {
           // UserTypeResponse가 정의되지 않은 경우
           setGuest();
+          return;
         }
       }
     } catch (error) {

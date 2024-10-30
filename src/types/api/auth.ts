@@ -1,10 +1,7 @@
 import { UserType } from '@/constants/user';
 import { Address, Language, UserInfo } from '@/types/api/users';
 
-export type SignInRequest = {
-  serial_id: string;
-  password: string;
-};
+export type SignInRequest = FormData;
 
 export type SignInResponse = {
   access_token: string;
