@@ -13,8 +13,7 @@ import RadioButton from '@/components/Information/RadioButton';
 import { InputType } from '@/types/common/input';
 import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
-import { formatDateToDash } from '../../utils/editResume';
-
+import { formatDate, formatDateToDash } from '../../utils/editResume';
 const InformationStep = ({
   userInfo,
   onNext,
@@ -203,6 +202,7 @@ const InformationStep = ({
                           : newUserInfo.nationality
                               .toUpperCase()
                               .replace(/\s/g, '_'),
+                      birth: formatDateToDash(newUserInfo.birth ?? ''),
                     },
                   })
           }
