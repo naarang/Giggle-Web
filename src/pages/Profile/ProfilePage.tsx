@@ -26,9 +26,9 @@ const ProfilePage = () => {
   };
 
   // API - 1.2 사용자 로그아웃
-  const { mutate: logout } = useLogout();
+  const { mutate } = useLogout();
   const handleLogout = () => {
-    logout;
+    mutate();
   };
 
   const handleLogoutCancel = () => {
