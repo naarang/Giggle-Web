@@ -16,7 +16,7 @@ type InputStatus = (typeof INPUT_STATUS)[keyof typeof INPUT_STATUS];
 type InputProps = {
   inputType: InputType; // 입력 필드의 타입
   placeholder: string; // 플레이스홀더 텍스트
-  value: string | undefined; // 입력 필드의 현재 값
+  value: string | null; // 입력 필드의 현재 값
   onChange: (value: string) => void; // 입력값 변경 시 호출될 함수
   canDelete: boolean; // 삭제 버튼 표시 여부
   clearInvalid?: () => void; // 토글 시 invalid 상태를 해제할 함수 (선택적)
@@ -83,7 +83,7 @@ const Input = ({
       {inputType === 'SEARCH' && <SearchIcon />}
       <input
         placeholder={placeholder}
-        value={value}
+        value={value ?? ''}
         className={'w-full outline-none placeholder:text-[var(--input-color)]'}
         onClick={() => handleFocus('click')}
         onBlur={() => handleFocus('blur')}

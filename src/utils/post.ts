@@ -1,10 +1,11 @@
+import { WorkPeriodInfo } from '@/constants/documents';
 import {
   EducationLevelInfo,
   genderInfo,
   JobCategoryInfo,
   VisaInfo,
 } from '@/constants/post';
-import { DayOfWeek, WorkDayTime } from '@/types/api/document';
+import { DayOfWeek, WorkDayTime, WorkPeriod } from '@/types/api/document';
 import { Gender } from '@/types/api/users';
 import {
   EducationLevel,
@@ -18,60 +19,71 @@ export const extractNumbersAsNumber = (str: string): number => {
   return numbers ? parseInt(numbers) : 0;
 };
 
-// map에서 name으로 key를 찾는 함수
+// 업직종 map에서 name으로 key를 찾는 함수
 export type JobCategoryNames =
   (typeof JobCategoryInfo)[keyof typeof JobCategoryInfo]['name'];
 
 export const findJobCategoryByNameStrict = (
   name: JobCategoryNames,
-): JobCategory | undefined => {
+): JobCategory | null => {
   const entry = Object.entries(JobCategoryInfo).find(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ([_, value]) => value.name === name,
   );
-  return entry ? (entry[1].key as JobCategory) : undefined;
+  return entry ? (entry[1].key as JobCategory) : null;
 };
 
-// map에서 name으로 key를 찾는 함수
+// 학력 map에서 name으로 key를 찾는 함수
 export type EducationCategoryNames =
   (typeof EducationLevelInfo)[keyof typeof EducationLevelInfo]['name'];
 
 export const findEducationLevelByNameStrict = (
   name: EducationCategoryNames,
-): EducationLevel | undefined => {
+): EducationLevel | null => {
   const entry = Object.entries(EducationLevelInfo).find(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ([_, value]) => value.name === name,
   );
-  return entry ? (entry[1].key as EducationLevel) : undefined;
+  return entry ? (entry[1].key as EducationLevel) : null;
 };
 
-// map에서 name으로 key를 찾는 함수
+// 비자 map에서 name으로 key를 찾는 함수
 export type VisaCategoryNames =
   (typeof VisaInfo)[keyof typeof VisaInfo]['name'];
 
 export const findVisaByNameStrict = (
   name: VisaCategoryNames,
-): VisaGroup | undefined => {
+): VisaGroup | null => {
   const entry = Object.entries(VisaInfo).find(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ([_, value]) => value.name === name,
   );
-  return entry ? (entry[1].key as VisaGroup) : undefined;
+  return entry ? (entry[1].key as VisaGroup) : null;
 };
 
-// map에서 name으로 key를 찾는 함수
+// 근무 기간 map에서 name으로 key를 찾는 함수
+export const getWorkPeriodKeyByName = (
+  name: string,
+): WorkPeriod | null => {
+  const entry = Object.entries(WorkPeriodInfo).find(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    ([_, value]) => value.name === name,
+  );
+  return entry ? (entry[0] as WorkPeriod) : null;
+};
+
+// 성별 map에서 name으로 key를 찾는 함수
 export type GenderCategoryNames =
   (typeof genderInfo)[keyof typeof genderInfo]['name'];
 
 export const findGenderByNameStrict = (
   name: GenderCategoryNames,
-): Gender | undefined => {
+): Gender | null => {
   const entry = Object.entries(genderInfo).find(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ([_, value]) => value.name === name,
   );
-  return entry ? (entry[1].key as Gender) : undefined;
+  return entry ? (entry[1].key as Gender) : null;
 };
 
 const dayOfWeekToKorean = (day: DayOfWeek): string => {

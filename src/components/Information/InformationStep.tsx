@@ -197,9 +197,12 @@ const InformationStep = ({
                     ...userInfo,
                     user_info: {
                       ...newUserInfo,
-                      nationality: newUserInfo.nationality
-                        ?.toUpperCase()
-                        .replace(/\s/g, '_'),
+                      nationality:
+                        newUserInfo.nationality === null
+                          ? null
+                          : newUserInfo.nationality
+                              .toUpperCase()
+                              .replace(/\s/g, '_'),
                     },
                   })
           }
