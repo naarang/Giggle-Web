@@ -1,7 +1,7 @@
-import { UserInformationType } from '@/types/api/profile';
+import { UserProfileResponse } from '@/types/api/profile';
 
 type ProfileCardProps = {
-  data: UserInformationType;
+  data: UserProfileResponse;
 };
 
 const ProfileCard = ({ data }: ProfileCardProps) => {
