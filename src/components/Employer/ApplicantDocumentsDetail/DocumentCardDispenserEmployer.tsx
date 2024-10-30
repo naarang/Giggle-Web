@@ -10,8 +10,6 @@ import WriteIcon from '@/assets/icons/WriteIcon.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { DocumentStatusEmployer } from '@/constants/documents';
 
-
-
 type DocumentCardProps = {
   document: EmployDocumentInfo;
   title: string;
@@ -234,25 +232,19 @@ const ConfirmationCard = ({
   document,
   title,
   onDownload,
-  onPreview,
 }: {
   title: string;
   document: EmployDocumentInfo;
   onDownload: (url: string) => void;
-  onPreview: () => void;
 }) => {
   return (
     <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-center justify-center gap-2 caption-2 text-left text-[#1e1926]">
-      <div className="self-stretch rounded-t-[1.125rem] bg-[#fef387] h-7 flex items-center justify-between px-4 pl-6 py-2 relative">
-        <div className="flex items-center justify-start relative ">
+      <div className="self-stretch rounded-t-[1.125rem] bg-[#1e1926] h-7 flex items-center justify-between px-4 pl-6 py-2 relative">
+        <div className="flex items-center justify-start relative text-[#fef387]">
           서류 작성이 완료되었습니다.
         </div>
-        <div className="w-1.5 absolute !m-0 top-[0.4rem] left-[8rem] rounded-full bg-[#ff6f61] h-1.5 z-[1]" />
         <div className="w-[0.75rem] relative h-[0.75rem] z-[2]">
-          <div
-            className="absolute w-full h-full top-0 righ-0 bottom-0 left-0"
-            onClick={onPreview}
-          />
+          <div className="absolute w-full h-full top-0 righ-0 bottom-0 left-0" />
           <ArrowrightIcon />
         </div>
       </div>
@@ -286,9 +278,7 @@ const ConfirmationCard = ({
               <div className="w-[1.375rem] h-[1.375rem] flex items-center justify-center rounded-full bg-[#1e1926]">
                 <FolderIcon />
               </div>
-              <div className="relative body-3 opacity-75">
-                word로 다운로드
-              </div>
+              <div className="relative body-3 opacity-75">word로 다운로드</div>
             </div>
             <div onClick={() => onDownload(document.word_url as string)}>
               <DownloadIcon />
@@ -301,9 +291,7 @@ const ConfirmationCard = ({
               <div className="w-[1.375rem] h-[1.375rem] flex items-center justify-center rounded-full bg-[#1e1926]">
                 <FolderIcon />
               </div>
-              <div className="relative body-3 opacity-75">
-                hwp로 다운로드
-              </div>
+              <div className="relative body-3 opacity-75">hwp로 다운로드</div>
             </div>
             <div onClick={() => onDownload(document.hwp_url as string)}>
               <DownloadIcon />
@@ -369,13 +357,6 @@ const DocumentCardDispenserEmployer = ({
           title={title}
           document={document}
           onDownload={handleDownload}
-          onPreview={() =>
-            navigate('/document-preview', {
-              state: {
-                type: type,
-              },
-            })
-          }
         />
       );
   }
