@@ -6,8 +6,9 @@ import {
 import {
   DocumentType,
   EmployDocumentsSummaryResponse,
-} from '../../../types/api/document';
+} from '@/types/api/document';
 import DocumentCardDispenserEmployer from '@/components/Employer/ApplicantDocumentsDetail/DocumentCardDispenserEmployer';
+import { useNavigate } from 'react-router-dom';
 
 const mockDocumentsSummaryResponse: EmployDocumentsSummaryResponse = {
   standard_labor_contract: {
@@ -20,11 +21,12 @@ const mockDocumentsSummaryResponse: EmployDocumentsSummaryResponse = {
     id: 2001,
     hwp_url: 'https://example.com/contracts/standard_2001.hwp',
     word_url: 'https://example.com/contracts/standard_2001.docx',
-    status: DocumentStatusEmployer.SUBMITTED,
+    status: DocumentStatusEmployer.TEMPORARY_SAVE,
   },
 };
 
 const ApplicantDocumentsDetailPage = () => {
+  const navigate = useNavigate();
   {
     /*
   integrated_application: {
@@ -39,6 +41,9 @@ const ApplicantDocumentsDetailPage = () => {
       <BaseHeader
         hasBackButton={true}
         hasMenuButton={false}
+        onClickBackButton={() =>
+          navigate('/employer/applicant/document-detail')
+        }
         title="서류 관리"
       />
       <div className="flex flex-col gap-2 p-6">
