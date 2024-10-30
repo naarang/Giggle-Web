@@ -1,5 +1,6 @@
-import { WorkDayTime } from '@/types/api/document';
+import { EmployerInformation, WorkDayTime } from '@/types/api/document';
 import { Address } from '@/types/api/users';
+import { extractNumbersAsNumber } from './post';
 
 // 객체의 모든 프로퍼티가 공백이 아닌지 확인하는 함수
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -49,4 +50,43 @@ export const propertyToString = (value: string) => {
     spaceConverted.charAt(0).toUpperCase() +
     spaceConverted.slice(1).toLowerCase()
   );
+};
+
+// 고용주 시간제 근무 허가서 수정 양식 유효성 검사 함수
+export const validateEmployerInformation = (
+  info: EmployerInformation,
+): boolean => {
+  // 빈 문자열 체크
+  if (
+    !info.company_name ||
+    !info.job_type ||
+    !info.name ||
+    !info.phone_number
+  ) {
+    return false;
+  }
+
+  // 사업자등록번호 유효성 검사 (12자리 숫자)
+  if (!info.company_registration_number?.match(/^\d{12}$/)) {
+    return false;
+  }
+
+  // 시급 유효성 검사(0이 아닌지)
+  if (
+    !info.hourly_rate ||
+    extractNumbersAsNumber(String(info.hourly_rate)) === 0
+  )
+    return false;
+
+  // 근무일 체크
+  if (!info.work_days_weekdays || !info.work_days_weekends) {
+    return false;
+  }
+
+  // 주소 체크
+  if (!info.address?.region_1depth_name) {
+    return false;
+  }
+
+  return true;
 };
