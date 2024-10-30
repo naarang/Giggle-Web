@@ -1,11 +1,13 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Outlet, useLocation } from 'react-router-dom';
+import { useUserStore } from '@/store/user';
+import { UserType } from '@/constants/user';
 
 import ScrollToTop from '@/components/Common/ScrollToTop';
 import Navbar from '@/components/Common/Navbar';
 import HomePage from '@/pages/Home/HomePage';
 import SigninPage from '@/pages/Signin/SigninPage';
-import SignupPage from '@/pages/Signup/SignupPage';
+import SignupPage from '@/pages/signup/SignupPage';
 import InformationPage from '@/pages/Information/InformationPage';
 import ApplicationDocumentsPage from '@/pages/ApplicationDocuments/ApplicationDocumentsPage';
 import PostSearchPage from '@/pages/PostSearch/PostSearchPage';
@@ -42,14 +44,20 @@ import EmployerEditProfilePage from '@/pages/Employer/EditProfile/EmployerEditPr
 import EmployerSignupPage from '@/pages/Employer/signup/EmployerSignupPage';
 import AlarmPage from '@/pages/Alarm/AlarmPage';
 import ChatBotPage from '@/pages/ChatBot/ChatBotPage';
+import Splash from '@/components/Splash/Splash';
 
 const Layout = () => {
   const location = useLocation();
+  const { account_type } = useUserStore();
 
   // Nav bar 컴포넌트가 랜딩되는 페이지
-  const showNavbarPaths = ['/', '/profile', '/search', '/application'];
+  const showNavbarPaths = () => {
+    if (account_type === UserType.OWNER) {
+      return ['/', '/search', '/employer/post', '/employer/profile'];
+    } else return ['/', '/search', '/application', '/profile'];
+  };
 
-  const shouldShowNavbar = showNavbarPaths.includes(location.pathname);
+  const shouldShowNavbar = showNavbarPaths().includes(location.pathname);
 
   return (
     <>
@@ -66,6 +74,7 @@ const Router = () => {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/splash" element={<Splash />} />
           <Route path="/chatbot" element={<ChatBotPage />} />
           <Route path="/alarm" element={<AlarmPage />} />
           <Route path="/signin" element={<SigninPage />} />

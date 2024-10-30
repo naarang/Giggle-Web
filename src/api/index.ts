@@ -49,7 +49,7 @@ function createInstance(type: string) {
     baseURL:
       type === 'kakao'
         ? import.meta.env.VITE_APP_KAKAO_API_BASE_URL
-        : import.meta.env.VITE_APP_API_URL,
+        : import.meta.env.VITE_APP_API_GIGGLE_API_BASE_URL,
   });
   return setInterceptors(instance, type);
 }
