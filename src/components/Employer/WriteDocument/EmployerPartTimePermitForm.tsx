@@ -24,6 +24,8 @@ import Button from '@/components/Common/Button';
 import { usePutPartTimeEmployPermitEmployer } from '@/hooks/api/useDocument';
 import { useParams } from 'react-router-dom';
 import { validateEmployerInformation } from '@/utils/document';
+import { formatPhoneNumber, parsePhoneNumber } from '@/utils/information';
+import { phone } from '@/constants/information';
 
 type PartTimePermitFormProps = {
   document?: PartTimePermitData;
@@ -41,6 +43,18 @@ const EmployerPartTimePermitForm = ({
   const [hourlyRate, setHourlyRate] = useState(
     String(newDocumentData.hourly_rate) + ' 원',
   );
+  // 세 부분으로 나누어 입력받는 방식을 위해 전화번호만 별도의 state로 분리, 추후 유효성 검사 단에서 통합
+  const [phoneNum, setPhoneNum] = useState({
+    start: newDocumentData.company_registration_number
+      ? parsePhoneNumber(newDocumentData.company_registration_number).start
+      : '',
+    middle: newDocumentData.company_registration_number
+      ? parsePhoneNumber(newDocumentData.company_registration_number).middle
+      : '',
+    end: newDocumentData.company_registration_number
+      ? parsePhoneNumber(newDocumentData.company_registration_number).end
+      : '',
+  });
   // 주소 검색용 input 저장하는 state
   const [addressInput, setAddressInput] = useState('');
   // 주소 검색 결과를 저장하는 array
@@ -80,8 +94,14 @@ const EmployerPartTimePermitForm = ({
 
   /* 정보 입력 시마다 유효성을 검사해 모든 값이 유효하면 버튼이 활성화 */
   useEffect(() => {
-    setIsInvalid(!validateEmployerInformation(newDocumentData));
-  }, [newDocumentData]);
+    setIsInvalid(
+      !validateEmployerInformation({
+        ...newDocumentData,
+        hourly_rate: extractNumbersAsNumber(hourlyRate),
+        phone_number: formatPhoneNumber(phoneNum),
+      }),
+    );
+  }, [newDocumentData, hourlyRate, phoneNum]);
 
   // 검색할 주소 입력 시 실시간 검색
   const handleAddressSearch = useCallback(
@@ -265,6 +285,33 @@ const EmployerPartTimePermitForm = ({
             }
             canDelete={false}
           />
+        </InputLayout>
+        {/* 담당자 휴대폰 번호 입력 */}
+        <InputLayout title="담당자 전화번호" isEssential>
+          <div className="w-full flex flex-row gap-2 justify-between">
+            <div className="w-full h-[2.75rem]">
+              <Dropdown
+                value={phoneNum.start}
+                placeholder="+82"
+                options={phone}
+                setValue={(value) => setPhoneNum({ ...phoneNum, start: value })}
+              />
+            </div>
+            <Input
+              inputType={InputType.TEXT}
+              placeholder="0000"
+              value={phoneNum.middle}
+              onChange={(value) => setPhoneNum({ ...phoneNum, middle: value })}
+              canDelete={false}
+            />
+            <Input
+              inputType={InputType.TEXT}
+              placeholder="0000"
+              value={phoneNum.end}
+              onChange={(value) => setPhoneNum({ ...phoneNum, end: value })}
+              canDelete={false}
+            />
+          </div>
         </InputLayout>
         {/* 서명 입력 */}
         <InputLayout title="서명" isEssential>

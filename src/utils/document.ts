@@ -75,8 +75,9 @@ export const validateEmployerInformation = (
   if (
     !info.hourly_rate ||
     extractNumbersAsNumber(String(info.hourly_rate)) === 0
-  )
+  ) {
     return false;
+  }
 
   // 근무일 체크
   if (!info.work_days_weekdays || !info.work_days_weekends) {
