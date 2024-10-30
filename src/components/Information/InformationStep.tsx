@@ -13,7 +13,7 @@ import RadioButton from '@/components/Information/RadioButton';
 import { InputType } from '@/types/common/input';
 import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
-import { formatDate, formatDateToDash } from '../../utils/editResume';
+import { formatDateToDash } from '@/utils/editResume';
 const InformationStep = ({
   userInfo,
   onNext,
