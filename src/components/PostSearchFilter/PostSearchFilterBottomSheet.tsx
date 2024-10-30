@@ -29,6 +29,7 @@ const PostSearchFilterBottomSheet = ({
       hasHandlebar={false}
       isAvailableHidden={false}
       isShowBottomsheet={true}
+      isFixedBackground={false}
     >
       <div className="w-full flex flex-col gap-[1.5rem] pb-[2rem]">
         <h3 className="w-full px-[0.75rem] head-3 text-black">

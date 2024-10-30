@@ -2,7 +2,7 @@ import JobPostingCard from '@/components/Common/JobPostingCard';
 import { JobPostingItemType } from '@/types/common/jobPostingItem';
 import RightArrowIcon from '@/assets/icons/Home/RightArrowIcon.svg?react';
 import Tag from '@/components/Common/Tag';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { POST_SEARCH_MENU } from '@/constants/postSearch';
 import { usePostSearchStore } from '@/store/postSearch';
@@ -13,10 +13,6 @@ import { useGetPostGuestList, useGetPostList } from '@/hooks/api/usePost';
 const HomeJobPostingList = () => {
   const { account_type } = useUserStore();
   const { updateSortType } = usePostSearchStore();
-
-  useEffect(() => {
-    console.log('?: ', account_type);
-  }, [account_type]);
 
   // 인기 공고
   const trendingDataRequest = {
@@ -68,14 +64,14 @@ const HomeJobPostingList = () => {
   const scrollRef = useRef<(HTMLDivElement | null)[]>([]);
 
   const [selectedMenu, setSelectedMenu] = useState<POST_SEARCH_MENU>(
-    POST_SEARCH_MENU.POPULAR,
+    POST_SEARCH_MENU.TRENDING,
   );
 
   const scrollToSelectedMenu = (menu: POST_SEARCH_MENU) => {
     const scrollIndex: { [key: string]: number } = {
-      POPULAR: 0,
-      RECENT: 1,
-      BOOKMARKS: 2,
+      TRENDING: 0,
+      RECENTLY: 1,
+      BOOKMARKED: 2,
     };
 
     const target = scrollRef.current[scrollIndex[menu]];
@@ -86,13 +82,13 @@ const HomeJobPostingList = () => {
 
   const goToSearchPage = (type: POST_SEARCH_MENU) => {
     updateSortType(type);
-    navigate('/search');
+    navigate('/search', { state: { type: type } });
   };
 
   return (
     <section className="w-full bg-[#FEF387]">
       <nav className="flex gap-[0.5rem] w-full py-[1rem] px-[2rem] rounded-t-[1rem] bg-white">
-        <button onClick={() => scrollToSelectedMenu(POST_SEARCH_MENU.POPULAR)}>
+        <button onClick={() => scrollToSelectedMenu(POST_SEARCH_MENU.TRENDING)}>
           <Tag
             value={'🔥 Popular'}
             padding="0.5rem 1rem"
@@ -148,7 +144,7 @@ const HomeJobPostingList = () => {
             <h3 className="head-3 text-black">🔥 Popular Job Lists for You</h3>
             <button
               className="flex items-center gap-[0.625rem] button-2 text-[#1E1926]"
-              onClick={() => goToSearchPage(POST_SEARCH_MENU.POPULAR)}
+              onClick={() => goToSearchPage(POST_SEARCH_MENU.TRENDING)}
             >
               See more <RightArrowIcon />
             </button>

@@ -8,6 +8,11 @@ export const enum POST_SEARCH_MENU {
   TRENDING = 'TRENDING',
 }
 
+export const POST_SORTING = {
+  POPULAR: 'POPULAR',
+  RECENT: 'RECENT',
+} as const;
+
 export const enum FILTER_CATEGORY {
   REGION_1DEPTH = 'Region 1depth', // 시, 도
   REGION_2DEPTH = 'Region 2depth', // 구
@@ -34,35 +39,33 @@ export type FilterOptionsType = {
 // 카테고리 별로 문자열 배열을 가지는 객체
 export const FILTER_CATEGORY_OPTIONS: FilterOptionsType = {
   [FILTER_CATEGORY.INDUSTRY]: [
-    'Translation',
+    'General Interpretation Translation',
     'Food Service Assistant',
-    'Office Assistant',
+    'General Administrative Support',
     'English Kids Cafe',
     'General Cafe',
-    'Play Assistant',
-    'Tourism Guide & Duty-Free Store Assistant',
-    'Manufacturing Industry',
+    'Part Time Work',
+    'Tour Guide And Duty Free Assistant',
+    'Manufacturing',
   ],
   [FILTER_CATEGORY.WORK_PERIOD]: [
-    '1 day',
-    'Less than a week',
-    '1 week - 1 month',
-    '1 month - 3 months',
-    '3 month - 6 months',
-    '6 month - 1 year',
-    'More than 1 year',
+    'One Day',
+    'Less Than One Week',
+    'One Week To One Month',
+    'One Month To Three Months',
+    'Three Months To Six Months',
+    'One Month To One Year',
+    'More Than One Year',
   ],
   [FILTER_CATEGORY.WORK_DAYS_PER_WEEK]: [
-    '1 days',
-    '2 days',
-    '3 days',
-    '4 days',
-    '5 days',
-    '6 days',
+    'One Day',
+    'Two Days',
+    'Three Days',
+    'Four Days',
+    'Five Days',
+    'Six Days',
   ],
   [FILTER_CATEGORY.WORKING_DAY]: [
-    'Weekdays',
-    'Weekend',
     'Monday',
     'Tuesday',
     'Wednesday',
@@ -76,15 +79,12 @@ export const FILTER_CATEGORY_OPTIONS: FilterOptionsType = {
     'Morning',
     'Afternoon',
     'Evening',
-    'Full day',
+    'Full Day',
     'Dawn',
-    'Evening - Night',
-    'Evening - Dawn',
-    'Dawn - Morning',
-    'Negotiable hours',
+    'Negotiable Hours',
   ],
   [FILTER_CATEGORY.RECRUITMENT_PERIOD]: ['Opening', 'Closed'],
-  [FILTER_CATEGORY.EMPLOYMENT_TYPE]: ['Part-time', 'Internship'],
+  [FILTER_CATEGORY.EMPLOYMENT_TYPE]: ['PartTime', 'Internship'],
   [FILTER_CATEGORY.VISA]: ['D-2', 'D-4', 'F-2'],
 };
 

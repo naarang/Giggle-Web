@@ -4,28 +4,7 @@ import { useEffect, useState } from 'react';
 import PostSearchFilterBottomSheet from '@/components/PostSearchFilter/PostSearchFilterBottomSheet';
 import { PostSearchFilterItemType } from '@/types/PostSearchFilter/PostSearchFilterItem';
 import { FILTER_CATEGORY } from '@/constants/postSearch';
-
-type RegionDataType = {
-  [key: string]: {
-    [key: string]: string[];
-  };
-};
-
-// 더미데이터
-const REGION_DATA: RegionDataType = {
-  Seoul: {
-    Gyeonggi: ['성남', '분당', '강남'],
-    Inchon: ['연수구', '계양구'],
-  },
-  Busan: {
-    Dong: ['동래구', '해운대구'],
-    Suyeong: ['수영구', '광안리'],
-  },
-  Daegu: {
-    Suseong: ['수성구', '달서구'],
-    Dalseo: ['달성군', '달서군'],
-  },
-};
+import { REGION_DATA } from '@/constants/regionData';
 
 type PostSearchFilterAreaType = {
   setIsOpenAreaFilter: React.Dispatch<React.SetStateAction<boolean>>;
@@ -169,7 +148,7 @@ const PostSearchFilterArea = ({
           hasMenuButton={false}
           title="Area"
         />
-        <section className="flex-1 flex w-full">
+        <section className="flex-1 flex w-full pb-[15rem]">
           <PostSearchFilterSelect
             selectedRegion={region1Depth}
             onSelect={onSelectRegion1Depth}

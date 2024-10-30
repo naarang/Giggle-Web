@@ -2,11 +2,12 @@ import { AscendingSortType } from '@/types/common/sort';
 import { api } from '.';
 import { GetApplyPostListReqType, GetPostListReqType } from '@/types/api/post';
 import { APPLICATION_STATUS_TYPE } from '@/constants/application';
+import { filterNullParams } from '@/utils/filterNullParams';
 
 // 4.1 (게스트) 공고 리스트 조회
 export const getPostListGuest = async (req: GetPostListReqType) => {
   const response = await api.get(`/guests/job-postings/overviews`, {
-    params: req,
+    params: filterNullParams(req),
   });
   return response.data;
 };
@@ -19,7 +20,9 @@ export const getPostDetailGuest = async (id: number) => {
 
 // 4.3 (유학생/고용주) 공고 리스트 조회
 export const getPostList = async (req: GetPostListReqType) => {
-  const response = await api.get(`/job-postings/overviews`, { params: req });
+  const response = await api.get(`/job-postings/overviews`, {
+    params: filterNullParams(req),
+  });
   return response.data;
 };
 

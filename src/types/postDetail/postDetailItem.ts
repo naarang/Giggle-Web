@@ -108,7 +108,7 @@ type CompanyInformationType = {
 
 export type PostDetailItemType = {
   id: number;
-  is_my_post: boolean;
+  is_my_post?: boolean;
   is_book_marked?: boolean;
   company_name: string;
   title: string;
