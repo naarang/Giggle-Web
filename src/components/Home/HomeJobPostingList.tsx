@@ -2,7 +2,7 @@ import JobPostingCard from '@/components/Common/JobPostingCard';
 import { JobPostingItemType } from '@/types/common/jobPostingItem';
 import RightArrowIcon from '@/assets/icons/Home/RightArrowIcon.svg?react';
 import Tag from '@/components/Common/Tag';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { POST_SEARCH_MENU } from '@/constants/postSearch';
 import { usePostSearchStore } from '@/store/postSearch';
@@ -14,20 +14,23 @@ const HomeJobPostingList = () => {
   const { account_type } = useUserStore();
   const { updateSortType } = usePostSearchStore();
 
+  const isGuest = !account_type;
+
   // 인기 공고
   const trendingDataRequest = {
     page: 1,
     size: 2,
     type: POST_SEARCH_MENU.TRENDING,
+    sorting: 'RECENT',
   };
   const { data: guestTrendData } = useGetPostGuestList(
     trendingDataRequest,
-    account_type ? false : true,
+    isGuest,
   );
 
-  const { data: userTrendData } = useGetPostList(
+  const { data: userTrendData, refetch: userTrendFetch } = useGetPostList(
     trendingDataRequest,
-    account_type ? true : false,
+    !isGuest,
   );
 
   const trendData = account_type ? userTrendData : guestTrendData;
@@ -37,14 +40,15 @@ const HomeJobPostingList = () => {
     page: 1,
     size: 2,
     type: POST_SEARCH_MENU.RECENTLY,
+    sorting: 'RECENT',
   };
   const { data: guestRecentlyData } = useGetPostGuestList(
     recentlyDataRequest,
-    account_type ? false : true,
+    isGuest,
   );
-  const { data: userRecentlyData } = useGetPostList(
+  const { data: userRecentlyData, refetch: userRecentlyFetch } = useGetPostList(
     recentlyDataRequest,
-    account_type ? true : false,
+    !isGuest,
   );
 
   const recentlyData = account_type ? userRecentlyData : guestRecentlyData;
@@ -54,11 +58,10 @@ const HomeJobPostingList = () => {
     page: 1,
     size: 2,
     type: POST_SEARCH_MENU.BOOKMARKED,
+    sorting: 'RECENT',
   };
-  const { data: userBookmarkedData } = useGetPostList(
-    bookmarkedDataRequest,
-    account_type ? true : false,
-  );
+  const { data: userBookmarkedData, refetch: userBookmarkFetch } =
+    useGetPostList(bookmarkedDataRequest, !isGuest);
 
   const navigate = useNavigate();
   const scrollRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -82,8 +85,21 @@ const HomeJobPostingList = () => {
 
   const goToSearchPage = (type: POST_SEARCH_MENU) => {
     updateSortType(type);
-    navigate('/search', { state: { type: type } });
+    navigate('/search');
   };
+
+  useEffect(() => {
+    if (!account_type) return;
+    userTrendFetch();
+    userRecentlyFetch();
+    userBookmarkFetch();
+  }, [
+    isGuest,
+    account_type,
+    userTrendFetch,
+    userRecentlyFetch,
+    userBookmarkFetch,
+  ]);
 
   return (
     <section className="w-full bg-[#FEF387]">

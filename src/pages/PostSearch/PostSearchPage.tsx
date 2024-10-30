@@ -1,25 +1,23 @@
 import TextFieldHeader from '@/components/Common/Header/TextFieldHeader';
 import PostSearchFilterList from '@/components/PostSearch/PostSearchFilterList';
 import PostSearchResult from '@/components/PostSearch/PostSearchResult';
-import { FILTER_CATEGORY } from '@/constants/postSearch';
+import { FILTER_CATEGORY, POST_SORTING } from '@/constants/postSearch';
 import { useGetPostGuestList, useGetPostList } from '@/hooks/api/usePost';
 import { usePostSearchStore } from '@/store/postSearch';
 import { useUserStore } from '@/store/user';
 import { GetPostListReqType } from '@/types/api/post';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const PostSearchPage = () => {
   const navigate = useNavigate();
-  const { state } = useLocation();
 
   const { account_type } = useUserStore();
-  const { searchText, updateSearchText, filterList, sortType } =
-    usePostSearchStore();
+  const { searchText, updateSearchText, filterList } = usePostSearchStore();
   const [searchParams, setSearchParams] = useState<GetPostListReqType>({
     page: 1,
     size: 10,
-    ...(state?.type && { type: state.type }), // type을 추가
+    sorting: POST_SORTING.RECENT,
   });
 
   const { data: guestPostData, refetch: guestRefetch } = useGetPostGuestList(
@@ -42,7 +40,7 @@ const PostSearchPage = () => {
       page: 1,
       size: 10,
       search: text ?? null,
-      sorting: sortType,
+      sorting: POST_SORTING.RECENT,
       region_1depth: filterList[FILTER_CATEGORY.REGION_1DEPTH].join(','),
       region_2depth: filterList[FILTER_CATEGORY.REGION_2DEPTH].join(','),
       region_3depth: filterList[FILTER_CATEGORY.REGION_3DEPTH].join(','),

@@ -19,7 +19,7 @@ type PostSearchStore = {
 };
 
 export const usePostSearchStore = create<PostSearchStore>()((set) => ({
-  sortType: POST_SORTING.POPULAR,
+  sortType: POST_SORTING.RECENT,
   searchText: '',
   filterList: initialFilterList,
   updateSortType: (type) => set(() => ({ sortType: type })),

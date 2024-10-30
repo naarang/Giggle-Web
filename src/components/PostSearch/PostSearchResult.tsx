@@ -2,16 +2,13 @@ import NoSearchResultImg from '@/assets/images/NoSearchResultImg.png';
 import { JobPostingItemType } from '@/types/common/jobPostingItem';
 import JobPostingCard from '@/components/Common/JobPostingCard';
 import SearchSortDropdown from '@/components/Common/SearchSortDropdown';
-import { usePostSearchStore } from '@/store/postSearch';
 import { POST_SORTING } from '@/constants/postSearch';
-import { PostSortingType } from '@/types/PostSearchFilter/PostSearchFilterItem';
 
 type PostSearchResultProps = {
   postData: JobPostingItemType[];
 };
 
 const PostSearchResult = ({ postData }: PostSearchResultProps) => {
-  const { sortType, updateSortType } = usePostSearchStore();
   // TODO: 홈에서 See more 버튼 클릭 시 해당 메뉴로 정렬하기
 
   return (
@@ -22,10 +19,8 @@ const PostSearchResult = ({ postData }: PostSearchResultProps) => {
           options={Object.values(POST_SORTING).map((value) =>
             value.toLowerCase(),
           )}
-          value={sortType.toLowerCase()}
-          onSelect={(sort) =>
-            updateSortType(sort.toUpperCase() as PostSortingType)
-          }
+          value={POST_SORTING.RECENT.toLowerCase()}
+          onSelect={() => {}}
         />
       </div>
       {postData?.length ? (

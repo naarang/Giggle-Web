@@ -24,9 +24,10 @@ export const useGetPostGuestList = (
   isEnabled: boolean,
 ) => {
   return useQuery({
-    queryKey: ['post'],
+    queryKey: ['post', req],
     queryFn: () => getPostListGuest(req),
     enabled: isEnabled,
+    staleTime: 0,
   });
 };
 
@@ -43,9 +44,10 @@ export const useGetPostDetailGuest = (id: number, isEnabled: boolean) => {
 // 4.3 (유학생/고용주) 공고 리스트 조회 훅
 export const useGetPostList = (req: GetPostListReqType, isEnabled: boolean) => {
   return useQuery({
-    queryKey: ['post'],
+    queryKey: ['post', req],
     queryFn: () => getPostList(req),
     enabled: isEnabled,
+    staleTime: 0,
   });
 };
 
