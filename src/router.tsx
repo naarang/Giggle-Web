@@ -45,6 +45,9 @@ import EmployerSignupPage from '@/pages/Employer/Signup/EmployerSignupPage';
 import AlarmPage from '@/pages/Alarm/AlarmPage';
 import ChatBotPage from '@/pages/ChatBot/ChatBotPage';
 import Splash from '@/components/Splash/Splash';
+import ApplicantDocumentsDetailPage from './pages/Employer/WriteDocuments/ApplicantDocumentsDetailPage';
+import EmployerWriteDocumentsPage from './pages/Employer/WriteDocuments/EmployerWriteDocumentsPage';
+import EmployerCreatePostPage from './pages/Employer/Post/EmployerCreatePostPage';
 
 const Layout = () => {
   const location = useLocation();
@@ -157,6 +160,17 @@ const Router = () => {
             path="/employer/applicant/:id/resume/accept"
             element={<EmployerApplicantResumeAcceptPage />}
           />
+          <Route
+            path="/employer/applicant/document-detail"
+            element={<ApplicantDocumentsDetailPage />}
+          />
+          <Route
+            path="/employer/write-documents"
+            element={<EmployerWriteDocumentsPage />}
+          />
+          <Route path="/write-documents" element={<WriteDocumentsPage />} />
+          <Route path="/document-preview" element={<DocumentPreview />} />
+          <Route path="/request-modify" element={<RequestModifyPage />} />
 
           <Route path="/employer/profile" element={<EmployerProfilePage />} />
           <Route
