@@ -8,7 +8,7 @@ import { buttonTypeKeys } from '@/constants/components';
 import { GenderType, NationalityType, VisaType } from '@/constants/profile';
 import { UserProfileDetailDataType } from '@/types/api/profile';
 import { InputType } from '@/types/common/input';
-import { transformToEditProfileData } from '@/utils/editProfileData';
+import { transformToProfileRequest } from '@/utils/editProfileData';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { country, phone, visa } from '@/constants/information';
@@ -48,7 +48,7 @@ const EditProfilePage = () => {
     navigate('/profile');
 
     // get -> patch 데이터 변환
-    const transformedData = transformToEditProfileData(
+    const transformedData = transformToProfileRequest(
       userData,
       phoneNum,
       profileImage,
