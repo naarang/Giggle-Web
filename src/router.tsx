@@ -1,11 +1,13 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Outlet, useLocation } from 'react-router-dom';
+import { useUserStore } from '@/store/user';
+import { UserType } from '@/constants/user';
 
 import ScrollToTop from '@/components/Common/ScrollToTop';
 import Navbar from '@/components/Common/Navbar';
 import HomePage from '@/pages/Home/HomePage';
 import SigninPage from '@/pages/Signin/SigninPage';
-import SignupPage from '@/pages/Signup/SignupPage';
+import SignupPage from '@/pages/signup/SignupPage';
 import InformationPage from '@/pages/Information/InformationPage';
 import ApplicationDocumentsPage from '@/pages/ApplicationDocuments/ApplicationDocumentsPage';
 import PostSearchPage from '@/pages/PostSearch/PostSearchPage';
@@ -32,17 +34,17 @@ import RequestModifyPage from '@/pages/WriteDocuments/RequestModifyPage';
 import DocumentPreview from '@/pages/WriteDocuments/DocumentPreviewPage';
 import EmployerPostPage from '@/pages/Employer/Post/EmployerPostPage';
 import EmployerApplicantListPage from '@/pages/Employer/ApplicantList/EmployerApplicantListPage';
+import EmployerProfilePage from '@/pages/Employer/Profile/EmployerProfilePage';
 import EmployerSignupInfoPage from '@/pages/Employer/signup/EmployerSignupInfoPage';
 import PostLanguagePage from '@/pages/PostLanguage/PostLanguagePage';
 import EmployerApplicantDetailPage from '@/pages/Employer/ApplicantDetail/EmployerApplicantDetailPage';
 import EmployerApplicantResumePage from '@/pages/Employer/ApplicantResume/EmployerApplicantResumePage';
 import EmployerApplicantResumeAcceptPage from '@/pages/Employer/ApplicantResumeAccept/EmployerApplicantResumeAcceptPage';
+import EmployerEditProfilePage from '@/pages/Employer/EditProfile/EmployerEditProfilePage';
+import EmployerSignupPage from '@/pages/Employer/signup/EmployerSignupPage';
 import AlarmPage from '@/pages/Alarm/AlarmPage';
 import ChatBotPage from '@/pages/ChatBot/ChatBotPage';
-import { useUserStore } from '@/store/user';
-import { UserType } from '@/constants/user';
 import Splash from '@/components/Splash/Splash';
-import EmployerSignupPage from './pages/Employer/signup/EmployerSignupPage';
 
 const Layout = () => {
   const location = useLocation();
@@ -112,6 +114,18 @@ const Router = () => {
 
           <Route path="/post/:id" element={<PostDetailPage />} />
           <Route path="/post/apply/:id" element={<PostApplyPage />} />
+          <Route path="/write-documents" element={<WriteDocumentsPage />} />
+
+          <Route path="/document-preview" element={<DocumentPreview />} />
+          <Route path="/request-modify" element={<RequestModifyPage />} />
+
+          <Route path="/application" element={<ApplicationPage />} />
+          <Route path="/application/:id" element={<ApplicationDetailPage />} />
+          <Route
+            path="/application/result/:id"
+            element={<ApplicationResultPage />}
+          />
+
           <Route path="/employer/signup" element={<EmployerSignupPage />} />
           <Route
             path="/employer/signup/information"
@@ -138,15 +152,11 @@ const Router = () => {
             path="/employer/applicant/:id/resume/accept"
             element={<EmployerApplicantResumeAcceptPage />}
           />
-          <Route path="/write-documents" element={<WriteDocumentsPage />} />
-          <Route path="/document-preview" element={<DocumentPreview />} />
-          <Route path="/request-modify" element={<RequestModifyPage />} />
 
-          <Route path="/application" element={<ApplicationPage />} />
-          <Route path="/application/:id" element={<ApplicationDetailPage />} />
+          <Route path="/employer/profile" element={<EmployerProfilePage />} />
           <Route
-            path="/application/result/:id"
-            element={<ApplicationResultPage />}
+            path="/employer/profile/edit"
+            element={<EmployerEditProfilePage />}
           />
         </Route>
       </Routes>
