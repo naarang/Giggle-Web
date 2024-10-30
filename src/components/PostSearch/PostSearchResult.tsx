@@ -1,8 +1,9 @@
 import NoSearchResultImg from '@/assets/images/NoSearchResultImg.png';
 import { JobPostingItemType } from '@/types/common/jobPostingItem';
 import JobPostingCard from '@/components/Common/JobPostingCard';
-import { useState } from 'react';
 import SearchSortDropdown from '@/components/Common/SearchSortDropdown';
+import { usePostSearchStore } from '@/store/postSearch';
+import { POST_SEARCH_MENU } from '@/constants/postSearch';
 
 // 공고 목록 더미데이터
 const JOB_POSTING_LIST: JobPostingItemType[] = [
@@ -46,23 +47,24 @@ const JOB_POSTING_LIST: JobPostingItemType[] = [
 
 const SORT_TYPE = {
   POPULAR: 'Popular',
-  RECOMMENDED: 'Recommended',
+  RECOMMEND: 'Recommend',
   RECENT: 'Recent',
 } as const;
 
-type SortType = (typeof SORT_TYPE)[keyof typeof SORT_TYPE];
-
 const PostSearchResult = () => {
+  const { sortType, updateSortType } = usePostSearchStore();
   // TODO: 홈에서 See more 버튼 클릭 시 해당 메뉴로 정렬하기
-  const [selectedSort, setSelectedSort] = useState<SortType>(SORT_TYPE.POPULAR);
+
   return (
     <section className="flex flex-col items-center gap-[1rem] w-full mt-[1rem] px-[1.5rem]">
       <div className="w-full flex justify-between items-center">
         <h3 className="head-3 text-black">Search Result</h3>
         <SearchSortDropdown
           options={Object.values(SORT_TYPE)}
-          value={selectedSort}
-          onSelect={(sort) => setSelectedSort(sort as SortType)}
+          value={sortType.toLowerCase()}
+          onSelect={(sort) =>
+            updateSortType(sort.toUpperCase() as POST_SEARCH_MENU)
+          }
         />
       </div>
       {JOB_POSTING_LIST?.length ? (

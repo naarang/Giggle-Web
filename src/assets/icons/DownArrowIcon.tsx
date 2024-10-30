@@ -2,20 +2,20 @@ type Props = {
   isMarked: boolean;
 };
 
-const ArrowIcon = ({ isMarked }: Props) => {
+const DownArrowIcon = ({ isMarked }: Props) => {
   return (
     <svg
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
+      width="19"
+      height="18"
+      viewBox="0 0 19 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g id="Iconography / Metaphor / ArrowUp">
+      <g id="Iconography">
         <path
           id="Path 5"
-          d="M2.91667 12.9167L10 5.83333L17.0833 12.9167"
-          stroke={isMarked ? '#1E1926' : '#BDBDBD'}
+          d="M15.875 6.375L9.5 12.75L3.125 6.375"
+          stroke={isMarked ? '#695F96' : '#BDBDBD'}
           strokeWidth="1.2"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -25,4 +25,4 @@ const ArrowIcon = ({ isMarked }: Props) => {
   );
 };
 
-export default ArrowIcon;
+export default DownArrowIcon;

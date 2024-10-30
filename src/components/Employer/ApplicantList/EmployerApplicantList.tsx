@@ -22,7 +22,7 @@ const EmployerApplicationList = ({
     KO_ASCENDING_SORT_TYPE.ASCENDING,
   );
   const [selectedStatus, setSelectedStatus] = useState<KoApplicationStatusType>(
-    KO_APPLICATION_STATUS_TYPE.INPROGRESS,
+    KO_APPLICATION_STATUS_TYPE.TOTAL,
   );
 
   useEffect(() => {
