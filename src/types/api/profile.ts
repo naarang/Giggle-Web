@@ -1,4 +1,3 @@
-import { GenderType, VisaType } from '@/constants/profile';
 import { OwnerInfo } from '@/types/api/employ';
 import { Address } from '@/types/api/users';
 
@@ -24,13 +23,14 @@ export type ApplicationCountType = {
   successful_hire_counts: number;
 };
 
+// 프로필 페이지에서 사용 3.3 유저 요약정보 조회
 export type UserProfileSummaryResponse = {
-  user_information: UserProfileResponse;
+  user_information: UserInformation;
   language_level: LanguageLevelType;
   meta_data: MetaDataType;
 };
 
-export type UserProfileResponse = {
+export type UserInformation = {
   profile_img_url: string;
   first_name: string;
   last_name: string;
@@ -41,12 +41,25 @@ export type UserProfileResponse = {
   is_notification_allowed: boolean;
 };
 
-export type UserEditProfileRequest = {
-  image?: File; // multipart-form-data
-  body: UserEditBodyRequest;
+// ----------- 프로필 수정 -----------
+// 프로필 수정시 사용 3.1 유학생 프로필 조회
+export type UserProfileDetailResponse = {
+  profile_img_url: string;
+  first_name: string;
+  last_name: string;
+  birth: string;
+  gender: string;
+  nationality: string;
+  visa: string;
+  phone_number: string;
 };
 
-export type UserEditBodyRequest = {
+export type UserEditProfileRequest = {
+  image?: File; // multipart-form-data
+  body: UserEditRequestBody;
+};
+
+export type UserEditRequestBody = {
   first_name: string;
   last_name: string;
   birth: string; // yyyy-MM-dd
@@ -57,15 +70,15 @@ export type UserEditBodyRequest = {
   is_profile_img_changed: boolean;
 };
 
-export type UserProfileDetailDataType = {
-  profile_img_url: string;
-  first_name: string;
-  last_name: string;
-  birth: string; // yyyy-MM-dd
-  gender: GenderType; // Enum(MALE, FEMALE, NONE)
-  nationality: string;
-  visa: VisaType; // Enum(D_2_1, D_2_2, D_2_3, D_2_4, D_2_6, D_2_7, D_2_8, D_4_1, D_4_7, F_2)
-  phone_number: string;
+export const InitialUserProfileDetail: UserEditRequestBody = {
+  first_name: '',
+  last_name: '',
+  birth: '', // yyyy-MM-dd
+  gender: '', // Enum(MALE, FEMALE, NONE)
+  nationality: '',
+  visa: '', // Enum(D_2_1, D_2_2, D_2_3, D_2_4, D_2_6, D_2_7, D_2_8, D_4_1, D_4_7, F_2)
+  phone_number: '',
+  is_profile_img_changed: false,
 };
 
 // 고용주 프로필
