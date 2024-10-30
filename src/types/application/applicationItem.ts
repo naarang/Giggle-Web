@@ -56,17 +56,22 @@ export type ApplicationRecruiterItemType = {
 };
 
 type SchoolAddressType = {
-  school_name: string;
-  institute_name: string;
-  detail_address: string;
+  address_name: string;
+  region_1depth_name: string;
+  region_2depth_name: string;
+  region_3depth_name: string;
+  region_4depth_name?: string;
+  address_detail: string;
   longitude: number;
   latitude: number;
 };
 
 // 학교 정보
 export type ApplicationCoordinaterItemType = {
-  coordinator_name: string;
-  coordinator_phone_number: string;
+  school_name?: string;
+  institute_name?: string;
+  coordinator_name?: string;
+  coordinator_phone_number?: string;
   address: SchoolAddressType;
 };
 

@@ -35,18 +35,20 @@ export const usePostApplyPost = () => {
 };
 
 // 6.2 (유학생) 지원 상태 상세 조회하기 훅
-export const useGetApplicationDetail = (id: number) => {
+export const useGetApplicationDetail = (id: number, isEnabled: boolean) => {
   return useQuery({
     queryKey: ['application', id],
     queryFn: () => getApplicationDetail(id),
+    enabled: isEnabled,
   });
 };
 
 // 6.5 (유학생) 공고 담당자 정보 조회하기 훅
-export const useGetRecruiterInfo = (id: number) => {
+export const useGetRecruiterInfo = (id: number, isEnabled: boolean) => {
   return useQuery({
     queryKey: ['application', id],
     queryFn: () => getRecruiterInfo(id),
+    enabled: isEnabled,
   });
 };
 
@@ -120,11 +122,13 @@ export const usePatchApplyHiKorea = () => {
 };
 
 // 6.15 (유학생) 하이코리아 처리결과 등록하기 훅
-export const usePatchHiKoreaResult = () => {
+export const usePatchHiKoreaResult = (id: number) => {
+  const navigate = useNavigate();
+
   return useMutation({
     mutationFn: patchHiKoreaResult,
     onSuccess: () => {
-      window.location.reload();
+      navigate(`/application/${id}`);
     },
     onError: (error) => {
       console.error('하이코리아 처리결과 등록 실패', error);
@@ -133,9 +137,10 @@ export const usePatchHiKoreaResult = () => {
 };
 
 // 9.2 (유학생) 학교 정보 상세조회하기 훅
-export const useGetSchoolInfo = () => {
+export const useGetSchoolInfo = (isEnabled: boolean) => {
   return useQuery({
     queryKey: ['application'],
     queryFn: () => getSchoolInfo(),
+    enabled: isEnabled,
   });
 };

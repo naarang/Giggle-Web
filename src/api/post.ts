@@ -87,7 +87,7 @@ export const getApplyPostList = async ({
   status,
 }: GetApplyPostListReqType) => {
   const response = await api.get(
-    `/users/user-owner-job-postings/overviews?page=${page}&size=${size}&sorting=${sorting}&${status === APPLICATION_STATUS_TYPE.TOTAL ? '' : `status=${status}`}`,
+    `/users/user-owner-job-postings/overviews?page=${page}&size=${size}&sorting=${sorting}${status === APPLICATION_STATUS_TYPE.TOTAL ? '' : `&status=${status}`}`,
   );
   return response.data;
 };

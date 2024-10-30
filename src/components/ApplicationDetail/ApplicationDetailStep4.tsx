@@ -1,45 +1,43 @@
 import { buttonTypeKeys } from '@/constants/components';
 import Button from '@/components/Common/Button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import ApplicationDetailBottomSheet from '@/components/ApplicationDetail/ApplicationDetailBottomSheet';
 import ContactCoordinatorModal from '@/components/ApplicationDetail/ContactCoordinatorModal';
 import { ApplicationCoordinaterItemType } from '@/types/application/applicationItem';
-
-const COORDINATER_DATA: ApplicationCoordinaterItemType = {
-  coordinator_name: 'John Doe',
-  coordinator_phone_number: '+1234567890',
-  address: {
-    school_name: 'Example High School',
-    institute_name: 'Example School District',
-    detail_address: '123 Main Street, City, Country',
-    longitude: 127.12345,
-    latitude: 37.54321,
-  },
-};
+import {
+  useGetSchoolInfo,
+  usePatchContactCoordinator,
+} from '@/hooks/api/useApplication';
 
 const ApplicationDetailStep4 = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  const { refetch } = useGetSchoolInfo(false);
+  const { mutate } = usePatchContactCoordinator();
 
   const [isShowBottomsheet, setIsShowBottomSheet] = useState<boolean>(false);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const [coordinatorData, setCoordinatorData] =
     useState<ApplicationCoordinaterItemType>();
 
-  const onClickBlackButton = () => {
-    // TODO: 9.2 조회
-    setCoordinatorData(COORDINATER_DATA);
+  const onClickBlackButton = async () => {
+    const { data } = await refetch();
+    if (!data?.success) return;
+
+    setCoordinatorData(data?.data);
     setIsShowModal(true);
     setIsShowBottomSheet(false);
   };
 
   const onClickYellowButton = () => {
-    // TODO: 6.13 조회
-    window.location.reload();
+    if (isNaN(Number(id))) return;
+    mutate(Number(id));
   };
 
   const onClickContact = () => {
-    // TODO: 전화연결 활성화...
+    // TODO: 전화연결 활성화
     setIsShowModal(false);
   };
 

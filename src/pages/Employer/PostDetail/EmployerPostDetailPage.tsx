@@ -15,14 +15,12 @@ const EmployerPostDetailPage = () => {
   const { id } = useParams();
 
   const { data, refetch } = useGetPostDetail(
-    parseInt(id!, 10),
-    account_type === UserType.OWNER && typeof parseInt(id!, 10) === 'number'
-      ? true
-      : false,
+    Number(id),
+    account_type === UserType.OWNER && !isNaN(Number(id)) ? true : false,
   );
 
   useEffect(() => {
-    if (typeof parseInt(id!, 10) === 'number') refetch();
+    if (!isNaN(Number(id))) refetch();
   }, [id, refetch]);
 
   if (!data?.data) return <></>;
