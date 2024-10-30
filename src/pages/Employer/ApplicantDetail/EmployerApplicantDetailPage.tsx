@@ -2,22 +2,25 @@ import ApplicationDetailSteps from '@/components/ApplicationDetail/ApplicationDe
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import EmployerApplicantDetailButton from '@/components/Employer/ApplicantDetail/EmployerApplicantDetailButton';
 import EmployerApplicantDetailCard from '@/components/Employer/ApplicantDetail/EmployerApplicantDetailCard';
-import { APPLICANT_DETAIL_DATA } from '@/constants/application';
-import { ApplicantDetailItemType } from '@/types/application/applicationItem';
+import { useGetEmployerApplicationDetail } from '@/hooks/api/useApplication';
 import { findCurrentStep } from '@/utils/application';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const EmployerApplicantDetailPage = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
 
-  const [applicantData, setApplicantData] = useState<ApplicantDetailItemType>();
+  const { data, refetch } = useGetEmployerApplicationDetail(
+    Number(id),
+    !isNaN(Number(id)),
+  );
 
   useEffect(() => {
-    setApplicantData(APPLICANT_DETAIL_DATA);
-  }, []);
+    if (!isNaN(Number(id))) refetch();
+  }, [id, refetch]);
 
-  if (!applicantData) return <></>;
+  if (!data?.success) return <></>;
 
   return (
     <>
@@ -28,13 +31,13 @@ const EmployerApplicantDetailPage = () => {
         title="서류 신청 관리하기"
       />
       <div className="w-full flex flex-col gap-[2.25rem] p-[1.5rem]">
-        <EmployerApplicantDetailCard applicantData={applicantData} />
+        <EmployerApplicantDetailCard applicantData={data?.data} />
         <ApplicationDetailSteps
-          step={findCurrentStep(applicantData.step)}
+          step={findCurrentStep(data?.data.step)}
           isKorean={true}
         />
       </div>
-      <EmployerApplicantDetailButton step={applicantData.step} />
+      <EmployerApplicantDetailButton step={data?.data.step} />
     </>
   );
 };

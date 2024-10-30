@@ -2,6 +2,12 @@ import BottomSheetLayout from '@/components/Common/BottomSheetLayout';
 import Button from '@/components/Common/Button';
 import { buttonTypeKeys } from '@/constants/components';
 import PhoneIcon from '@/assets/icons/PhoneIcon.svg?react';
+import {
+  useGetEmployerApplicationSummary,
+  usePatchInterviewFinish,
+} from '@/hooks/api/useApplication';
+import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 
 type EmployerApplicantContactBottomSheetType = {
   isShowBottomsheet: boolean;
@@ -12,10 +18,23 @@ const EmployerApplicantContactBottomSheet = ({
   isShowBottomsheet,
   setIsShowBottomSheet,
 }: EmployerApplicantContactBottomSheetType) => {
+  const { id } = useParams();
+  const { data, refetch } = useGetEmployerApplicationSummary(
+    Number(id),
+    !isNaN(Number(id)),
+  );
+  const { mutate } = usePatchInterviewFinish();
+
+  useEffect(() => {
+    if (!isNaN(Number(id))) refetch();
+  }, [id, refetch]);
+
   const onClickComplete = () => {
-    // 6.11 호출
-    window.location.reload();
+    if (!isNaN(Number(id))) mutate(Number(id));
   };
+
+  if (!data?.success) return <></>;
+
   return (
     <BottomSheetLayout
       hasHandlebar={true}
@@ -37,8 +56,12 @@ const EmployerApplicantContactBottomSheet = ({
             <PhoneIcon />
           </div>
           <div>
-            <h5 className="button-2 text-black text-start">지원자명</h5>
-            <p className="caption-1 text-[#656565] text-start">전화번호</p>
+            <h5 className="button-2 text-black text-start">
+              {data?.data?.applicant_name}
+            </h5>
+            <p className="caption-1 text-[#656565] text-start">
+              {data?.data?.applicant_phone_number}
+            </p>
           </div>
         </div>
         <p className="body-3 text-[#7872ED]">

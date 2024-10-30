@@ -95,7 +95,7 @@ export type ApplicantDetailItemType = {
   nationality: string;
   gender: string;
   visa: VisaType;
-  school_name: string;
+  school_name?: string;
   duration_of_days: number;
   step: ApplicationStepType;
 };

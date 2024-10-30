@@ -53,18 +53,26 @@ export const useGetRecruiterInfo = (id: number, isEnabled: boolean) => {
 };
 
 // 6.7 (고용주) 지원자 지원 상태 상세 조회 훅
-export const useGetEmployerApplicationDetail = (id: number) => {
+export const useGetEmployerApplicationDetail = (
+  id: number,
+  isEnabled: boolean,
+) => {
   return useQuery({
     queryKey: ['application', id],
     queryFn: () => getEmployerApplicationDetail(id),
+    enabled: isEnabled,
   });
 };
 
 // 6.8 (고용주) 지원자 간단 정보 조회하기 훅
-export const useGetEmployerApplicationSummary = (id: number) => {
+export const useGetEmployerApplicationSummary = (
+  id: number,
+  isEnabled: boolean,
+) => {
   return useQuery({
     queryKey: ['application', id],
     queryFn: () => getEmployerApplicationSummary(id),
+    enabled: isEnabled,
   });
 };
 
