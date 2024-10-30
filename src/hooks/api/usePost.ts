@@ -14,7 +14,7 @@ import {
   putPostBookmark,
 } from '@/api/post';
 import { GetApplyPostListReqType, GetPostListReqType } from '@/types/api/post';
-import { AscendingSortType } from '@/types/common/sort';
+import { MatchKoEnAscendingSortType } from '@/types/common/sort';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
@@ -71,18 +71,21 @@ export const useGetApplicantList = (
   id: number,
   sorting: string,
   status: string,
+  isEnabled: boolean,
 ) => {
   return useQuery({
     queryKey: ['post', id],
     queryFn: () => getApplicantList(id, sorting, status),
+    enabled: isEnabled,
   });
 };
 
 // 4.7 (유학생/고용주) 공고 요약 정보 조회하기 훅
-export const useGetPostSummary = (id: number) => {
+export const useGetPostSummary = (id: number, isEnabled: boolean) => {
   return useQuery({
     queryKey: ['post', id],
     queryFn: () => getPostSummary(id),
+    enabled: isEnabled,
   });
 };
 
@@ -141,7 +144,7 @@ export const useGetInterviewList = (page: number, size: number) => {
 };
 
 // 6.6 (고용주) 등록한 공고 리스트 조회하기 훅
-export const useGetEmployerPostList = (sorting: AscendingSortType) => {
+export const useGetEmployerPostList = (sorting: MatchKoEnAscendingSortType) => {
   return useQuery({
     queryKey: ['post'],
     queryFn: () => getEmployerPostList(sorting),

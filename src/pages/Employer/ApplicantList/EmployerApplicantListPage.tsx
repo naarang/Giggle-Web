@@ -1,22 +1,24 @@
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import EmployerApplicantListTitle from '@/components/Employer/ApplicantList/EmployerApplicantListTitle';
 import EmployerApplicantList from '@/components/Employer/ApplicantList/EmployerApplicantList';
-import { useNavigate } from 'react-router-dom';
-import { PostSummaryItemType } from '@/types/post/postSummaryItem';
-import { useEffect, useState } from 'react';
-import { POST_SUMMARY_ITEM } from '@/constants/post';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useGetPostSummary } from '@/hooks/api/usePost';
 
 const EmployerApplicantListPage = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
 
-  const [postData, setPostData] = useState<PostSummaryItemType>();
+  const { data, refetch } = useGetPostSummary(
+    Number(id),
+    !isNaN(Number(id)) ? true : false,
+  );
 
   useEffect(() => {
-    // TODO: 4.7로 조회하기
-    setPostData(POST_SUMMARY_ITEM);
-  }, []);
+    if (!isNaN(Number(id))) refetch();
+  }, [id, refetch]);
 
-  if (!postData) return <></>;
+  if (!data?.success) return <></>;
 
   return (
     <>
@@ -27,9 +29,9 @@ const EmployerApplicantListPage = () => {
           hasMenuButton={false}
           title="지원자 조회"
         />
-        <EmployerApplicantListTitle postData={postData} />
+        <EmployerApplicantListTitle postData={data?.data} />
       </div>
-      <EmployerApplicantList title={postData?.title} />
+      <EmployerApplicantList title={data?.data?.title} />
     </>
   );
 };

@@ -5,8 +5,11 @@ import {
   LanguageType,
   WorkExperienceType,
 } from '@/types/postApply/resumeDetailItem';
-import { useGetResume } from '@/hooks/api/useResume';
-import { useNavigate } from 'react-router-dom';
+import { useGetApplicantResume, useGetResume } from '@/hooks/api/useResume';
+import { useParams } from 'react-router-dom';
+import { useUserStore } from '@/store/user';
+import { UserType } from '@/constants/user';
+import { useEffect } from 'react';
 
 const EDUCATION_PERIOD = {
   BACHELOR: 4,
@@ -15,12 +18,26 @@ const EDUCATION_PERIOD = {
 } as const;
 
 const PostApplyResume = () => {
-  const { data, isError } = useGetResume();
-  const navigate = useNavigate();
+  const { id } = useParams();
+  const { account_type } = useUserStore();
 
-  if (isError) navigate('/signin');
+  const { data: userData, refetch: userFetch } = useGetResume(
+    account_type === UserType.USER,
+  );
+  const { data: ownerData, refetch: ownerFetch } = useGetApplicantResume(
+    Number(id),
+    !isNaN(Number(id)) && account_type === UserType.OWNER ? true : false,
+  );
+
+  const data = account_type === UserType.OWNER ? userData : ownerData;
+
+  useEffect(() => {
+    if (!isNaN(Number(id)) && account_type === UserType.OWNER) ownerFetch();
+    if (account_type === UserType.USER) userFetch();
+  }, [id, account_type, ownerFetch, userFetch]);
 
   if (data?.data) return <></>;
+
   return (
     <section className="flex flex-col items-center gap-[1.5rem] w-full pt-[1.5rem] px-[1.5rem] pb-[7.25rem]">
       <PostApplyProfile

@@ -1,4 +1,4 @@
-import { AscendingSortType } from '@/types/common/sort';
+import { MatchKoEnAscendingSortType } from '@/types/common/sort';
 import { api } from '.';
 import { GetApplyPostListReqType, GetPostListReqType } from '@/types/api/post';
 import { APPLICATION_STATUS_TYPE } from '@/constants/application';
@@ -101,7 +101,9 @@ export const getInterviewList = async (page: number, size: number) => {
 };
 
 // 6.6 (고용주) 등록한 공고 리스트 조회하기
-export const getEmployerPostList = async (sorting: AscendingSortType) => {
+export const getEmployerPostList = async (
+  sorting: MatchKoEnAscendingSortType,
+) => {
   // TODO: 무한 스크롤 구현하기
   const page = 1;
   const size = 10;
