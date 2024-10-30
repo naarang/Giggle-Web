@@ -53,7 +53,9 @@ const EmployerWriteDocumentsPage = () => {
           hasBackButton={true}
           hasMenuButton={false}
           title="서류 작성"
-          onClickBackButton={() => navigate('/employer/application-documents')} // 서류관리 페이지로 이동 요망
+          onClickBackButton={() =>
+            navigate('/employer/applicant/document-detail')
+          } // 서류관리 페이지로 이동 요망
         />
         <DocumentSubHeaderEmployer type={type as DocumentType} />
         <div className="px-6 pt-6">
