@@ -30,7 +30,6 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { useEmailTryCountStore } from '@/store/signup';
 import { useUserStore } from '@/store/user';
 import { RESTYPE } from '@/types/api/common';
-import { error } from 'console';
 
 /**
  * 로그인 프로세스를 처리하는 커스텀 훅

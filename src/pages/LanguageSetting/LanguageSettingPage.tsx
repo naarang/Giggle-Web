@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import Button from '@/components/Common/Button';
 import Dropdown from '@/components/Common/Dropdown';

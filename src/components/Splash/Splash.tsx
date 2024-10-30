@@ -4,7 +4,6 @@ import SplashIcon from '@/assets/icons/Splash.svg?react';
 import { getAccessToken, getRefreshToken } from '@/utils/auth';
 import { useGetUserType, useReIssueToken } from '@/hooks/api/useAuth';
 import { useUserStore } from '@/store/user';
-import { log } from 'console';
 
 const Splash = () => {
   const navigate = useNavigate();
