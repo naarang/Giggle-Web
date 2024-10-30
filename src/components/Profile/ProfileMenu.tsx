@@ -24,22 +24,26 @@ const ProfileMenu = ({
   onClick,
   isToggle,
 }: ProfileMenuProps) => {
-  const { data } = useGetUserSummaries();
+  const { mutate: patchNotificationAllowed } = usePatchNotificationAllowed();
+  const { data: notificaionAllowed } = useGetUserSummaries();
+
+  // const { data } = useGetUserSummaries();
   const [toggleOn, setToggleOn] = useState<boolean>(false);
 
   useEffect(() => {
     // 알림 설정 상태 불러오기
-    if (isToggle && data && data.success) {
-      setToggleOn(data.data.user_information.is_notification_allowed);
+    if (isToggle && notificaionAllowed && notificaionAllowed.success) {
+      setToggleOn(
+        notificaionAllowed.data.user_information.is_notification_allowed,
+      );
     }
   }, []);
 
-  const { mutate: patchNotificationAllowed } = usePatchNotificationAllowed();
   const handleToggleChange = () => {
     // 알림 설정 변경
     patchNotificationAllowed(!toggleOn, {
-      onSuccess: (res) => {
-        setToggleOn(res);
+      onSuccess: () => {
+        setToggleOn(!toggleOn);
       },
     });
   };
