@@ -3,14 +3,10 @@ import ProfileMenu from '@/components/Profile/ProfileMenu';
 import { useNavigate } from 'react-router-dom';
 
 type ProfileMenuListProps = {
-  isNotificationAllowed: boolean;
   onLogoutClick: () => void;
 };
 
-const ProfileMenuList = ({
-  isNotificationAllowed,
-  onLogoutClick,
-}: ProfileMenuListProps) => {
+const ProfileMenuList = ({ onLogoutClick }: ProfileMenuListProps) => {
   const navigate = useNavigate();
 
   const handleEditProfileClick = () => {
@@ -23,7 +19,6 @@ const ProfileMenuList = ({
     navigate('/resume/scrapped');
   };
   const handleLanguageClick = () => {
-    // API - 언어 설정(추후 적용 예정)
     navigate('/profile/language');
   };
 
@@ -50,7 +45,7 @@ const ProfileMenuList = ({
         <ProfileMenu
           title="Notifications"
           iconType={IconType.NOTIFICATION}
-          isToggle={isNotificationAllowed}
+          isToggle={true}
         />
         <ProfileMenu
           title="Language"

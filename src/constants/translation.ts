@@ -104,3 +104,38 @@ export const signInputTranclation = {
     en: 'Verification successful',
   },
 };
+
+export const profileTranslation = {
+  wantLogout: {
+    ko: '로그아웃을 원하시나요?',
+    en: 'Are you sure you want to leave?',
+  },
+  yes: {
+    ko: '네',
+    en: 'Yes',
+  },
+  no: {
+    ko: '아니오',
+    en: 'No',
+  },
+  deleteAccount: {
+    ko: '계정 삭제',
+    en: 'Delete account',
+  },
+  wantDeleteAccount: {
+    ko: '정말 계정을 삭제하시나요?',
+    en: 'Do you want me to delete the account?',
+  },
+  descriptionDelet: {
+    ko: '계정을 삭제하면 이후 복구가 불가능합니다. 정말 계정을 삭제하시나요?',
+    en: 'If you delete your account, you will not be able to recover it again. Do you still want to delete it?',
+  },
+  cancel: {
+    ko: '취소',
+    en: 'Cancel',
+  },
+  delete: {
+    ko: '삭제',
+    en: 'Delete',
+  },
+};

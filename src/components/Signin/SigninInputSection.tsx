@@ -31,7 +31,12 @@ const SigninInputSection = () => {
 
   // ====== Sign in API =======
   const handleSubmit = async () => {
-    signIn({ serial_id: idValue, password: passwordValue });
+    // signIn({ serial_id: idValue, password: passwordValue });
+    const formData = new FormData();
+    formData.append('serial_id', idValue);
+    formData.append('password', passwordValue);
+
+    signIn(formData);
   };
 
   // 모든 필드의 유효성 검사 후, Sign In 버튼 활성화
