@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IconType } from '@/constants/profile';
 import ProfileIcon from '@/assets/icons/Profile/ProfileIcon.svg?react';
 import ManageIcon from '@/assets/icons/Profile/ManageIcon.svg?react';
@@ -8,6 +8,8 @@ import LanguageIcon from '@/assets/icons/Profile/LanguageIcon.svg?react';
 import LogoutIcon from '@/assets/icons/Profile/LogoutIcon.svg?react';
 import ToggleBar from '@/assets/icons/Profile/ToggleBar.svg?react';
 import ToggleButton from '@/assets/icons/Profile/ToggleButton.svg?react';
+import { usePatchNotificationAllowed } from '@/hooks/api/useSetting';
+import { useGetUserSummaries } from '@/hooks/api/useProfile';
 
 type ProfileMenuProps = {
   title: string;
@@ -22,28 +24,24 @@ const ProfileMenu = ({
   onClick,
   isToggle,
 }: ProfileMenuProps) => {
-  const [toggleOn, setToggleOn] = useState<boolean>(true);
+  const { data } = useGetUserSummaries();
+  const [toggleOn, setToggleOn] = useState<boolean>(false);
 
-  const handleToggleChange = async () => {
-    // 임시 코드로 아래 API 코드로 변경 예정
-    setToggleOn(!toggleOn);
-
-    /*
-    try {
-      // PATCH API 호출
-      const response = await axios.patch('/api/v1/notification-allowed', {
-        is_notification_allowed: toggleOn,
-      });
-
-      if (response.data.success) {
-        setToggleOn(response.data.is_notification_allowed);
-      } else {
-        console.error('Error:', response.data.error);
-      }
-    } catch (error) {
-      console.error('API 호출 중 오류 발생:', error);
+  useEffect(() => {
+    // 알림 설정 상태 불러오기
+    if (isToggle && data && data.success) {
+      setToggleOn(data.data.user_information.is_notification_allowed);
     }
-      */
+  }, []);
+
+  const { mutate: patchNotificationAllowed } = usePatchNotificationAllowed();
+  const handleToggleChange = () => {
+    // 알림 설정 변경
+    patchNotificationAllowed(!toggleOn, {
+      onSuccess: (res) => {
+        setToggleOn(res);
+      },
+    });
   };
 
   const iconMapping = (iconType: IconType) => {
@@ -78,8 +76,9 @@ const ProfileMenu = ({
       </div>
       {isToggle && (
         <div className="relative flex items-center">
-          <ToggleBar />
+          <ToggleBar fill="#00D1A033" />
           <ToggleButton
+            fill={toggleOn ? '#00D1A0' : '#DCDCDC'}
             className={`absolute transform transition-transform duration-300 ease-in-out ${
               toggleOn ? 'translate-x-4' : 'translate-x-0'
             }`}
