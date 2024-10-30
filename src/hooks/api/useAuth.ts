@@ -69,7 +69,7 @@ export const useSignIn = () => {
       }
     },
     onError: () => {
-      alert('아이디 혹은 비밀번호가 일치하지 않습니다.');
+      alert('아이디 혹은 비밀번호를 다시 확인해주세요.');
     },
   });
 };
@@ -167,12 +167,10 @@ export const useSignUp = () => {
 
 // 2.7 이메일 인증코드 검증 훅
 export const usePatchAuthentication = () => {
-  const navigate = useNavigate();
   return useMutation({
     mutationFn: patchAuthentication,
     onSuccess: (data: RESTYPE<AuthenticationResponse>) => {
       setTemporaryToken(data.data.temporary_token);
-      navigate('/information');
     },
     onError: (error) => {
       alert('인증코드를 다시 확인해주세요.');

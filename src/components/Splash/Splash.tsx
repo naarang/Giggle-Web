@@ -40,7 +40,6 @@ const Splash = () => {
     try {
       if (!access && !refresh) {
         setGuest();
-        alert('만료되어 재로그인이 필요합니다');
         navigate('/');
         return;
       }
