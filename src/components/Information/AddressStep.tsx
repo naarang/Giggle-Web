@@ -40,7 +40,10 @@ const AddressStep = ({ userInfo, onNext }: AddressStepProps) => {
   useEffect(() => {
     setNewAddress({
       ...newAddress,
-      address_name: data?.address.address_name,
+      address_name:
+        data?.address.address_name === undefined
+          ? null
+          : data.address.address_name,
     });
   }, [isSuccess]);
 
@@ -117,7 +120,9 @@ const AddressStep = ({ userInfo, onNext }: AddressStepProps) => {
           {/* 주소 검색 결과 보여주는 dropdown modal */}
           {addressSearchResult && addressSearchResult.length !== 0 && (
             <DropdownModal
-              value={newAddress.address_name}
+              value={
+                newAddress.address_name === null ? '' : newAddress.address_name
+              }
               options={Array.from(
                 addressSearchResult.filter(
                   (address) =>

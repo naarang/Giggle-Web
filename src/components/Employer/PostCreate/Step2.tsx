@@ -12,7 +12,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import CheckIcon from '@/assets/icons/CheckOfBoxIcon.svg?react';
 import { buttonTypeKeys } from '@/constants/components';
-import { formatDateToDash } from '../../../utils/editResume';
+import { formatDateToDash } from '@/utils/editResume';
 
 const Step2 = ({
   postInfo,

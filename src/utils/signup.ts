@@ -36,7 +36,7 @@ export const isValidEmployerRegistration = (
 
   // region_4depth_name은 optional이므로 값이 있는 경우에만 검증
   if (
-    address.region_4depth_name !== undefined &&
+    address.region_4depth_name !== null &&
     !isValidString(address.region_4depth_name)
   ) {
     return false;
