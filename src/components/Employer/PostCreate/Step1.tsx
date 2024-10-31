@@ -18,7 +18,7 @@ import {
   findJobCategoryByNameStrict,
   JobCategoryNames,
   workDayTimeToString,
-} from '../../../utils/post';
+} from '@/utils/post';
 import WorkDayTimeBottomSheet from '@/components/Common/WorkDayTimeBottomSheet';
 import { WorkDayTime } from '@/types/api/document';
 

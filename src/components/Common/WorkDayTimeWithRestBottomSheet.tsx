@@ -3,32 +3,20 @@ import Button from '@/components/Common/Button';
 import { buttonTypeKeys } from '@/constants/components';
 import { useState } from 'react';
 import TimePicker from '@/components/Common/TimePicker';
+import { DayOfWeek, WorkDayTimeWithRest } from '@/types/api/document';
+import { DAYS } from '@/constants/documents';
 
 // TODO: 나중에 constant로 분리해주세요!
-const DAYS = {
-  ['월요일']: 'MONDAY',
-  ['화요일']: 'TUESDAY',
-  ['수요일']: 'WEDNESDAY',
-  ['목요일']: 'THURSDAY',
-  ['금요일']: 'FRIDAY',
-  ['토요일']: 'SATURDAY',
-  ['일요일']: 'SUNDAY',
-} as const;
 
 type DayType = (typeof DAYS)[keyof typeof DAYS];
 
-// api에게 보낼 데이터 형식
-type WorkDayTimeItemType = {
-  day_of_week: DayType;
-  work_start_time: string;
-  work_end_time: string;
-  break_start_time: string;
-  break_end_time: string;
-};
-
-const WorkDayTimeWithRestBottomSheet = () => {
-  const [isShowBottomsheet, setisShowBottomsheet] = useState<boolean>(true);
-
+const WorkDayTimeWithRestBottomSheet = ({
+  onClose,
+  isShowBottomsheet,
+}: {
+  onClose: (value: WorkDayTimeWithRest[]) => void;
+  isShowBottomsheet: boolean;
+}) => {
   const [dayOfWeek, setDayOfWeek] = useState<DayType[]>([]);
   const [workStartTime, setWorkStartTime] = useState<string | null>(null);
   const [workEndTime, setWorkEndTime] = useState<string | null>(null);
@@ -55,21 +43,18 @@ const WorkDayTimeWithRestBottomSheet = () => {
     return false;
   };
 
-  const onClickSubmit = () => {
+  const returnResult = () => {
     if (!isAvailableSubmit()) return;
-
-    const result: WorkDayTimeItemType[] = dayOfWeek.map((day) => {
+    const result: WorkDayTimeWithRest[] = dayOfWeek.map((day) => {
       return {
-        day_of_week: DAYS[day as keyof typeof DAYS],
+        day_of_week: DAYS[day as keyof typeof DAYS] as DayOfWeek,
         work_start_time: workStartTime!,
         work_end_time: workEndTime!,
         break_start_time: breakStartTime!,
         break_end_time: breakEndTime!,
       };
-    });
-
-    console.log(result); // TODO: API에 보낼 형식 맞춰놨쓔!
-    setisShowBottomsheet(false);
+    })
+    onClose(result)
   };
 
   return (
@@ -139,7 +124,7 @@ const WorkDayTimeWithRestBottomSheet = () => {
           fontColor={isAvailableSubmit() ? `text-[#1E1926]` : `text-[#BDBDBD]`}
           isBorder={false}
           title={'추가하기'}
-          onClick={onClickSubmit}
+          onClick={returnResult}
         />
       </div>
     </BottomSheetLayout>

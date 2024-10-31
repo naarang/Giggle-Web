@@ -77,7 +77,7 @@ export type JobPostingForm = {
     hourly_rate: number;
     employment_type: EmploymentType;
     address: Address;
-    recruitment_dead_line?: string | null;
+    recruitment_dead_line: string | null;
     recruitment_number: number;
     gender: Gender;
     age_restriction: number | null;

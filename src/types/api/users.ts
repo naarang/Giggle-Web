@@ -34,41 +34,41 @@ export const enum Language {
   ENGLISH = 'ENGLISH',
 }
 
-// Type for user info with undefinedable fields
+// Type for user info with nullable fields
 export type UserInfo = {
-  marketing_allow: boolean | undefined;
-  first_name: string | undefined;
-  last_name: string | undefined;
-  gender: string | undefined;
-  birth: string | undefined; // Format: yyyy/mm/dd
-  nationality: string | undefined;
-  visa: string | undefined;
-  phone_number: string | undefined;
+  marketing_allow: boolean | null;
+  first_name: string | null;
+  last_name: string | null;
+  gender: string | null;
+  birth: string | null; // Format: yyyy/mm/dd
+  nationality: string | null;
+  visa: string | null;
+  phone_number: string | null;
 };
 
-// Type for address with undefinedable fields
+// Type for address with nullable fields
 export type Address = {
-  address_name: string | undefined;
-  region_1depth_name: string | undefined;
-  region_2depth_name: string | undefined;
-  region_3depth_name: string | undefined;
-  region_4depth_name: string | undefined;
-  address_detail: string | undefined;
-  longitude: number | undefined;
-  latitude: number | undefined;
+  address_name: string | null;
+  region_1depth_name: string | null;
+  region_2depth_name: string | null;
+  region_3depth_name: string | null;
+  region_4depth_name: string | null;
+  address_detail: string | null;
+  longitude: number | null;
+  latitude: number | null;
 };
 
-// Main type for the API request body with undefinedable fields
+// Main type for the API request body with nullable fields
 export type UserInfoRequestBody = {
-  temporary_token: string | undefined;
+  temporary_token: string | null;
   user_info: UserInfo;
   address: Address;
-  language: Language | undefined;
+  language: Language | null;
 };
 
 // Initial state for UserInfo
 export const initialUserInfo: UserInfo = {
-  marketing_allow: undefined,
+  marketing_allow: null,
   first_name: '',
   last_name: '',
   gender: 'MALE',
@@ -86,14 +86,14 @@ export const initialAddress: Address = {
   region_3depth_name: '',
   region_4depth_name: '',
   address_detail: '',
-  longitude: undefined,
-  latitude: undefined,
+  longitude: null,
+  latitude: null,
 };
 
 // Initial state for UserInfoRequestBody
 export const initialUserInfoRequestBody: UserInfoRequestBody = {
-  temporary_token: undefined,
+  temporary_token: null,
   user_info: initialUserInfo,
   address: initialAddress,
-  language: undefined,
+  language: null,
 };
