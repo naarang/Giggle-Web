@@ -1,31 +1,19 @@
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import {
-  DocumentStatusEmployer,
   DocumentTypeInfo,
 } from '@/constants/documents';
 import {
   DocumentType,
-  EmployDocumentsSummaryResponse,
+  EmployDocumentInfo,
 } from '@/types/api/document';
 import DocumentCardDispenserEmployer from '@/components/Employer/ApplicantDocumentsDetail/DocumentCardDispenserEmployer';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useGetDocumentsEmployer } from '@/hooks/api/useDocument';
 
-const mockDocumentsSummaryResponse: EmployDocumentsSummaryResponse = {
-  standard_labor_contract: {
-    id: 2001,
-    hwp_url: 'https://example.com/contracts/standard_2001.hwp',
-    word_url: 'https://example.com/contracts/standard_2001.docx',
-    status: DocumentStatusEmployer.TEMPORARY_SAVE,
-  },
-  part_time_employment_permits: {
-    id: 2001,
-    hwp_url: 'https://example.com/contracts/standard_2001.hwp',
-    word_url: 'https://example.com/contracts/standard_2001.docx',
-    status: DocumentStatusEmployer.TEMPORARY_SAVE,
-  },
-};
 
 const ApplicantDocumentsDetailPage = () => {
+  const {id} = useParams();
+  const { data } = useGetDocumentsEmployer(Number(id));
   const navigate = useNavigate();
   {
     /*
@@ -47,10 +35,10 @@ const ApplicantDocumentsDetailPage = () => {
         title="서류 관리"
       />
       <div className="flex flex-col gap-2 p-6">
-        {mockDocumentsSummaryResponse[DocumentType.PART_TIME_PERMIT] ? (
+        {data && data?.data[DocumentType.PART_TIME_PERMIT] ? (
           <DocumentCardDispenserEmployer
             document={
-              mockDocumentsSummaryResponse[DocumentType.PART_TIME_PERMIT]
+              data.data[DocumentType.PART_TIME_PERMIT] as EmployDocumentInfo
             }
             title={DocumentTypeInfo[DocumentType.PART_TIME_PERMIT].name}
             type={DocumentType.PART_TIME_PERMIT}
@@ -67,9 +55,9 @@ const ApplicantDocumentsDetailPage = () => {
             </div>
           </div>
         )}
-        {mockDocumentsSummaryResponse[DocumentType.LABOR_CONTRACT] ? (
+        {data && data?.data[DocumentType.LABOR_CONTRACT] ? (
           <DocumentCardDispenserEmployer
-            document={mockDocumentsSummaryResponse[DocumentType.LABOR_CONTRACT]}
+            document={data.data[DocumentType.LABOR_CONTRACT] as EmployDocumentInfo}
             title={DocumentTypeInfo[DocumentType.LABOR_CONTRACT].name}
             type={DocumentType.LABOR_CONTRACT}
             onNext={() => {}}

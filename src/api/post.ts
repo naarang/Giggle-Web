@@ -1,6 +1,5 @@
 import { MatchKoEnAscendingSortType } from '@/types/common/sort';
 import { api } from '.';
-import { JobPostingForm } from '@/types/postCreate/postCreate';
 import { GetApplyPostListReqType, GetPostListReqType } from '@/types/api/post';
 import { APPLICATION_STATUS_TYPE } from '@/constants/application';
 import { filterNullParams } from '@/utils/filterNullParams';
@@ -61,8 +60,14 @@ export const getPostSummary = async (id: number) => {
 };
 
 // 4.10 (고용주) 공고 등록하기
-export const createPost = async (newPost: JobPostingForm) => {
+export const createPost = async (newPost: FormData) => {
   const response = await api.post(`/owners/job-postings`, newPost);
+  return response.data;
+};
+
+// 4.10 (고용주) 공고 수정하기
+export const editPost = async ({newPost, id}: {newPost: FormData, id: number}) => {
+  const response = await api.put(`/owners/job-postings/${id}`, newPost);
   return response.data;
 };
 

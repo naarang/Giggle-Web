@@ -114,7 +114,7 @@ const Input = ({
       {/* 입력값 삭제 가능한 경우 삭제 아이콘을 표시합니다. */}
       {canDelete && <CloseIcon onClick={onDelete} />}
       {/* 단위가 존재할 경우 표시합니다. */}
-      {isUnit && <div className="body-2 text-[#464646]">{unit}</div>}
+      {isUnit && <div className="text-right w-full body-2 text-[#464646]"><div className='w-full'>{unit}</div></div>}
     </div>
   );
 };

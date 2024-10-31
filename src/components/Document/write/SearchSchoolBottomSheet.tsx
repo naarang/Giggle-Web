@@ -8,6 +8,7 @@ import Input from '@/components/Common/Input';
 import { InputType } from '@/types/common/input';
 import { School } from '@/types/api/document';
 import { schoolMockData } from '@/constants/documents';
+import { RESTYPE } from '../../../types/api/common';
 
 type SearchSchoolBottomSheetProps = {
   newDocumentData: IntegratedApplicationData;
@@ -23,8 +24,8 @@ const SearchSchoolBottomSheet = ({
   // TODO: 학교 검색 API와 연결 후 mock data 제거, 함수는 작성완료된 상태
   const [searchResult, setSearchResult] = useState<School[]>(schoolMockData);
   const { searchSchool } = useSearchSchool({
-    onSuccess: (data: SearchSchoolResponse) =>
-      setSearchResult(data.school_list),
+    onSuccess: (data: RESTYPE<SearchSchoolResponse>) =>
+      setSearchResult(data.data.school_list),
   });
 
   // 검색 입력 시 실시간으로 검색 진행
@@ -70,7 +71,7 @@ const SearchSchoolBottomSheet = ({
             }
           />
           <div className="w-full h-[30vh]">
-            {searchResult?.length && searchResult.length > 0 && (
+            {searchResult?.length > 0 && (
               <div className="w-full relative rounded-2xl bg-white flex flex-row items-start justify-start pl-1 text-left text-[#656565] body-2">
                 <div className="flex-1 flex flex-col items-start justify-start gap-1">
                   {searchResult.map((school) => (

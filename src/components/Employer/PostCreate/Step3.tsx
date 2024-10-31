@@ -21,7 +21,6 @@ import {
 } from '@/types/postCreate/postCreate';
 import {
   EducationCategoryNames,
-  extractNumbersAsNumber,
   findEducationLevelByNameStrict,
   findGenderByNameStrict,
   findVisaByNameStrict,
@@ -30,6 +29,7 @@ import {
 } from '@/utils/post';
 import { useEffect, useState } from 'react';
 import CheckIcon from '@/assets/icons/CheckOfBoxIcon.svg?react';
+import { parseStringToSafeNumber } from '@/utils/document';
 
 const Step3 = ({
   postInfo,
@@ -42,28 +42,21 @@ const Step3 = ({
 }) => {
   // 현재 step내에서 입력받는 정보를 따로 관리할 state, 추후 다음 step으로 넘어갈 때 funnel 관리 페이지의 state로 통합된다.
   const [newPostInfo, setNewPostInfo] = useState<JobPostingForm>(postInfo);
-  const [recruitmentNum, setRecruitmentNum] = useState(
-    String(newPostInfo.body.recruitment_number) + ' 명',
-  );
-  const [ageRestrict, setAgeRestrict] = useState(
-    newPostInfo.body.age_restriction === null
-      ? ''
-      : String(newPostInfo.body.age_restriction) + '살 이상',
-  );
   // 버튼 활성화 여부를 위한 플래그
   const [isInvalid, setIsInvalid] = useState(true);
 
   /* 정보 입력 시마다 유효성을 검사해 모든 값이 유효하면 버튼이 활성화 */
   useEffect(() => {
-    const { education_level } = newPostInfo.body;
+    const { education_level, age_restriction, recruitment_number } =
+      newPostInfo.body;
 
     const isFormValid =
-      extractNumbersAsNumber(recruitmentNum) !== 0 &&
-      extractNumbersAsNumber(ageRestrict) !== 0 &&
+      recruitment_number !== 0 &&
+      age_restriction !== 0 &&
       education_level !== '' &&
       newPostInfo.body.visa !== '';
     setIsInvalid(!isFormValid);
-  }, [newPostInfo, ageRestrict, recruitmentNum]);
+  }, [newPostInfo]);
 
   return (
     <div className="w-full py-6 flex flex-col">
@@ -73,9 +66,19 @@ const Step3 = ({
           <Input
             inputType={InputType.TEXT}
             placeholder="모집 인원을 입력해주세요"
-            value={recruitmentNum}
-            onChange={(value) => setRecruitmentNum(value)}
+            value={String(newPostInfo.body.recruitment_number)}
+            onChange={(value) =>
+              setNewPostInfo({
+                ...newPostInfo,
+                body: {
+                  ...newPostInfo.body,
+                  recruitment_number: parseStringToSafeNumber(value),
+                },
+              })
+            }
             canDelete={false}
+            isUnit
+            unit="명"
           />
         </InputLayout>
         {/* 성별 입력 */}
@@ -109,23 +112,38 @@ const Step3 = ({
           <Input
             inputType={InputType.TEXT}
             placeholder="연령제한을 입력해주세요"
-            value={ageRestrict}
-            onChange={(value) => setAgeRestrict(value)}
+            value={
+              newPostInfo.body.age_restriction === null
+                ? ''
+                : String(newPostInfo.body.age_restriction)
+            }
+            onChange={(value) =>
+              setNewPostInfo({
+                ...newPostInfo,
+                body: {
+                  ...newPostInfo.body,
+                  age_restriction: parseStringToSafeNumber(value),
+                },
+              })
+            }
             canDelete={false}
+            isUnit
+            unit="살 이상"
           />
           <div className="w-full relative flex items-center justify-start py-2 gap-3 text-left body-3 text-[#656565]">
             <div className="w-6 h-6 relative">
               <div
-                className={`w-full h-full border border-[#f4f4f9] flex items-center justify-center ${ageRestrict === '' ? 'bg-[#1E1926]' : 'bg-white'}`}
-                onClick={
-                  ageRestrict === ''
-                    ? () => {
-                        setAgeRestrict('살 이상');
-                      }
-                    : () => {
-                        setAgeRestrict('');
-                      }
-                }
+                className={`w-full h-full border border-[#f4f4f9] flex items-center justify-center ${newPostInfo.body.age_restriction === null ? 'bg-[#1E1926]' : 'bg-white'}`}
+                onClick={() => {
+                  setNewPostInfo({
+                    ...newPostInfo,
+                    body: {
+                      ...newPostInfo.body,
+                      age_restriction:
+                        newPostInfo.body.age_restriction === null ? 0 : null,
+                    },
+                  });
+                }}
               >
                 <CheckIcon />
               </div>
@@ -207,9 +225,6 @@ const Step3 = ({
                       ...postInfo,
                       body: {
                         ...newPostInfo.body,
-                        recruitment_number:
-                          extractNumbersAsNumber(recruitmentNum),
-                        age_restriction: extractNumbersAsNumber(ageRestrict),
                       },
                     })
             }

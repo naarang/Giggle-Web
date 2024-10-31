@@ -1,6 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import SignatureCanvas from 'react-signature-canvas';
 
+type Point = {
+  x: number;
+  y: number;
+  time: number;
+  velocity?: number;
+};
+
 type SignaturePadProps = {
   onSave?: (signature: string) => void;
   onReset?: () => void;
@@ -69,14 +76,49 @@ const SignaturePad: React.FC<SignaturePadProps> = ({
     }
   };
 
-  // 작성된 서명을 base64 형태로 저장하는 함수
   const handleSave = () => {
     if (sigPadRef.current) {
-      const dataUrl = sigPadRef.current.toDataURL('image/png', {
-        backgroundColor: 'transparent',
+      const canvas = sigPadRef.current.getCanvas();
+      const points = sigPadRef.current.toData() as Point[][];
+
+      let pathData = '';
+      points.forEach((stroke: Point[]) => {
+        if (stroke.length > 0) {
+          const firstPoint = stroke[0];
+          pathData += `M ${firstPoint.x} ${firstPoint.y} `;
+
+          // Bezier curve를 사용하여 더 부드러운 선 생성
+          for (let i = 1; i < stroke.length - 1; i++) {
+            const p1 = stroke[i];
+            const p2 = stroke[i + 1];
+            const cp1x = p1.x;
+            const cp1y = p1.y;
+            const cp2x = (p1.x + p2.x) / 2;
+            const cp2y = (p1.y + p2.y) / 2;
+            pathData += `C ${cp1x} ${cp1y} ${cp2x} ${cp2y} ${p2.x} ${p2.y} `;
+          }
+        }
       });
+
+      const svgString = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <svg xmlns="http://www.w3.org/2000/svg" 
+             width="${canvas.width}" 
+             height="${canvas.height}"
+             viewBox="0 0 ${canvas.width} ${canvas.height}">
+          <path d="${pathData}"
+                fill="none"
+                stroke="black"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"/>
+        </svg>`;
+
+      // SVG를 base64로 인코딩
+      const base64SVG = btoa(unescape(encodeURIComponent(svgString)));
+      const dataUrl = `data:image/svg+xml;base64,${base64SVG}`;
+
       setSignatureData(dataUrl);
-      onSave?.(dataUrl);
+      onSave?.(base64SVG);
     }
   };
 

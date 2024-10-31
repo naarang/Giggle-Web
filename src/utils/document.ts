@@ -107,7 +107,7 @@ export const validateLaborContractEmployerInformation = (
     !info.description ||
     !info.phone_number
   ) {
-    console.log("문자열")
+    console.log('문자열');
     return false;
   }
 
@@ -121,13 +121,13 @@ export const validateLaborContractEmployerInformation = (
     !info.hourly_rate ||
     extractNumbersAsNumber(String(info.hourly_rate)) === 0
   ) {
-    console.log("시급")
+    console.log('시급');
     return false;
   }
 
   // 초과 근무에 따른 가산임금률 유효성 검사(0이 아닌지)
   if (!info.wage_rate || Number(info.wage_rate) === 0) {
-    console.log("가산임금")
+    console.log('가산임금');
     return false;
   }
 
@@ -137,27 +137,35 @@ export const validateLaborContractEmployerInformation = (
     Number(info.wage_rate) > 31 ||
     Number(info.wage_rate) < 1
   ) {
-    console.log("급료지급일")
+    console.log('급료지급일');
     return false;
   }
 
   // 근무일 체크
   if (!info.work_day_time_list || info.work_day_time_list.length === 0) {
-    console.log("근무일")
+    console.log('근무일');
     return false;
   }
 
   // 서명 체크
   if (!info.signature_base64 || info.signature_base64 === '') {
-    console.log("서명")
+    console.log('서명');
     return false;
   }
 
   // 주소 체크
   if (!info.address?.region_1depth_name) {
-    console.log("주소")
+    console.log('주소');
     return false;
   }
 
   return true;
+};
+
+// number만 가능한 필드에서 NaN 입력으로 input이 멈추지 않게 값 검증
+export const parseStringToSafeNumber = (value: string): number => {
+  const numberValue = Number(value);
+
+  if (isNaN(numberValue)) return 0;
+  else return numberValue;
 };

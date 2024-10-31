@@ -26,7 +26,7 @@ import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
 import { usePutLaborContractEmployer } from '@/hooks/api/useDocument';
 import { useParams } from 'react-router-dom';
-import { validateLaborContractEmployerInformation } from '@/utils/document';
+import { parseStringToSafeNumber, validateLaborContractEmployerInformation } from '@/utils/document';
 import { formatPhoneNumber, parsePhoneNumber } from '@/utils/information';
 import { phone } from '@/constants/information';
 import { formatDateToDash } from '@/utils/editResume';
@@ -187,13 +187,7 @@ const EmployerLaborContractForm = ({
     }
   };
 
-  // number만 가능한 필드에서 NaN 입력으로 input이 멈추지 않게 값 검증
-  const parseStringToSafeNumber = (value: string): number => {
-    const numberValue = Number(value);
 
-    if (isNaN(numberValue)) return 0;
-    else return numberValue;
-  };
   return (
     <div className="w-full p-6 flex flex-col">
       <div className="[&>*:last-child]:mb-40 flex flex-col gap-4">

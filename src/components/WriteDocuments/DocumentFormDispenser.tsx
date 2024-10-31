@@ -13,6 +13,7 @@ import {
   useGetPartTimeEmployPermit,
   useGetStandardLaborContract,
 } from '@/hooks/api/useDocument';
+import { useParams } from 'react-router-dom';
 
 type DocumentFormDispenserProps = {
   type: DocumentType;
@@ -23,29 +24,30 @@ const DocumentFormDispenser = ({
   type,
   isEdit,
 }: DocumentFormDispenserProps) => {
+  const { id } = useParams();
   const [document, setDocument] = useState<
     PartTimePermitData | LaborContractDataResponse | IntegratedApplicationData
   >();
   const { mutate: getPartTimeEmployPermit } = useGetPartTimeEmployPermit({
-    onSuccess: (data) => setDocument(data),
+    onSuccess: (data) => setDocument(data.data),
   });
   const { mutate: getStandardLaborContract } = useGetStandardLaborContract({
-    onSuccess: (data) => setDocument(data),
+    onSuccess: (data) => setDocument(data.data),
   });
   const { mutate: getIntegratedApplication } = useGetIntegratedApplication({
-    onSuccess: (data) => setDocument(data),
+    onSuccess: (data) => setDocument(data.data),
   });
   {
     useEffect(() => {
       switch (type) {
         case DocumentType.PART_TIME_PERMIT:
-          getPartTimeEmployPermit(1);
+          getPartTimeEmployPermit(Number(id));
           break;
         case DocumentType.LABOR_CONTRACT:
-          getStandardLaborContract(1);
+          getStandardLaborContract(Number(id));
           break;
         case DocumentType.INTEGRATED_APPLICATION:
-          getIntegratedApplication(1);
+          getIntegratedApplication(Number(id));
           break;
       }
     }, [type]);
