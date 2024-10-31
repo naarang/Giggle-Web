@@ -6,7 +6,7 @@ import BookmarkIcon from '@/assets/icons/BookmarkIcon.svg?react';
 import BookmarkCheckedIcon from '@/assets/icons/BookmarkCheckedIcon.svg?react';
 import { useState } from 'react';
 import { useUserStore } from '@/store/user';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useGetPostValidation } from '@/hooks/api/useApplication';
 import { UserType } from '@/constants/user';
 import { usePutPostBookmark } from '@/hooks/api/usePost';
@@ -20,6 +20,7 @@ const PostDetailApplyButton = ({
 }: PostDetailApplyButtonProps) => {
   const { account_type } = useUserStore();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const { refetch } = useGetPostValidation(Number(id), false);
   const { mutate } = usePutPostBookmark();
@@ -30,13 +31,16 @@ const PostDetailApplyButton = ({
     useState<boolean>(false);
 
   const onClickApply = async () => {
+    if (!account_type) {
+      setIsOpenLoginBottomSheet(true);
+      return;
+    }
     if (account_type === UserType.USER && !isNaN(Number(id))) {
       const { data } = await refetch();
-      console.log('?: ', data);
       if (data?.data?.is_qualification_verified) {
-        setIsOpenConfirmBottomSheet(true);
+        navigate(`/post/apply/${id}`);
       } else {
-        setIsOpenLoginBottomSheet(true);
+        setIsOpenConfirmBottomSheet(true);
       }
     }
   };
