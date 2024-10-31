@@ -46,7 +46,7 @@ export const useGetApplicationDetail = (id: number, isEnabled: boolean) => {
 // 6.5 (유학생) 공고 담당자 정보 조회하기 훅
 export const useGetRecruiterInfo = (id: number, isEnabled: boolean) => {
   return useQuery({
-    queryKey: ['application', id],
+    queryKey: ['application', 'recruiter', id],
     queryFn: () => getRecruiterInfo(id),
     enabled: isEnabled,
   });
@@ -58,7 +58,7 @@ export const useGetEmployerApplicationDetail = (
   isEnabled: boolean,
 ) => {
   return useQuery({
-    queryKey: ['application', id],
+    queryKey: ['application', 'detail', id],
     queryFn: () => getEmployerApplicationDetail(id),
     enabled: isEnabled,
   });
@@ -78,12 +78,8 @@ export const useGetEmployerApplicationSummary = (
 
 // 6.10 (고용주) 이력서 수락/거절하기 훅
 export const usePatchResumeAccepted = () => {
-  const navigate = useNavigate();
   return useMutation({
     mutationFn: patchResumeAccepted,
-    onSuccess: (id: number) => {
-      navigate(`/employer/applicant/${id}`);
-    },
     onError: (error) => {
       console.error('이력서 수락/거절하기 실패', error);
     },
