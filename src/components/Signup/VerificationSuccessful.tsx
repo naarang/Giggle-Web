@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SuccessIcon from '@/assets/icons/Successful.svg?react';
 import { signInputTranclation } from '@/constants/translation';
+import { checkEmployerPage } from '@/utils/checkUserPage';
 import { isEmployer } from '@/utils/signup';
 
 const VerificationSuccessful = () => {
@@ -9,9 +10,12 @@ const VerificationSuccessful = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // 2초 띄우고 information 화면으로 이동
     const timer = setTimeout(() => {
-      navigate('/information');
+      navigate(
+        checkEmployerPage(pathname)
+          ? '/employer/signup/information'
+          : '/information',
+      );
     }, 2000);
 
     return () => clearTimeout(timer);
