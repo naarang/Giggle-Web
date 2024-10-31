@@ -40,6 +40,7 @@ import PostLanguagePage from '@/pages/PostLanguage/PostLanguagePage';
 import EmployerApplicantDetailPage from '@/pages/Employer/ApplicantDetail/EmployerApplicantDetailPage';
 import EmployerApplicantResumePage from '@/pages/Employer/ApplicantResume/EmployerApplicantResumePage';
 import EmployerApplicantResumeAcceptPage from '@/pages/Employer/ApplicantResumeAccept/EmployerApplicantResumeAcceptPage';
+import EmployerCreatePostPage from './pages/Employer/Post/EmployerCreatePostPage';
 import EmployerEditProfilePage from '@/pages/Employer/EditProfile/EmployerEditProfilePage';
 import EmployerSignupPage from '@/pages/Employer/Signup/EmployerSignupPage';
 import AlarmPage from '@/pages/Alarm/AlarmPage';
@@ -133,6 +134,10 @@ const Router = () => {
           />
           <Route path="/employer/post" element={<EmployerPostPage />} />
           <Route
+            path="/employer/post/create"
+            element={<EmployerCreatePostPage />}
+          />
+          <Route
             path="/employer/post/:id"
             element={<EmployerPostDetailPage />}
           />
@@ -148,6 +153,7 @@ const Router = () => {
             path="/employer/applicant/:id/resume"
             element={<EmployerApplicantResumePage />}
           />
+
           <Route
             path="/employer/applicant/:id/resume/accept"
             element={<EmployerApplicantResumeAcceptPage />}

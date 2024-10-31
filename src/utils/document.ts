@@ -2,6 +2,7 @@ import { WorkDayTime } from '@/types/api/document';
 import { Address } from '@/types/api/users';
 
 // 객체의 모든 프로퍼티가 공백이 아닌지 확인하는 함수
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const isNotEmpty = (obj: Record<string, any>): boolean => {
   return Object.values(obj).every((value) => {
     // null 또는 undefined 체크

@@ -1,4 +1,5 @@
 import {
+  createPost,
   deletePost,
   getApplicantList,
   getApplyPostList,
@@ -60,6 +61,23 @@ export const useGetPostSummary = (id: number) => {
   return useQuery({
     queryKey: ['post', id],
     queryFn: () => getPostSummary(id),
+  });
+};
+
+// 4.10 (고용주) 공고 등록하기 훅
+export const useCreatePost = () => {
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: createPost,
+    onSuccess: (response) => {
+      // response는 API 응답 데이터
+      // { success: true, data: { id: Long }, error: null }
+      navigate(`/employer/post/${response.data.id}`);
+    },
+    onError: (error) => {
+      console.error('공고 등록하기 실패', error);
+    },
   });
 };
 
