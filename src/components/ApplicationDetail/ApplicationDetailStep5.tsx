@@ -1,11 +1,15 @@
 import { buttonTypeKeys } from '@/constants/components';
 import Button from '@/components/Common/Button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import ApplicationDetailBottomSheet from '@/components/ApplicationDetail/ApplicationDetailBottomSheet';
+import { usePatchApplyHiKorea } from '@/hooks/api/useApplication';
 
 const ApplicationDetailStep5 = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  const { mutate } = usePatchApplyHiKorea();
 
   const [isShowBottomsheet, setIsShowBottomSheet] = useState<boolean>(false);
 
@@ -15,8 +19,8 @@ const ApplicationDetailStep5 = () => {
   };
 
   const onClickYellowButton = () => {
-    // 6.14 api -> 성공 시 현재 페이지 새로 고침
-    window.location.reload();
+    if (isNaN(Number(id))) return;
+    mutate(Number(id));
   };
 
   return (

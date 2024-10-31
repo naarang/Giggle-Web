@@ -22,10 +22,11 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 // 7.1 (유학생/고용주) 이력서 조회하기
-export const useGetResume = () => {
+export const useGetResume = (isEnabled: boolean) => {
   return useQuery({
     queryKey: ['resume'],
     queryFn: getResume,
+    enabled: isEnabled,
   });
 };
 
@@ -214,10 +215,11 @@ export const useDeleteEtcLanguageLevel = () => {
 };
 
 // 7.19 (고용주) 이력서 조회하기 훅
-export const useGetApplicantResume = (id: number) => {
+export const useGetApplicantResume = (id: number, isEnabled: boolean) => {
   return useQuery({
     queryKey: ['resume', id],
     queryFn: () => getApplicantResume(id),
+    enabled: isEnabled,
   });
 };
 

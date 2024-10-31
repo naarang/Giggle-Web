@@ -28,10 +28,17 @@ const PostDetailCompanyImageList = ({
   // TODO: 대표 사진 1개만 보여주고 클릭하면 사진 리스트 보여주기
   return (
     <>
-      <section
-        className='w-full h-[8.75rem] bg-cover bg-center bg-[url("/src/assets/images/JobIconExample.jpeg")]'
-        onClick={() => setIsOpen(true)}
-      ></section>
+      {companyImageData?.length ? (
+        <section
+          className="w-full h-[8.75rem] bg-cover bg-center"
+          style={{
+            backgroundImage: `url(${companyImageData[0].img_url})`,
+          }}
+          onClick={() => setIsOpen(true)}
+        ></section>
+      ) : (
+        <section className="w-full h-[8.75rem] bg-cover bg-center bg-[#F4F4F9]"></section>
+      )}
       {isOpen && (
         <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center  bg-black bg-opacity-90 z-30 overflow-x-scroll no-scrollbar whitespace-nowrap">
           <button
@@ -43,10 +50,11 @@ const PostDetailCompanyImageList = ({
           {companyImageData.map((image) => (
             <div
               key={image.id}
-              className="min-w-[96vw] w-[96vw] mx-[2vw] h-[300px] bg-orange-400"
-            >
-              {image.img_url}
-            </div>
+              className="min-w-[96vw] w-[96vw] mx-[2vw] h-[300px] bg-cover bg-center"
+              style={{
+                backgroundImage: `url(${image.img_url})`,
+              }}
+            ></div>
           ))}
         </div>
       )}

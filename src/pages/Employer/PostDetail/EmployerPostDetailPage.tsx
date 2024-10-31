@@ -3,25 +3,36 @@ import EmployerPostDetailButton from '@/components/Employer/PostDetail/EmployerP
 import PostDetailCompanyImageList from '@/components/PostDetail/PostDetailCompanyImageList';
 import PostDetailContent from '@/components/PostDetail/PostDetailContent';
 import PostDetailTitle from '@/components/PostDetail/PostDetailTitle';
-import { POST_DETAIL_DATA } from '@/constants/postDetail';
-import { useNavigate } from 'react-router-dom';
+import { UserType } from '@/constants/user';
+import { useGetPostDetail } from '@/hooks/api/usePost';
+import { useUserStore } from '@/store/user';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const EmployerPostDetailPage = () => {
+  const { account_type } = useUserStore();
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  const { data } = useGetPostDetail(
+    Number(id),
+    account_type === UserType.OWNER && !isNaN(Number(id)) ? true : false,
+  );
+
+  if (!data?.success) return <></>;
 
   return (
     <>
       <BaseHeader
         hasBackButton={true}
-        onClickBackButton={() => navigate(-1)}
+        onClickBackButton={() => navigate('/search')}
         hasMenuButton={false}
         title="Detail"
       />
       <PostDetailCompanyImageList
-        companyImageData={POST_DETAIL_DATA.company_img_url_list}
+        companyImageData={data.data?.company_img_url_list}
       />
-      <PostDetailTitle postDetailData={POST_DETAIL_DATA} />
-      <PostDetailContent postDetailData={POST_DETAIL_DATA} />
+      <PostDetailTitle postDetailData={data.data} />
+      <PostDetailContent postDetailData={data.data} />
       <EmployerPostDetailButton />
     </>
   );
