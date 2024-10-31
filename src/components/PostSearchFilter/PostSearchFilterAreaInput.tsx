@@ -31,7 +31,7 @@ const PostSearchFilterAreaInput = ({
   }, [filterList]);
 
   const formatRegionArrayToString = (index: number) => {
-    return `${region1Depth[index]} ${region2Depth[index]} ${region3Depth[index]}`;
+    return `${region1Depth[index]} ${region2Depth[index]} ${region3Depth[index] === 'none' ? '' : region3Depth[index]}`;
   };
 
   const onClickDelete = (regionIndex: number) => {

@@ -50,7 +50,16 @@ const ApplicationCard = ({ applicationData }: ApplicationCardPropsType) => {
       </div>
       <div className="flex flex-col gap-[1.25rem] w-full px-[1.5rem] pt-[1.5rem] pb-[1rem]">
         <div className="flex gap-[0.75rem]">
-          <div className='w-[2.5rem] h-[2.5rem] rounded-[0.5rem] bg-cover bg-[url("/src/assets/images/JobIconExample.jpeg")]'></div>
+          {applicationData?.icon_img_url ? (
+            <div
+              className="w-[2.5rem] h-[2.5rem] rounded-[0.5rem] bg-cover"
+              style={{
+                backgroundImage: `url(${applicationData.icon_img_url})`,
+              }}
+            ></div>
+          ) : (
+            <div className="w-[2.5rem] h-[2.5rem] rounded-[0.5rem] bg-[#F4F4F9]]"></div>
+          )}
           <div>
             <h3 className="pb-[0.25rem] head-3 text-[#1E1926]">
               {applicationData.title}
@@ -77,7 +86,6 @@ const ApplicationCard = ({ applicationData }: ApplicationCardPropsType) => {
         </div>
       </div>
       <div className="flex">
-        {/* TODO: 각각 공고의 id로 이동하기, 지원 상태 상세로 이동하기 */}
         <button
           className="flex-1 py-[0.75rem] caption-1-sb text-[#F4F4F9] bg-[#1E1926]  text-center"
           onClick={() => navigate(`/post/${applicationData.job_posting_id}`)}

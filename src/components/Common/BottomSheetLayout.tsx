@@ -8,6 +8,7 @@ type BottomSheetLayoutProps = {
   isShowBottomsheet: boolean; // BottomSheet 보이기
   setIsShowBottomSheet?: React.Dispatch<React.SetStateAction<boolean>>; // isShowBottomsheet 값 동기화하기 위한 함수
   children: ReactNode;
+  isFixedBackground?: boolean;
 };
 
 const VIEW_HEIGHT = window.innerHeight;
@@ -19,6 +20,7 @@ const BottomSheetLayout = ({
   isShowBottomsheet,
   setIsShowBottomSheet,
   children,
+  isFixedBackground = true,
 }: BottomSheetLayoutProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -39,17 +41,18 @@ const BottomSheetLayout = ({
   }, [contentRef]);
 
   useEffect(() => {
-    if (isShowBottomsheet) document.body.style.overflow = 'hidden';
+    if (isShowBottomsheet && isFixedBackground)
+      document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'auto';
 
     return () => {
       document.body.style.overflow = 'auto';
     };
-  }, [isShowBottomsheet]);
+  }, [isShowBottomsheet, isFixedBackground]);
 
   return (
     <>
-      {isShowBottomsheet && (
+      {isShowBottomsheet && isFixedBackground && (
         <div className="fixed w-screen h-screen top-0 bottom-0 left-0 right-0 bg-[rgba(0,0,0,0.3)] z-30"></div>
       )}
       <motion.div

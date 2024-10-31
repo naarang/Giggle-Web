@@ -1,38 +1,41 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import Button from '@/components/Common/Button';
 import EducationPost from '@/components/SetEducation/EducationPost';
 import { buttonTypeKeys } from '@/constants/components';
 import useNavigateBack from '@/hooks/useNavigateBack';
-import { InitailEducationType } from '@/types/postResume/postEducation';
-import { isPostEducationType } from '@/utils/introduction';
-
-// input 기본값 설정
-const InitailEducation = (): InitailEducationType => ({
-  education_level: '',
-  school_id: 0,
-  major: '',
-  gpa: 0.0,
-  start_date: '',
-  end_date: '',
-  grade: 0,
-});
+import {
+  InitailEducationType,
+  InitialEducationData,
+} from '@/types/postResume/postEducation';
+import { usePostEducation } from '@/hooks/api/useResume';
+import { educationDataValidation } from '@/utils/editResume';
+import { EducationRequest } from '@/types/api/resumes';
 
 const PostEducationPage = () => {
+  const { mutate } = usePostEducation();
+
   const handleBackButtonClick = useNavigateBack();
-  const navigate = useNavigate();
   const [educationData, setEducationData] =
-    useState<InitailEducationType>(InitailEducation());
+    useState<InitailEducationType>(InitialEducationData);
   const [isValid, setIsValid] = useState<boolean>(false);
 
   const handleSubmit = () => {
-    // TODO: API - 7.6 학력 생성하기
-    navigate('/profile/manage-resume');
+    // 유효성 검사
+    if (!educationDataValidation(educationData)) return;
+    // API - 7.6 학력 생성하기
+    const formattedEducationData = {
+      ...educationData,
+      gpa: educationData.gpa ? parseFloat(String(educationData.gpa)) : 0, // gpa가 없을 경우 기본값 0 할당
+      grade: educationData.grade ? Number(educationData.grade) : 0, // grade가 없을 경우 기본값 0 할당
+    };
+
+    mutate(formattedEducationData as EducationRequest);
   };
 
   useEffect(() => {
-    setIsValid(isPostEducationType(educationData));
+    setIsValid(educationDataValidation(educationData));
+    console.log(educationData);
   }, [educationData]);
 
   return (

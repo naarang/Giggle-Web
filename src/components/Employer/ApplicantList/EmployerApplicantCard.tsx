@@ -49,16 +49,27 @@ const EmployerApplicantCard = ({
       </div>
       <div className="flex justify-between w-full px-[1.5rem] pt-[1rem] pb-[0.75rem]">
         <div className="flex gap-[0.75rem]">
-          <div className='w-[2.5rem] h-[2.5rem] rounded-[0.5rem] bg-cover bg-[url("/src/assets/images/JobIconExample.jpeg")]'></div>
+          {applicantData?.profile_img_url ? (
+            <div
+              className="w-[2.5rem] h-[2.5rem] rounded-[0.5rem] bg-cover"
+              style={{
+                backgroundImage: `url(${applicantData.profile_img_url})`,
+              }}
+            ></div>
+          ) : (
+            <div className="w-[2.5rem] h-[2.5rem] rounded-[0.5rem] bg-[#F4F4F9]"></div>
+          )}
           <div>
             <h3 className="pb-[0.25rem] head-3 text-[#1E1926]">
-              {applicantData.name}
+              {applicantData.name.replace(/-/g, ' ')}
             </h3>
-            <p className="body-3 text-[#464646]">{applicantData.nationality}</p>
+            <p className="body-3 text-[#464646]">
+              {applicantData.nationality.replace(/_/g, ' ').toLowerCase()}
+            </p>
           </div>
         </div>
         <Tag
-          value={`${applicantData.duration_of_days}days After`}
+          value={`${applicantData.duration_of_days} days After`}
           padding="0.25rem 0.438rem"
           isRounded={false}
           hasCheckIcon={false}
@@ -95,7 +106,7 @@ const EmployerApplicantCard = ({
         <button
           className="w-full px-[1.5rem] py-[0.75rem] text-center rounded-full bg-[#FEF387] text-[#1E1926] caption-1-sb"
           onClick={() =>
-            navigate(`/employer/applicant/${applicantData.id}/resume/`)
+            navigate(`/employer/applicant/${applicantData.id}/resume`)
           }
         >
           See Resume

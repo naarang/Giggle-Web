@@ -62,7 +62,7 @@ const LoginBottomSheet = ({
           <p className="caption-1 text-[#7D8A95]">Don't have an account?</p>
           <button
             className="caption-1-sb text-[#7872ED]"
-            onClick={() => navigate('/signup')}
+            onClick={() => navigate('/signin')}
           >
             Create Account
           </button>

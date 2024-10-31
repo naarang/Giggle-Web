@@ -19,20 +19,29 @@ export const enum APPLICATION_STEP {
 
 export const APPLICATION_STATUS_TYPE = {
   TOTAL: 'Total',
-  INPROGRESS: 'Inprogress',
-  APPLICATION_SUCCESSFUL: 'Applicatioin successful',
-  APPLICATION_REJECTED: 'Applicatioin rejected',
+  APPLICATION_IN_PROGRESS: 'Application in progress',
+  APPLICATION_SUCCESS: 'Application success',
+  APPLICATION_REJECTED: 'Application rejected',
   RESUME_REJECTED: 'resume rejected',
   PENDING: 'pending',
 } as const;
 
 export const KO_APPLICATION_STATUS_TYPE = {
   TOTAL: '전체',
-  INPROGRESS: '진행중',
-  APPLICATION_SUCCESSFUL: '계약 성공',
+  APPLICATION_IN_PROGRESS: '진행중',
+  APPLICATION_SUCCESS: '계약 성공',
   APPLICATION_REJECTED: '시간제취업허가 실패',
   RESUME_REJECTED: '이력서 거절',
   PENDING: '대기',
+} as const;
+
+export const EN_APPLICATION_STATUS_TYPE = {
+  ['전체']: 'Total',
+  ['진행중']: 'Application in progress',
+  ['계약 성공']: 'Application success',
+  ['시간제취업허가 실패']: 'Application rejected',
+  ['이력서 거절']: 'resume rejected',
+  ['대기']: 'pending',
 } as const;
 
 // 지원자 리스트 더미데이터

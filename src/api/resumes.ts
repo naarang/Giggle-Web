@@ -3,22 +3,27 @@ import {
   EducationRequest,
   IntroDuctionRequest,
   LanguagesLevelType,
+  LanguagesSummariesResponse,
   UserResumeDetailResponse,
   WorkExperienctRequest,
+  WorkExperienctResponse,
 } from '@/types/api/resumes';
 import { api } from '.';
 import { RESTYPE } from '@/types/api/common';
+import { GetEducationType } from '@/types/postResume/postEducation';
 
-// 7.1 (유학생/고용주) 이력서 조회하기
+// 7.1 (유학생) 이력서 조회하기
 export const getResume = async (): Promise<
   RESTYPE<UserResumeDetailResponse>
 > => {
-  const response = await api.get('/resumes/details');
+  const response = await api.get('/users/resumes/details');
   return response.data;
 };
 
 // 7.2 경력 상세 조회하기
-export const getWorkExperience = async (id: number) => {
+export const getWorkExperience = async (
+  id: string,
+): Promise<RESTYPE<WorkExperienctResponse>> => {
   const response = await api.get(
     `/users/resumes/work-experiences/${id}/details`,
   );
@@ -26,13 +31,17 @@ export const getWorkExperience = async (id: number) => {
 };
 
 // 7.3 학력 상세 조회하기
-export const getEducation = async (id: number) => {
+export const getEducation = async (
+  id: string,
+): Promise<RESTYPE<GetEducationType>> => {
   const response = await api.get(`/users/resumes/educations/${id}/details`);
   return response.data;
 };
 
 // 7.4 언어 요약 조회하기
-export const getLanguagesSummaries = async () => {
+export const getLanguagesSummaries = async (): Promise<
+  RESTYPE<LanguagesSummariesResponse>
+> => {
   const response = await api.get('/users/resumes/languages/summaries');
   return response.data;
 };
@@ -49,21 +58,18 @@ export const postWorkExperience = async (
 };
 
 // 7.6 학력 생성하기
-export const postEducation = async ({
-  id,
-  education,
-}: {
-  id: number;
-  education: EducationRequest;
-}) => {
-  const response = await api.post(`/users/resumes/educations/${id}`, education);
+export const postEducation = async (education: EducationRequest) => {
+  const response = await api.post('/users/resumes/educations', education);
   return response.data;
 };
 
 // 7.7 언어 - ETC 생성하기
-export const postEtcLanguageLevel = async () => {
+export const postEtcLanguageLevel = async (
+  etcLanguage: AdditionalLanguageRequest,
+) => {
   const response = await api.post(
     '/users/resumes/languages/additional-languages',
+    etcLanguage,
   );
   return response.data;
 };
@@ -79,7 +85,7 @@ export const patchWorkExperience = async ({
   id,
   workExperience,
 }: {
-  id: number;
+  id: string;
   workExperience: WorkExperienctRequest;
 }) => {
   const response = await api.patch(
@@ -94,7 +100,7 @@ export const patchEducation = async ({
   id,
   education,
 }: {
-  id: number;
+  id: string;
   education: EducationRequest;
 }) => {
   const response = await api.patch(
@@ -180,7 +186,7 @@ export const getSearchSchools = async ({
   size: string;
 }) => {
   const response = await api.get(
-    `/users/schools/brief?search=${search}&page=${page}&size=${size}`,
+    `/users/schools/briefs?search=${search}&page=${page}&size=${size}`,
   );
   return response.data;
 };

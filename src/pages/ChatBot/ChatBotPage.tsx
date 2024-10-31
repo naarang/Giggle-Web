@@ -6,8 +6,11 @@ import { CHAT_BOT_INTRODUCE_MESSAGE } from '@/constants/chatbot';
 import { ChatItemType } from '@/types/api/chatbot';
 import { getCurrentDayAndTime } from '@/utils/getCurrentDateTime';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ChatBotPage = () => {
+  const navigate = useNavigate();
+
   const [chatData, setChatData] = useState<ChatItemType[]>([
     CHAT_BOT_INTRODUCE_MESSAGE,
   ]);
@@ -22,6 +25,7 @@ const ChatBotPage = () => {
         hasBackButton={true}
         hasMenuButton={false}
         title="GIGGLE Bot Chat"
+        onClickBackButton={() => navigate('/')}
       />
       <section className="w-full p-[1.5rem] pb-[9.375rem]">
         <div className="w-full pb-[1.5rem] caption-1 text-[#1E1926] text-center">

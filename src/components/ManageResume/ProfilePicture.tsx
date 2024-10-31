@@ -15,7 +15,7 @@ const ProfilePicture = ({ name, profileImg }: ProfilePictureProps) => {
           />
         </div>
         <span className="py-2 px-3 head-3 text-[#1E1926] text-center">
-          {name}
+          {name.replace('-', ' ')}
         </span>
       </div>
     </div>

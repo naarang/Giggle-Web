@@ -2,19 +2,23 @@ import Button from '@/components/Common/Button';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import EducationPatch from '@/components/SetEducation/EducationPatch';
 import { buttonTypeKeys } from '@/constants/components';
-import { GetEducationData } from '@/constants/manageResume';
+import { useGetEducation, usePatchEducation } from '@/hooks/api/useResume';
 import useNavigateBack from '@/hooks/useNavigateBack';
 import {
   GetEducationType,
   PostEducationType,
 } from '@/types/postResume/postEducation';
-import { transformToPostEducation } from '@/utils/editResume';
+import { transformToPatchEducation } from '@/utils/editResume';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const PatchEducationPage = () => {
+  const { id } = useParams();
   const handleBackButtonClick = useNavigateBack();
-  const navigate = useNavigate();
+
+  const { mutate } = usePatchEducation();
+
+  // 수정할 학력 데이터
   const [educationData, setEducationData] = useState<PostEducationType>({
     education_level: 'BACHELOR',
     school_id: 0,
@@ -34,9 +38,9 @@ const PatchEducationPage = () => {
   // 초기 값에서 수정된 내용이 있는지 확인
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
+  // API - 7.10 학력 수정하기
   const handleSubmit = () => {
-    // TODO: API - 7.6 학력 생성하기
-    navigate('/profile/manage-resume');
+    mutate({ id: id!, education: educationData });
   };
 
   const handleReset = () => {
@@ -45,19 +49,16 @@ const PatchEducationPage = () => {
   };
 
   // TODO: API - 7.3 학력 상세 조회하기
-  // Get API 연결
+  const { data: getEducationData } = useGetEducation(id!);
   useEffect(() => {
-    const fetchDataFromApi = async () => {
-      const data = GetEducationData;
-      setFetchData(data);
+    if (getEducationData) {
+      setFetchData(getEducationData.data);
 
       // patch 타입 initialData 설정
-      const transformedData = transformToPostEducation(data);
+      const transformedData = transformToPatchEducation(getEducationData.data);
       setInitialData(transformedData);
-    };
-
-    fetchDataFromApi();
-  }, []);
+    }
+  }, [getEducationData]);
 
   // initialData가 설정된 후에 educationData를 설정
   useEffect(() => {

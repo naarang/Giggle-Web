@@ -1,27 +1,27 @@
 import { useState } from 'react';
 import ContactRecruiterModal from '@/components/ApplicationDetail/ContactRecruiterModal';
-import { ApplicationRecruiterItemType } from '@/types/application/applicationItem';
-
-// 더미데이터
-const RECRUITER_DATA: ApplicationRecruiterItemType = {
-  recruiter_name: '이름~',
-  recruiter_phone_number: '010-0000-0000',
-};
+import { useParams } from 'react-router-dom';
+import { useGetRecruiterInfo } from '@/hooks/api/useApplication';
 
 const ApplicationDetailStep2 = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
 
+  const { id } = useParams();
+  const { refetch } = useGetRecruiterInfo(Number(id), false);
+
   const onClickContact = () => {
-    // TODO: 전화 켜주도록...?
+    // TODO: 전화 켜주도록
     setModalOpen(false);
   };
 
-  const getRecruiterInfo = () => {
-    // TODO: 성공 시 modal 열기
-    setName(RECRUITER_DATA.recruiter_name);
-    setPhoneNumber(RECRUITER_DATA.recruiter_phone_number);
+  const getRecruiterInfo = async () => {
+    const { data } = await refetch();
+    if (!data?.success) return;
+
+    setName(data?.data?.recruiter_name);
+    setPhoneNumber(data?.data?.recruiter_phone_number);
     setModalOpen(true);
   };
 

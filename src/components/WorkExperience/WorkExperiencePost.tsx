@@ -2,13 +2,13 @@ import { InputType } from '@/types/common/input';
 import Input from '@/components/Common/Input';
 import { useEffect, useRef, useState, ChangeEvent } from 'react';
 import Dropdown from '@/components/Common/Dropdown';
-import { PostWorkExperienceType } from '@/types/postResume/postWorkExperience';
 import InputLayout from '@/components/WorkExperience/InputLayout';
+import { WorkExperienctRequest } from '@/types/api/resumes';
 
 type WorkExperiencePostProps = {
-  workExperienceData: PostWorkExperienceType;
+  workExperienceData: WorkExperienctRequest;
   setWorkExperienceData: React.Dispatch<
-    React.SetStateAction<PostWorkExperienceType>
+    React.SetStateAction<WorkExperienctRequest>
   >;
 };
 
@@ -37,10 +37,10 @@ const WorkExperiencePost = ({
   };
 
   const handleInputChange = (
-    field: keyof PostWorkExperienceType,
+    field: keyof WorkExperienctRequest,
     value: string,
   ) => {
-    setWorkExperienceData((prev) => ({ ...prev, [field]: value }));
+    setWorkExperienceData({ ...workExperienceData, [field]: value });
   };
 
   const handleTextareaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -82,7 +82,7 @@ const WorkExperiencePost = ({
         />
       </InputLayout>
       {/* 장소 입력 */}
-      <InputLayout title="Experience Title" isEssential={true}>
+      <InputLayout title="Workplace" isEssential={true}>
         <Input
           inputType={InputType.TEXT}
           placeholder="Workplace"
@@ -105,7 +105,7 @@ const WorkExperiencePost = ({
       </InputLayout>
       <div className="h-8" />
       {/* 끝 날짜 입력 */}
-      <InputLayout title="End Date" isEssential={true} width="w-fit">
+      <InputLayout title="End Date" isEssential={true}>
         <div className="absolute z-40">
           <Dropdown
             value={workExperienceData.end_date?.replace(/-/g, '/')}
@@ -127,7 +127,7 @@ const WorkExperiencePost = ({
         </div>
       </InputLayout>
       {/* 상세설명 입력 */}
-      <InputLayout title="Experience Title" isEssential={true}>
+      <InputLayout title="Description" isEssential={true}>
         <div
           onClick={handleFocusTextArea}
           className="w-full min-h-32 px-4 py-3 flex flex-col gap-2.5 rounded-xl border border-[#E2E5EB] shadow-inputFieldShadow p-2"

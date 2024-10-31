@@ -1,13 +1,27 @@
 import { buttonTypeKeys } from '@/constants/components';
 import Button from '@/components/Common/Button';
 import CompleteButtonModal from '@/components/Common/CompleteButtonModal';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
+import { usePostApplyPost } from '@/hooks/api/useApplication';
 
 const PostApplyButton = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const [isComplete, setIsComplete] = useState<boolean>(false);
+  const [postId, setPostId] = useState<number | undefined>();
+
+  const { mutateAsync } = usePostApplyPost();
+
+  const onClickApply = async () => {
+    if (isNaN(Number(id))) return;
+    const result = await mutateAsync(Number(id));
+    if (result?.success) {
+      setPostId(result?.data?.id);
+      setIsComplete(true);
+    }
+  };
 
   return (
     <>
@@ -19,6 +33,7 @@ const PostApplyButton = () => {
           fontColor="text-[#BDBDBD]"
           title="Edit"
           isBorder={false}
+          onClick={() => navigate('/profile/manage-resume')}
         />
         <Button
           type={buttonTypeKeys.APPLY}
@@ -26,7 +41,7 @@ const PostApplyButton = () => {
           fontColor="text-[#1E1926]"
           title="Apply Now"
           isBorder={false}
-          onClick={() => setIsComplete(true)}
+          onClick={onClickApply}
         />
       </section>
       {isComplete && (
@@ -35,7 +50,7 @@ const PostApplyButton = () => {
           content="You can check the status of your documents"
           buttonContent="Check Now"
           // TODO: 추후에 지원상태 - 상세 페이지로 이동시키기
-          onClick={() => navigate('/')}
+          onClick={() => navigate(`/application/${postId}`)}
         />
       )}
     </>

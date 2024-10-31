@@ -37,10 +37,10 @@ const ContactCoordinatorModal = ({
             </div>
             <div>
               <h5 className="button-2 text-black">
-                {coordinatorData.coordinator_name}
+                {coordinatorData?.coordinator_name ?? ''}
               </h5>
               <p className="caption-1 text-[#656565]">
-                {coordinatorData.coordinator_phone_number}
+                {coordinatorData?.coordinator_phone_number ?? ''}
               </p>
             </div>
           </div>
@@ -49,11 +49,11 @@ const ContactCoordinatorModal = ({
               Check the address
             </p>
             <p className="pb-[0.75rem] px-[0.25rem] button-2 text-[#1E1926]">
-              {coordinatorData.address.school_name}{' '}
-              {coordinatorData.address.institute_name}
+              {coordinatorData?.school_name ?? ''}{' '}
+              {coordinatorData?.institute_name ?? ''}
             </p>
             <p className="pb-[0.75rem] px-[0.5rem] caption-1 text-[##656565]">
-              {coordinatorData.address.detail_address}
+              {coordinatorData?.address?.address_detail}
             </p>
             <Map
               center={{

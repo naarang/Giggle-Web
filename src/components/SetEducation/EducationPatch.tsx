@@ -1,17 +1,19 @@
 import { InputType } from '@/types/common/input';
 import Input from '@/components/Common/Input';
 import Dropdown from '@/components/Common/Dropdown';
-import { PostEducationType } from '@/types/postResume/postEducation';
+import {
+  PostEducationType,
+  SchoolSummary,
+} from '@/types/postResume/postEducation';
 import { EducationLevels } from '@/constants/manageResume';
 import GraySearchIcon from '@/assets/icons/ManageResume/GraySearchIcon.svg?react';
 import { useState } from 'react';
 import SearchSchools from '@/components/SetEducation/SearchSchools';
-import { School } from '@/types/api/document';
 
 type EducationPatchProps = {
   educationData: PostEducationType;
   setEducationData: React.Dispatch<React.SetStateAction<PostEducationType>>;
-  schoolData: School;
+  schoolData: SchoolSummary;
 };
 
 const EducationPatch = ({
@@ -20,9 +22,9 @@ const EducationPatch = ({
   schoolData,
 }: EducationPatchProps) => {
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
-  const [school, setSchool] = useState<School>(schoolData);
+  const [school, setSchool] = useState<SchoolSummary>(schoolData);
 
-  const handleSchoolChange = (school: School) => {
+  const handleSchoolChange = (school: SchoolSummary) => {
     setSchool(school);
   };
 
@@ -31,6 +33,10 @@ const EducationPatch = ({
     value: string | number,
   ) => {
     setEducationData((prev) => ({ ...prev, [field]: value }));
+  };
+  const handleNumberChange = (field: 'grade' | 'gpa', value: string) => {
+    const formmateedvalue = value == 'null' ? '' : value;
+    handleInputChange(field, formmateedvalue);
   };
 
   const handleDateChange = (
@@ -105,8 +111,12 @@ const EducationPatch = ({
           <Input
             inputType={InputType.TEXT}
             placeholder="Grade"
-            value={String(educationData.grade)}
-            onChange={(value) => handleInputChange('grade', value)}
+            value={
+              String(educationData.grade) == 'null'
+                ? ''
+                : String(educationData.grade)
+            }
+            onChange={(value) => handleNumberChange('grade', value)}
             canDelete={false}
           />
         </div>
@@ -119,7 +129,7 @@ const EducationPatch = ({
             inputType={InputType.TEXT}
             placeholder="0.0"
             value={String(educationData.gpa)}
-            onChange={(value) => handleInputChange('gpa', value)}
+            onChange={(value) => handleNumberChange('gpa', value)}
             canDelete={false}
           />
         </div>

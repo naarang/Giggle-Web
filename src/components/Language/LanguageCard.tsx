@@ -5,14 +5,19 @@ import KoreanFlag from '@/assets/images/koreanFlag.png';
 import BottomSheetLayout from '@/components/Common/BottomSheetLayout';
 import { useState } from 'react';
 import Button from '@/components/Common/Button';
-import { usePatchLanguagesLevel } from '@/hooks/api/useResume';
+import {
+  useDeleteEtcLanguageLevel,
+  usePatchLanguagesLevel,
+} from '@/hooks/api/useResume';
 import NumberRadioButton from '@/components/Language/NumberRadioButton';
 import { LanguagesLevelType } from '@/types/api/resumes';
+import { LanguageList } from '@/constants/language_data';
 
 type LanguageCardProps = {
   title: string;
   description: string;
   level: number;
+  etcLanguageId?: number;
   isAdditionalLanguage: boolean;
   maxLevel: number;
 };
@@ -21,12 +26,14 @@ const LanguageCard = ({
   title,
   description,
   level,
+  etcLanguageId,
   isAdditionalLanguage,
   maxLevel,
 }: LanguageCardProps) => {
   const [levelBottomSheet, setLevelBottomSheet] = useState(false);
   const [selectedLevel, setSelectedLevel] = useState(level);
 
+  const { mutate: deleteEtcLanguage } = useDeleteEtcLanguageLevel();
   const { mutate: patchLanguagesLevel } = usePatchLanguagesLevel({
     type: title.toLowerCase().replace(/\s+/g, '-') as LanguagesLevelType,
     level: selectedLevel,
@@ -37,9 +44,18 @@ const LanguageCard = ({
     setLevelBottomSheet(false);
   };
 
+  const mapLanguageImg = (title: string) => {
+    const languageData = LanguageList.find(
+      (language) => language.language === title,
+    );
+
+    // 일치하는 언어의 이미지가 없을 경우 undefined 반환
+    return languageData ? languageData.img_url : undefined;
+  };
+
   const goToWebSite = [
     {
-      language: 'TOPIC',
+      language: 'TOPIK',
       site: 'https://www.topik.go.kr/TWMAIN/TWMAIN0010.do',
     },
     {
@@ -54,6 +70,12 @@ const LanguageCard = ({
 
   // 현재 title과 일치하는 사이트 URL 찾기
   const siteInfo = goToWebSite.find((item) => item.language === title);
+
+  const handleEtcLanguageDelete = () => {
+    if (etcLanguageId) {
+      deleteEtcLanguage(etcLanguageId);
+    }
+  };
 
   return (
     <>
@@ -100,9 +122,9 @@ const LanguageCard = ({
       <div className="flex flex-col p-4 gap-2 rounded-[1.125rem] border-[0.5px] border-[#DCDCDC] border-solid">
         <div className="flex justify-between">
           <div className="flex gap-4 justify-center items-center">
-            <div className="w-9 h-9">
+            <div className="w-9 h-9 rounded-full overflow-hidden">
               <img
-                src={KoreanFlag}
+                src={mapLanguageImg(title) ? mapLanguageImg(title) : KoreanFlag}
                 alt="Korean Flag"
                 className="w-full h-full object-cover"
               />
@@ -124,7 +146,10 @@ const LanguageCard = ({
               className="cursor-pointer"
             />
             {isAdditionalLanguage && (
-              <TrashcanIcon className="cursor-pointer" />
+              <TrashcanIcon
+                className="cursor-pointer"
+                onClick={handleEtcLanguageDelete}
+              />
             )}
           </div>
         </div>

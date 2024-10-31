@@ -1,9 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import ResumeManageBox from '@/components/ManageResume/components/ResumeManageBox';
-import {
-  MypageCardData,
-  MypageCardType,
-} from '@/types/manageResume/manageResume';
+import { MypageCardType } from '@/types/manageResume/manageResume';
 import { ManageResumeType } from '@/constants/manageResume';
 
 import CtaIcon from '@/assets/icons/ManageResume/CtaIcon.svg?react';
@@ -13,20 +9,32 @@ import WorkIcon from '@/assets/icons/ManageResume/WorkIcon.svg?react';
 import EducationIcon from '@/assets/icons/ManageResume/EducationIcon.svg?react';
 import LanguageIcon from '@/assets/icons/ManageResume/LanguageIcon.svg?react';
 import BigEditIcon from '@/assets/icons/ManageResume/BigEditIcon.svg?react';
-import { isEmptyData } from '@/utils/editResume';
+import IntroductionDetail from '@/components/ManageResume/components/IntroductionDetail';
+import {
+  EducationType,
+  LanguageListType,
+  WorkExperienceType,
+} from '@/types/postApply/resumeDetailItem';
+import WorkExperienceDetail from '@/components/ManageResume/components/WorkExperienceDetail';
+import EducationDetail from '@/components/ManageResume/components/EducationDetail';
+import LanguageManageDetail from '@/components/ManageResume/components/LanguageManageDetail';
 
 type MypageCardProps = {
   type: ManageResumeType;
   informations?: MypageCardType[];
-  data?: MypageCardData;
-  onDelete?: (id?: number) => void;
+  introductionData?: string;
+  workExperienceData?: WorkExperienceType[];
+  educationData?: EducationType[];
+  languageData?: LanguageListType;
 };
 
 const MypageCard = ({
   type,
   informations,
-  data,
-  onDelete,
+  introductionData,
+  workExperienceData,
+  educationData,
+  languageData,
 }: MypageCardProps) => {
   const navigate = useNavigate();
 
@@ -93,40 +101,60 @@ const MypageCard = ({
       {informations?.map((info, index) => (
         <div key={index} className="px-3 py-4 flex flex-col gap-1">
           <div className="head-3 text-[#1E1926]">{info.title}</div>
-          <div className="body-3 text-[#656565]">{info.description}</div>
+          <div className="body-3 text-[#656565]">
+            {info.description.length == 2
+              ? `${info.description[0]}, ${info.description[1]}` // 상세주소
+              : info.description[0]}
+          </div>
         </div>
       ))}
     </div>
   );
 
   // 이력서 관리 페이지에서 수정 가능한 정보 렌더링
-  // server 데이터 : Json 구조
   const renderEditSection = () => {
-    if (data) {
-      if (isEmptyData(data)) {
-        return (
-          <div className="flex flex-col">
-            <div className="bg-profileMenuGradient bg-cover bg-no-repeat bg-center rounded-[1.375rem] py-7 px-6 flex justify-between items-center cursor-pointer">
-              <div className="flex items-center gap-3">
-                <div>{iconAndPath[type].icon}</div>
-                <div className="head-3 text-[#1E1926]">{type}</div>
-              </div>
-              <CtaIcon onClick={handleClick} />
+    // 데이터가 있을 경우
+    if (
+      (type === ManageResumeType.INTRODUCTION && introductionData != null) ||
+      (type === ManageResumeType.WORKEXPERIENCE &&
+        workExperienceData &&
+        workExperienceData.length > 0) ||
+      (type === ManageResumeType.EDUCATION &&
+        educationData &&
+        educationData.length > 0) ||
+      type === ManageResumeType.LANGUAGE
+    ) {
+      return (
+        <div className="flex flex-col w-full p-4 justify-center gap-4 rounded-[1.125rem] border-[0.5px] border-solid border-[#DCDCDC]">
+          {renderHeader()}
+          {type == ManageResumeType.INTRODUCTION && (
+            <IntroductionDetail data={introductionData!} />
+          )}
+          {type === ManageResumeType.WORKEXPERIENCE && (
+            <WorkExperienceDetail data={workExperienceData!} />
+          )}
+          {type === ManageResumeType.EDUCATION && (
+            <EducationDetail data={educationData!} />
+          )}
+          {type === ManageResumeType.LANGUAGE && (
+            <LanguageManageDetail data={languageData!} />
+          )}
+        </div>
+      );
+    }
+    // 데이터가 없을 경우
+    else {
+      return (
+        <div className="flex flex-col">
+          <div className="bg-profileMenuGradient bg-cover bg-no-repeat bg-center rounded-[1.375rem] py-7 px-6 flex justify-between items-center cursor-pointer">
+            <div className="flex items-center gap-3">
+              <div>{iconAndPath[type].icon}</div>
+              <div className="head-3 text-[#1E1926]">{type}</div>
             </div>
+            <CtaIcon onClick={handleClick} />
           </div>
-        );
-      } else {
-        return (
-          <div className="flex flex-col w-full p-4 justify-center gap-4 rounded-[1.125rem] border-[0.5px] border-solid border-[#DCDCDC]">
-            {renderHeader()}
-            <ResumeManageBox
-              type={type}
-              data={data}
-              onDelete={() => onDelete}
-            />
-          </div>
-        );
-      }
+        </div>
+      );
     }
   };
 

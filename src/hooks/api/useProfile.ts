@@ -58,7 +58,7 @@ export const usePatchUserProfile = () => {
   });
 };
 
-// 3.5 (유학생) 프로필 수정
+// 3.6 (고용주) 회사 정보 수정하기
 export const usePatchOwnerProfile = () => {
   const navigate = useNavigate();
   return useMutation({

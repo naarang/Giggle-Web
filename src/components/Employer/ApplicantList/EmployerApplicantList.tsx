@@ -1,14 +1,19 @@
 import SearchSortDropdown from '@/components/Common/SearchSortDropdown';
 import EmployerApplicationCard from '@/components/Employer/ApplicantList/EmployerApplicantCard';
 import {
-  APPLICANT_LIST_DATA,
+  EN_APPLICATION_STATUS_TYPE,
   KO_APPLICATION_STATUS_TYPE,
 } from '@/constants/application';
-import { KO_ASCENDING_SORT_TYPE } from '@/constants/sort';
+import {
+  KO_ASCENDING_SORT_TYPE,
+  MATCH_KO_EN_ASCENDING_SORT,
+} from '@/constants/sort';
+import { useGetApplicantList } from '@/hooks/api/usePost';
 import { ApplicantItemType } from '@/types/application/applicationItem';
 import { KoApplicationStatusType } from '@/types/application/applicationStatus';
 import { KoAscendingSortType } from '@/types/common/sort';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 type EmployerApplicationListPropsType = {
   title: string;
@@ -17,7 +22,8 @@ type EmployerApplicationListPropsType = {
 const EmployerApplicationList = ({
   title,
 }: EmployerApplicationListPropsType) => {
-  const [applicantList, setApplicantList] = useState<ApplicantItemType[]>([]);
+  const { id } = useParams();
+
   const [selectedSort, setSelectedSort] = useState<KoAscendingSortType>(
     KO_ASCENDING_SORT_TYPE.ASCENDING,
   );
@@ -25,10 +31,18 @@ const EmployerApplicationList = ({
     KO_APPLICATION_STATUS_TYPE.TOTAL,
   );
 
+  const { data, refetch } = useGetApplicantList(
+    Number(id),
+    MATCH_KO_EN_ASCENDING_SORT[selectedSort],
+    EN_APPLICATION_STATUS_TYPE[selectedStatus],
+    !isNaN(Number(id)) ? true : false,
+  );
+
   useEffect(() => {
-    // TODO: 4.6 호출하기
-    setApplicantList(APPLICANT_LIST_DATA);
-  }, [selectedSort, selectedStatus]);
+    if (!isNaN(Number(id))) refetch();
+  }, [id, selectedSort, selectedStatus, refetch]);
+
+  if (!data?.success) return <></>;
 
   return (
     <section className="flex flex-col gap-[1rem] w-full p-[1.5rem] pb-[6.25rem]">
@@ -51,7 +65,7 @@ const EmployerApplicationList = ({
           />
         </div>
       </div>
-      {applicantList?.map((data) => (
+      {data?.data?.applicant_list?.map((data: ApplicantItemType) => (
         <EmployerApplicationCard key={data.id} applicantData={data} />
       ))}
     </section>

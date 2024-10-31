@@ -35,7 +35,7 @@ export const POST_DETAIL_DATA: PostDetailItemType = {
   },
   summaries: {
     address: '123 Main St, Seoul',
-    houlry_rate: 15000,
+    hourly_rate: 15000,
     work_period: 'ONE_MONTH_TO_THREE_MONTHS',
     work_days_per_week: 5,
   },
@@ -57,7 +57,7 @@ export const POST_DETAIL_DATA: PostDetailItemType = {
     longitude: 126.978,
   },
   working_conditions: {
-    houlry_rate: 15000,
+    hourly_rate: 15000,
     work_period: 'ONE_MONTH_TO_THREE_MONTHS',
     work_day_times: [
       {

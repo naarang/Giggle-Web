@@ -1,7 +1,16 @@
-import { AscendingSortType } from '@/types/common/sort';
+import { MatchKoEnAscendingSortType } from '@/types/common/sort';
 import { api } from '.';
 import { GetApplyPostListReqType, GetPostListReqType } from '@/types/api/post';
 import { APPLICATION_STATUS_TYPE } from '@/constants/application';
+import { filterNullParams } from '@/utils/filterNullParams';
+
+// 4.1 (게스트) 공고 리스트 조회
+export const getPostListGuest = async (req: GetPostListReqType) => {
+  const response = await api.get(`/guests/job-postings/overviews`, {
+    params: filterNullParams(req),
+  });
+  return response.data;
+};
 
 // 4.2 (게스트) 공고 상세 조회하기
 export const getPostDetailGuest = async (id: number) => {
@@ -11,9 +20,9 @@ export const getPostDetailGuest = async (id: number) => {
 
 // 4.3 (유학생/고용주) 공고 리스트 조회
 export const getPostList = async (req: GetPostListReqType) => {
-  const response = await api.get(
-    `/job-postings/overviews?page=${req.page}&size=${req.size}&search=${req.search}&sorting=${req.sorting}&region_1depth=${req.region_1depth}&region_2depth=${req.region_2depth}&region_3depth=${req.region_3depth}&industry=${req.industry}&work_period=${req.work_period}&work_days_per_week=${req.work_days_per_week}&working_day=${req.working_day}&working_hours=${req.working_hours}&recruitment_period=${req.recruitment_period}&employment_type=${req.employment_type}&visa=${req.visa}&type=${req.type}`,
-  );
+  const response = await api.get(`/job-postings/overviews`, {
+    params: filterNullParams(req),
+  });
   return response.data;
 };
 
@@ -90,7 +99,7 @@ export const getApplyPostList = async ({
   status,
 }: GetApplyPostListReqType) => {
   const response = await api.get(
-    `/users/user-owner-job-postings/overviews?page=${page}&size=${size}&sorting=${sorting}&${status === APPLICATION_STATUS_TYPE.TOTAL ? '' : `status=${status}`}`,
+    `/users/user-owner-job-postings/overviews?page=${page}&size=${size}&sorting=${sorting.toUpperCase()}${status === APPLICATION_STATUS_TYPE.TOTAL ? '' : `&status=${status.replace(/\s/g, '_').toUpperCase()}`}`,
   );
   return response.data;
 };
@@ -104,7 +113,9 @@ export const getInterviewList = async (page: number, size: number) => {
 };
 
 // 6.6 (고용주) 등록한 공고 리스트 조회하기
-export const getEmployerPostList = async (sorting: AscendingSortType) => {
+export const getEmployerPostList = async (
+  sorting: MatchKoEnAscendingSortType,
+) => {
   // TODO: 무한 스크롤 구현하기
   const page = 1;
   const size = 10;

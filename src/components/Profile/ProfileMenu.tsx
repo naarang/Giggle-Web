@@ -27,12 +27,11 @@ const ProfileMenu = ({
   const { mutate: patchNotificationAllowed } = usePatchNotificationAllowed();
   const { data: notificaionAllowed } = useGetUserSummaries();
 
-  // const { data } = useGetUserSummaries();
   const [toggleOn, setToggleOn] = useState<boolean>(false);
 
   useEffect(() => {
     // 알림 설정 상태 불러오기
-    if (isToggle && notificaionAllowed && notificaionAllowed.success) {
+    if (isToggle && notificaionAllowed) {
       setToggleOn(
         notificaionAllowed.data.user_information.is_notification_allowed,
       );

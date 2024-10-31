@@ -15,6 +15,7 @@ import {
 import {
   AuthenticationResponse,
   SignInResponse,
+  SignUpResponse,
   TempSignUpResponse,
 } from '@/types/api/auth';
 import {
@@ -65,6 +66,7 @@ export const useSignIn = () => {
         setAccessToken(data.data.access_token);
         setRefreshToken(data.data.refresh_token);
         navigate('/splash');
+        window.location.reload();
       }
     },
     onError: () => {
@@ -79,15 +81,17 @@ export const useLogout = () => {
   const { updateAccountType, updateName } = useUserStore();
   return useMutation({
     mutationFn: logout,
-    onSuccess: () => {
-      // 토큰 삭제
-      deleteAccessToken();
-      deleteRefreshToken();
-      // 유저 타입 전역 변수 초기화
-      updateAccountType(undefined);
-      updateName('');
-      // 스플래시 이동
-      navigate('/splash');
+    onSuccess: (data: RESTYPE<null>) => {
+      if (data.success) {
+        // 토큰 삭제
+        deleteAccessToken();
+        deleteRefreshToken();
+        // 유저 타입 전역 변수 초기화
+        updateAccountType(undefined);
+        updateName('');
+        // 스플래시 이동
+        navigate('/splash');
+      }
     },
     onError: () => {
       alert('로그아웃을 다시 시도해주세요.');
@@ -102,9 +106,11 @@ export const useReIssueToken = () => {
   return useMutation({
     mutationFn: reIssueToken,
     onSuccess: (data: RESTYPE<SignInResponse>) => {
-      setAccessToken(data.data.access_token);
-      setRefreshToken(data.data.refresh_token);
-      navigate('/splash'); // 재발급 후 유형 확인
+      if (data.success) {
+        setAccessToken(data.data.access_token);
+        setRefreshToken(data.data.refresh_token);
+        navigate('/splash'); // 재발급 후 유형 확인
+      }
     },
     onError: () => {
       alert('만료되었습니다. 다시 로그인해주세요.');
@@ -139,8 +145,14 @@ export const useGetUserType = () => {
 
 // 2.4 기본 임시회원가입 훅
 export const useTempSignUp = () => {
+  const { updateTryCnt } = useEmailTryCountStore();
   return useMutation({
     mutationFn: tempSignUp,
+    onSuccess: (data: RESTYPE<TempSignUpResponse>) => {
+      if (data.success) {
+        updateTryCnt(data.data.try_cnt);
+      }
+    },
     onError: (error) => {
       console.log('임시 회원가입 실패 : ', error.message);
     },
@@ -153,9 +165,11 @@ export const useSignUp = () => {
   return useMutation({
     mutationFn: signUp,
     onSuccess: (data: RESTYPE<SignInResponse>) => {
-      deleteTemporaryToken();
-      setAccessToken(data.data.access_token);
-      setRefreshToken(data.data.refresh_token);
+      if (data.success) {
+        deleteTemporaryToken();
+        setAccessToken(data.data.access_token);
+        setRefreshToken(data.data.refresh_token);
+      }
     },
     onError: () => {
       alert('회원가입에 실패하였습니다. 다시 시도해주세요.');
@@ -169,7 +183,9 @@ export const usePatchAuthentication = () => {
   return useMutation({
     mutationFn: patchAuthentication,
     onSuccess: (data: RESTYPE<AuthenticationResponse>) => {
-      setTemporaryToken(data.data.temporary_token);
+      if (data.success) {
+        setTemporaryToken(data.data.temporary_token);
+      }
     },
     onError: (error) => {
       alert('인증코드를 다시 확인해주세요.');
@@ -185,8 +201,10 @@ export const useReIssueAuthentication = () => {
   return useMutation({
     mutationFn: reIssueAuthentication,
     onSuccess: (data: RESTYPE<TempSignUpResponse>) => {
-      // 이메일 재발송 횟수 업데이트
-      updateTryCnt(data.data.try_cnt);
+      if (data.success) {
+        // 이메일 재발송 횟수 업데이트
+        updateTryCnt(data.data.try_cnt);
+      }
     },
     onError: () => {
       alert('인증코드 재발송이 실패하였습니다. 회원가입을 다시 시도해주세요.');
@@ -201,15 +219,17 @@ export const useWithdraw = () => {
   const { updateAccountType, updateName } = useUserStore();
   return useMutation({
     mutationFn: withdraw,
-    onSuccess: () => {
-      // 토큰 삭제
-      deleteAccessToken();
-      deleteRefreshToken();
-      // 유저 타입 전역 변수 초기화
-      updateAccountType(undefined);
-      updateName('');
-      // 스플래시 이동
-      navigate('/splash');
+    onSuccess: (data: RESTYPE<null>) => {
+      if (data.success) {
+        // 토큰 삭제
+        deleteAccessToken();
+        deleteRefreshToken();
+        // 유저 타입 전역 변수 초기화
+        updateAccountType(undefined);
+        updateName('');
+        // 스플래시 이동
+        navigate('/splash');
+      }
     },
     onError: () => {
       alert('탈퇴에 실패하였습니다.');
@@ -222,10 +242,16 @@ export const useSignupEmployer = (setSuccess: () => void) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: signUpEmployer,
-    onSuccess: () => {
-      setSuccess();
+    onSuccess: (data: RESTYPE<SignUpResponse>) => {
+      if (data.success) {
+        deleteTemporaryToken();
+        setAccessToken(data.data.access_token);
+        setRefreshToken(data.data.refresh_token);
+        setSuccess();
+      }
     },
     onError: () => {
+      alert('회원가입에 실패하였습니다. 다시 시도해주세요.');
       navigate('/signin');
     },
   });
