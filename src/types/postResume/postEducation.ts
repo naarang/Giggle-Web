@@ -29,18 +29,18 @@ export type InitailEducationType = {
   education_level: string | null; // Enum(BACHELOR, ASSOCIATE, HIGHSCHOOL),
   school_id: number | null;
   major: string | null;
-  gpa: number | null;
+  gpa: string | null;
   start_date: string | null; // yyyy-MM-dd
   end_date: string | null; // yyyy-MM-dd
-  grade: number | null;
+  grade: string | null;
 };
 
 export const InitialEducationData = {
   education_level: '', // Enum(BACHELOR, ASSOCIATE, HIGHSCHOOL),
   school_id: null,
   major: '',
-  gpa: null,
+  gpa: '',
   start_date: '', // yyyy-MM-dd
   end_date: '', // yyyy-MM-dd
-  grade: null,
+  grade: '',
 };

@@ -10,7 +10,7 @@ import { UserResumeDetailResponse } from '@/types/api/resumes';
 const ManageResumePage = () => {
   const navigate = useNavigate();
   const [data, setData] = useState<UserResumeDetailResponse>();
-  const { data: resumeData } = useGetResume();
+  const { data: resumeData } = useGetResume(true);
 
   useEffect(() => {
     if (resumeData) {
