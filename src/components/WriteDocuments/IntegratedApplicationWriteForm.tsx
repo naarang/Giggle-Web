@@ -21,6 +21,7 @@ import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
 import { usePostIntegratedApplicants } from '@/hooks/api/useDocument';
 import { formatPhoneNumber } from '@/utils/information';
+import { useParams } from 'react-router-dom';
 
 type IntegratedApplicationFormProps = {
   document?: IntegratedApplicationData;
@@ -31,6 +32,7 @@ const IntegratedApplicationWriteForm = ({
   document,
   isEdit,
 }: IntegratedApplicationFormProps) => {
+  const { id } = useParams();
   const [newDocumentData, setNewDocumentData] =
     useState<IntegratedApplicationData>(initialIntegratedApplication);
 
@@ -70,8 +72,8 @@ const IntegratedApplicationWriteForm = ({
   const { searchAddress } = useSearchAddress({
     onSuccess: (data) => setAddressSearchResult(data),
   });
-  const { mutate: postDocument } = usePostIntegratedApplicants(); // 통합신청서 생성 훅
-  const { mutate: updateDocument } = usePostIntegratedApplicants(); // 통합신청서 수정 훅
+  const { mutate: postDocument } = usePostIntegratedApplicants(Number(id)); // 통합신청서 생성 훅
+  const { mutate: updateDocument } = usePostIntegratedApplicants(Number(id)); // 통합신청서 수정 훅
   // 문서 편집일 시 페이지 진입과 동시에 기존 내용 자동 입력
   useEffect(() => {
     if (isEdit && document) {

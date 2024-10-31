@@ -162,15 +162,15 @@ export const usePostIntegratedApplicants = (id: number) => {
 };
 
 // 8.14 (유학생) 통합신청서 수정 api 통신 커스텀 훅
-export const usePutIntegratedApplicants = () => {
+export const usePutIntegratedApplicants = (id: number) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: putIntegratedApplications,
     onSuccess: () => {
-      navigate('/');
+      navigate(`/application-documents/${id}`);
     },
     onError: () =>
-      navigate('/write-documents', {
+      navigate(`/write-documents/${id}`, {
         state: {
           type: DocumentType.INTEGRATED_APPLICATION,
         },
@@ -183,7 +183,7 @@ export const useSearchSchool = ({
   onSuccess,
   onError,
 }: {
-  onSuccess?: (data: SearchSchoolResponse) => void;
+  onSuccess?: (data: RESTYPE<SearchSchoolResponse>) => void;
   onError?: (error: unknown) => void;
 }) => {
   const { mutate, ...rest } = useMutation({
@@ -198,14 +198,14 @@ export const useSearchSchool = ({
 };
 
 // 8.9 (유학생) 서류 재검토 요청 api 통신 커스텀 훅
-export const usePostRequest = () => {
+export const usePostRequest = (id: number) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: postRequest,
     onSuccess: () => {
-      navigate('/application-documents');
+      navigate(`/application-documents/${id}`);
     },
-    onError: () => navigate('/request-modify'),
+    onError: () => navigate(`/request-modify/${id}`),
   });
 };
 

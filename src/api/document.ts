@@ -136,9 +136,9 @@ export const putIntegratedApplications = async ({
 // 9.1 (유학생)학교명 검색 api 통신 함수
 export const searchSchool = async (
   name: string,
-): Promise<SearchSchoolResponse> => {
-  const response = await api.post(
-    `/users/schools/brief?search=${name}&page=1&size=7`,
+): Promise<RESTYPE<SearchSchoolResponse>> => {
+  const response = await api.get(
+    `/users/schools/briefs?search=${name}&page=1&size=7`,
   );
   return response.data;
 };
