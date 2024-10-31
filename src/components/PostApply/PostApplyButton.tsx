@@ -18,7 +18,7 @@ const PostApplyButton = () => {
     if (isNaN(Number(id))) return;
     const result = await mutateAsync(Number(id));
     if (result?.success) {
-      setPostId(result?.id);
+      setPostId(result?.data?.id);
       setIsComplete(true);
     }
   };
@@ -33,6 +33,7 @@ const PostApplyButton = () => {
           fontColor="text-[#BDBDBD]"
           title="Edit"
           isBorder={false}
+          onClick={() => navigate('/profile/manage-resume')}
         />
         <Button
           type={buttonTypeKeys.APPLY}
@@ -49,7 +50,7 @@ const PostApplyButton = () => {
           content="You can check the status of your documents"
           buttonContent="Check Now"
           // TODO: 추후에 지원상태 - 상세 페이지로 이동시키기
-          onClick={() => navigate(`/applicatioin/${postId}`)}
+          onClick={() => navigate(`/application/${postId}`)}
         />
       )}
     </>
