@@ -110,51 +110,6 @@ export const LanguageData: LanguagesSummariesResponse = {
   ],
 };
 
-// 학교 더미데이터
-export const SearchSchollsList: School[] = [
-  { id: 1, name: 'University of Oxford', phone_number: '000-0000' },
-  {
-    id: 2,
-    name: 'National University of Lesotho International School',
-    phone_number: '000-0000',
-  },
-  { id: 3, name: 'University of Chester CE Academy', phone_number: '000-0000' },
-  {
-    id: 4,
-    name: 'University of Chester Academy Northwich',
-    phone_number: '000-0000',
-  },
-  { id: 5, name: 'University of Birmingham School', phone_number: '000-0000' },
-  { id: 6, name: 'University of Oxford', phone_number: '000-0000' },
-  {
-    id: 7,
-    name: 'National University of Lesotho International School',
-    phone_number: '000-0000',
-  },
-  { id: 8, name: 'University of Chester CE Academy', phone_number: '000-0000' },
-  {
-    id: 9,
-    name: 'University of Chester Academy Northwich',
-    phone_number: '000-0000',
-  },
-  { id: 10, name: 'University of Birmingham School', phone_number: '000-0000' },
-];
-
-// 학력 더미데이터
-export const GetEducationData: GetEducationType = {
-  education_level: 'BACHELOR', // Enum(BACHELOR, ASSOCIATE, HIGHSCHOOL),
-  school: {
-    id: 1,
-    name: 'University of Chester Academy Northwich',
-    phone_number: '000-0000',
-  },
-  major: 'Department of Computer Engineering',
-  gpa: 3.5,
-  start_date: '2021-03-01', // yyyy-MM-dd
-  end_date: '2026-03-01', // yyyy-MM-dd
-  grade: 4,
-};
-
 // 북마크 공고 더미데이터
 export const ScrappedJobPostsData: JobPostingItemType[] = [
   {

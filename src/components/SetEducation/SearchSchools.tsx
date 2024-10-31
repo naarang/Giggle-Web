@@ -5,7 +5,6 @@ import { InputType } from '@/types/common/input';
 import Button from '@/components/Common/Button';
 import { buttonTypeKeys } from '@/constants/components';
 import { School } from '@/types/api/document';
-import { SearchSchollsList } from '@/constants/manageResume';
 import { InitailEducationType } from '@/types/postResume/postEducation';
 import { useGetSearchSchools } from '@/hooks/api/useResume';
 

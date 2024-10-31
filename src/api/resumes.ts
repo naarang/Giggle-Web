@@ -9,6 +9,7 @@ import {
 } from '@/types/api/resumes';
 import { api } from '.';
 import { RESTYPE } from '@/types/api/common';
+import { GetEducationType } from '@/types/postResume/postEducation';
 
 // 7.1 (유학생) 이력서 조회하기
 export const getResume = async (): Promise<
@@ -27,7 +28,9 @@ export const getWorkExperience = async (id: number) => {
 };
 
 // 7.3 학력 상세 조회하기
-export const getEducation = async (id: number) => {
+export const getEducation = async (
+  id: number,
+): Promise<RESTYPE<GetEducationType>> => {
   const response = await api.get(`/users/resumes/educations/${id}/details`);
   return response.data;
 };

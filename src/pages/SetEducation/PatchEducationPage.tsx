@@ -2,7 +2,7 @@ import Button from '@/components/Common/Button';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import EducationPatch from '@/components/SetEducation/EducationPatch';
 import { buttonTypeKeys } from '@/constants/components';
-import { GetEducationData } from '@/constants/manageResume';
+import { useGetEducation } from '@/hooks/api/useResume';
 import useNavigateBack from '@/hooks/useNavigateBack';
 import {
   GetEducationType,
@@ -10,9 +10,10 @@ import {
 } from '@/types/postResume/postEducation';
 import { transformToPatchEducation } from '@/utils/editResume';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const PatchEducationPage = () => {
+  const { id } = useParams();
   const handleBackButtonClick = useNavigateBack();
   const navigate = useNavigate();
   const [educationData, setEducationData] = useState<PostEducationType>({
@@ -45,19 +46,16 @@ const PatchEducationPage = () => {
   };
 
   // TODO: API - 7.3 학력 상세 조회하기
-  // Get API 연결
+  const { data: getEducationData } = useGetEducation(parseInt(id!));
   useEffect(() => {
-    const fetchDataFromApi = async () => {
-      const data = GetEducationData;
-      setFetchData(data);
+    if (getEducationData) {
+      setFetchData(getEducationData.data);
 
       // patch 타입 initialData 설정
-      const transformedData = transformToPatchEducation(data);
+      const transformedData = transformToPatchEducation(getEducationData.data);
       setInitialData(transformedData);
-    };
-
-    fetchDataFromApi();
-  }, []);
+    }
+  }, [getEducationData]);
 
   // initialData가 설정된 후에 educationData를 설정
   useEffect(() => {

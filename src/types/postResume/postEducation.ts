@@ -11,9 +11,14 @@ export type PostEducationType = {
   grade: number;
 };
 
+export type SchoolSummary = {
+  id: number;
+  name: string;
+};
+
 export type GetEducationType = {
   education_level: EducationLevelType; // Enum(BACHELOR, ASSOCIATE, HIGHSCHOOL),
-  school: School;
+  school: SchoolSummary;
   major: string;
   gpa: number;
   start_date: string; // yyyy-MM-dd
