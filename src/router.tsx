@@ -40,14 +40,14 @@ import PostLanguagePage from '@/pages/PostLanguage/PostLanguagePage';
 import EmployerApplicantDetailPage from '@/pages/Employer/ApplicantDetail/EmployerApplicantDetailPage';
 import EmployerApplicantResumePage from '@/pages/Employer/ApplicantResume/EmployerApplicantResumePage';
 import EmployerApplicantResumeAcceptPage from '@/pages/Employer/ApplicantResumeAccept/EmployerApplicantResumeAcceptPage';
-import EmployerCreatePostPage from './pages/Employer/Post/EmployerCreatePostPage';
+import EmployerCreatePostPage from '@/pages/Employer/Post/EmployerCreatePostPage';
 import EmployerEditProfilePage from '@/pages/Employer/EditProfile/EmployerEditProfilePage';
 import EmployerSignupPage from '@/pages/Employer/Signup/EmployerSignupPage';
 import AlarmPage from '@/pages/Alarm/AlarmPage';
 import ChatBotPage from '@/pages/ChatBot/ChatBotPage';
 import Splash from '@/components/Splash/Splash';
-import ApplicantDocumentsDetailPage from './pages/Employer/WriteDocuments/ApplicantDocumentsDetailPage';
-import EmployerWriteDocumentsPage from './pages/Employer/WriteDocuments/EmployerWriteDocumentsPage';
+import ApplicantDocumentsDetailPage from '@/pages/Employer/WriteDocuments/ApplicantDocumentsDetailPage';
+import EmployerWriteDocumentsPage from '@/pages/Employer/WriteDocuments/EmployerWriteDocumentsPage';
 
 const Layout = () => {
   const location = useLocation();
