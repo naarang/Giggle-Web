@@ -69,7 +69,7 @@ const EmployerApplicantCard = ({
           </div>
         </div>
         <Tag
-          value={`${applicantData.duration_of_days}days After`}
+          value={`${applicantData.duration_of_days} days After`}
           padding="0.25rem 0.438rem"
           isRounded={false}
           hasCheckIcon={false}

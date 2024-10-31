@@ -54,7 +54,7 @@ export const useGetPostList = (req: GetPostListReqType, isEnabled: boolean) => {
 // 4.4 (유학생/고용주) 공고 상세 조회하기 훅
 export const useGetPostDetail = (id: number, isEnabled: boolean) => {
   return useQuery({
-    queryKey: ['post', id],
+    queryKey: ['post', 'detail', id],
     queryFn: () => getPostDetail(id),
     enabled: isEnabled,
   });
