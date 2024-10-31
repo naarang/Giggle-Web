@@ -6,7 +6,6 @@ import {
   BookmarkCountType,
   EmployerCountsInfoResponse,
   EmployerProfileDetailResponse,
-  EmployerProfileRequest,
   EmployerProfileResponse,
   UserProfileDetailResponse,
   UserProfileSummaryResponse,
@@ -52,9 +51,7 @@ export const patchUserProfile = async (userData: FormData) => {
 };
 
 // 3.6 (고용주) 회사 정보 수정하기
-export const patchOwnerProfile = async (
-  ownerProfile: EmployerProfileRequest,
-) => {
+export const patchOwnerProfile = async (ownerProfile: FormData) => {
   const response = await api.patch('/owners', ownerProfile);
   return response.data;
 };

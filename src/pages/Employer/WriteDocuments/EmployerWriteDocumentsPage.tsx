@@ -26,13 +26,13 @@ const EmployerWriteDocumentsPage = () => {
     PartTimePermitData | LaborContractDataResponse | IntegratedApplicationData
   >();
   const { mutate: getPartTimeEmployPermit } = useGetPartTimeEmployPermit({
-    onSuccess: (data) => setDocument(data),
+    onSuccess: (data) => setDocument(data.data),
   });
   const { mutate: getStandardLaborContract } = useGetStandardLaborContract({
-    onSuccess: (data) => setDocument(data),
+    onSuccess: (data) => setDocument(data.data),
   });
   const { mutate: getIntegratedApplication } = useGetIntegratedApplication({
-    onSuccess: (data) => setDocument(data),
+    onSuccess: (data) => setDocument(data.data),
   });
   {
     useEffect(() => {
@@ -71,7 +71,7 @@ const EmployerWriteDocumentsPage = () => {
             isEdit={isEdit}
           />
         )}
-                {type === DocumentType.LABOR_CONTRACT && (
+        {type === DocumentType.LABOR_CONTRACT && (
           <EmployerLaborContractForm
             document={document as LaborContractDataResponse}
             isEdit={isEdit}

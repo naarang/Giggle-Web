@@ -1,4 +1,5 @@
 import {
+  getDocumentsEmployee,
   getIntegratedApplication,
   getPartTimeEmployPermit,
   getStandardLaborContract,
@@ -20,16 +21,33 @@ import {
   PartTimePermitData,
   SearchSchoolResponse,
 } from '@/types/api/document';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { RESTYPE } from '../../types/api/common';
+
+// 8.1 (유학생) 서류 조회하기 훅
+export const useGetDocumentsEmployee = (id: number) => {
+  return useQuery({
+    queryKey: ['application', id],
+    queryFn: () => getDocumentsEmployee(id),
+  });
+};
+
+// 8.2 (고용주) 서류 조회하기 훅
+export const useGetDocumentsEmployer = (id: number) => {
+  return useQuery({
+    queryKey: ['application', id],
+    queryFn: () => getDocumentsEmployee(id),
+  });
+};
 
 // 시간제취업허가서 작성 api 통신 커스텀 훅
-export const usePostPartTimeEmployPermit = () => {
+export const usePostPartTimeEmployPermit = (id: number) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: postPartTimeEmployPermit,
     onSuccess: () => {
-      navigate('/');
+      navigate(`/application-documents/${id}`);
     },
     onError: () =>
       navigate('/write-documents', {
@@ -42,12 +60,12 @@ export const usePostPartTimeEmployPermit = () => {
 
 // 8.10 (유학생)시간제취업허가서 수정 api 통신 커스텀 훅
 //TODO: ID값 사용해 redirect 해야
-export const usePutPartTimeEmployPermit = () => {
+export const usePutPartTimeEmployPermit = (id: number) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: putPartTimeEmployPermit,
     onSuccess: () => {
-      navigate('/');
+      navigate(`/application-documents/${id}`);
     },
     onError: () =>
       navigate('/write-documents', {
@@ -76,15 +94,15 @@ export const usePutPartTimeEmployPermitEmployer = (id: number) => {
 };
 
 //표준 근로계약서 작성 api 통신 커스텀 훅
-export const usePostStandardLaborContracts = () => {
+export const usePostStandardLaborContracts = (id: number) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: postStandardLaborContracts,
     onSuccess: () => {
-      navigate('/');
+      navigate(`/application-documents/${id}`);
     },
     onError: () =>
-      navigate('/write-documents', {
+      navigate(`/write-documents/${id}`, {
         state: {
           type: DocumentType.LABOR_CONTRACT,
         },
@@ -93,12 +111,12 @@ export const usePostStandardLaborContracts = () => {
 };
 
 // 8.12 (유학생) 표준 근로계약서 수정 api 통신 커스텀 훅
-export const usePutStandardLaborContracts = () => {
+export const usePutStandardLaborContracts = (id: number) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: putStandardLaborContracts,
     onSuccess: () => {
-      navigate('/');
+      navigate(`/application-documents/${id}`);
     },
     onError: () =>
       navigate('/write-documents', {
@@ -127,12 +145,12 @@ export const usePutLaborContractEmployer = (id: number) => {
 };
 
 // 8.8 통합신청서 생성 api 통신 커스텀 훅
-export const usePostIntegratedApplicants = () => {
+export const usePostIntegratedApplicants = (id: number) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: postIntegratedApplications,
     onSuccess: () => {
-      navigate('/');
+      navigate(`/application-documents/${id}`);
     },
     onError: () =>
       navigate('/write-documents', {
@@ -144,15 +162,15 @@ export const usePostIntegratedApplicants = () => {
 };
 
 // 8.14 (유학생) 통합신청서 수정 api 통신 커스텀 훅
-export const usePutIntegratedApplicants = () => {
+export const usePutIntegratedApplicants = (id: number) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: putIntegratedApplications,
     onSuccess: () => {
-      navigate('/');
+      navigate(`/application-documents/${id}`);
     },
     onError: () =>
-      navigate('/write-documents', {
+      navigate(`/write-documents/${id}`, {
         state: {
           type: DocumentType.INTEGRATED_APPLICATION,
         },
@@ -165,7 +183,7 @@ export const useSearchSchool = ({
   onSuccess,
   onError,
 }: {
-  onSuccess?: (data: SearchSchoolResponse) => void;
+  onSuccess?: (data: RESTYPE<SearchSchoolResponse>) => void;
   onError?: (error: unknown) => void;
 }) => {
   const { mutate, ...rest } = useMutation({
@@ -180,14 +198,14 @@ export const useSearchSchool = ({
 };
 
 // 8.9 (유학생) 서류 재검토 요청 api 통신 커스텀 훅
-export const usePostRequest = () => {
+export const usePostRequest = (id: number) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: postRequest,
     onSuccess: () => {
-      navigate('/application-documents');
+      navigate(`/application-documents/${id}`);
     },
-    onError: () => navigate('/request-modify'),
+    onError: () => navigate(`/request-modify/${id}`),
   });
 };
 
@@ -196,7 +214,7 @@ export const useGetPartTimeEmployPermit = ({
   onSuccess,
   onError,
 }: {
-  onSuccess?: (data: PartTimePermitData) => void;
+  onSuccess?: (data: RESTYPE<PartTimePermitData>) => void;
   onError?: (error: unknown) => void;
 }) => {
   const { mutate, ...rest } = useMutation({
@@ -215,7 +233,7 @@ export const useGetStandardLaborContract = ({
   onSuccess,
   onError,
 }: {
-  onSuccess?: (data: LaborContractDataResponse) => void;
+  onSuccess?: (data: RESTYPE<LaborContractDataResponse>) => void;
   onError?: (error: unknown) => void;
 }) => {
   const { mutate, ...rest } = useMutation({
@@ -234,7 +252,7 @@ export const useGetIntegratedApplication = ({
   onSuccess,
   onError,
 }: {
-  onSuccess?: (data: IntegratedApplicationData) => void;
+  onSuccess?: (data: RESTYPE<IntegratedApplicationData>) => void;
   onError?: (error: unknown) => void;
 }) => {
   const { mutate, ...rest } = useMutation({

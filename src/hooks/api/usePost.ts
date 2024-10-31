@@ -1,6 +1,7 @@
 import {
   createPost,
   deletePost,
+  editPost,
   getApplicantList,
   getApplyPostList,
   getBookmarkPostList,
@@ -100,10 +101,31 @@ export const useCreatePost = () => {
     onSuccess: (response) => {
       // response는 API 응답 데이터
       // { success: true, data: { id: Long }, error: null }
-      navigate(`/employer/post/${response.data.id}`);
+      setTimeout(() => {
+        navigate(`/employer/post/${response.data.id}`);
+      }, 1000);
     },
     onError: (error) => {
       console.error('공고 등록하기 실패', error);
+    },
+  });
+};
+
+// 4.10 (고용주) 공고 수정하기 훅
+export const useEditPost = () => {
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: editPost,
+    onSuccess: (response) => {
+      // response는 API 응답 데이터
+      // { success: true, data: { id: Long }, error: null }
+      setTimeout(() => {
+        navigate(`/employer/post/${response.data.id}`);
+      }, 1000);
+    },
+    onError: (error) => {
+      console.error('공고 수정하기 실패', error);
     },
   });
 };
