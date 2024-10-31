@@ -8,11 +8,14 @@ import { PostSortingType } from '@/types/PostSearchFilter/PostSearchFilterItem';
 
 type PostSearchResultProps = {
   postData: JobPostingItemType[];
+  onChangeSortType: (sort: PostSortingType) => void;
 };
 
-const PostSearchResult = ({ postData }: PostSearchResultProps) => {
-  // TODO: 홈에서 See more 버튼 클릭 시 해당 메뉴로 정렬하기
-  const { sortType, updateSortType } = usePostSearchStore();
+const PostSearchResult = ({
+  postData,
+  onChangeSortType,
+}: PostSearchResultProps) => {
+  const { sortType } = usePostSearchStore();
 
   return (
     <section className="flex flex-col items-center gap-[1rem] w-full mt-[1rem] px-[1.5rem]">
@@ -23,9 +26,7 @@ const PostSearchResult = ({ postData }: PostSearchResultProps) => {
             value.toLowerCase(),
           )}
           value={sortType.toLowerCase()}
-          onSelect={(value) => {
-            updateSortType(value as PostSortingType);
-          }}
+          onSelect={(value) => onChangeSortType(value as PostSortingType)}
         />
       </div>
       {postData?.length ? (

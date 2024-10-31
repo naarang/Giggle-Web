@@ -10,7 +10,9 @@ const HomeHeader = () => {
 
   return (
     <section className="w-full pt-[3.125rem] pb-[1rem] px-[1.5rem] bg-[#FEF387]">
-      <p className="pb-[0.375rem] body-2 text-[#37383C9C]">Welcome! {name}</p>
+      <p className="pb-[0.375rem] body-2 text-[#37383C9C]">
+        Welcome! {name.replace(/-/g, ' ')}
+      </p>
       <div className="w-full flex">
         <h1 className="flex-1 title-1 text-[#0A0909]">
           Find your <br />
