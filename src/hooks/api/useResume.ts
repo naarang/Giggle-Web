@@ -61,6 +61,9 @@ export const usePatchLanguagesLevel = ({
 }) => {
   return useMutation({
     mutationFn: () => patchLanguagesLevel({ type, level }),
+    onSuccess: () => {
+      window.location.reload();
+    },
     onError: (error) => {
       console.error('언어 레벨 수정 실패', error);
     },

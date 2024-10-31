@@ -34,7 +34,7 @@ export type EducationRequest = {
 
 // 언어 레벨 수정 API 통합시 type property로 사용
 export type LanguagesLevelType =
-  | 'topic'
+  | 'topik'
   | 'social-integration-program'
   | 'sejong-institute';
 

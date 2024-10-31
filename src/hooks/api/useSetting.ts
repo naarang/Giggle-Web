@@ -11,7 +11,7 @@ export const usePatchNotificationAllowed = () => {
   return useMutation({
     mutationFn: patchNotificationAllowed,
     onSuccess: () => {
-      window.location.reload;
+      window.location.reload();
     },
     onError: (error) => {
       console.error('알람 설정 변경 실패', error);

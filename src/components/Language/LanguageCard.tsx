@@ -39,7 +39,7 @@ const LanguageCard = ({
 
   const goToWebSite = [
     {
-      language: 'TOPIC',
+      language: 'TOPIK',
       site: 'https://www.topik.go.kr/TWMAIN/TWMAIN0010.do',
     },
     {
@@ -54,6 +54,7 @@ const LanguageCard = ({
 
   // 현재 title과 일치하는 사이트 URL 찾기
   const siteInfo = goToWebSite.find((item) => item.language === title);
+  console.log(level);
 
   return (
     <>
