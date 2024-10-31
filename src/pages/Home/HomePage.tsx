@@ -4,10 +4,13 @@ import HomeGuestBanner from '@/components/Home/HomeGuestBanner';
 import HomeHeader from '@/components/Home/HomeHeader';
 import HomeJobPostingList from '@/components/Home/HomeJobPostingList';
 import HomeRecommendPost from '@/components/Home/HomeRecommendPost';
+import ChatIcon from '@/assets/icons/ChatIcon.svg?react';
 import { UserType } from '@/constants/user';
 import { useUserStore } from '@/store/user';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const { account_type } = useUserStore();
 
   return (
@@ -26,6 +29,12 @@ const HomePage = () => {
         </>
       )}
       <HomeJobPostingList />
+      <button
+        className="fixed w-[3rem] h-[3rem] flex justify-center items-center rounded-full right-[1.5rem] bottom-[4.75rem] bg-[#FEF387]"
+        onClick={() => navigate('/chatbot')}
+      >
+        <ChatIcon />
+      </button>
     </>
   );
 };
