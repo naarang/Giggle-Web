@@ -1,4 +1,8 @@
-import { EmployerInformation, WorkDayTime } from '@/types/api/document';
+import {
+  EmployerInformation,
+  LaborContractEmployerInfo,
+  WorkDayTime,
+} from '@/types/api/document';
 import { Address } from '@/types/api/users';
 import { extractNumbersAsNumber } from './post';
 
@@ -86,6 +90,72 @@ export const validateEmployerInformation = (
 
   // 주소 체크
   if (!info.address?.region_1depth_name) {
+    return false;
+  }
+
+  return true;
+};
+
+// 근로계약서 수정 양식 유효성 검사 함수
+export const validateLaborContractEmployerInformation = (
+  info: LaborContractEmployerInfo,
+): boolean => {
+  // 빈 문자열 체크
+  if (
+    !info.company_name ||
+    !info.name ||
+    !info.description ||
+    !info.phone_number
+  ) {
+    console.log("문자열")
+    return false;
+  }
+
+  // 사업자등록번호 유효성 검사 (12자리 숫자)
+  if (!info.company_registration_number?.match(/^\d{12}$/)) {
+    return false;
+  }
+
+  // 시급 유효성 검사(0이 아닌지)
+  if (
+    !info.hourly_rate ||
+    extractNumbersAsNumber(String(info.hourly_rate)) === 0
+  ) {
+    console.log("시급")
+    return false;
+  }
+
+  // 초과 근무에 따른 가산임금률 유효성 검사(0이 아닌지)
+  if (!info.wage_rate || Number(info.wage_rate) === 0) {
+    console.log("가산임금")
+    return false;
+  }
+
+  // 급료 지급일 유효성 검사(0이 아닌지)
+  if (
+    !info.wage_rate ||
+    Number(info.wage_rate) > 31 ||
+    Number(info.wage_rate) < 1
+  ) {
+    console.log("급료지급일")
+    return false;
+  }
+
+  // 근무일 체크
+  if (!info.work_day_time_list || info.work_day_time_list.length === 0) {
+    console.log("근무일")
+    return false;
+  }
+
+  // 서명 체크
+  if (!info.signature_base64 || info.signature_base64 === '') {
+    console.log("서명")
+    return false;
+  }
+
+  // 주소 체크
+  if (!info.address?.region_1depth_name) {
+    console.log("주소")
     return false;
   }
 
