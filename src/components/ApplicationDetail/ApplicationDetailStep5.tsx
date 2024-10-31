@@ -40,7 +40,7 @@ const ApplicationDetailStep5 = () => {
           fontColor="text-[#F4F4F9]"
           isBorder={false}
           title="Check the application documents"
-          onClick={() => navigate('/application-documents')}
+          onClick={() => navigate(`/application-documents/${id}`)}
         />
       </section>
       <ApplicationDetailBottomSheet

@@ -34,7 +34,9 @@ const EmployerApplicationList = ({
   const { data, refetch } = useGetApplicantList(
     Number(id),
     MATCH_KO_EN_ASCENDING_SORT[selectedSort],
-    EN_APPLICATION_STATUS_TYPE[selectedStatus],
+    EN_APPLICATION_STATUS_TYPE[selectedStatus]
+      .replace(/\s/g, '_')
+      .toUpperCase(),
     !isNaN(Number(id)) ? true : false,
   );
 
