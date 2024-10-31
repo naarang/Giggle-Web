@@ -31,13 +31,13 @@ const EmployerEditProfilePage = () => {
   const { mutate } = usePatchOwnerProfile();
 
   useEffect(() => {
-    if (data && data.success) {
+    if (data) {
       setOriginalData(data.data); // 수정 전 데이터
 
       // get 타입에서 patch 타입으로 변환
       setNewEmployData(transformToEmployerProfileRequest(data.data)); // 수정 데이터
     }
-  }, []);
+  }, [data]);
 
   useEffect(() => {
     setIsValid(isValidEmployerProfile(newEmployData));
@@ -52,12 +52,20 @@ const EmployerEditProfilePage = () => {
         setNewEmployData({ ...newEmployData, is_icon_img_changed: true });
       }
       // patch 훅 호출
-      mutate({
-        image: logoFile,
-        body: {
-          ...newEmployData,
-        },
-      });
+
+      const formData = new FormData();
+      // 이미지가 있을 경우 FormData에 추가
+      if (logoFile) {
+        formData.append('image', logoFile);
+      }
+      // JSON 데이터를 Blob으로 변환 후 FormData에 추가
+      formData.append(
+        'body',
+        new Blob([JSON.stringify(newEmployData)], {
+          type: 'application/json',
+        }),
+      );
+      mutate(formData);
     }
   };
 
