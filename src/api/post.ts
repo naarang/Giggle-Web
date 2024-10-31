@@ -56,6 +56,12 @@ export const createPost = async (newPost: FormData) => {
   return response.data;
 };
 
+// 4.10 (고용주) 공고 수정하기
+export const editPost = async ({newPost, id}: {newPost: FormData, id: number}) => {
+  const response = await api.put(`/owners/job-postings/${id}`, newPost);
+  return response.data;
+};
+
 // 4.12 (유학생) 북마크 추가/삭제
 export const putPostBookmark = async (id: number) => {
   const response = await api.put(`/users/job-postings/${id}/book-marks`);

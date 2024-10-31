@@ -6,19 +6,25 @@ import Step3 from '@/components/Employer/PostCreate/Step3';
 import Step4 from '@/components/Employer/PostCreate/Step4';
 import Step5 from '@/components/Employer/PostCreate/Step5';
 import StepIndicator from '@/components/Information/StepIndicator';
-import { useCreatePost } from '@/hooks/api/usePost';
+import { useCreatePost, useEditPost } from '@/hooks/api/usePost';
 import {
   initialJobPostingState,
   JobPostingForm,
 } from '@/types/postCreate/postCreate';
 import { useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 
 const EmployerCreatePostPage = () => {
+  const location = useLocation();
+  const { isEdit } = location.state || {};
+  const { id } = useParams();
   const [currentStep, setCurrentStep] = useState(1);
   const [postInfo, setPostInfo] = useState<JobPostingForm>(
     initialJobPostingState,
   );
-  const { mutate } = useCreatePost();
+
+  const { mutate } = useCreatePost(); // 공고 생성 시 호출하느 ㄴ훅
+  const { mutate: editPost } = useEditPost(); //  공고 수정 시 호출하는 훅
   const [devIsModal, setDevIsModal] = useState(false);
 
   // 다음 step으로 넘어갈 때 호출되며, 각 step에서 입력한 정보를 userInfo에 저장, 다음 step으로 이동한다.
@@ -28,8 +34,12 @@ const EmployerCreatePostPage = () => {
   };
   // 최종 완료 시 호출, 서버 api 호출 및 완료 modal 표시
   const handleSubmit = (newPost: FormData) => {
-    mutate(newPost);
-    setDevIsModal(true);
+    if (isEdit) {
+      editPost({ newPost: newPost, id: Number(id) });
+    } else {
+      mutate(newPost);
+      setDevIsModal(true);
+    }
   };
   return (
     <div>
@@ -43,7 +53,7 @@ const EmployerCreatePostPage = () => {
         <>
           <div className="w-full flex flex-row p-6 items-center justify-between">
             <div className="relative w-full flex items-center justify-start title-1 text-[#1e1926] text-left">
-              공고등록
+              {isEdit ? "공고수정" : "공고등록"}
             </div>
             <StepIndicator
               length={5}
