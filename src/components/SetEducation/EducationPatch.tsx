@@ -34,6 +34,10 @@ const EducationPatch = ({
   ) => {
     setEducationData((prev) => ({ ...prev, [field]: value }));
   };
+  const handleNumberChange = (field: 'grade' | 'gpa', value: string) => {
+    const formmateedvalue = value == 'null' ? '' : value;
+    handleInputChange(field, formmateedvalue);
+  };
 
   const handleDateChange = (
     field: 'start_date' | 'end_date',
@@ -107,8 +111,12 @@ const EducationPatch = ({
           <Input
             inputType={InputType.TEXT}
             placeholder="Grade"
-            value={String(educationData.grade)}
-            onChange={(value) => handleInputChange('grade', value)}
+            value={
+              String(educationData.grade) == 'null'
+                ? ''
+                : String(educationData.grade)
+            }
+            onChange={(value) => handleNumberChange('grade', value)}
             canDelete={false}
           />
         </div>
@@ -121,7 +129,7 @@ const EducationPatch = ({
             inputType={InputType.TEXT}
             placeholder="0.0"
             value={String(educationData.gpa)}
-            onChange={(value) => handleInputChange('gpa', value)}
+            onChange={(value) => handleNumberChange('gpa', value)}
             canDelete={false}
           />
         </div>
