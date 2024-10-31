@@ -52,12 +52,14 @@ const PostDetailApplyButton = ({
   return (
     <>
       <footer className="fixed bottom-0 left-0 w-full flex gap-[0.5rem] pt-[0.75rem] px-[1.5rem] pb-[2.5rem] bg-white z-20">
-        <button
-          className="flex justify-center items-center min-w-[3.25rem] w-[3.25rem] h-[3.25rem] rounded-full bg-[#F4F4F980]"
-          onClick={onClickBookmark}
-        >
-          {isBookmarked ? <BookmarkCheckedIcon /> : <BookmarkIcon />}
-        </button>
+        {account_type && (
+          <button
+            className="flex justify-center items-center min-w-[3.25rem] w-[3.25rem] h-[3.25rem] rounded-full bg-[#F4F4F980]"
+            onClick={onClickBookmark}
+          >
+            {isBookmarked ? <BookmarkCheckedIcon /> : <BookmarkIcon />}
+          </button>
+        )}
         <Button
           type={buttonTypeKeys.APPLY}
           bgColor=""

@@ -6,7 +6,6 @@ import {
   BookmarkCountType,
   EmployerCountsInfoResponse,
   EmployerProfileDetailResponse,
-  EmployerProfileRequest,
   EmployerProfileResponse,
   UserProfileDetailResponse,
   UserProfileSummaryResponse,
@@ -55,6 +54,7 @@ export const patchUserProfile = async (userData: FormData) => {
 export const patchOwnerProfile = async (
   ownerProfile: EmployerProfileRequest,
 ) => {
+  // export const patchOwnerProfile = async (ownerProfile: FormData) => {
   const response = await api.patch('/owners', ownerProfile);
   return response.data;
 };

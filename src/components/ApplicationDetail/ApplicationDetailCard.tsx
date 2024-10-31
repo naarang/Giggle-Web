@@ -11,7 +11,16 @@ const ApplicationDetailCard = ({
     <article className="w-full border-[0.031rem] border-[#1E19263D] rounded-[1.125rem]">
       <div className="flex flex-col gap-[1.25rem] w-full px-[1.5rem] pt-[1.5rem] pb-[1rem]">
         <div className="flex gap-[0.75rem]">
-          <div className='w-[2.5rem] h-[2.5rem] rounded-[0.5rem] bg-cover bg-[url("/src/assets/images/JobIconExample.jpeg")]'></div>
+          {applicationData?.icon_img_url ? (
+            <div
+              className="w-[2.5rem] h-[2.5rem] rounded-[0.5rem] bg-cover"
+              style={{
+                backgroundImage: `url(${applicationData.icon_img_url})`,
+              }}
+            ></div>
+          ) : (
+            <div className="w-[2.5rem] h-[2.5rem] rounded-[0.5rem] bg-[#F4F4F9]"></div>
+          )}
           <div>
             <h3 className="pb-[0.25rem] head-3 text-[#1E1926]">
               {applicationData.title}
