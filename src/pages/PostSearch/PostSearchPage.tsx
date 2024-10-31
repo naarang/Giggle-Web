@@ -43,7 +43,9 @@ const PostSearchPage = () => {
       sorting: POST_SORTING.RECENT,
       region_1depth: filterList[FILTER_CATEGORY.REGION_1DEPTH].join(','),
       region_2depth: filterList[FILTER_CATEGORY.REGION_2DEPTH].join(','),
-      region_3depth: filterList[FILTER_CATEGORY.REGION_3DEPTH].join(','),
+      region_3depth: filterList[FILTER_CATEGORY.REGION_3DEPTH]
+        .map((value) => (value === '' ? 'none' : value))
+        .join(','),
       industry: filterList[FILTER_CATEGORY.INDUSTRY]
         .join(',')
         .toUpperCase()

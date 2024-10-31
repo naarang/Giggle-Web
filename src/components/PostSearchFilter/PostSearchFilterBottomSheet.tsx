@@ -21,7 +21,7 @@ const PostSearchFilterBottomSheet = ({
   onClickSubmit,
 }: PostSearchFilterBottomSheetType) => {
   const formatRegionArrayToString = (index: number) => {
-    return `${currentRegion1[index]} ${currentRegion2[index]} ${currentRegion3[index]}`;
+    return `${currentRegion1[index]} ${currentRegion2[index]} ${currentRegion3[index] === 'none' ? '' : currentRegion3[index]}`;
   };
 
   return (
