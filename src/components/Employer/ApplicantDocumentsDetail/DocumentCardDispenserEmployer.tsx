@@ -7,7 +7,7 @@ import FolderIcon from '@/assets/icons/FolderIcon.svg?react';
 import DownloadIcon from '@/assets/icons/DownloadIcon.svg?react';
 import CheckIconGreen from '@/assets/icons/CheckIconGreen.svg?react';
 import WriteIcon from '@/assets/icons/WriteIcon.svg?react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { DocumentStatusEmployer } from '@/constants/documents';
 
 type DocumentCardProps = {
@@ -310,6 +310,7 @@ const DocumentCardDispenserEmployer = ({
   onNext,
   reason,
 }: DocumentCardProps) => {
+  const {id} = useParams();
   const navigate = useNavigate();
   const handleDownload = (url: string) => {
     window.open(url, '_blank');
@@ -322,7 +323,7 @@ const DocumentCardDispenserEmployer = ({
           title={title}
           onNext={onNext}
           onEdit={() =>
-            navigate('/employer/write-documents', {
+            navigate(`/employer/write-documents/${id}`, {
               state: {
                 type: type,
                 isEdit: true,
@@ -341,7 +342,7 @@ const DocumentCardDispenserEmployer = ({
             reason={reason}
             onNext={onNext}
             onEdit={() =>
-              navigate('/employer/write-documents', {
+              navigate(`/employer/write-documents/${id}`, {
                 state: {
                   type: type,
                   isEdit: true,

@@ -1,4 +1,5 @@
 import {
+  getDocumentsEmployee,
   getIntegratedApplication,
   getPartTimeEmployPermit,
   getStandardLaborContract,
@@ -20,8 +21,25 @@ import {
   PartTimePermitData,
   SearchSchoolResponse,
 } from '@/types/api/document';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { RESTYPE } from '../../types/api/common';
+
+// 8.1 (유학생) 서류 조회하기 훅
+export const useGetDocumentsEmployee = (id: number) => {
+  return useQuery({
+    queryKey: ['application', id],
+    queryFn: () => getDocumentsEmployee(id),
+  });
+};
+
+// 8.2 (고용주) 서류 조회하기 훅
+export const useGetDocumentsEmployer = (id: number) => {
+  return useQuery({
+    queryKey: ['application', id],
+    queryFn: () => getDocumentsEmployee(id),
+  });
+};
 
 // 시간제취업허가서 작성 api 통신 커스텀 훅
 export const usePostPartTimeEmployPermit = () => {
@@ -196,7 +214,7 @@ export const useGetPartTimeEmployPermit = ({
   onSuccess,
   onError,
 }: {
-  onSuccess?: (data: PartTimePermitData) => void;
+  onSuccess?: (data: RESTYPE<PartTimePermitData>) => void;
   onError?: (error: unknown) => void;
 }) => {
   const { mutate, ...rest } = useMutation({
@@ -215,7 +233,7 @@ export const useGetStandardLaborContract = ({
   onSuccess,
   onError,
 }: {
-  onSuccess?: (data: LaborContractDataResponse) => void;
+  onSuccess?: (data: RESTYPE<LaborContractDataResponse>) => void;
   onError?: (error: unknown) => void;
 }) => {
   const { mutate, ...rest } = useMutation({
@@ -234,7 +252,7 @@ export const useGetIntegratedApplication = ({
   onSuccess,
   onError,
 }: {
-  onSuccess?: (data: IntegratedApplicationData) => void;
+  onSuccess?: (data: RESTYPE<IntegratedApplicationData>) => void;
   onError?: (error: unknown) => void;
 }) => {
   const { mutate, ...rest } = useMutation({

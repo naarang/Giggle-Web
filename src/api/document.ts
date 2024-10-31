@@ -1,4 +1,6 @@
 import {
+  DocumentsSummaryResponse,
+  EmployDocumentsSummaryResponse,
   EmployerInformation,
   IntegratedApplicationData,
   LaborContractDataResponse,
@@ -155,10 +157,30 @@ export const postRequest = async ({
   return response.data;
 };
 
+// 8.1 (유학생) 서류 조회하기
+export const getDocumentsEmployee = async (
+  id: number,
+): Promise<RESTYPE<DocumentsSummaryResponse>> => {
+  const response = await api.get(
+    `users/user-owner-job-postings/${id}/documents/summaries`,
+  );
+  return response.data;
+};
+
+// 8.2 (고용주) 서류 조회하기
+export const getDocumentsEmployer = async (
+  id: number,
+): Promise<RESTYPE<EmployDocumentsSummaryResponse>> => {
+  const response = await api.get(
+    `owners/user-owner-job-postings/${id}/documents/summaries`,
+  );
+  return response.data;
+};
+
 // 8.3 (유학생/고용주) 시간제 취업 허가서 조회하기
 export const getPartTimeEmployPermit = async (
   id: number,
-): Promise<PartTimePermitData> => {
+): Promise<RESTYPE<PartTimePermitData>> => {
   const response = await api.get(
     `documents/${id}/part-time-employment-permit/details`,
   );
@@ -168,7 +190,7 @@ export const getPartTimeEmployPermit = async (
 // 8.4 (유학생/고용주) 근로계약서 조회하기
 export const getStandardLaborContract = async (
   id: number,
-): Promise<LaborContractDataResponse> => {
+): Promise<RESTYPE<LaborContractDataResponse>> => {
   const response = await api.get(
     `documents/${id}/standard-labor-contract/details`,
   );
@@ -178,7 +200,7 @@ export const getStandardLaborContract = async (
 // 8.5 (유학생/고용주) 통합신청서 조회하기
 export const getIntegratedApplication = async (
   id: number,
-): Promise<IntegratedApplicationData> => {
+): Promise<RESTYPE<IntegratedApplicationData>> => {
   const response = await api.get(
     `documents/${id}/integrated-application/details`,
   );

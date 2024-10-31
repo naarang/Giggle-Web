@@ -165,7 +165,7 @@ const Router = () => {
             element={<ApplicantDocumentsDetailPage />}
           />
           <Route
-            path="/employer/write-documents"
+            path="/employer/write-documents/:id"
             element={<EmployerWriteDocumentsPage />}
           />
           <Route path="/write-documents" element={<WriteDocumentsPage />} />
