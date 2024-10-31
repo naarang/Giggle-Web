@@ -30,7 +30,7 @@ export const useGetResume = () => {
 };
 
 // 7.2 경력 상세 조회하기
-export const useGetWorkExperience = (id: number) => {
+export const useGetWorkExperience = (id: string) => {
   return useQuery({
     queryKey: ['workExperience', id],
     queryFn: () => getWorkExperience(id),
@@ -38,7 +38,7 @@ export const useGetWorkExperience = (id: number) => {
 };
 
 // 7.3 학력 상세 조회하기
-export const useGetEducation = (id: number) => {
+export const useGetEducation = (id: string) => {
   return useQuery({
     queryKey: ['education', id],
     queryFn: () => getEducation(id),

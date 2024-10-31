@@ -1,4 +1,3 @@
-import { School } from '@/types/api/document';
 import { EducationLevelType } from '@/types/postApply/resumeDetailItem';
 
 export type PostEducationType = {

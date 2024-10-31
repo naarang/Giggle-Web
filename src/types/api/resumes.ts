@@ -21,6 +21,15 @@ export type WorkExperienctRequest = {
   description: string;
 };
 
+// 경력사항 반환 타입
+export type WorkExperienctResponse = {
+  title: string;
+  workplace: string;
+  start_date: string; // (yyyy-MM-dd),
+  end_date: string; // (yyyy-MM-dd),
+  description: string;
+};
+
 // 학력 요청 타입
 export type EducationRequest = {
   education_level: EducationLevelType; // Enum(BACHELOR, ASSOCIATE, HIGHSCHOOL),

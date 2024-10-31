@@ -40,7 +40,7 @@ const PatchEducationPage = () => {
 
   // API - 7.10 학력 수정하기
   const handleSubmit = () => {
-    mutate({ id: parseInt(id!), education: educationData });
+    mutate({ id: id!, education: educationData });
   };
 
   const handleReset = () => {
@@ -49,7 +49,7 @@ const PatchEducationPage = () => {
   };
 
   // TODO: API - 7.3 학력 상세 조회하기
-  const { data: getEducationData } = useGetEducation(parseInt(id!));
+  const { data: getEducationData } = useGetEducation(id!);
   useEffect(() => {
     if (getEducationData) {
       setFetchData(getEducationData.data);

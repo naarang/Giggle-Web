@@ -28,7 +28,7 @@ export const formatDate = (dateString: string) => {
 export const formatDateToDash = (date: string) => date.replace(/\//g, '-');
 export const formatDateToSlash = (date: string) => date.replace(/-/g, '/');
 
-// 변환 함수
+// 학력 get 데이터에서 patch 데이터로 타입 변환하는 함수
 export const transformToPatchEducation = (
   data: GetEducationType,
 ): PostEducationType => {

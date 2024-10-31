@@ -6,10 +6,12 @@ import {
   LanguagesSummariesResponse,
   UserResumeDetailResponse,
   WorkExperienctRequest,
+  WorkExperienctResponse,
 } from '@/types/api/resumes';
 import { api } from '.';
 import { RESTYPE } from '@/types/api/common';
 import { GetEducationType } from '@/types/postResume/postEducation';
+import { WorkExperienceType } from '@/types/postApply/resumeDetailItem';
 
 // 7.1 (유학생) 이력서 조회하기
 export const getResume = async (): Promise<
@@ -20,7 +22,9 @@ export const getResume = async (): Promise<
 };
 
 // 7.2 경력 상세 조회하기
-export const getWorkExperience = async (id: number) => {
+export const getWorkExperience = async (
+  id: string,
+): Promise<RESTYPE<WorkExperienctResponse>> => {
   const response = await api.get(
     `/users/resumes/work-experiences/${id}/details`,
   );
@@ -29,7 +33,7 @@ export const getWorkExperience = async (id: number) => {
 
 // 7.3 학력 상세 조회하기
 export const getEducation = async (
-  id: number,
+  id: string,
 ): Promise<RESTYPE<GetEducationType>> => {
   const response = await api.get(`/users/resumes/educations/${id}/details`);
   return response.data;
@@ -82,7 +86,7 @@ export const patchWorkExperience = async ({
   id,
   workExperience,
 }: {
-  id: number;
+  id: string;
   workExperience: WorkExperienctRequest;
 }) => {
   const response = await api.patch(
@@ -97,7 +101,7 @@ export const patchEducation = async ({
   id,
   education,
 }: {
-  id: number;
+  id: string;
   education: EducationRequest;
 }) => {
   const response = await api.patch(
