@@ -202,7 +202,11 @@ const InformationStep = ({
                           : newUserInfo.nationality
                               .toUpperCase()
                               .replace(/\s/g, '_'),
-                      birth: formatDateToDash(newUserInfo.birth ?? ''),
+                      birth: formatDateToDash(newUserInfo.birth as string),
+                      visa:
+                        newUserInfo.visa !== null
+                          ? newUserInfo.visa.replace(/-/g, '_')
+                          : '',
                     },
                   })
           }
