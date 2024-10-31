@@ -64,7 +64,7 @@ export const useGetPostDetail = (id: number, isEnabled: boolean) => {
 // 4.5 (유학생) 추천 공고 리스트 조회하기 훅
 export const useGetRecommendPostList = () => {
   return useQuery({
-    queryKey: ['post'],
+    queryKey: ['post', 'recommend'],
     queryFn: () => getRecommendPostList(),
   });
 };

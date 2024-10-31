@@ -46,7 +46,7 @@ export const useGetApplicationDetail = (id: number, isEnabled: boolean) => {
 // 6.5 (유학생) 공고 담당자 정보 조회하기 훅
 export const useGetRecruiterInfo = (id: number, isEnabled: boolean) => {
   return useQuery({
-    queryKey: ['application', id],
+    queryKey: ['application', 'recruiter', id],
     queryFn: () => getRecruiterInfo(id),
     enabled: isEnabled,
   });
