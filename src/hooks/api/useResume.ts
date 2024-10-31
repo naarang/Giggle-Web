@@ -9,6 +9,7 @@ import {
   getResume,
   getSearchSchools,
   getWorkExperience,
+  patchEducation,
   patchIntroduction,
   patchLanguagesLevel,
   patchWorkExperience,
@@ -144,7 +145,7 @@ export const usePatchWorkExperience = () => {
 export const usePatchEducation = () => {
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: patchWorkExperience,
+    mutationFn: patchEducation,
     onSuccess: () => {
       navigate('/profile/manage-resume');
     },
