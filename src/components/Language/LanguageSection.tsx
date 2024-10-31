@@ -68,6 +68,7 @@ const LanguageSection = () => {
                     level={language.level}
                     isAdditionalLanguage={true}
                     maxLevel={10}
+                    etcLanguageId={language.id}
                   />
                 </div>
               ))}

@@ -51,7 +51,7 @@ const ResumeManageBox = ({ type, data, onDelete }: ResumeManageBoxProps) => {
             </div>
             <p className="caption-1">
               {formatDate(work.start_date)} ~{' '}
-              {work.end_date && formatDate(work.end_date)} •{' '}
+              {work.end_date ? `${formatDate(work.end_date)}• ` : '현재 • '}
               {(work.duration / 30).toFixed(0)} months
             </p>
             <p className="body-3">{work.description}</p>
