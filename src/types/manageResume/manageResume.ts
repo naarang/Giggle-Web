@@ -13,7 +13,7 @@ export type ResumeDataState = {
   introductionData: string | '';
   workexperienceData: WorkExperienceType[] | [];
   educationData: EducationType[] | [];
-  languageData: LanguageListType | null;
+  languageData: LanguageListType;
 };
 
 export type MypageCardData =

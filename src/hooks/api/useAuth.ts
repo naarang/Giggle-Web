@@ -61,11 +61,10 @@ export const useSignIn = () => {
   return useMutation({
     mutationFn: signIn,
     onSuccess: (data: RESTYPE<SignInResponse>) => {
-      if (data.success) {
-        setAccessToken(data.data.access_token);
-        setRefreshToken(data.data.refresh_token);
-        navigate('/splash');
-      }
+      setAccessToken(data.data.access_token);
+      setRefreshToken(data.data.refresh_token);
+      navigate('/splash');
+      window.location.reload();
     },
     onError: () => {
       alert('아이디 혹은 비밀번호를 다시 확인해주세요.');

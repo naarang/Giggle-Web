@@ -2,18 +2,21 @@ import Button from '@/components/Common/Button';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import WorkExperiencePatch from '@/components/WorkExperience/WorkExperiencePatch';
 import { buttonTypeKeys } from '@/constants/components';
+import {
+  useGetWorkExperience,
+  usePatchWorkExperience,
+} from '@/hooks/api/useResume';
 import useNavigateBack from '@/hooks/useNavigateBack';
-import { PostWorkExperienceType } from '@/types/postResume/postWorkExperience';
-import { formatDateToDash } from '@/utils/editResume';
+import { WorkExperienctRequest } from '@/types/api/resumes';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const PatchWorkExperiencePage = () => {
   const handleBackButtonClick = useNavigateBack();
-  const navigate = useNavigate();
+  const { id } = useParams();
 
   // reset 버튼을 대비하여 초기 데이터를 저장하는 상태
-  const [initialData, setInitialData] = useState<PostWorkExperienceType>({
+  const [initialData, setInitialData] = useState<WorkExperienctRequest>({
     title: '',
     workplace: '',
     start_date: '',
@@ -22,22 +25,32 @@ const PatchWorkExperiencePage = () => {
   });
 
   const [workExperienceData, setWorkExperienceData] =
-    useState<PostWorkExperienceType>(initialData);
+    useState<WorkExperienctRequest>(initialData);
 
   // 초기 값에서 수정된 내용이 있는지 확인
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
+  const { data: getWorkExperienceData } = useGetWorkExperience(id!);
+  const { mutate } = usePatchWorkExperience();
+
   const handleSubmit = () => {
+    // 모든 필드가 입력되었는지 확인
+    if (Object.values(workExperienceData).every((value) => value === ''))
+      return;
+
     // 날짜 형식 서버 데이터와 통일
     const formattedData = {
       ...workExperienceData,
-      start_date: formatDateToDash(workExperienceData.start_date),
-      end_date: formatDateToDash(workExperienceData.end_date),
+      start_date: workExperienceData.start_date
+        ? workExperienceData.start_date.replace(/\//g, '-')
+        : '',
+      end_date: workExperienceData.end_date
+        ? workExperienceData.end_date.replace(/\//g, '-')
+        : '',
     };
-    if (formattedData) true; //추후 로직 추가
 
-    // TODO: API - 7.5 경력 생성하기
-    navigate('/profile/manage-resume');
+    // API - 7.9 경력 수정하기
+    mutate({ id: id!, workExperience: formattedData });
   };
 
   const handleReset = () => {
@@ -45,19 +58,13 @@ const PatchWorkExperiencePage = () => {
     setWorkExperienceData(initialData);
   };
 
+  // 7.2 (유학생) 경력 상세 조회하기
   useEffect(() => {
-    // TODO: API - 7.9 (유학생) 경력 수정하기
-    const fetchData = {
-      title: 'Restaurant Work',
-      workplace: 'Some Restaurant',
-      start_date: '2021-03-01',
-      end_date: '2023-05-15',
-      description: 'Task1, Task2...',
-    };
-
-    setWorkExperienceData(fetchData);
-    setInitialData(fetchData);
-  }, []);
+    if (getWorkExperienceData) {
+      setWorkExperienceData(getWorkExperienceData.data);
+      setInitialData(getWorkExperienceData.data);
+    }
+  }, [getWorkExperienceData]);
 
   useEffect(() => {
     // 편집 중인지 여부 확인

@@ -127,7 +127,11 @@ const EducationPost = ({
             Entrance Date <span className="text-[#EE4700] body-1">*</span>
           </p>
           <Dropdown
-            value={educationData.start_date.replace(/-/g, '/')}
+            value={
+              educationData.start_date
+                ? educationData.start_date.replace(/-/g, '/')
+                : null
+            }
             placeholder="Select Date"
             options={[]}
             isCalendar={true}
@@ -140,7 +144,11 @@ const EducationPost = ({
             Graduation Date <span className="text-[#EE4700] body-1">*</span>
           </p>
           <Dropdown
-            value={educationData.end_date?.replace(/-/g, '/')}
+            value={
+              educationData.end_date
+                ? educationData.end_date.replace(/-/g, '/')
+                : null
+            }
             placeholder="Select Date"
             options={[]}
             isCalendar={true}

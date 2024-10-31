@@ -139,7 +139,7 @@ export const reIssueAuthentication = async (
 
 // 2.9 탈퇴하기
 export const withdraw = async () => {
-  const response = await api.delete('/auth/withdraw');
+  const response = await api.delete('/auth');
   return response.data;
 };
 

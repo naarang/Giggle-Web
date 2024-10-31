@@ -2,13 +2,13 @@ import { InputType } from '@/types/common/input';
 import Input from '@/components/Common/Input';
 import { useEffect, useRef, useState, ChangeEvent } from 'react';
 import Dropdown from '@/components/Common/Dropdown';
-import { PostWorkExperienceType } from '@/types/postResume/postWorkExperience';
 import InputLayout from '@/components/WorkExperience/InputLayout';
+import { WorkExperienctRequest } from '@/types/api/resumes';
 
 type WorkExperiencePatchProps = {
-  workExperienceData: PostWorkExperienceType;
+  workExperienceData: WorkExperienctRequest;
   setWorkExperienceData: React.Dispatch<
-    React.SetStateAction<PostWorkExperienceType>
+    React.SetStateAction<WorkExperienctRequest>
   >;
 };
 
@@ -35,7 +35,7 @@ const WorkExperiencePatch = ({
   };
 
   const handleInputChange = (
-    field: keyof PostWorkExperienceType,
+    field: keyof WorkExperienctRequest,
     value: string,
   ) => {
     setWorkExperienceData((prev) => ({ ...prev, [field]: value }));
