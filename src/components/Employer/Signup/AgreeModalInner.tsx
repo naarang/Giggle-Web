@@ -145,8 +145,8 @@ const AgreeModalInner = ({
         title="Agree"
         onClick={
           essentialAgreeList.slice(0, 3).includes(false)
-            ? handleNext
-            : undefined
+            ? undefined
+            : handleNext
         }
       />
     </div>
