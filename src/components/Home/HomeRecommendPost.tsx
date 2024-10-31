@@ -8,6 +8,8 @@ const HomeRecommendPost = () => {
   const navigate = useNavigate();
   const { data } = useGetRecommendPostList();
 
+  if (!data?.success) return <></>;
+
   return (
     <section className="w-full flex gap-[0.5rem] px-[1.25rem] pt-[1rem] pb-[1.5rem] overflow-x-scroll no-scrollbar whitespace-nowrap bg-[#FEF387]">
       {data?.data?.job_posting_list?.length ? (
@@ -15,7 +17,10 @@ const HomeRecommendPost = () => {
         <>
           {data?.data?.job_posting_list.map(
             (value: RecommendJobPostingItemType) => (
-              <HomeRecommendPostCard key={value.id} jobPostingData={value} />
+              <HomeRecommendPostCard
+                key={`recommend_${value.id}`}
+                jobPostingData={value}
+              />
             ),
           )}
         </>

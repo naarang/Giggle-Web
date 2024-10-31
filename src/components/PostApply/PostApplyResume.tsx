@@ -26,9 +26,9 @@ const PostApplyResume = () => {
     !isNaN(Number(id)) && account_type === UserType.OWNER ? true : false,
   );
 
-  const data = account_type === UserType.OWNER ? userData : ownerData;
+  const data = account_type === UserType.OWNER ? ownerData : userData;
 
-  if (data?.data) return <></>;
+  if (!data?.success) return <></>;
 
   return (
     <section className="flex flex-col items-center gap-[1.5rem] w-full pt-[1.5rem] px-[1.5rem] pb-[7.25rem]">
