@@ -79,7 +79,7 @@ const EditProfilePage = () => {
       setOriginalData(initailData);
       setUserData(initailData);
     }
-  }, []);
+  }, [userProfile]);
 
   return (
     <>
