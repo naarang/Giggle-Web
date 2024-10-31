@@ -6,7 +6,6 @@ import PostDetailTitle from '@/components/PostDetail/PostDetailTitle';
 import { UserType } from '@/constants/user';
 import { useGetPostDetail } from '@/hooks/api/usePost';
 import { useUserStore } from '@/store/user';
-import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const EmployerPostDetailPage = () => {
@@ -14,16 +13,12 @@ const EmployerPostDetailPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const { data, refetch } = useGetPostDetail(
+  const { data } = useGetPostDetail(
     Number(id),
     account_type === UserType.OWNER && !isNaN(Number(id)) ? true : false,
   );
 
-  useEffect(() => {
-    if (!isNaN(Number(id))) refetch();
-  }, [id, refetch]);
-
-  if (!data?.data) return <></>;
+  if (!data?.success) return <></>;
 
   return (
     <>

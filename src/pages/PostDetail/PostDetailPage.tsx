@@ -5,7 +5,6 @@ import PostDetailContent from '@/components/PostDetail/PostDetailContent';
 import PostDetailTitle from '@/components/PostDetail/PostDetailTitle';
 import { useGetPostDetail, useGetPostDetailGuest } from '@/hooks/api/usePost';
 import { useUserStore } from '@/store/user';
-import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const PostDetailPage = () => {
@@ -13,24 +12,17 @@ const PostDetailPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const { data: guestData, refetch: guestRefetch } = useGetPostDetailGuest(
+  const { data: guestData } = useGetPostDetailGuest(
     Number(id),
     !account_type && !isNaN(Number(id)) ? true : false,
   );
 
-  const { data: userData, refetch: userRefetch } = useGetPostDetail(
+  const { data: userData } = useGetPostDetail(
     Number(id),
     account_type && !isNaN(Number(id)) ? true : false,
   );
 
   const postDetailData = account_type ? userData : guestData;
-
-  useEffect(() => {
-    if (isNaN(Number(id))) return;
-
-    if (account_type) userRefetch();
-    else guestRefetch();
-  }, [id, userRefetch, guestRefetch, account_type]);
 
   if (!postDetailData?.data) return <></>;
 
@@ -47,7 +39,9 @@ const PostDetailPage = () => {
       />
       <PostDetailTitle postDetailData={postDetailData.data} />
       <PostDetailContent postDetailData={postDetailData.data} />
-      <PostDetailApplyButton />
+      <PostDetailApplyButton
+        isBookmarked={postDetailData.data?.is_book_marked ?? false}
+      />
     </>
   );
 };

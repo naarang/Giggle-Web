@@ -13,7 +13,8 @@ const PostSearchPage = () => {
   const navigate = useNavigate();
 
   const { account_type } = useUserStore();
-  const { searchText, updateSearchText, filterList } = usePostSearchStore();
+  const { searchText, updateSearchText, filterList, sortType } =
+    usePostSearchStore();
   const [searchParams, setSearchParams] = useState<GetPostListReqType>({
     page: 1,
     size: 10,
@@ -22,12 +23,12 @@ const PostSearchPage = () => {
 
   const { data: guestPostData, refetch: guestRefetch } = useGetPostGuestList(
     searchParams,
-    false,
+    true,
   );
 
   const { data: userPostData, refetch: userRefetch } = useGetPostList(
     searchParams,
-    false,
+    true,
   );
 
   const data = account_type ? userPostData : guestPostData;
@@ -40,7 +41,7 @@ const PostSearchPage = () => {
       page: 1,
       size: 10,
       search: text ?? null,
-      sorting: POST_SORTING.RECENT,
+      sorting: sortType,
       region_1depth: filterList[FILTER_CATEGORY.REGION_1DEPTH].join(','),
       region_2depth: filterList[FILTER_CATEGORY.REGION_2DEPTH].join(','),
       region_3depth: filterList[FILTER_CATEGORY.REGION_3DEPTH]
@@ -85,6 +86,8 @@ const PostSearchPage = () => {
     }
   }, [searchParams, account_type, guestRefetch, userRefetch]);
 
+  if (!data?.success) return <></>;
+
   return (
     <>
       <TextFieldHeader
@@ -94,7 +97,7 @@ const PostSearchPage = () => {
         initialValue={searchText}
       />
       <PostSearchFilterList />
-      <PostSearchResult postData={data} />
+      <PostSearchResult postData={data?.data?.job_posting_list ?? []} />
     </>
   );
 };

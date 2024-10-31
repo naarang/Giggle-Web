@@ -7,7 +7,6 @@ import CalendarIcon from '@/assets/icons/CalendarIcon.svg?react';
 import { JobPostingItemType } from '@/types/common/jobPostingItem';
 import { calculateTimeAgo } from '@/utils/calculateTimeAgo';
 import { calculateDDay } from '@/utils/calculateDDay';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePutPostBookmark } from '@/hooks/api/usePost';
 import { useUserStore } from '@/store/user';
@@ -19,23 +18,16 @@ type JobPostingCardProps = {
 
 const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
   const { account_type } = useUserStore();
-  const { mutateAsync } = usePutPostBookmark();
+  const { mutate } = usePutPostBookmark();
 
   const navigate = useNavigate();
-
-  const [isBookmarked, setIsBookmarked] = useState<boolean>(
-    jobPostingData?.is_book_marked ?? false,
-  );
 
   const onClickBookmark = async (
     event: React.MouseEvent<SVGSVGElement, MouseEvent>,
   ) => {
     event.stopPropagation();
 
-    if (!account_type) return;
-
-    const result = await mutateAsync(jobPostingData.id);
-    if (result?.success) setIsBookmarked(!isBookmarked);
+    if (account_type) mutate(jobPostingData.id);
   };
 
   const goToPostDetailPage = () => {
@@ -99,7 +91,7 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
             color="#1E1926"
             fontStyle="button-2"
           />
-          {isBookmarked ? (
+          {jobPostingData?.is_book_marked ? (
             <BookmarkCheckedIcon onClick={(e) => onClickBookmark(e)} />
           ) : (
             <BookmarkIcon onClick={(e) => onClickBookmark(e)} />

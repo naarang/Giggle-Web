@@ -9,6 +9,7 @@ import { useUserStore } from '@/store/user';
 
 const HomePage = () => {
   const { account_type } = useUserStore();
+
   return (
     <>
       <HomeHeader />

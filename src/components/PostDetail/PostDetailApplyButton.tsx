@@ -11,14 +11,19 @@ import { useGetPostValidation } from '@/hooks/api/useApplication';
 import { UserType } from '@/constants/user';
 import { usePutPostBookmark } from '@/hooks/api/usePost';
 
-const PostDetailApplyButton = () => {
+type PostDetailApplyButtonProps = {
+  isBookmarked: boolean;
+};
+
+const PostDetailApplyButton = ({
+  isBookmarked,
+}: PostDetailApplyButtonProps) => {
   const { account_type } = useUserStore();
   const { id } = useParams();
 
   const { refetch } = useGetPostValidation(Number(id), false);
-  const { mutateAsync } = usePutPostBookmark();
+  const { mutate } = usePutPostBookmark();
 
-  const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
   const [isOpenConfirmBottomSheet, setIsOpenConfirmBottomSheet] =
     useState<boolean>(false);
   const [isOpenLoginBottomSheet, setIsOpenLoginBottomSheet] =
@@ -27,6 +32,7 @@ const PostDetailApplyButton = () => {
   const onClickApply = async () => {
     if (account_type === UserType.USER && !isNaN(Number(id))) {
       const { data } = await refetch();
+      console.log('?: ', data);
       if (data?.data?.is_qualification_verified) {
         setIsOpenConfirmBottomSheet(true);
       } else {
@@ -36,10 +42,7 @@ const PostDetailApplyButton = () => {
   };
 
   const onClickBookmark = async () => {
-    if (!account_type || isNaN(Number(id))) return;
-
-    const result = await mutateAsync(Number(id));
-    if (result?.success) setIsBookmarked(!isBookmarked);
+    if (account_type && !isNaN(Number(id))) mutate(Number(id));
   };
 
   return (

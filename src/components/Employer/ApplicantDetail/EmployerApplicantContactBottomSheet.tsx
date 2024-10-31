@@ -7,7 +7,6 @@ import {
   usePatchInterviewFinish,
 } from '@/hooks/api/useApplication';
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
 
 type EmployerApplicantContactBottomSheetType = {
   isShowBottomsheet: boolean;
@@ -19,15 +18,11 @@ const EmployerApplicantContactBottomSheet = ({
   setIsShowBottomSheet,
 }: EmployerApplicantContactBottomSheetType) => {
   const { id } = useParams();
-  const { data, refetch } = useGetEmployerApplicationSummary(
+  const { data } = useGetEmployerApplicationSummary(
     Number(id),
     !isNaN(Number(id)),
   );
   const { mutate } = usePatchInterviewFinish();
-
-  useEffect(() => {
-    if (!isNaN(Number(id))) refetch();
-  }, [id, refetch]);
 
   const onClickComplete = () => {
     if (!isNaN(Number(id))) mutate(Number(id));

@@ -6,7 +6,6 @@ import { filterNullParams } from '@/utils/filterNullParams';
 
 // 4.1 (게스트) 공고 리스트 조회
 export const getPostListGuest = async (req: GetPostListReqType) => {
-  console.log('4.1');
   const response = await api.get(`/guests/job-postings/overviews`, {
     params: filterNullParams(req),
   });
@@ -21,7 +20,6 @@ export const getPostDetailGuest = async (id: number) => {
 
 // 4.3 (유학생/고용주) 공고 리스트 조회
 export const getPostList = async (req: GetPostListReqType) => {
-  console.log('4.3');
   const response = await api.get(`/job-postings/overviews`, {
     params: filterNullParams(req),
   });
@@ -89,7 +87,7 @@ export const getApplyPostList = async ({
   status,
 }: GetApplyPostListReqType) => {
   const response = await api.get(
-    `/users/user-owner-job-postings/overviews?page=${page}&size=${size}&sorting=${sorting}${status === APPLICATION_STATUS_TYPE.TOTAL ? '' : `&status=${status}`}`,
+    `/users/user-owner-job-postings/overviews?page=${page}&size=${size}&sorting=${sorting.toUpperCase()}${status === APPLICATION_STATUS_TYPE.TOTAL ? '' : `&status=${status.replace(/\s/g, '_').toUpperCase()}`}`,
   );
   return response.data;
 };

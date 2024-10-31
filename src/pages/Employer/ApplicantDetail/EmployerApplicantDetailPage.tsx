@@ -4,21 +4,16 @@ import EmployerApplicantDetailButton from '@/components/Employer/ApplicantDetail
 import EmployerApplicantDetailCard from '@/components/Employer/ApplicantDetail/EmployerApplicantDetailCard';
 import { useGetEmployerApplicationDetail } from '@/hooks/api/useApplication';
 import { findCurrentStep } from '@/utils/application';
-import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const EmployerApplicantDetailPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const { data, refetch } = useGetEmployerApplicationDetail(
+  const { data } = useGetEmployerApplicationDetail(
     Number(id),
     !isNaN(Number(id)),
   );
-
-  useEffect(() => {
-    if (!isNaN(Number(id))) refetch();
-  }, [id, refetch]);
 
   if (!data?.success) return <></>;
 

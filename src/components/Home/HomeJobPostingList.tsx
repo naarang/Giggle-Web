@@ -2,7 +2,7 @@ import JobPostingCard from '@/components/Common/JobPostingCard';
 import { JobPostingItemType } from '@/types/common/jobPostingItem';
 import RightArrowIcon from '@/assets/icons/Home/RightArrowIcon.svg?react';
 import Tag from '@/components/Common/Tag';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { POST_SEARCH_MENU } from '@/constants/postSearch';
 import { usePostSearchStore } from '@/store/postSearch';
@@ -21,17 +21,13 @@ const HomeJobPostingList = () => {
     page: 1,
     size: 2,
     type: POST_SEARCH_MENU.TRENDING,
-    sorting: 'RECENT',
   };
   const { data: guestTrendData } = useGetPostGuestList(
     trendingDataRequest,
     isGuest,
   );
 
-  const { data: userTrendData, refetch: userTrendFetch } = useGetPostList(
-    trendingDataRequest,
-    !isGuest,
-  );
+  const { data: userTrendData } = useGetPostList(trendingDataRequest, !isGuest);
 
   const trendData = account_type ? userTrendData : guestTrendData;
 
@@ -40,13 +36,12 @@ const HomeJobPostingList = () => {
     page: 1,
     size: 2,
     type: POST_SEARCH_MENU.RECENTLY,
-    sorting: 'RECENT',
   };
   const { data: guestRecentlyData } = useGetPostGuestList(
     recentlyDataRequest,
     isGuest,
   );
-  const { data: userRecentlyData, refetch: userRecentlyFetch } = useGetPostList(
+  const { data: userRecentlyData } = useGetPostList(
     recentlyDataRequest,
     !isGuest,
   );
@@ -58,10 +53,11 @@ const HomeJobPostingList = () => {
     page: 1,
     size: 2,
     type: POST_SEARCH_MENU.BOOKMARKED,
-    sorting: 'RECENT',
   };
-  const { data: userBookmarkedData, refetch: userBookmarkFetch } =
-    useGetPostList(bookmarkedDataRequest, !isGuest);
+  const { data: userBookmarkedData } = useGetPostList(
+    bookmarkedDataRequest,
+    !isGuest,
+  );
 
   const navigate = useNavigate();
   const scrollRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -87,19 +83,6 @@ const HomeJobPostingList = () => {
     updateSortType(type);
     navigate('/search');
   };
-
-  useEffect(() => {
-    if (!account_type) return;
-    userTrendFetch();
-    userRecentlyFetch();
-    userBookmarkFetch();
-  }, [
-    isGuest,
-    account_type,
-    userTrendFetch,
-    userRecentlyFetch,
-    userBookmarkFetch,
-  ]);
 
   return (
     <section className="w-full bg-[#FEF387]">

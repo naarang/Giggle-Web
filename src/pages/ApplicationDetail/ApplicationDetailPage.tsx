@@ -13,19 +13,14 @@ import ApplicationDetailStep7 from '@/components/ApplicationDetail/ApplicationDe
 import { findCurrentStep } from '@/utils/application';
 import ApplicationDetailStepEtc from '@/components/ApplicationDetail/ApplicationDetailStepEtc';
 import { useGetApplicationDetail } from '@/hooks/api/useApplication';
-import { useEffect } from 'react';
 
 const ApplicationDetailPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { data, refetch } = useGetApplicationDetail(
+  const { data } = useGetApplicationDetail(
     Number(id),
     !isNaN(Number(id)) ? true : false,
   );
-
-  useEffect(() => {
-    if (!isNaN(Number(id))) refetch();
-  }, [id, refetch]);
 
   if (!data?.success) return <></>;
 

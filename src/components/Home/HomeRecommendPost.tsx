@@ -9,7 +9,7 @@ const HomeRecommendPost = () => {
   const { data } = useGetRecommendPostList();
 
   return (
-    <section className="w-full flex gap-[0.5rem] px-[1.25rem] overflow-x-scroll no-scrollbar whitespace-nowrap bg-[#FEF387]">
+    <section className="w-full flex gap-[0.5rem] px-[1.25rem] pt-[1rem] pb-[1.5rem] overflow-x-scroll no-scrollbar whitespace-nowrap bg-[#FEF387]">
       {data?.data?.job_posting_list?.length ? (
         // 이력서 등록 -> 추천 공고 보여주기
         <>

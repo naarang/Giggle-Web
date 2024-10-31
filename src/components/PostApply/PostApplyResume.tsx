@@ -9,7 +9,6 @@ import { useGetApplicantResume, useGetResume } from '@/hooks/api/useResume';
 import { useParams } from 'react-router-dom';
 import { useUserStore } from '@/store/user';
 import { UserType } from '@/constants/user';
-import { useEffect } from 'react';
 
 const EDUCATION_PERIOD = {
   BACHELOR: 4,
@@ -21,20 +20,13 @@ const PostApplyResume = () => {
   const { id } = useParams();
   const { account_type } = useUserStore();
 
-  const { data: userData, refetch: userFetch } = useGetResume(
-    account_type === UserType.USER,
-  );
-  const { data: ownerData, refetch: ownerFetch } = useGetApplicantResume(
+  const { data: userData } = useGetResume(account_type === UserType.USER);
+  const { data: ownerData } = useGetApplicantResume(
     Number(id),
     !isNaN(Number(id)) && account_type === UserType.OWNER ? true : false,
   );
 
   const data = account_type === UserType.OWNER ? userData : ownerData;
-
-  useEffect(() => {
-    if (!isNaN(Number(id)) && account_type === UserType.OWNER) ownerFetch();
-    if (account_type === UserType.USER) userFetch();
-  }, [id, account_type, ownerFetch, userFetch]);
 
   if (data?.data) return <></>;
 
