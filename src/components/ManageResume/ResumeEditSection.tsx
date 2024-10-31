@@ -6,11 +6,6 @@ import {
 import { ManageResumeType } from '@/constants/manageResume';
 import MypageCard from '@/components/ManageResume/components/MypageCard';
 import { ResumeDataState } from '@/types/manageResume/manageResume';
-import {
-  useDeleteEducation,
-  useDeleteWorkExperience,
-  useDeleteIntroduction,
-} from '@/hooks/api/useResume';
 
 type ResumeEditSectionProps = {
   introductionData: string;
@@ -33,44 +28,23 @@ const ResumeEditSection = ({
     languageData,
   };
 
-  // API 훅 적용
-  const { mutate: deleteIntroduction } = useDeleteIntroduction();
-  const { mutate: deleteEducation } = useDeleteEducation();
-  const { mutate: deleteWorkExperience } = useDeleteWorkExperience();
-
-  // 삭제 핸들러 (데이터 삭제 시 해당 API 호출)
-  const handleDeleteIntroduction = () => {
-    deleteIntroduction();
-  };
-
-  const handleDeleteEducation = (id: number) => {
-    deleteEducation(id);
-  };
-
-  const handleDeleteWorkExperience = (id: number) => {
-    deleteWorkExperience(id);
-  };
-
   return (
     <div className="flex flex-col gap-4">
       <MypageCard
         type={ManageResumeType.INTRODUCTION}
-        data={resumeData.introductionData}
-        onDelete={() => handleDeleteIntroduction()}
+        introductionData={resumeData.introductionData}
       />
       <MypageCard
         type={ManageResumeType.WORKEXPERIENCE}
-        data={resumeData.workexperienceData}
-        onDelete={(id) => id !== undefined && handleDeleteWorkExperience(id)}
+        workExperienceData={resumeData.workexperienceData}
       />
       <MypageCard
         type={ManageResumeType.EDUCATION}
-        data={resumeData.educationData}
-        onDelete={(id) => id !== undefined && handleDeleteEducation(id)}
+        educationData={resumeData.educationData}
       />
       <MypageCard
         type={ManageResumeType.LANGUAGE}
-        data={resumeData.languageData}
+        languageData={resumeData.languageData}
       />
     </div>
   );
