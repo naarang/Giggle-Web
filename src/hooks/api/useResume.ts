@@ -220,6 +220,6 @@ export const useGetSearchSchools = (
         page: page.toString(),
         size: size.toString(),
       }),
-    enabled: !!search, // 검색어가 있을 때만 쿼리 활성화
+    // enabled: !!search, // 검색어가 있을 때만 쿼리 활성화
   });
 };

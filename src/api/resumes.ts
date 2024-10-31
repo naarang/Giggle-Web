@@ -180,7 +180,7 @@ export const getSearchSchools = async ({
   size: string;
 }) => {
   const response = await api.get(
-    `/users/schools/brief?search=${search}&page=${page}&size=${size}`,
+    `/users/schools/briefs?search=${search}&page=${page}&size=${size}`,
   );
   return response.data;
 };
