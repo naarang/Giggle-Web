@@ -1,6 +1,7 @@
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import DocumentSubHeaderEmployer from '@/components/Employer/ApplicantDocumentsDetail/DocumentSubHeaderEmployer';
 import EmployeeInfoSectionKOR from '@/components/Employer/WriteDocument/EmployeeInfoSectionKOR';
+import EmployerLaborContractForm from '@/components/Employer/WriteDocument/EmployerLaborContractForm';
 import EmployerPartTimePermitForm from '@/components/Employer/WriteDocument/EmployerPartTimePermitForm';
 import { mockPartTimePermitForm } from '@/constants/documents';
 import {
@@ -67,6 +68,12 @@ const EmployerWriteDocumentsPage = () => {
         {type === DocumentType.PART_TIME_PERMIT && (
           <EmployerPartTimePermitForm
             document={document as PartTimePermitData}
+            isEdit={isEdit}
+          />
+        )}
+                {type === DocumentType.LABOR_CONTRACT && (
+          <EmployerLaborContractForm
+            document={document as LaborContractDataResponse}
             isEdit={isEdit}
           />
         )}

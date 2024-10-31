@@ -15,7 +15,7 @@ const mockDocumentsSummaryResponse: EmployDocumentsSummaryResponse = {
     id: 2001,
     hwp_url: 'https://example.com/contracts/standard_2001.hwp',
     word_url: 'https://example.com/contracts/standard_2001.docx',
-    status: DocumentStatusEmployer.SUBMITTED,
+    status: DocumentStatusEmployer.TEMPORARY_SAVE,
   },
   part_time_employment_permits: {
     id: 2001,
