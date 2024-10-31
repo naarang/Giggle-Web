@@ -161,7 +161,7 @@ export const PartTimeEmployPermitEmployerInfo = {
     key: 'company_name',
   },
   [EmployerInfoProperty.COMPANY_REGISTRATION_NUMBER]: {
-    name: 'Business registration number', 
+    name: 'Business registration number',
     key: 'company_registration_number',
   },
   [EmployerInfoProperty.JOB_TYPE]: {
@@ -170,7 +170,7 @@ export const PartTimeEmployPermitEmployerInfo = {
   },
   [EmployerInfoProperty.PHONE_NUMBER]: {
     name: 'Phone number',
-    key: 'phone_number', 
+    key: 'phone_number',
   },
   [EmployerInfoProperty.SIGNATURE_BASE64]: {
     name: "Representative's signature",
@@ -196,7 +196,8 @@ export const PartTimeEmployPermitEmployerInfo = {
     name: 'Address in Korea',
     key: 'address',
   },
- } as const;
+} as const;
+
 // 표준 근로계약서 내 고용주 입력 정보 속성과 이름 mapping
 export const LaborContractEmployerInfoNameMap = {
   [LaborContractEmployerInfoProperty.COMPANY_NAME]: {
@@ -289,6 +290,37 @@ export const mockEmployerInformation: EmployerInformation = {
   },
 };
 
+// 고용주 표준근로계약서 초기 state
+export const initialLaborContractEmployerInfo: LaborContractEmployerInfo = {
+  company_name: '',
+  company_registration_number: null,
+  phone_number: '',
+  name: '',
+  start_date: '', // yyyy-MM-dd
+  end_date: '', // yyyy-MM-dd
+  address: {
+    address_name: '',
+    region_1depth_name: '',
+    region_2depth_name: '',
+    region_3depth_name: '',
+    region_4depth_name: '',
+    address_detail: '',
+    longitude: 0,
+    latitude: 0,
+  },
+  description: '',
+  work_day_time_list: [],
+  weekly_last_days: [],
+  hourly_rate: 0,
+  bonus: null,
+  additional_salary: null,
+  wage_rate: 0,
+  payment_day: 1, // 기본값을 1일로 설정
+  payment_method: PaymentMethod.BANK_TRANSFER, // 기본값을 계좌이체로 설정
+  insurance: [Insurance.WORKERS_COMPENSATION_INSURANCE], // 기본값을 산재보험으로 설정
+  signature_base64: '',
+};
+
 // 표준 계약서 property enum
 export enum LaborContractEmployeeInfoProperty {
   FIRST_NAME = 'first_name',
@@ -361,6 +393,8 @@ export const mockLaborContractEmployeeInfo: LaborContractEmployeeInfo = {
 // 근로계약서 고용주 mock data
 export const sampleLaborContract: LaborContractEmployerInfo = {
   company_name: 'ABC Technology Co., Ltd.',
+  company_registration_number: null,
+  phone_number: '010-1111-1111',
   name: 'John Smith',
   start_date: '2024-01-01',
   end_date: '2024-12-31',
@@ -380,26 +414,36 @@ export const sampleLaborContract: LaborContractEmployerInfo = {
       day_of_week: DayOfWeek.MONDAY,
       work_start_time: '09:00',
       work_end_time: '18:00',
+      break_start_time: '12:00',
+      break_end_time: '13:00',
     },
     {
       day_of_week: DayOfWeek.TUESDAY,
       work_start_time: '09:00',
       work_end_time: '18:00',
+      break_start_time: '12:00',
+      break_end_time: '13:00',
     },
     {
       day_of_week: DayOfWeek.WEDNESDAY,
       work_start_time: '09:00',
       work_end_time: '18:00',
+      break_start_time: '12:00',
+      break_end_time: '13:00',
     },
     {
       day_of_week: DayOfWeek.THURSDAY,
       work_start_time: '09:00',
       work_end_time: '18:00',
+      break_start_time: '12:00',
+      break_end_time: '13:00',
     },
     {
       day_of_week: DayOfWeek.FRIDAY,
       work_start_time: '09:00',
       work_end_time: '18:00',
+      break_start_time: '12:00',
+      break_end_time: '13:00',
     },
   ],
   weekly_last_days: [DayOfWeek.SATURDAY, DayOfWeek.SUNDAY],
@@ -409,11 +453,12 @@ export const sampleLaborContract: LaborContractEmployerInfo = {
   wage_rate: 1.5,
   payment_day: 10,
   payment_method: PaymentMethod.BANK_TRANSFER,
-  insurance: Insurance.HEALTH_INSURANCE,
+  insurance: [Insurance.HEALTH_INSURANCE],
   signature_base64:
     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==',
 };
 
+// 통합신청서 초기 state
 export const initialIntegratedApplication: IntegratedApplicationData = {
   first_name: '',
   last_name: '',
@@ -444,6 +489,7 @@ export const initialIntegratedApplication: IntegratedApplicationData = {
   },
 };
 
+// 통합 신청서 mock data
 export const mockIntegratedApplication: IntegratedApplicationData = {
   first_name: '길동',
   last_name: '홍',
@@ -554,6 +600,7 @@ export const LaborContractEmployeePropertyInfo = {
   },
 } as const;
 
+// 고용주 시간제 근무 허가서 초기 state
 export const initialPartTimePermitEmployerForm = {
   company_name: '',
   company_registration_number: '',
@@ -577,6 +624,7 @@ export const initialPartTimePermitEmployerForm = {
   },
 };
 
+// 근무 기간 이름 과 property 매핑
 export const WorkPeriodInfo = {
   [WorkPeriod.ONE_DAY]: {
     name: '하루',
@@ -601,6 +649,7 @@ export const WorkPeriodInfo = {
   },
 } as const;
 
+// 근무 기간 리스트
 export const WorkPeriodNames = [
   '하루',
   '1주 미만',
@@ -610,3 +659,20 @@ export const WorkPeriodNames = [
   '6개월 ~ 1년',
   '1년 이상',
 ];
+
+export const DAYS = {
+  ['월요일']: 'MONDAY',
+  ['화요일']: 'TUESDAY',
+  ['수요일']: 'WEDNESDAY',
+  ['목요일']: 'THURSDAY',
+  ['금요일']: 'FRIDAY',
+  ['토요일']: 'SATURDAY',
+  ['일요일']: 'SUNDAY',
+} as const;
+
+export const INSURANCES = {
+  ['고용보험']: 'EMPLOYMENT_INSURANCE',
+  ['산재보험']: 'WORKERS_COMPENSATION_INSURANCE',
+  ['국민연금']: 'NATIONAL_PENSION',
+  ['건강보험']: 'HEALTH_INSURANCE',
+};

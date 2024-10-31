@@ -174,15 +174,26 @@ export type WorkDayTime = {
   work_end_time: string | null; // HH:MM 형식
 };
 
+// 휴식시간 포함된 근무시간 타입
+export type WorkDayTimeWithRest = {
+  day_of_week: DayOfWeek;
+  work_start_time: string | null; // HH:MM 형식
+  work_end_time: string | null; // HH:MM 형식
+  break_start_time: string;
+  break_end_time: string;
+};
+
 // 근로 계약서 고용주 정보
 export type LaborContractEmployerInfo = {
   company_name: string;
+  company_registration_number: string | null;
+  phone_number : string;
   name: string;
   start_date: string; // yyyy-MM-dd 형식
   end_date: string; // yyyy-MM-dd 형식
   address: Address;
   description: string;
-  work_day_time_list: WorkDayTime[];
+  work_day_time_list: WorkDayTimeWithRest[];
   weekly_last_days: DayOfWeek[];
   hourly_rate: number;
   bonus: number | null; // optional
@@ -190,7 +201,7 @@ export type LaborContractEmployerInfo = {
   wage_rate: number;
   payment_day: number;
   payment_method: PaymentMethod;
-  insurance: Insurance;
+  insurance: Insurance[];
   signature_base64: string; // base64 문자열
 };
 
