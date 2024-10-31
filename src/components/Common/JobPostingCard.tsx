@@ -27,7 +27,11 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
     jobPostingData?.is_book_marked ?? false,
   );
 
-  const onClickBookmark = async () => {
+  const onClickBookmark = async (
+    event: React.MouseEvent<SVGSVGElement, MouseEvent>,
+  ) => {
+    event.stopPropagation();
+
     if (!account_type) return;
 
     const result = await mutateAsync(jobPostingData.id);
@@ -50,7 +54,16 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
       <div className="w-full flex justify-between items-start">
         <div>
           <div className="mb-[0.5rem] flex items-center gap-[0.625rem]">
-            <div className='w-[2rem] h-[2rem] rounded-[0.5rem] bg-cover bg-[url("/src/assets/images/JobIconExample.jpeg")]'></div>
+            {jobPostingData?.icon_img_url ? (
+              <div
+                className="w-[2rem] h-[2rem] rounded-[0.5rem] bg-cover"
+                style={{
+                  backgroundImage: `url(${jobPostingData.icon_img_url})`,
+                }}
+              ></div>
+            ) : (
+              <div className="w-[2rem] h-[2rem] rounded-[0.5rem] bg-[#F4F4F9]"></div>
+            )}
             <h3 className="head-2 text-[#1E1926]">{jobPostingData.title}</h3>
           </div>
           <div className="flex flex-col gap-[0.125rem]">
@@ -87,9 +100,9 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
             fontStyle="button-2"
           />
           {isBookmarked ? (
-            <BookmarkCheckedIcon onClick={onClickBookmark} />
+            <BookmarkCheckedIcon onClick={(e) => onClickBookmark(e)} />
           ) : (
-            <BookmarkIcon onClick={onClickBookmark} />
+            <BookmarkIcon onClick={(e) => onClickBookmark(e)} />
           )}
         </div>
       </div>

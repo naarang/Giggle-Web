@@ -41,7 +41,7 @@ export const POST_SUMMARY_ITEM: PostSummaryItemType = {
   },
   summaries: {
     address: '123 Translation Ave, Seoul',
-    houlry_rate: 15000,
+    hourly_rate: 15000,
     work_period: 'ONE_MONTH_TO_THREE_MONTHS',
     work_days_per_week: 5,
   },

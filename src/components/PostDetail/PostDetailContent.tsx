@@ -152,7 +152,7 @@ const PostDetailContent = ({ postDetailData }: PostDetailContentProps) => {
             <div>
               <h5 className="pb-[0.5rem] text-[#656565] button-2">Salary</h5>
               <p className="text-[#656565] caption-1">
-                {postDetailData.working_conditions.houlry_rate} KRW
+                {postDetailData.working_conditions.hourly_rate} KRW
               </p>
             </div>
             <div>

@@ -62,7 +62,7 @@ export type TagType = {
 
 export type SummariesType = {
   address: string;
-  houlry_rate: number;
+  hourly_rate: number;
   work_period: WorkPeriodType;
   work_days_per_week: number;
 };
@@ -91,7 +91,7 @@ type WorkDayTimesType = {
 };
 
 type WorkingConditionsType = {
-  houlry_rate: number;
+  hourly_rate: number;
   work_period: WorkPeriodType;
   work_day_times: WorkDayTimesType[];
   job_category: JobCategoryType;

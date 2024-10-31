@@ -111,7 +111,7 @@ const HomeJobPostingList = () => {
             isRounded={true}
             hasCheckIcon={false}
             backgroundColor={
-              selectedMenu === POST_SEARCH_MENU.POPULAR ? '#FEF387' : 'white'
+              selectedMenu === POST_SEARCH_MENU.TRENDING ? '#FEF387' : 'white'
             }
             color="#1E1926A6"
             fontStyle="button-2"

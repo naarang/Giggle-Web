@@ -36,7 +36,7 @@ const PostDetailApplyButton = () => {
   };
 
   const onClickBookmark = async () => {
-    if (!account_type && isNaN(Number(id))) return;
+    if (!account_type || isNaN(Number(id))) return;
 
     const result = await mutateAsync(Number(id));
     if (result?.success) setIsBookmarked(!isBookmarked);
