@@ -52,14 +52,8 @@ export const postWorkExperience = async (
 };
 
 // 7.6 학력 생성하기
-export const postEducation = async ({
-  id,
-  education,
-}: {
-  id: number;
-  education: EducationRequest;
-}) => {
-  const response = await api.post(`/users/resumes/educations/${id}`, education);
+export const postEducation = async (education: EducationRequest) => {
+  const response = await api.post('/users/resumes/educations', education);
   return response.data;
 };
 

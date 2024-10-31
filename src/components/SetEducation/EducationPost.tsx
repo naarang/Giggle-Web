@@ -103,7 +103,9 @@ const EducationPost = ({
           <Input
             inputType={InputType.TEXT}
             placeholder="Grade"
-            value={String(educationData.grade)}
+            value={
+              educationData.grade ? String(educationData.grade) : undefined
+            }
             onChange={(value) => handleInputChange('grade', value)}
             canDelete={false}
           />
@@ -116,7 +118,7 @@ const EducationPost = ({
           <Input
             inputType={InputType.TEXT}
             placeholder="0.0"
-            value={String(educationData.gpa)}
+            value={educationData.gpa ? String(educationData.gpa) : undefined}
             onChange={(value) => handleInputChange('gpa', value)}
             canDelete={false}
           />
@@ -127,7 +129,7 @@ const EducationPost = ({
             Entrance Date <span className="text-[#EE4700] body-1">*</span>
           </p>
           <Dropdown
-            value={educationData.start_date.replace(/-/g, '/')}
+            value={educationData.start_date?.replace(/-/g, '/')}
             placeholder="Select Date"
             options={[]}
             isCalendar={true}

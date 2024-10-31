@@ -8,7 +8,7 @@ import {
   GetEducationType,
   PostEducationType,
 } from '@/types/postResume/postEducation';
-import { transformToPostEducation } from '@/utils/editResume';
+import { transformToPatchEducation } from '@/utils/editResume';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -52,7 +52,7 @@ const PatchEducationPage = () => {
       setFetchData(data);
 
       // patch 타입 initialData 설정
-      const transformedData = transformToPostEducation(data);
+      const transformedData = transformToPatchEducation(data);
       setInitialData(transformedData);
     };
 
