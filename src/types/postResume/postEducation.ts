@@ -26,21 +26,21 @@ export type GetEducationType = {
 };
 
 export type InitailEducationType = {
-  education_level: string | undefined; // Enum(BACHELOR, ASSOCIATE, HIGHSCHOOL),
-  school_id: number | undefined;
-  major: string | undefined;
-  gpa: number | undefined;
-  start_date: string | undefined; // yyyy-MM-dd
-  end_date: string | undefined; // yyyy-MM-dd
-  grade: number | undefined;
+  education_level: string | null; // Enum(BACHELOR, ASSOCIATE, HIGHSCHOOL),
+  school_id: number | null;
+  major: string | null;
+  gpa: number | null;
+  start_date: string | null; // yyyy-MM-dd
+  end_date: string | null; // yyyy-MM-dd
+  grade: number | null;
 };
 
 export const InitialEducationData = {
   education_level: '', // Enum(BACHELOR, ASSOCIATE, HIGHSCHOOL),
-  school_id: undefined,
+  school_id: null,
   major: '',
-  gpa: undefined,
+  gpa: null,
   start_date: '', // yyyy-MM-dd
   end_date: '', // yyyy-MM-dd
-  grade: undefined,
+  grade: null,
 };
