@@ -1,20 +1,21 @@
 import {
   useGetApplicationCounts,
-  useGetOwnerApplicationCounts,
+  userGetBookmarksCounts,
 } from '@/hooks/api/useProfile';
 import { ApplicationCountType, BookmarkCountType } from '@/types/api/profile';
 import { useEffect, useState } from 'react';
 
 const ApplicationStatus = () => {
   const { data: applcationData } = useGetApplicationCounts();
-  const { data: bookmarkData } = useGetOwnerApplicationCounts();
+  const { data: bookmarkData } = userGetBookmarksCounts();
+
   const [applicationCounts, setApplicationCounts] =
     useState<ApplicationCountType>({
-      application_counts: 7,
-      successful_hire_counts: 2,
+      application_counts: 0,
+      successful_hire_counts: 0,
     });
   const [bookmarkCounts, setBookmarkCounts] = useState<BookmarkCountType>({
-    book_mark_counts: 10,
+    book_mark_counts: 0,
   });
 
   useEffect(() => {
@@ -26,10 +27,10 @@ const ApplicationStatus = () => {
     }
     if (bookmarkData?.success) {
       setBookmarkCounts({
-        book_mark_counts: bookmarkData.data.applicants_counts,
+        book_mark_counts: bookmarkData.data.book_mark_counts,
       });
     }
-  }, []);
+  }, [applcationData, bookmarkData]);
 
   return (
     <div className="flex gap-4 items-center justify-center">

@@ -9,6 +9,7 @@ import {
   getResume,
   getSearchSchools,
   getWorkExperience,
+  patchEducation,
   patchIntroduction,
   patchLanguagesLevel,
   patchWorkExperience,
@@ -29,7 +30,7 @@ export const useGetResume = () => {
 };
 
 // 7.2 경력 상세 조회하기
-export const useGetWorkExperience = (id: number) => {
+export const useGetWorkExperience = (id: string) => {
   return useQuery({
     queryKey: ['workExperience', id],
     queryFn: () => getWorkExperience(id),
@@ -37,7 +38,7 @@ export const useGetWorkExperience = (id: number) => {
 };
 
 // 7.3 학력 상세 조회하기
-export const useGetEducation = (id: number) => {
+export const useGetEducation = (id: string) => {
   return useQuery({
     queryKey: ['education', id],
     queryFn: () => getEducation(id),
@@ -52,6 +53,9 @@ export const useGetLanguagesSummaries = () => {
   });
 };
 
+// 7.11 (유학생) 언어 - TOPIK 레벨 수정하기
+// 7.12 (유학생) 언어 - SOCIAL INTEGRATION PROGRAM 레벨 수정하기
+// 7.13 (유학생) 언어 - SEJONG INSTITUTE 레벨 수정하기
 export const usePatchLanguagesLevel = ({
   type,
   level,
@@ -61,6 +65,9 @@ export const usePatchLanguagesLevel = ({
 }) => {
   return useMutation({
     mutationFn: () => patchLanguagesLevel({ type, level }),
+    onSuccess: () => {
+      window.location.reload();
+    },
     onError: (error) => {
       console.error('언어 레벨 수정 실패', error);
     },
@@ -104,6 +111,7 @@ export const usePostEtcLanguageLevel = () => {
       navigate('/resume/language');
     },
     onError: (error) => {
+      alert('이미 존재하는 언어입니다');
       console.error('ETC 작성 실패', error);
     },
   });
@@ -141,7 +149,7 @@ export const usePatchWorkExperience = () => {
 export const usePatchEducation = () => {
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: patchWorkExperience,
+    mutationFn: patchEducation,
     onSuccess: () => {
       navigate('/profile/manage-resume');
     },
@@ -157,6 +165,7 @@ export const useDeleteIntroduction = () => {
   return useMutation({
     mutationFn: deleteIntroduction,
     onSuccess: () => {
+      window.location.reload();
       navigate('/profile/manage-resume');
     },
     onError: (error) => {
@@ -169,6 +178,9 @@ export const useDeleteIntroduction = () => {
 export const useDeleteWorkExperience = () => {
   return useMutation({
     mutationFn: deleteWorkExperience,
+    onSuccess: () => {
+      window.location.reload();
+    },
     onError: (error) => {
       console.error('경력 삭제 실패', error);
     },
@@ -179,6 +191,9 @@ export const useDeleteWorkExperience = () => {
 export const useDeleteEducation = () => {
   return useMutation({
     mutationFn: deleteEducation,
+    onSuccess: () => {
+      window.location.reload();
+    },
     onError: (error) => {
       console.error('학력 삭제 실패', error);
     },
@@ -189,6 +204,9 @@ export const useDeleteEducation = () => {
 export const useDeleteEtcLanguageLevel = () => {
   return useMutation({
     mutationFn: deleteEtcLanguageLevel,
+    onSuccess: () => {
+      window.location.reload();
+    },
     onError: (error) => {
       console.error('ETC 삭제 실패', error);
     },

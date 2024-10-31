@@ -2,12 +2,15 @@ import Button from '@/components/Common/Button';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import WorkExperiencePost from '@/components/WorkExperience/WorkExperiencePost';
 import { buttonTypeKeys } from '@/constants/components';
+import { usePostWorkExperience } from '@/hooks/api/useResume';
 import useNavigateBack from '@/hooks/useNavigateBack';
-import { PostWorkExperienceType } from '@/types/postResume/postWorkExperience';
+import { WorkExperienctRequest } from '@/types/api/resumes';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const PostWorkExperiencePage = () => {
+  const { mutate } = usePostWorkExperience();
+  const handleBackButtonClick = useNavigateBack();
+
   const initialData = {
     title: '',
     workplace: '',
@@ -16,17 +19,14 @@ const PostWorkExperiencePage = () => {
     description: '',
   };
 
-  const handleBackButtonClick = useNavigateBack();
-  const navigate = useNavigate();
-
   const [workExperienceData, setWorkExperienceData] =
-    useState<PostWorkExperienceType>(initialData);
+    useState<WorkExperienctRequest>(initialData);
   // 초기 값에서 수정된 내용이 있는지 확인
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const handleSubmit = () => {
-    // TODO: API - 7.5 경력 생성하기
-    navigate('/profile/manage-resume');
+    // API - 7.5 경력 생성하기
+    mutate(workExperienceData);
   };
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const PostWorkExperiencePage = () => {
           hasBackButton={true}
           onClickBackButton={handleBackButtonClick}
           hasMenuButton={false}
-          title="Introduction"
+          title="Work Experience"
         />
         {/* input 컴포넌트 */}
         <WorkExperiencePost
