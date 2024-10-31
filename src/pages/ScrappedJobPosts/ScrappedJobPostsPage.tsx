@@ -1,6 +1,6 @@
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import JobPostingCard from '@/components/Common/JobPostingCard';
-import { ScrappedJobPostsData } from '@/constants/manageResume';
+import { useGetBookmarkPostList } from '@/hooks/api/usePost';
 import { ScrappedJobPostingType } from '@/types/api/mypage';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -10,10 +10,15 @@ const ScrappedJobPostsPage = () => {
   const [jobPostingData, setJobPostingData] =
     useState<ScrappedJobPostingType[]>();
 
+  // TODO: 무한스크롤 구현
+  const { data } = useGetBookmarkPostList(1, 20);
+
   useEffect(() => {
-    // TODO: API - 5.1 (유학생) 북마크한 공고 리스트 조회하
-    setJobPostingData(ScrappedJobPostsData);
-  }, []);
+    // API - 5.1 (유학생) 북마크한 공고 리스트 조회하
+    if (data) {
+      setJobPostingData(data.data.job_posting_list);
+    }
+  }, [data]);
   return (
     <>
       {jobPostingData ? (
