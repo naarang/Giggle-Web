@@ -29,7 +29,7 @@ const ManageResumePage = () => {
             title="Manage Resume"
           />
           <div className="flex flex-col px-6 gap-9 pb-9">
-            <div className="flex flex-col pt-5 pb-4 gap-6">
+            <div className="flex flex-col pt-5 gap-6">
               <ProfilePicture
                 name={data.name}
                 profileImg={data.profile_img_url}

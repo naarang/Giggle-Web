@@ -34,33 +34,21 @@ const ResumeEditSection = ({
   };
 
   // API 훅 적용
-  const deleteIntroductionMutation = useDeleteIntroduction();
-  const deleteEducationMutation = useDeleteEducation();
-  const deleteWorkExperienceMutation = useDeleteWorkExperience();
+  const { mutate: deleteIntroduction } = useDeleteIntroduction();
+  const { mutate: deleteEducation } = useDeleteEducation();
+  const { mutate: deleteWorkExperience } = useDeleteWorkExperience();
 
   // 삭제 핸들러 (데이터 삭제 시 해당 API 호출)
   const handleDeleteIntroduction = () => {
-    deleteIntroductionMutation.mutate(undefined, {
-      onError: (error) => {
-        console.error('Introduction 삭제 실패', error);
-      },
-    });
+    deleteIntroduction();
   };
 
   const handleDeleteEducation = (id: number) => {
-    deleteEducationMutation.mutate(id, {
-      onError: (error) => {
-        console.error(`Education 삭제 실패: ${id}`, error);
-      },
-    });
+    deleteEducation(id);
   };
 
   const handleDeleteWorkExperience = (id: number) => {
-    deleteWorkExperienceMutation.mutate(id, {
-      onError: (error) => {
-        console.error(`Work experience 삭제 실패: ${id}`, error);
-      },
-    });
+    deleteWorkExperience(id);
   };
 
   return (

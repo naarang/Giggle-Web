@@ -5,7 +5,6 @@ import {
   PersonalInformationType,
   WorkExperienceType,
 } from '@/types/postApply/resumeDetailItem';
-import { PostWorkExperienceType } from '@/types/postResume/postWorkExperience';
 import { VisaType } from '../postDetail/postDetailItem';
 
 // 자기소개 요청 타입
@@ -14,14 +13,13 @@ export type IntroDuctionRequest = {
 };
 
 // 경력사항 요청 타입
-export type WorkExperienctRequest = PostWorkExperienceType;
-/*
-  "title" : String, 
-  "workplace" : String,
-  "start_date" : String(yyyy-MM-dd),
-  "end_date" : String(yyyy-MM-dd),
-  "description" : String
-*/
+export type WorkExperienctRequest = {
+  title: string;
+  workplace: string;
+  start_date: string; // (yyyy-MM-dd),
+  end_date: string; // (yyyy-MM-dd),
+  description: string;
+};
 
 // 학력 요청 타입
 export type EducationRequest = {
