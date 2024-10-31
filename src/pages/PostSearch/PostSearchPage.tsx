@@ -6,6 +6,7 @@ import { useGetPostGuestList, useGetPostList } from '@/hooks/api/usePost';
 import { usePostSearchStore } from '@/store/postSearch';
 import { useUserStore } from '@/store/user';
 import { GetPostListReqType } from '@/types/api/post';
+import { PostSortingType } from '@/types/PostSearchFilter/PostSearchFilterItem';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,7 +14,7 @@ const PostSearchPage = () => {
   const navigate = useNavigate();
 
   const { account_type } = useUserStore();
-  const { searchText, updateSearchText, filterList, sortType } =
+  const { searchText, updateSearchText, filterList, sortType, updateSortType } =
     usePostSearchStore();
   const [searchParams, setSearchParams] = useState<GetPostListReqType>({
     page: 1,
@@ -33,10 +34,8 @@ const PostSearchPage = () => {
 
   const data = account_type ? userPostData : guestPostData;
 
-  // TODO: 여기서 검색어, 검색 필터 모두 전역변수로 관리하기
   const onClickSearch = (text: string) => {
     updateSearchText(text);
-    // TODO : 검색 api 불러오기
     const trendingDataRequest = {
       page: 1,
       size: 10,
@@ -78,6 +77,11 @@ const PostSearchPage = () => {
     setSearchParams(trendingDataRequest);
   };
 
+  const onChangeSortType = (selectedSortType: PostSortingType) => {
+    updateSortType(selectedSortType);
+    setSearchParams({ ...searchParams, sorting: selectedSortType });
+  };
+
   useEffect(() => {
     if (account_type) {
       userRefetch();
@@ -97,7 +101,10 @@ const PostSearchPage = () => {
         initialValue={searchText}
       />
       <PostSearchFilterList />
-      <PostSearchResult postData={data?.data?.job_posting_list ?? []} />
+      <PostSearchResult
+        postData={data?.data?.job_posting_list ?? []}
+        onChangeSortType={onChangeSortType}
+      />
     </>
   );
 };

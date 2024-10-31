@@ -86,11 +86,12 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
             color="#1E1926"
             fontStyle="button-2"
           />
-          {jobPostingData?.is_book_marked ? (
-            <BookmarkCheckedIcon onClick={(e) => onClickBookmark(e)} />
-          ) : (
-            <BookmarkIcon onClick={(e) => onClickBookmark(e)} />
-          )}
+          {account_type &&
+            (jobPostingData?.is_book_marked ? (
+              <BookmarkCheckedIcon onClick={(e) => onClickBookmark(e)} />
+            ) : (
+              <BookmarkIcon onClick={(e) => onClickBookmark(e)} />
+            ))}
         </div>
       </div>
       <div className="flex items-center flex-wrap gap-[0.375rem]">
