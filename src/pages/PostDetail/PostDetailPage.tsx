@@ -26,6 +26,9 @@ const PostDetailPage = () => {
 
   if (!postDetailData?.data) return <></>;
 
+  if (postDetailData?.data?.is_my_post)
+    navigate(`/employer/post/${postDetailData?.data?.id}`);
+
   return (
     <>
       <BaseHeader

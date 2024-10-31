@@ -24,7 +24,7 @@ const EmployerPostDetailPage = () => {
     <>
       <BaseHeader
         hasBackButton={true}
-        onClickBackButton={() => navigate(-1)}
+        onClickBackButton={() => navigate('/search')}
         hasMenuButton={false}
         title="Detail"
       />

@@ -10,7 +10,6 @@ import { calculateDDay } from '@/utils/calculateDDay';
 import { useNavigate } from 'react-router-dom';
 import { usePutPostBookmark } from '@/hooks/api/usePost';
 import { useUserStore } from '@/store/user';
-import { UserType } from '@/constants/user';
 
 type JobPostingCardProps = {
   jobPostingData: JobPostingItemType;
@@ -31,11 +30,7 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
   };
 
   const goToPostDetailPage = () => {
-    if (account_type === UserType.OWNER) {
-      navigate(`/employer/post/${jobPostingData.id}`);
-    } else {
-      navigate(`/post/${jobPostingData.id}`);
-    }
+    navigate(`/post/${jobPostingData.id}`);
   };
 
   return (
