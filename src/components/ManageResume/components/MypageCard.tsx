@@ -9,15 +9,15 @@ import WorkIcon from '@/assets/icons/ManageResume/WorkIcon.svg?react';
 import EducationIcon from '@/assets/icons/ManageResume/EducationIcon.svg?react';
 import LanguageIcon from '@/assets/icons/ManageResume/LanguageIcon.svg?react';
 import BigEditIcon from '@/assets/icons/ManageResume/BigEditIcon.svg?react';
-import IntroductionDetail from './IntroductionDetail';
+import IntroductionDetail from '@/components/ManageResume/components/IntroductionDetail';
 import {
   EducationType,
   LanguageListType,
   WorkExperienceType,
 } from '@/types/postApply/resumeDetailItem';
-import WorkExperienceDetail from './WorkExperienceDetail';
-import EducationDetail from './EducationDetail';
-import LanguageManageDetail from './LanguageManageDetail';
+import WorkExperienceDetail from '@/components/ManageResume/components/WorkExperienceDetail';
+import EducationDetail from '@/components/ManageResume/components/EducationDetail';
+import LanguageManageDetail from '@/components/ManageResume/components/LanguageManageDetail';
 
 type MypageCardProps = {
   type: ManageResumeType;

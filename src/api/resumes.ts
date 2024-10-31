@@ -11,7 +11,6 @@ import {
 import { api } from '.';
 import { RESTYPE } from '@/types/api/common';
 import { GetEducationType } from '@/types/postResume/postEducation';
-import { WorkExperienceType } from '@/types/postApply/resumeDetailItem';
 
 // 7.1 (유학생) 이력서 조회하기
 export const getResume = async (): Promise<
