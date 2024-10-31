@@ -328,6 +328,7 @@ const EmployerPartTimePermitForm = ({
                 signature_base64: '',
               })
             }
+            isKorean
           />
         </InputLayout>
         {/* 근무 기간 입력 */}

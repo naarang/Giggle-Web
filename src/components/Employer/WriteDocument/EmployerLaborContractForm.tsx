@@ -639,6 +639,7 @@ const EmployerLaborContractForm = ({
                 signature_base64: '',
               })
             }
+            isKorean
           />
         </InputLayout>
       </div>

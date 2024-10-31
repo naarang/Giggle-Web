@@ -13,12 +13,14 @@ type SignaturePadProps = {
   onReset?: () => void;
   width?: number;
   height?: number;
+  isKorean?: boolean;
 };
 
 const SignaturePad: React.FC<SignaturePadProps> = ({
   onSave,
   onReset,
   height = 120,
+  isKorean,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState<number>(0);
@@ -155,7 +157,12 @@ const SignaturePad: React.FC<SignaturePadProps> = ({
           onClick={handleCreateOrReset}
           className={`relative rounded-lg bg-[#1e1926] flex flex-row items-center justify-center px-6 py-2.5 box-border text-left text-[#f4f4f9]`}
         >
-          {isEditing ? 'Reset' : 'Create'}
+          {(() => {
+            if (isEditing && isKorean) return '초기화';
+            if (isEditing && !isKorean) return 'Reset';
+            if (!isEditing && isKorean) return '생성';
+            return 'Create';
+          })()}
         </button>
         <button
           onClick={handleSave}
@@ -164,7 +171,12 @@ const SignaturePad: React.FC<SignaturePadProps> = ({
             canSave ? 'bg-[#fef387]' : 'bg-[#F4F4F9] cursor-not-allowed'
           }`}
         >
-          {signatureData !== '' ? 'Saved' : 'Saving'}
+          {(() => {
+            if (signatureData !== '' && isKorean) return '저장됨';
+            if (signatureData !== '' && !isKorean) return 'Saved';
+            if (signatureData === '' && isKorean) return '저장';
+            return 'Saving';
+          })()}
         </button>
       </div>
     </div>
