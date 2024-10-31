@@ -25,13 +25,13 @@ const DocumentPreview = () => {
     PartTimePermitData | LaborContractDataResponse | IntegratedApplicationData
   >();
   const { mutate: getPartTimeEmployPermit } = useGetPartTimeEmployPermit({
-    onSuccess: (data) => setDocument(data),
+    onSuccess: (data) => setDocument(data.data),
   });
   const { mutate: getStandardLaborContract } = useGetStandardLaborContract({
-    onSuccess: (data) => setDocument(data),
+    onSuccess: (data) => setDocument(data.data),
   });
   const { mutate: getIntegratedApplication } = useGetIntegratedApplication({
-    onSuccess: (data) => setDocument(data),
+    onSuccess: (data) => setDocument(data.data),
   });
   {
     useEffect(() => {
