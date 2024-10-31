@@ -16,7 +16,7 @@ const Step5 = ({
 }: {
   postInfo: JobPostingForm;
   onNext: (postInfo: JobPostingForm) => void;
-  onSubmit: () => void;
+  onSubmit: (newPost: FormData) => void;
   onPrev: () => void;
 }) => {
   // 현재 step내에서 입력받는 정보를 따로 관리할 state, 추후 다음 step으로 넘어갈 때 funnel 관리 페이지의 state로 통합된다.
@@ -45,6 +45,24 @@ const Step5 = ({
 
   const handleSubmit = () => {
     if (isInvalid) return;
+    const formData = new FormData();
+    newPostInfo.images.forEach((image) => {
+      formData.append('image', image);
+    });
+    formData.append(
+      'body',
+      new Blob([JSON.stringify(newPostInfo.body)], {
+        type: 'application/json',
+      }),
+    );
+    formData.forEach((value, key) => {
+      if (value instanceof Blob) {
+        console.log(`${key}:`, `Blob size: ${value.size}, type: ${value.type}`);
+      } else {
+        console.log(`${key}:`, value);
+      }
+    });
+
     onNext({
       ...postInfo,
       body: {
@@ -56,7 +74,7 @@ const Step5 = ({
         ),
       },
     });
-    onSubmit();
+    onSubmit(formData);
   };
 
   return (

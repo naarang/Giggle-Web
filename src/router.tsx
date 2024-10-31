@@ -85,7 +85,7 @@ const Router = () => {
           <Route path="/information" element={<InformationPage />} />
 
           <Route
-            path="/application-documents"
+            path="/application-documents/:id"
             element={<ApplicationDocumentsPage />}
           />
 
@@ -117,7 +117,7 @@ const Router = () => {
 
           <Route path="/post/:id" element={<PostDetailPage />} />
           <Route path="/post/apply/:id" element={<PostApplyPage />} />
-          <Route path="/write-documents" element={<WriteDocumentsPage />} />
+          <Route path="/write-documents/:id" element={<WriteDocumentsPage />} />
 
           <Route path="/document-preview" element={<DocumentPreview />} />
           <Route path="/request-modify" element={<RequestModifyPage />} />
@@ -165,7 +165,7 @@ const Router = () => {
             element={<ApplicantDocumentsDetailPage />}
           />
           <Route
-            path="/employer/write-documents"
+            path="/employer/write-documents/:id"
             element={<EmployerWriteDocumentsPage />}
           />
           <Route path="/write-documents" element={<WriteDocumentsPage />} />

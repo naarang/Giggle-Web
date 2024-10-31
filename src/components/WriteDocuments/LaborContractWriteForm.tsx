@@ -23,6 +23,7 @@ import {
   usePostStandardLaborContracts,
   usePutStandardLaborContracts,
 } from '@/hooks/api/useDocument';
+import { useParams } from 'react-router-dom';
 
 type LaborContractFormProps = {
   document?: LaborContractDataResponse;
@@ -35,7 +36,7 @@ const LaborContractWriteForm = ({
 }: LaborContractFormProps) => {
   const [newDocumentData, setNewDocumentData] =
     useState<LaborContractEmployeeInfo>(initialLaborContractEmployeeInfo);
-
+  const { id } = useParams();
   // 세 부분으로 나누어 입력받는 방식을 위해 전화번호만 별도의 state로 분리, 추후 유효성 검사 단에서 통합
   const [phoneNum, setPhoneNum] = useState({
     start: '',
@@ -59,8 +60,8 @@ const LaborContractWriteForm = ({
     onSuccess: (data) => setAddressSearchResult(data),
   });
 
-  const { mutate: postDocument } = usePostStandardLaborContracts(); // 작성된 근로계약서 제출 훅
-  const { mutate: updateDocument } = usePutStandardLaborContracts(); // 수정된 근로계약서 제출 훅
+  const { mutate: postDocument } = usePostStandardLaborContracts(Number(id)); // 작성된 근로계약서 제출 훅
+  const { mutate: updateDocument } = usePutStandardLaborContracts(Number(id)); // 수정된 근로계약서 제출 훅
   // 문서 편집일 시 페이지 진입과 동시에 기존 내용 자동 입력
   useEffect(() => {
     if (isEdit && document) {

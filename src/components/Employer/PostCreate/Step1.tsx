@@ -14,13 +14,15 @@ import { JobCategoryInfo, JobCategoryList } from '@/constants/post';
 import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
 import {
-  extractNumbersAsNumber,
   findJobCategoryByNameStrict,
+  getWorkPeriodKeyByName,
   JobCategoryNames,
   workDayTimeToString,
 } from '@/utils/post';
 import WorkDayTimeBottomSheet from '@/components/Common/WorkDayTimeBottomSheet';
-import { WorkDayTime } from '@/types/api/document';
+import { WorkDayTime, WorkPeriod } from '@/types/api/document';
+import { parseStringToSafeNumber } from '@/utils/document';
+import { WorkPeriodInfo, WorkPeriodNames } from '@/constants/documents';
 
 const Step1 = ({
   postInfo,
@@ -31,9 +33,7 @@ const Step1 = ({
 }) => {
   // 현재 step내에서 입력받는 정보를 따로 관리할 state, 추후 다음 step으로 넘어갈 때 funnel 관리 페이지의 state로 통합된다.
   const [newPostInfo, setNewPostInfo] = useState<JobPostingForm>(postInfo);
-  const [hourlyRate, setHourlyRate] = useState(
-    String(newPostInfo.body.hourly_rate) + ' 원',
-  );
+
   // 버튼 활성화 여부를 위한 플래그
   const [isInvalid, setIsInvalid] = useState(true);
   // 근무 시간 모달 활성화 여부 위한 플래그
@@ -41,15 +41,17 @@ const Step1 = ({
 
   /* 정보 입력 시마다 유효성을 검사해 모든 값이 유효하면 버튼이 활성화 */
   useEffect(() => {
-    const { title, job_category } = newPostInfo.body;
+    const { title, job_category, work_day_times, hourly_rate, work_period } =
+      newPostInfo.body;
 
     const isFormValid =
       title !== '' &&
       job_category !== '' &&
-      // work_day_times.length &&
-      extractNumbersAsNumber(hourlyRate) !== 0;
+      work_day_times.length &&
+      work_period !== '' &&
+      hourly_rate !== 0;
     setIsInvalid(!isFormValid);
-  }, [newPostInfo, hourlyRate]);
+  }, [newPostInfo]);
 
   return (
     <div className="w-full py-6 flex flex-col">
@@ -126,9 +128,19 @@ const Step1 = ({
           <Input
             inputType={InputType.TEXT}
             placeholder="시급을 입력해주세요"
-            value={hourlyRate}
-            onChange={(value) => setHourlyRate(value)}
+            value={String(newPostInfo.body.hourly_rate)}
+            onChange={(value) =>
+              setNewPostInfo({
+                ...newPostInfo,
+                body: {
+                  ...newPostInfo.body,
+                  hourly_rate: parseStringToSafeNumber(value),
+                },
+              })
+            }
             canDelete={false}
+            isUnit
+            unit="원"
           />
           <div className="w-full relative body-3 px-1 py-1.5 text-[#222] text-left">
             2024년 기준 최저시급은 9,860원입니다.
@@ -169,6 +181,28 @@ const Step1 = ({
             />
           </div>
         </InputLayout>
+        {/* 근무 기간 입력 */}
+        <InputLayout title="근무기간" isEssential>
+          <Dropdown
+            value={
+              newPostInfo.body.work_period === ''
+                ? ''
+                : WorkPeriodInfo[newPostInfo.body.work_period as WorkPeriod]
+                    .name
+            }
+            placeholder="근무 기간을 선택해주세요"
+            options={WorkPeriodNames}
+            setValue={(value) => {
+              setNewPostInfo({
+                ...newPostInfo,
+                body: {
+                  ...newPostInfo.body,
+                  work_period: getWorkPeriodKeyByName(value as string) ?? '',
+                },
+              });
+            }}
+          />
+        </InputLayout>
       </div>
       <BottomButtonPanel>
         {/* 정보 입력 시마다 유효성을 검사해 모든 값이 유효하면 버튼이 활성화 */}
@@ -186,7 +220,6 @@ const Step1 = ({
                     ...postInfo,
                     body: {
                       ...newPostInfo.body,
-                      hourly_rate: extractNumbersAsNumber(hourlyRate),
                     },
                   })
           }
