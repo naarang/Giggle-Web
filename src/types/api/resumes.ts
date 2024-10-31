@@ -5,8 +5,7 @@ import {
   PersonalInformationType,
   WorkExperienceType,
 } from '@/types/postApply/resumeDetailItem';
-import { PostWorkExperienceType } from '@/types/postResume/postWorkExperience';
-import { VisaType } from '../postDetail/postDetailItem';
+import { VisaType } from '@/types/postDetail/postDetailItem';
 
 // 자기소개 요청 타입
 export type IntroDuctionRequest = {
@@ -14,14 +13,22 @@ export type IntroDuctionRequest = {
 };
 
 // 경력사항 요청 타입
-export type WorkExperienctRequest = PostWorkExperienceType;
-/*
-  "title" : String, 
-  "workplace" : String,
-  "start_date" : String(yyyy-MM-dd),
-  "end_date" : String(yyyy-MM-dd),
-  "description" : String
-*/
+export type WorkExperienctRequest = {
+  title: string;
+  workplace: string;
+  start_date: string; // (yyyy-MM-dd),
+  end_date: string; // (yyyy-MM-dd),
+  description: string;
+};
+
+// 경력사항 반환 타입
+export type WorkExperienctResponse = {
+  title: string;
+  workplace: string;
+  start_date: string; // (yyyy-MM-dd),
+  end_date: string; // (yyyy-MM-dd),
+  description: string;
+};
 
 // 학력 요청 타입
 export type EducationRequest = {
@@ -36,7 +43,7 @@ export type EducationRequest = {
 
 // 언어 레벨 수정 API 통합시 type property로 사용
 export type LanguagesLevelType =
-  | 'topic'
+  | 'topik'
   | 'social-integration-program'
   | 'sejong-institute';
 

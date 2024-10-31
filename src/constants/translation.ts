@@ -139,3 +139,10 @@ export const profileTranslation = {
     en: 'Delete',
   },
 };
+
+export const headerTranslation = {
+  profile: {
+    ko: '프로필',
+    en: 'Profile',
+  },
+};

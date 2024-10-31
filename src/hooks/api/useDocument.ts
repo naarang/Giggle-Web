@@ -7,7 +7,9 @@ import {
   postRequest,
   postStandardLaborContracts,
   putIntegratedApplications,
+  putLaborContractEmployer,
   putPartTimeEmployPermit,
+  putPartTimeEmployPermitEmployer,
   putStandardLaborContracts,
   searchSchool,
 } from '@/api/document';
@@ -21,7 +23,7 @@ import {
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
-//시간제취업허가서 작성 api 통신 커스텀 훅
+// 시간제취업허가서 작성 api 통신 커스텀 훅
 export const usePostPartTimeEmployPermit = () => {
   const navigate = useNavigate();
   return useMutation({
@@ -39,12 +41,30 @@ export const usePostPartTimeEmployPermit = () => {
 };
 
 // 8.10 (유학생)시간제취업허가서 수정 api 통신 커스텀 훅
+//TODO: ID값 사용해 redirect 해야
 export const usePutPartTimeEmployPermit = () => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: putPartTimeEmployPermit,
     onSuccess: () => {
       navigate('/');
+    },
+    onError: () =>
+      navigate('/write-documents', {
+        state: {
+          type: DocumentType.PART_TIME_PERMIT,
+        },
+      }),
+  });
+};
+
+// 8.11 (고용주)시간제취업허가서 수정 api 통신 커스텀 훅
+export const usePutPartTimeEmployPermitEmployer = (id: number) => {
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: putPartTimeEmployPermitEmployer,
+    onSuccess: () => {
+      navigate(`/employer/applicant/${id}/document-detail`);
     },
     onError: () =>
       navigate('/write-documents', {
@@ -79,6 +99,23 @@ export const usePutStandardLaborContracts = () => {
     mutationFn: putStandardLaborContracts,
     onSuccess: () => {
       navigate('/');
+    },
+    onError: () =>
+      navigate('/write-documents', {
+        state: {
+          type: DocumentType.LABOR_CONTRACT,
+        },
+      }),
+  });
+};
+
+// 8.13 (고용주) 표준 근로계약서 수정 api 통신 커스텀 훅
+export const usePutLaborContractEmployer = (id: number) => {
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: putLaborContractEmployer,
+    onSuccess: () => {
+      navigate(`/employer/applicant/${id}/document-detail`);
     },
     onError: () =>
       navigate('/write-documents', {
@@ -142,7 +179,7 @@ export const useSearchSchool = ({
   return { searchSchool: mutate, ...rest };
 };
 
-// 8.14 (유학생) 통합신청서 수정 api 통신 커스텀 훅
+// 8.9 (유학생) 서류 재검토 요청 api 통신 커스텀 훅
 export const usePostRequest = () => {
   const navigate = useNavigate();
   return useMutation({

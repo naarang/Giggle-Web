@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import EtcLanguageCard from '@/components/Language/EtcLanguageCard';
 import Input from '@/components/Common/Input';
 import { InputType } from '@/types/common/input';
@@ -16,11 +16,15 @@ const EtcLanguageSection = ({
   setSelectedLanguage,
 }: EtcLanguageSectionProps) => {
   const [search, setSearch] = useState('');
+  const [filteredLanguages, setFilteredLanguages] = useState(languageList);
 
   // 검색어에 따라 언어 리스트 필터링
-  const filteredLanguages = languageList.filter((language) =>
-    language.language.toLowerCase().includes(search.toLowerCase()),
-  );
+  useEffect(() => {
+    const filteredLang = languageList.filter((language) =>
+      language.language.toLowerCase().includes(search.toLowerCase()),
+    );
+    setFilteredLanguages(filteredLang);
+  }, [search]);
 
   return (
     <>

@@ -1,5 +1,6 @@
 import { MatchKoEnAscendingSortType } from '@/types/common/sort';
 import { api } from '.';
+import { JobPostingForm } from '@/types/postCreate/postCreate';
 import { GetApplyPostListReqType, GetPostListReqType } from '@/types/api/post';
 import { APPLICATION_STATUS_TYPE } from '@/constants/application';
 import { filterNullParams } from '@/utils/filterNullParams';
@@ -56,6 +57,12 @@ export const getApplicantList = async (
 // 4.7 (유학생/고용주) 공고 요약 정보 조회하기
 export const getPostSummary = async (id: number) => {
   const response = await api.get(`/job-postings/${id}/summaries`);
+  return response.data;
+};
+
+// 4.10 (고용주) 공고 등록하기
+export const createPost = async (newPost: JobPostingForm) => {
+  const response = await api.post(`/owners/job-postings`, newPost);
   return response.data;
 };
 

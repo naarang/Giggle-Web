@@ -5,7 +5,7 @@ import DatePicker from '@/components/Common/DatePicker';
 // Dropdown 컴포넌트의 props 타입을 정의합니다.
 type DropDownProps = {
   title?: string; // 드롭다운의 제목 (선택적)
-  value: string | undefined; // 현재 선택된 값
+  value: string | null; // 현재 선택된 값
   placeholder: string; // 플레이스홀더 텍스트
   options: Array<string>; // 드롭다운 옵션 목록
   isCalendar?: boolean; // 캘린더 모드 여부 (선택적)
@@ -19,7 +19,7 @@ export const DropdownModal = ({
   onSelect,
 }: {
   options: string[];
-  value: string | undefined;
+  value: string | null;
   onSelect: (option: string) => void;
 }) => {
   return (
@@ -74,7 +74,7 @@ const Dropdown = ({
           <div className="flex-1 h-5 flex flex-row items-center justify-between">
             <input
               className="w-full relative leading-5 outline-none bg-white"
-              value={value}
+              value={value ?? ''}
               placeholder={placeholder}
               disabled
             />
@@ -88,7 +88,7 @@ const Dropdown = ({
                   isOpen ? '' : 'rotate-180'
                 }`}
               >
-                <ArrowIcon isMarked={value !== undefined} />
+                <ArrowIcon isMarked={value !== null} />
               </div>
             </button>
           </div>
@@ -99,7 +99,7 @@ const Dropdown = ({
             <DatePicker setSelectedDate={handleSelect} />
           ) : (
             <DropdownModal
-              value={value}
+              value={value ?? ''}
               options={options}
               onSelect={handleSelect}
             />

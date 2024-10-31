@@ -2,13 +2,13 @@ import Button from '@/components/Common/Button';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import IntroductionInput from '@/components/Introduction/IntroductionInput';
 import { buttonTypeKeys } from '@/constants/components';
+import { usePatchIntroduction } from '@/hooks/api/useResume';
 import useNavigateBack from '@/hooks/useNavigateBack';
 import { useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const IntroductionPage = () => {
   const location = useLocation();
-  const navigate = useNavigate();
   const handleBackButtonClick = useNavigateBack();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const initialData = location.state?.data || '';
@@ -31,9 +31,11 @@ const IntroductionPage = () => {
     }
   };
 
+  const { mutate } = usePatchIntroduction();
+
   const handleSubmit = () => {
-    // TODO: API - 7.8 (유학생) 자기소개 수정하기
-    navigate('/profile/manage-resume');
+    // API - 7.8 (유학생) 자기소개 수정하기
+    mutate({ introduction: data });
   };
 
   // textarea에 스크롤이 생기지 않도록 길이 자동 조정
