@@ -22,11 +22,11 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 // 7.1 (유학생/고용주) 이력서 조회하기
-export const useGetResume = (isEnabled: boolean) => {
+export const useGetResume = (isEnabled?: boolean) => {
   return useQuery({
     queryKey: ['resume'],
     queryFn: getResume,
-    enabled: isEnabled,
+    enabled: isEnabled ?? false,
   });
 };
 
