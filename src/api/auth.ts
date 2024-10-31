@@ -45,7 +45,7 @@ export const signIn = async (
 };
 
 // 1.2 사용자 로그아웃
-export const logout = async () => {
+export const logout = async (): Promise<RESTYPE<null>> => {
   const response = await api.post('/auth/logout');
   return response.data;
 };
@@ -98,23 +98,6 @@ export const signUp = async (
   return response.data;
 };
 
-// 2.6 기본 고용주 회원가입
-/*
-export const ownerSignUp = async (
-  signupInfo: OwnerInfoRequest,
-  logoImage?: File,
-): Promise<RESTYPE<SignUpResponse>> => {
-  const formData = new FormData();
-  // 회사 로고
-  if (logoImage) {
-    formData.append('logo_image', logoImage);
-  }
-  formData.append('signup_info', JSON.stringify(signupInfo));
-  const response = await apiWithoutAuth.post('/auth/owners', formData);
-  return response.data;
-};
-*/
-
 // 2.7 이메일 인증코드 검증
 export const patchAuthentication = async (
   info: AuthenticationRequest,
@@ -138,14 +121,15 @@ export const reIssueAuthentication = async (
 };
 
 // 2.9 탈퇴하기
-export const withdraw = async () => {
+export const withdraw = async (): Promise<RESTYPE<null>> => {
   const response = await api.delete('/auth');
   return response.data;
 };
 
+// 고용주 회원가입
 export const signUpEmployer = async (
   signupInfo: EmployerRegistrationRequest,
-): Promise<{ success: boolean }> => {
+): Promise<RESTYPE<SignUpResponse>> => {
   const response = await api.post(`/auth/owners`, signupInfo);
   return response.data;
 };

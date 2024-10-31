@@ -9,7 +9,7 @@ import LogoutIcon from '@/assets/icons/Profile/LogoutIcon.svg?react';
 import ToggleBar from '@/assets/icons/Profile/ToggleBar.svg?react';
 import ToggleButton from '@/assets/icons/Profile/ToggleButton.svg?react';
 import { usePatchNotificationAllowed } from '@/hooks/api/useSetting';
-import { usegetOwnerSummaries } from '@/hooks/api/useProfile';
+import { useGetUserSummaries } from '@/hooks/api/useProfile';
 
 type ProfileMenuProps = {
   title: string;
@@ -25,14 +25,16 @@ const ProfileMenu = ({
   isToggle,
 }: ProfileMenuProps) => {
   const { mutate: patchNotificationAllowed } = usePatchNotificationAllowed();
-  const { data: notificaionAllowed } = usegetOwnerSummaries();
+  const { data: notificaionAllowed } = useGetUserSummaries();
 
   const [toggleOn, setToggleOn] = useState<boolean>(false);
 
   useEffect(() => {
     // 알림 설정 상태 불러오기
     if (isToggle && notificaionAllowed) {
-      setToggleOn(notificaionAllowed.data.is_notification_allowed);
+      setToggleOn(
+        notificaionAllowed.data.user_information.is_notification_allowed,
+      );
     }
   }, []);
 
