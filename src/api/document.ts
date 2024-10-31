@@ -3,6 +3,7 @@ import {
   IntegratedApplicationData,
   LaborContractDataResponse,
   LaborContractEmployeeInfo,
+  LaborContractEmployerInfo,
   PartTimePermitData,
   PartTimePermitFormRequest,
   SearchSchoolResponse,
@@ -47,7 +48,7 @@ export const putPartTimeEmployPermitEmployer = async ({
 }: {
   id: number;
   document: EmployerInformation;
-}): Promise<{ success: boolean }> => {
+}): Promise<RESTYPE<null>> => {
   const response = await api.put(
     `/owners/documents/${id}/part-time-employment-permits`,
     document,
@@ -80,6 +81,21 @@ export const putStandardLaborContracts = async ({
 }): Promise<{ success: boolean }> => {
   const response = await api.put(
     `/users/documents/${id}/standard-labor-contracts`,
+    document,
+  );
+  return response.data;
+};
+
+// 8.13 (고용주) 시간제 취업허가서 수정하기
+export const putLaborContractEmployer = async ({
+  id,
+  document,
+}: {
+  id: number;
+  document: LaborContractEmployerInfo;
+}): Promise<RESTYPE<null>> => {
+  const response = await api.put(
+    `/owners/documents/${id}/standard-labor-contracts`,
     document,
   );
   return response.data;
