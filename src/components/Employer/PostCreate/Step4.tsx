@@ -139,7 +139,7 @@ const Step4 = ({
                 <input
                   id="logo-upload"
                   type="file"
-                  accept="image/*"
+                  accept="image/jpeg,image/png"
                   onChange={handleImageChange}
                   className="hidden"
                 />
