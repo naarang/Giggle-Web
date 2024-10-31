@@ -127,10 +127,8 @@ export enum Insurance {
 // 근무 시간 타입
 export type WorkDayTime = {
   day_of_week: DayOfWeek;
-  work_start_time: string; // HH:MM 형식
-  work_end_time: string; // HH:MM 형식
-  break_start_time: string; // HH:MM 형식
-  break_end_time: string; // HH:MM 형식
+  work_start_time: string | null; // HH:MM 형식
+  work_end_time: string | null; // HH:MM 형식
 };
 
 // 근로 계약서 고용주 정보

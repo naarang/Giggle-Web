@@ -131,24 +131,24 @@ const AgreeModalInner = ({
           </div>
         </div>
       </div>
-      {essentialAgreeList.slice(0, 3).includes(false) ? (
-        <Button
-          type="large"
-          bgColor="bg-[#F4F4F9]"
-          fontColor=""
-          isBorder={false}
-          title="Agree"
-        />
-      ) : (
-        <Button
-          type="large"
-          bgColor="bg-[#fef387]"
-          fontColor=""
-          isBorder={false}
-          title="Agree"
-          onClick={handleNext}
-        />
-      )}
+      <Button
+        type="large"
+        bgColor={
+          essentialAgreeList.slice(0, 3).includes(false)
+            ? 'bg-[#F4F4F9]'
+            : 'bg-[#fef387]'
+        }
+        fontColor={
+          essentialAgreeList.slice(0, 3).includes(false) ? '' : 'text-[#222]'
+        }
+        isBorder={false}
+        title="Agree"
+        onClick={
+          essentialAgreeList.slice(0, 3).includes(false)
+            ? handleNext
+            : undefined
+        }
+      />
     </div>
   );
 };

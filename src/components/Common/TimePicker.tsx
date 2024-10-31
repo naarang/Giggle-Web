@@ -12,9 +12,14 @@ const TimePicker = ({ isDisabled, onChangeTime }: TimePickerProps) => {
 
   const handleTimeChange = (field: 'hour' | 'minute', value: string) => {
     if (isDisabled) return;
-    setTime((prev) => ({ ...prev, [field]: value }));
-    onChangeTime(`${time.hour}:${time.minute}`);
+
+    const newTime =
+      field === 'hour' ? { ...time, hour: value } : { ...time, minute: value };
+
+    setTime(newTime);
+    onChangeTime(`${newTime.hour}:${newTime.minute}`);
   };
+
   return (
     <div
       className={`w-full flex justify-between items-center border  ${isDisabled ? 'border-[#EAE9F6] text-[#BDBDBD]' : 'border-gray-300'} rounded-lg px-[1rem] py-[0.5rem]`}
