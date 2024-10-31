@@ -1,12 +1,12 @@
-import { UserProfileResponse } from '@/types/api/profile';
+import { UserInformation } from '@/types/api/profile';
+import { useNavigate } from 'react-router-dom';
 
 type ProfileCardProps = {
-  data: UserProfileResponse;
+  data: UserInformation;
 };
 
 const ProfileCard = ({ data }: ProfileCardProps) => {
-  // TODO: 추후 로직 추가
-  const handleButtonClick = () => {};
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-col px-[1.125rem] pt-5 pb-4 rounded-[1.125rem] gap-4 bg-[rgba(255,255,255,0.5)]">
@@ -30,7 +30,7 @@ const ProfileCard = ({ data }: ProfileCardProps) => {
           </div>
 
           {/* 교육 정보 */}
-          {data.school_name === '' ? (
+          {data.school_name === ' - ' ? (
             <span className="body-2 text-[#1E1926]">
               Please register your
               <br />
@@ -56,10 +56,10 @@ const ProfileCard = ({ data }: ProfileCardProps) => {
           )}
         </div>
       </div>
-      {data.school_name === '' && (
+      {data.school_name === ' - ' && (
         <button
           className="grow w-full bg-[#FEF387] rounded-md py-2 text-center caption-1 text-[#1E1926] shadow-emphasizeShadow"
-          onClick={handleButtonClick}
+          onClick={() => navigate('/resume/education')}
         >
           Write your educational background
         </button>
