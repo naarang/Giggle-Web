@@ -7,29 +7,50 @@ import CalendarIcon from '@/assets/icons/CalendarIcon.svg?react';
 import { JobPostingItemType } from '@/types/common/jobPostingItem';
 import { calculateTimeAgo } from '@/utils/calculateTimeAgo';
 import { calculateDDay } from '@/utils/calculateDDay';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { usePutPostBookmark } from '@/hooks/api/usePost';
+import { useUserStore } from '@/store/user';
 
 type JobPostingCardProps = {
   jobPostingData: JobPostingItemType;
 };
 
 const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
+  const { account_type } = useUserStore();
+  const { mutate } = usePutPostBookmark();
+
   const navigate = useNavigate();
 
-  const [isBookmarked, setIsBookmarked] = useState<boolean>(
-    jobPostingData?.is_book_marked ?? false,
-  );
+  const onClickBookmark = async (
+    event: React.MouseEvent<SVGSVGElement, MouseEvent>,
+  ) => {
+    event.stopPropagation();
+
+    if (account_type) mutate(jobPostingData.id);
+  };
+
+  const goToPostDetailPage = () => {
+    navigate(`/post/${jobPostingData.id}`);
+  };
 
   return (
     <article
       className="flex flex-col gap-[1rem] w-full px-[1.125rem] pt-[1.125rem] pb-[0.75rem] border-[0.5px] border-solid border-[#1E19263D] rounded-[1.125rem]"
-      onClick={() => navigate(`/post/${jobPostingData.id}`)}
+      onClick={goToPostDetailPage}
     >
       <div className="w-full flex justify-between items-start">
         <div>
           <div className="mb-[0.5rem] flex items-center gap-[0.625rem]">
-            <div className='w-[2rem] h-[2rem] rounded-[0.5rem] bg-cover bg-[url("/src/assets/images/JobIconExample.jpeg")]'></div>
+            {jobPostingData?.icon_img_url ? (
+              <div
+                className="w-[2rem] h-[2rem] rounded-[0.5rem] bg-cover"
+                style={{
+                  backgroundImage: `url(${jobPostingData.icon_img_url})`,
+                }}
+              ></div>
+            ) : (
+              <div className="w-[2rem] h-[2rem] rounded-[0.5rem] bg-[#F4F4F9]"></div>
+            )}
             <h3 className="head-2 text-[#1E1926]">{jobPostingData.title}</h3>
           </div>
           <div className="flex flex-col gap-[0.125rem]">
@@ -65,10 +86,10 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
             color="#1E1926"
             fontStyle="button-2"
           />
-          {isBookmarked ? (
-            <BookmarkCheckedIcon onClick={() => setIsBookmarked(false)} />
+          {jobPostingData?.is_book_marked ? (
+            <BookmarkCheckedIcon onClick={(e) => onClickBookmark(e)} />
           ) : (
-            <BookmarkIcon onClick={() => setIsBookmarked(true)} />
+            <BookmarkIcon onClick={(e) => onClickBookmark(e)} />
           )}
         </div>
       </div>

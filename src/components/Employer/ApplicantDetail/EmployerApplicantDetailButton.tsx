@@ -18,11 +18,6 @@ const EmployerApplicantDetailButton = ({
   const { id } = useParams();
   const [isShowBottomsheet, setIsShowBottomSheet] = useState<boolean>(false);
 
-  const onClickGetApplicantData = () => {
-    // 6.8
-    setIsShowBottomSheet(true);
-  };
-
   const renderCurrentStepButton = (currentStep: number) => {
     switch (currentStep) {
       case 1:
@@ -45,7 +40,7 @@ const EmployerApplicantDetailButton = ({
               fontColor="text-[#1E1926]"
               title="다음"
               isBorder={false}
-              onClick={onClickGetApplicantData}
+              onClick={() => setIsShowBottomSheet(true)}
             />
             <EmployerApplicantContactBottomSheet
               isShowBottomsheet={isShowBottomsheet}

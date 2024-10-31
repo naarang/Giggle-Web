@@ -41,7 +41,7 @@ const PostSearchFilterList = () => {
     const filteredRegions = region1Depth.map((region, index) => {
       return {
         category: 'region',
-        value: `${region} ${region2Depth[index]} ${region3Depth[index]}`,
+        value: `${region} ${region2Depth[index]} ${region3Depth[index] === 'none' ? '' : region3Depth[index]}`,
       };
     });
 
@@ -60,12 +60,28 @@ const PostSearchFilterList = () => {
     return newRegionFilter;
   };
 
+  const findFilterIndex = (
+    region1: string,
+    region2: string,
+    region3: string,
+  ) => {
+    for (let i = 0; i < filterList[FILTER_CATEGORY.REGION_1DEPTH].length; i++) {
+      if (
+        region1 === filterList[FILTER_CATEGORY.REGION_1DEPTH][i] &&
+        region2 === filterList[FILTER_CATEGORY.REGION_2DEPTH][i] &&
+        (region3 === filterList[FILTER_CATEGORY.REGION_3DEPTH][i] ||
+          region2 === '전체')
+      )
+        return i;
+    }
+    return -1;
+  };
+
   const onDeleteFilter = (tag: TagType) => {
     if (tag.category === 'region') {
-      const [, , region3] = tag.value.split(' ');
+      const [region1, region2, region3] = tag.value.split(' ');
 
-      const regionIndex =
-        filterList[FILTER_CATEGORY.REGION_3DEPTH].indexOf(region3);
+      const regionIndex = findFilterIndex(region1, region2, region3);
 
       if (regionIndex !== -1) return;
 
@@ -86,6 +102,7 @@ const PostSearchFilterList = () => {
       };
       updateFilterList(newFilterList);
     }
+
     const newFilterList = {
       ...filterList,
       [tag.category]: filterList[tag.category as FILTER_CATEGORY].filter(

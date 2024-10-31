@@ -8,6 +8,8 @@ export type VisaType =
   | 'D_2_8'
   | 'D_4_1'
   | 'D_4_7'
+  | 'D_2'
+  | 'D_4'
   | 'F_2';
 
 export type JobCategoryType =
@@ -60,7 +62,7 @@ export type TagType = {
 
 export type SummariesType = {
   address: string;
-  houlry_rate: number;
+  hourly_rate: number;
   work_period: WorkPeriodType;
   work_days_per_week: number;
 };
@@ -89,7 +91,7 @@ type WorkDayTimesType = {
 };
 
 type WorkingConditionsType = {
-  houlry_rate: number;
+  hourly_rate: number;
   work_period: WorkPeriodType;
   work_day_times: WorkDayTimesType[];
   job_category: JobCategoryType;
@@ -106,7 +108,7 @@ type CompanyInformationType = {
 
 export type PostDetailItemType = {
   id: number;
-  is_my_post: boolean;
+  is_my_post?: boolean;
   is_book_marked?: boolean;
   company_name: string;
   title: string;

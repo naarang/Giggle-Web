@@ -4,17 +4,24 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { buttonTypeKeys } from '@/constants/components';
 import Button from '@/components/Common/Button';
+import { usePatchHiKoreaResult } from '@/hooks/api/useApplication';
 
 const ApplicationResultPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
+  const { mutate } = usePatchHiKoreaResult(Number(id));
+
   const [isApproval, setIsApproval] = useState<boolean>(true);
   const [feedback, setFeedback] = useState<string>('');
 
   const onClickRegistration = () => {
-    // TODO: 6.15 호출
-    navigate(`/application/${id}`);
+    if (isNaN(Number(id))) return;
+    const body = {
+      is_approval: isApproval,
+      feedback: feedback,
+    };
+    mutate({ id: Number(id), body: body });
   };
 
   return (

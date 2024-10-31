@@ -2,73 +2,34 @@ import NoSearchResultImg from '@/assets/images/NoSearchResultImg.png';
 import { JobPostingItemType } from '@/types/common/jobPostingItem';
 import JobPostingCard from '@/components/Common/JobPostingCard';
 import SearchSortDropdown from '@/components/Common/SearchSortDropdown';
+import { POST_SORTING } from '@/constants/postSearch';
 import { usePostSearchStore } from '@/store/postSearch';
-import { POST_SEARCH_MENU } from '@/constants/postSearch';
+import { PostSortingType } from '@/types/PostSearchFilter/PostSearchFilterItem';
 
-// 공고 목록 더미데이터
-const JOB_POSTING_LIST: JobPostingItemType[] = [
-  {
-    id: 1234567890,
-    icon_img_url: 'https://example.com/images/icon1.png',
-    title: 'English Tutor',
-    summaries: {
-      address: 'Seoul, South Korea',
-      work_period: '1_WEEK_TO_1_MONTH',
-      work_days_per_week: 5,
-    },
-    tags: {
-      is_recruiting: true,
-      visa: 'D-2-1',
-      job_category: 'GENERAL_INTERPRETATION_TRANSLATION',
-    },
-    hourly_rate: 15000,
-    recruitment_dead_line: '2024-11-01T23:59:59',
-    created_at: '2024-10-20T10:30:00',
-  },
-  {
-    id: 9876543210,
-    icon_img_url: 'https://example.com/images/icon2.png',
-    title: 'Café Barista',
-    summaries: {
-      address: 'Busan, South Korea',
-      work_period: '3_MONTHS_TO_6_MONTHS',
-      work_days_per_week: 6,
-    },
-    tags: {
-      is_recruiting: false,
-      visa: 'D-4-1',
-      job_category: 'GENERAL_CAFE',
-    },
-    hourly_rate: 12000,
-    recruitment_dead_line: '2024-10-21T18:00:00',
-    created_at: '2024-10-15T09:00:00',
-  },
-];
+type PostSearchResultProps = {
+  postData: JobPostingItemType[];
+};
 
-const SORT_TYPE = {
-  POPULAR: 'Popular',
-  RECOMMEND: 'Recommend',
-  RECENT: 'Recent',
-} as const;
-
-const PostSearchResult = () => {
-  const { sortType, updateSortType } = usePostSearchStore();
+const PostSearchResult = ({ postData }: PostSearchResultProps) => {
   // TODO: 홈에서 See more 버튼 클릭 시 해당 메뉴로 정렬하기
+  const { sortType, updateSortType } = usePostSearchStore();
 
   return (
     <section className="flex flex-col items-center gap-[1rem] w-full mt-[1rem] px-[1.5rem]">
       <div className="w-full flex justify-between items-center">
         <h3 className="head-3 text-black">Search Result</h3>
         <SearchSortDropdown
-          options={Object.values(SORT_TYPE)}
+          options={Object.values(POST_SORTING).map((value) =>
+            value.toLowerCase(),
+          )}
           value={sortType.toLowerCase()}
-          onSelect={(sort) =>
-            updateSortType(sort.toUpperCase() as POST_SEARCH_MENU)
-          }
+          onSelect={(value) => {
+            updateSortType(value as PostSortingType);
+          }}
         />
       </div>
-      {JOB_POSTING_LIST?.length ? (
-        JOB_POSTING_LIST.map((value: JobPostingItemType) => (
+      {postData?.length ? (
+        postData.map((value: JobPostingItemType) => (
           <JobPostingCard key={value.id} jobPostingData={value} />
         ))
       ) : (

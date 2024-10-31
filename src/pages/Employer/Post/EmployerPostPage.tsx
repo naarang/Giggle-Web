@@ -9,6 +9,7 @@ const EmployerPostPage = () => {
   const [selectedSort, setSelectedSort] = useState<KoAscendingSortType>(
     KO_ASCENDING_SORT_TYPE.ASCENDING,
   );
+
   return (
     <>
       <BaseHeader

@@ -3,11 +3,31 @@ import PostDetailApplyButton from '@/components/PostDetail/PostDetailApplyButton
 import PostDetailCompanyImageList from '@/components/PostDetail/PostDetailCompanyImageList';
 import PostDetailContent from '@/components/PostDetail/PostDetailContent';
 import PostDetailTitle from '@/components/PostDetail/PostDetailTitle';
-import { POST_DETAIL_DATA } from '@/constants/postDetail';
-import { useNavigate } from 'react-router-dom';
+import { useGetPostDetail, useGetPostDetailGuest } from '@/hooks/api/usePost';
+import { useUserStore } from '@/store/user';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const PostDetailPage = () => {
+  const { account_type } = useUserStore();
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  const { data: guestData } = useGetPostDetailGuest(
+    Number(id),
+    !account_type && !isNaN(Number(id)) ? true : false,
+  );
+
+  const { data: userData } = useGetPostDetail(
+    Number(id),
+    account_type && !isNaN(Number(id)) ? true : false,
+  );
+
+  const postDetailData = account_type ? userData : guestData;
+
+  if (!postDetailData?.data) return <></>;
+
+  if (postDetailData?.data?.is_my_post)
+    navigate(`/employer/post/${postDetailData?.data?.id}`);
 
   return (
     <>
@@ -18,11 +38,13 @@ const PostDetailPage = () => {
         title="Detail"
       />
       <PostDetailCompanyImageList
-        companyImageData={POST_DETAIL_DATA.company_img_url_list}
+        companyImageData={postDetailData.data?.company_img_url_list}
       />
-      <PostDetailTitle postDetailData={POST_DETAIL_DATA} />
-      <PostDetailContent postDetailData={POST_DETAIL_DATA} />
-      <PostDetailApplyButton />
+      <PostDetailTitle postDetailData={postDetailData.data} />
+      <PostDetailContent postDetailData={postDetailData.data} />
+      <PostDetailApplyButton
+        isBookmarked={postDetailData.data?.is_book_marked ?? false}
+      />
     </>
   );
 };

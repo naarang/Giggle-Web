@@ -3,54 +3,10 @@ import BaseHeader from '@/components/Common/Header/BaseHeader';
 import SearchSortDropdown from '@/components/Common/SearchSortDropdown';
 import { APPLICATION_STATUS_TYPE } from '@/constants/application';
 import { ASCENDING_SORT_TYPE } from '@/constants/sort';
-import { AppicationItemType } from '@/types/application/applicationItem';
+import { useGetApplyPostList } from '@/hooks/api/usePost';
 import { ApplicationStatusType } from '@/types/application/applicationStatus';
 import { AscendingSortType } from '@/types/common/sort';
-import { useState } from 'react';
-
-// 더미데이터
-const APPLICATION_LIST_DATA: AppicationItemType[] = [
-  {
-    job_posting_id: 1,
-    user_owner_job_posting_id: 1,
-    icon_img_url: 'https://example.com/icon1.png',
-    title: 'Frontend Developer',
-    address_name: '123 Tech Avenue, Seoul',
-    step: 'RESUME_UNDER_REVIEW',
-    hourly_rate: 25,
-    duration_of_days: 90,
-  },
-  {
-    job_posting_id: 2,
-    user_owner_job_posting_id: 2,
-    icon_img_url: 'https://example.com/icon2.png',
-    title: 'Backend Developer',
-    address_name: '456 Code Street, Busan',
-    step: 'PENDING',
-    hourly_rate: 30,
-    duration_of_days: 120,
-  },
-  {
-    job_posting_id: 3,
-    user_owner_job_posting_id: 3,
-    icon_img_url: 'https://example.com/icon3.png',
-    title: 'Full Stack Developer',
-    address_name: '789 Web Road, Incheon',
-    step: 'APPLICATION_REJECTED',
-    hourly_rate: 28,
-    duration_of_days: 60,
-  },
-  {
-    job_posting_id: 4,
-    user_owner_job_posting_id: 4,
-    icon_img_url: 'https://example.com/icon3.png',
-    title: 'Full Stack Developer',
-    address_name: '789 Web Road, Incheon',
-    step: 'APPLICATION_SUCCESS',
-    hourly_rate: 28,
-    duration_of_days: 60,
-  },
-];
+import { useEffect, useState } from 'react';
 
 const ApplicationPage = () => {
   const [selectedSort, setSelectedSort] = useState<AscendingSortType>(
@@ -59,6 +15,31 @@ const ApplicationPage = () => {
   const [selectedStatus, setSelectedStatus] = useState<ApplicationStatusType>(
     APPLICATION_STATUS_TYPE.TOTAL,
   );
+
+  const [requestParams, setRequestParams] = useState({
+    page: 1,
+    size: 10,
+    sorting: selectedSort,
+    status: selectedStatus,
+  });
+
+  const { data, refetch } = useGetApplyPostList(requestParams);
+
+  const selectSort = (sort: AscendingSortType) => {
+    setSelectedSort(sort);
+    setRequestParams({ ...requestParams, sorting: sort });
+  };
+
+  const selectStatus = (status: ApplicationStatusType) => {
+    setSelectedStatus(status);
+    setRequestParams({ ...requestParams, status: status });
+  };
+
+  useEffect(() => {
+    refetch();
+  }, [requestParams, refetch]);
+
+  if (!data?.success) return <></>;
 
   return (
     <>
@@ -72,17 +53,17 @@ const ApplicationPage = () => {
           <SearchSortDropdown
             options={Object.values(ASCENDING_SORT_TYPE)}
             value={selectedSort}
-            onSelect={(sort) => setSelectedSort(sort as AscendingSortType)}
+            onSelect={(sort) => selectSort(sort as AscendingSortType)}
           />
           <SearchSortDropdown
             options={Object.values(APPLICATION_STATUS_TYPE)}
             value={selectedStatus}
-            onSelect={(sort) =>
-              setSelectedStatus(sort as ApplicationStatusType)
-            }
+            onSelect={(status) => selectStatus(status as ApplicationStatusType)}
           />
         </div>
-        <ApplicationCardList applicationListData={APPLICATION_LIST_DATA} />
+        <ApplicationCardList
+          applicationListData={data?.data?.job_posting_list ?? []}
+        />
       </div>
     </>
   );
