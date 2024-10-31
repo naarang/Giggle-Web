@@ -9,31 +9,55 @@ import {
   getPostDetail,
   getPostDetailGuest,
   getPostList,
+  getPostListGuest,
   getPostSummary,
   getRecommendPostList,
   putPostBookmark,
 } from '@/api/post';
 import { GetApplyPostListReqType, GetPostListReqType } from '@/types/api/post';
-import { AscendingSortType } from '@/types/common/sort';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { MatchKoEnAscendingSortType } from '@/types/common/sort';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
+// 4.1 (게스트) 공고 리스트 조회 훅
+export const useGetPostGuestList = (
+  req: GetPostListReqType,
+  isEnabled: boolean,
+) => {
+  return useQuery({
+    queryKey: ['post', req],
+    queryFn: () => getPostListGuest(req),
+    enabled: isEnabled,
+    staleTime: 0,
+  });
+};
+
 // 4.2 (게스트) 공고 상세 조회하기 훅
-export const useGetPostDetailGuest = (id: number) => {
+export const useGetPostDetailGuest = (id: number, isEnabled: boolean) => {
   return useQuery({
     queryKey: ['post', id],
     queryFn: () => getPostDetailGuest(id),
+    enabled: isEnabled,
   });
 };
 
 // 4.3 (유학생/고용주) 공고 리스트 조회 훅
-export const useGetPostList = (req: GetPostListReqType) => {
-  return useQuery({ queryKey: ['post'], queryFn: () => getPostList(req) });
+export const useGetPostList = (req: GetPostListReqType, isEnabled: boolean) => {
+  return useQuery({
+    queryKey: ['post', req],
+    queryFn: () => getPostList(req),
+    enabled: isEnabled,
+    staleTime: 0,
+  });
 };
 
 // 4.4 (유학생/고용주) 공고 상세 조회하기 훅
-export const useGetPostDetail = (id: number) => {
-  return useQuery({ queryKey: ['post', id], queryFn: () => getPostDetail(id) });
+export const useGetPostDetail = (id: number, isEnabled: boolean) => {
+  return useQuery({
+    queryKey: ['post', id],
+    queryFn: () => getPostDetail(id),
+    enabled: isEnabled,
+  });
 };
 
 // 4.5 (유학생) 추천 공고 리스트 조회하기 훅
@@ -49,18 +73,21 @@ export const useGetApplicantList = (
   id: number,
   sorting: string,
   status: string,
+  isEnabled: boolean,
 ) => {
   return useQuery({
     queryKey: ['post', id],
     queryFn: () => getApplicantList(id, sorting, status),
+    enabled: isEnabled,
   });
 };
 
 // 4.7 (유학생/고용주) 공고 요약 정보 조회하기 훅
-export const useGetPostSummary = (id: number) => {
+export const useGetPostSummary = (id: number, isEnabled: boolean) => {
   return useQuery({
-    queryKey: ['post', id],
+    queryKey: ['post', 'summary', id],
     queryFn: () => getPostSummary(id),
+    enabled: isEnabled,
   });
 };
 
@@ -83,8 +110,15 @@ export const useCreatePost = () => {
 
 // 4.12 (유학생) 북마크 추가/삭제 훅
 export const usePutPostBookmark = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: putPostBookmark,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ['post'],
+      });
+    },
     onError: (error) => {
       console.error('북마크 추가/삭제 실패', error);
     },
@@ -124,6 +158,7 @@ export const useGetApplyPostList = ({
   return useQuery({
     queryKey: ['post'],
     queryFn: () => getApplyPostList({ page, size, sorting, status }),
+    enabled: false,
   });
 };
 
@@ -136,7 +171,7 @@ export const useGetInterviewList = (page: number, size: number) => {
 };
 
 // 6.6 (고용주) 등록한 공고 리스트 조회하기 훅
-export const useGetEmployerPostList = (sorting: AscendingSortType) => {
+export const useGetEmployerPostList = (sorting: MatchKoEnAscendingSortType) => {
   return useQuery({
     queryKey: ['post'],
     queryFn: () => getEmployerPostList(sorting),

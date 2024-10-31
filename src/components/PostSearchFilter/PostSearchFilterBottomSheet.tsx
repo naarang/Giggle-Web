@@ -21,7 +21,7 @@ const PostSearchFilterBottomSheet = ({
   onClickSubmit,
 }: PostSearchFilterBottomSheetType) => {
   const formatRegionArrayToString = (index: number) => {
-    return `${currentRegion1[index]} ${currentRegion2[index]} ${currentRegion3[index]}`;
+    return `${currentRegion1[index]} ${currentRegion2[index]} ${currentRegion3[index] === 'none' ? '' : currentRegion3[index]}`;
   };
 
   return (
@@ -29,6 +29,7 @@ const PostSearchFilterBottomSheet = ({
       hasHandlebar={false}
       isAvailableHidden={false}
       isShowBottomsheet={true}
+      isFixedBackground={false}
     >
       <div className="w-full flex flex-col gap-[1.5rem] pb-[2rem]">
         <h3 className="w-full px-[0.75rem] head-3 text-black">

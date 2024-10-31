@@ -69,7 +69,7 @@ const EmployerApplicantListTitle = ({
         <div className="flex justify-end gap-[0.5rem] px-[0.5rem]">
           <MoneyIcon className="min-w-[0.5rem]" />
           <p className="text-[#464646] caption-1">
-            ${postData.summaries.houlry_rate}
+            ${postData.summaries.hourly_rate}
           </p>
         </div>
         <div className="flex gap-[0.5rem] px-[0.5rem]">

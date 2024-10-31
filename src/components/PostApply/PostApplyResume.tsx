@@ -1,62 +1,14 @@
 import PostApplyProfile from '@/components/PostApply/PostApplyProfile';
 import PostApplyCardLayout from '@/components/PostApply/PostApplyCardLayout';
-import { ResumeDetailItemType } from '@/types/postApply/resumeDetailItem';
-
-// 더미데이터
-const RESUME_DETAIL_DATA: ResumeDetailItemType = {
-  profile_img_url: 'https://example.com/profile.jpg',
-  name: 'John Doe',
-  visa: {
-    visa: 'D_2_2',
-    description: 'Student visa for academic studies',
-  },
-  personal_information: {
-    main_address: '123 Main Street, Seoul',
-    detailed_address: 'Apt 45B, Gangnam-gu',
-    phone_number: '010-1234-5678',
-    email: 'john.doe@example.com',
-  },
-  introduction:
-    'A passionate software developer with experience in full-stack development.',
-  work_experience: [
-    {
-      id: 1,
-      title: 'Software Engineer',
-      description: 'Worked on developing and maintaining a web application.',
-      start_date: '2021-03-01',
-      end_date: '2023-05-15',
-      duration: 805,
-    },
-  ],
-  education: [
-    {
-      id: 1,
-      education_level: 'ASSOCIATE',
-      school_name: 'Seoul National University',
-      major: 'Computer Science',
-      start_date: '2017-03-01',
-      end_date: '2021-02-28',
-      grade: 3,
-    },
-  ],
-  languages: {
-    topik: 5,
-    social_integration: 80,
-    sejong_institute: 85,
-    etc: [
-      {
-        id: 1,
-        laguage_name: 'English',
-        level: 4,
-      },
-      {
-        id: 2,
-        laguage_name: 'Japanese',
-        level: 3,
-      },
-    ],
-  },
-};
+import {
+  EducationType,
+  LanguageType,
+  WorkExperienceType,
+} from '@/types/postApply/resumeDetailItem';
+import { useGetApplicantResume, useGetResume } from '@/hooks/api/useResume';
+import { useParams } from 'react-router-dom';
+import { useUserStore } from '@/store/user';
+import { UserType } from '@/constants/user';
 
 const EDUCATION_PERIOD = {
   BACHELOR: 4,
@@ -65,18 +17,31 @@ const EDUCATION_PERIOD = {
 } as const;
 
 const PostApplyResume = () => {
+  const { id } = useParams();
+  const { account_type } = useUserStore();
+
+  const { data: userData } = useGetResume(account_type === UserType.USER);
+  const { data: ownerData } = useGetApplicantResume(
+    Number(id),
+    !isNaN(Number(id)) && account_type === UserType.OWNER ? true : false,
+  );
+
+  const data = account_type === UserType.OWNER ? userData : ownerData;
+
+  if (data?.data) return <></>;
+
   return (
     <section className="flex flex-col items-center gap-[1.5rem] w-full pt-[1.5rem] px-[1.5rem] pb-[7.25rem]">
       <PostApplyProfile
-        profileImgUrl={RESUME_DETAIL_DATA.profile_img_url}
-        name={RESUME_DETAIL_DATA.name}
+        profileImgUrl={data?.data?.profile_img_url}
+        name={data?.data?.name}
       />
       <PostApplyCardLayout title="Visa">
         <h4 className="px-[0.25rem] pb-[0.375rem] head-3 text-[#464646]">
-          {RESUME_DETAIL_DATA.visa.visa.replace(/_/g, '-')}
+          {data?.data?.visa.visa.replace(/_/g, '-')}
         </h4>
         <p className="px-[0.25rem] body-3 text-[#464646]">
-          {RESUME_DETAIL_DATA.visa.description}
+          {data?.data?.visa.description}
         </p>
       </PostApplyCardLayout>
       <PostApplyCardLayout title="Personal Information">
@@ -86,7 +51,7 @@ const PostApplyResume = () => {
               Main Address
             </h4>
             <p className="px-[0.25rem] body-3 text-[#464646]">
-              {RESUME_DETAIL_DATA.personal_information.main_address}
+              {data?.data?.personal_information.main_address}
             </p>
           </div>
           <div>
@@ -94,7 +59,7 @@ const PostApplyResume = () => {
               Detailed Address
             </h4>
             <p className="px-[0.25rem] body-3 text-[#464646]">
-              {RESUME_DETAIL_DATA.personal_information.detailed_address}
+              {data?.data?.personal_information.detailed_address}
             </p>
           </div>
           <div>
@@ -102,7 +67,7 @@ const PostApplyResume = () => {
               Phone number
             </h4>
             <p className="px-[0.25rem] body-3 text-[#464646]">
-              {RESUME_DETAIL_DATA.personal_information.phone_number}
+              {data?.data?.personal_information.phone_number}
             </p>
           </div>
           <div>
@@ -110,19 +75,19 @@ const PostApplyResume = () => {
               Email
             </h4>
             <p className="px-[0.25rem] body-3 text-[#464646]">
-              {RESUME_DETAIL_DATA.personal_information.email}
+              {data?.data?.personal_information.email}
             </p>
           </div>
         </div>
       </PostApplyCardLayout>
       <PostApplyCardLayout title="Introduction">
         <p className="w-full px-[0.25rem] body-3 text-[#464646]">
-          {RESUME_DETAIL_DATA.introduction}
+          {data?.data?.introduction}
         </p>
       </PostApplyCardLayout>
       <PostApplyCardLayout title="Work Experience">
         <div className="flex flex-col gap-[0.563rem]">
-          {RESUME_DETAIL_DATA.work_experience.map((data) => (
+          {data?.data?.work_experience?.map((data: WorkExperienceType) => (
             <div
               key={data.id}
               className="w-full p-[0.75rem] rounded-[0.75rem] bg-[#F4F4F980]"
@@ -145,7 +110,7 @@ const PostApplyResume = () => {
       </PostApplyCardLayout>
       <PostApplyCardLayout title="Education">
         <div className="flex flex-col gap-[0.563rem]">
-          {RESUME_DETAIL_DATA.education.map((data) => (
+          {data?.data?.education?.map((data: EducationType) => (
             <div key={data.id}>
               <h5 className="px-[0.5rem] pb-[0.563rem] button-2 text-[#1E1926]">
                 {data.education_level}
@@ -178,7 +143,7 @@ const PostApplyResume = () => {
           <div className="flex justify-between items-center w-full py-[1rem] px-[0.75rem] rounded-[0.75rem] bg-[#F4F4F980]">
             <h5 className="pb-[0.125rem] button-2 text-[#464646]">TOPIK</h5>
             <div className="px-[0.5rem] py-[0.25rem] rounded-[0.188rem] border-[0.031rem] border-[#7872ED] text-[#7872ED] bg-[#2801E81F] caption-2">
-              LEVEL {RESUME_DETAIL_DATA.languages.topik}
+              LEVEL {data?.data?.languages.topik}
             </div>
           </div>
           <div className="flex justify-between items-center w-full py-[1rem] px-[0.75rem] rounded-[0.75rem] bg-[#F4F4F980]">
@@ -186,7 +151,7 @@ const PostApplyResume = () => {
               Social Intergration
             </h5>
             <div className="px-[0.5rem] py-[0.25rem] rounded-[0.188rem] border-[0.031rem] border-[#7872ED] text-[#7872ED] bg-[#2801E81F] caption-2">
-              Level {RESUME_DETAIL_DATA.languages.social_integration}
+              Level {data?.data?.languages.social_integration}
             </div>
           </div>
           <div className="flex justify-between items-center w-full py-[1rem] px-[0.75rem] rounded-[0.75rem] bg-[#F4F4F980]">
@@ -194,10 +159,10 @@ const PostApplyResume = () => {
               Sejong Institute
             </h5>
             <div className="px-[0.5rem] py-[0.25rem] rounded-[0.188rem] border-[0.031rem] border-[#7872ED] text-[#7872ED] bg-[#2801E81F] caption-2">
-              Level {RESUME_DETAIL_DATA.languages.sejong_institute}
+              Level {data?.data?.languages.sejong_institute}
             </div>
           </div>
-          {RESUME_DETAIL_DATA.languages.etc?.map((data) => (
+          {data?.data?.languages.etc?.map((data: LanguageType) => (
             <div
               key={data.id}
               className="flex justify-between items-center w-full py-[1rem] px-[0.75rem] rounded-[0.75rem] bg-[#F4F4F980]"

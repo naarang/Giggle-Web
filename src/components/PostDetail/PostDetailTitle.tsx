@@ -11,7 +11,14 @@ type PostDetailTitleProps = {
 const PostDetailTitle = ({ postDetailData }: PostDetailTitleProps) => {
   return (
     <section className="flex flex-col items-center gap-[1rem] w-full mt-[-2.5rem] pt-[2.5rem] pb-[2rem] px-[1.5rem] rounded-t-[2.5rem] shadow-bottomSheetShadow bg-white">
-      <div className='w-[5.125rem] h-[5.125rem] rounded-full bg-cover bg-center bg-[url("/src/assets/images/JobIconExample.jpeg")]'></div>
+      {postDetailData?.icon_img_url ? (
+        <div
+          className="w-[5.125rem] h-[5.125rem] rounded-full bg-cover bg-center"
+          style={{ backgroundImage: `url(${postDetailData.icon_img_url})` }}
+        ></div>
+      ) : (
+        <div className="w-[5.125rem] h-[5.125rem] rounded-full bg-[#F4F4F9]"></div>
+      )}
       <div className="flex flex-col gap-[0.5rem] text-center">
         <p className="button-2 text-[#656565]">{postDetailData.company_name}</p>
         <h2 className="text-[#33384B] font-bold text-lg">
@@ -65,7 +72,7 @@ const PostDetailTitle = ({ postDetailData }: PostDetailTitleProps) => {
         <div className="flex justify-end gap-[0.5rem] px-[0.5rem]">
           <MoneyIcon className="min-w-[0.5rem]" />
           <p className="text-[#464646] caption-1">
-            ${postDetailData.summaries.houlry_rate}
+            ${postDetailData.summaries.hourly_rate}
           </p>
         </div>
         <div className="flex gap-[0.5rem] px-[0.5rem]">

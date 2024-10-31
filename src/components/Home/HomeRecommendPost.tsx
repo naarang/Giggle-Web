@@ -1,35 +1,19 @@
 import MessageIcon from '@/assets/icons/Home/MessageIcon.svg?react';
 import HomeRecommendPostCard from '@/components/Home/HomeRecommendPostCard';
+import { useGetRecommendPostList } from '@/hooks/api/usePost';
 import { RecommendJobPostingItemType } from '@/types/home/recommendJobPostingItem';
 import { useNavigate } from 'react-router-dom';
 
-// 추천 공고 목록 더미데이터
-const RECOMMEND_JOB_POSTING_LIST: RecommendJobPostingItemType[] = [
-  {
-    id: 1,
-    title: '공고 제목1',
-    recruitment_dead_line: '2024.11.01',
-    job_category: 'GENERAL_INTERPRETATION_TRANSLATION',
-  },
-  {
-    id: 2,
-    title: '공고 제목 222 어쩌구 저쩌구',
-    recruitment_dead_line: '2024.10.25',
-    job_category: 'GENERAL_CAFE',
-  },
-];
-
 const HomeRecommendPost = () => {
   const navigate = useNavigate();
-
-  const hasProfile = true; // 이력서 등록여부
+  const { data } = useGetRecommendPostList();
 
   return (
-    <section className="w-full flex gap-[0.5rem] px-[1.25rem] overflow-x-scroll no-scrollbar whitespace-nowrap bg-[#FEF387]">
-      {hasProfile ? (
+    <section className="w-full flex gap-[0.5rem] px-[1.25rem] pt-[1rem] pb-[1.5rem] overflow-x-scroll no-scrollbar whitespace-nowrap bg-[#FEF387]">
+      {data?.data?.job_posting_list?.length ? (
         // 이력서 등록 -> 추천 공고 보여주기
         <>
-          {RECOMMEND_JOB_POSTING_LIST.map(
+          {data?.data?.job_posting_list.map(
             (value: RecommendJobPostingItemType) => (
               <HomeRecommendPostCard key={value.id} jobPostingData={value} />
             ),

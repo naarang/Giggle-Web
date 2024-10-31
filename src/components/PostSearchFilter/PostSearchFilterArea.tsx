@@ -4,28 +4,7 @@ import { useEffect, useState } from 'react';
 import PostSearchFilterBottomSheet from '@/components/PostSearchFilter/PostSearchFilterBottomSheet';
 import { PostSearchFilterItemType } from '@/types/PostSearchFilter/PostSearchFilterItem';
 import { FILTER_CATEGORY } from '@/constants/postSearch';
-
-type RegionDataType = {
-  [key: string]: {
-    [key: string]: string[];
-  };
-};
-
-// 더미데이터
-const REGION_DATA: RegionDataType = {
-  Seoul: {
-    Gyeonggi: ['성남', '분당', '강남'],
-    Inchon: ['연수구', '계양구'],
-  },
-  Busan: {
-    Dong: ['동래구', '해운대구'],
-    Suyeong: ['수영구', '광안리'],
-  },
-  Daegu: {
-    Suseong: ['수성구', '달서구'],
-    Dalseo: ['달성군', '달서군'],
-  },
-};
+import { REGION_DATA } from '@/constants/regionData';
 
 type PostSearchFilterAreaType = {
   setIsOpenAreaFilter: React.Dispatch<React.SetStateAction<boolean>>;
@@ -55,9 +34,9 @@ const PostSearchFilterArea = ({
     const region2Depth = filterList[FILTER_CATEGORY.REGION_2DEPTH];
     const region3Depth = filterList[FILTER_CATEGORY.REGION_3DEPTH];
 
-    setCurrentRegion1(region1Depth ?? []);
-    setCurrentRegion2(region2Depth ?? []);
-    setCurrentRegion3(region3Depth ?? []);
+    setCurrentRegion1(region1Depth ? [...region1Depth] : []);
+    setCurrentRegion2(region2Depth ? [...region2Depth] : []);
+    setCurrentRegion3(region3Depth ? [...region3Depth] : []);
   }, [filterList]);
 
   const onClickBackButton = () => {
@@ -81,6 +60,23 @@ const PostSearchFilterArea = ({
   const onSelectRegion2Depth = (region: string) => {
     if (!region1Depth) return;
     setRegion2Depth(region);
+
+    // 전체 선택이면 바로 태그에 추가
+    if (region === '전체') {
+      setRegion3Depth('none');
+      setRegion3DepthData([]);
+
+      if (isExistedFilter(region1Depth, region, 'none')) {
+        alert('이미 선택된 지역입니다.');
+        return;
+      }
+
+      setCurrentRegion1([...currentRegion1, region1Depth]);
+      setCurrentRegion2([...currentRegion2, region]);
+      setCurrentRegion3([...currentRegion3, 'none']);
+      return;
+    }
+
     setRegion3Depth(null);
 
     const isValidRegionData = REGION_DATA[region1Depth];
@@ -114,17 +110,16 @@ const PostSearchFilterArea = ({
   const isExistedFilter = (
     region1Depth: string,
     region2Depth: string,
-    region: string,
+    region3Depth: string,
   ) => {
-    const isSameRegion1 = currentRegion1.find(
-      (value) => value === region1Depth,
-    );
-    const isSameRegion2 = currentRegion2.find(
-      (value) => value === region2Depth,
-    );
-    const isSameRegion3 = currentRegion3.find((value) => value === region);
-
-    if (isSameRegion1 && isSameRegion2 && isSameRegion3) return true;
+    for (let i = 0; i < currentRegion1.length; i++) {
+      if (
+        region1Depth === currentRegion1[i] &&
+        region2Depth === currentRegion2[i] &&
+        region3Depth === currentRegion3[i]
+      )
+        return true;
+    }
     return false;
   };
 
@@ -169,7 +164,7 @@ const PostSearchFilterArea = ({
           hasMenuButton={false}
           title="Area"
         />
-        <section className="flex-1 flex w-full">
+        <section className="flex-1 flex w-full pb-[15rem]">
           <PostSearchFilterSelect
             selectedRegion={region1Depth}
             onSelect={onSelectRegion1Depth}
