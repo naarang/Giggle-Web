@@ -13,6 +13,7 @@ import RadioButton from '@/components/Information/RadioButton';
 import { InputType } from '@/types/common/input';
 import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
+import { formatDateToDash } from '../../utils/editResume';
 
 const InformationStep = ({
   userInfo,
@@ -182,27 +183,36 @@ const InformationStep = ({
       </div>
       {/* 정보 입력 시마다 유효성을 검사해 모든 값이 유효하면 버튼이 활성화 */}
       <BottomButtonPanel>
-        <Button
-          type="large"
-          bgColor={isInvalid ? 'bg-[#F4F4F9]' : 'bg-[#fef387]'}
-          fontColor={isInvalid ? '' : 'text-[#222]'}
-          isBorder={false}
-          title="Next"
-          onClick={
-            isInvalid
-              ? undefined
-              : () =>
-                  onNext({
-                    ...userInfo,
-                    user_info: {
-                      ...newUserInfo,
-                      nationality: newUserInfo.nationality
-                        ?.toUpperCase()
-                        .replace(/\s/g, '_'),
-                    },
-                  })
-          }
-        />
+        {isInvalid ? (
+          <Button
+            type="large"
+            bgColor="bg-[#F4F4F9]"
+            fontColor=""
+            isBorder={false}
+            title="Next"
+          />
+        ) : (
+          <Button
+            type="large"
+            bgColor="bg-[#fef387]"
+            fontColor="text-[#222]"
+            isBorder={false}
+            title="Next"
+            onClick={() =>
+              onNext({
+                ...userInfo,
+                user_info: {
+                  ...newUserInfo,
+                  nationality: newUserInfo.nationality
+                    ?.toUpperCase()
+                    .replace(/\s/g, '_'),
+                  birth: formatDateToDash(newUserInfo.birth as string),
+                  visa: newUserInfo.visa?.replace(/-/g, '_'),
+                },
+              })
+            }
+          />
+        )}
       </BottomButtonPanel>
     </div>
   );

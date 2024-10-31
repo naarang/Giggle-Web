@@ -1,21 +1,14 @@
-import { useEffect, useState } from 'react';
-import { ResumeDetailItemType } from '@/types/postApply/resumeDetailItem';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import MypageCardSection from '@/components/ManageResume/MypageCardSection';
 import ProfilePicture from '@/components/ManageResume/ProfilePicture';
 import ResumeEditSection from '@/components/ManageResume/ResumeEditSection';
-import { ResumeData } from '@/constants/manageResume';
 import { useNavigate } from 'react-router-dom';
+import { useGetResume } from '@/hooks/api/useResume';
 
 const ManageResumePage = () => {
-  const [data, setData] = useState<ResumeDetailItemType>();
   const navigate = useNavigate();
+  const { data } = useGetResume();
 
-  useEffect(() => {
-    // TODO : API - 7.1 (유학생/고용주) 이력서 조회하기
-    // 더이데이터 수정
-    setData(ResumeData);
-  }, []);
   return (
     <>
       {data ? (
@@ -29,19 +22,19 @@ const ManageResumePage = () => {
           <div className="flex flex-col px-6 gap-9 pb-9">
             <div className="flex flex-col pt-5 pb-4 gap-6">
               <ProfilePicture
-                name={data?.name}
-                profileImg={data?.profile_img_url}
+                name={data.data.name}
+                profileImg={data.data.profile_img_url}
               />
               <MypageCardSection
-                visaData={data.visa}
-                personalData={data.personal_information}
+                visaData={data.data.visa}
+                personalData={data.data.personal_information}
               />
             </div>
             <ResumeEditSection
-              introductionData={data.introduction}
-              workexperienceData={data.work_experience}
-              educationData={data.education}
-              languageData={data.languages}
+              introductionData={data.data.introduction}
+              workexperienceData={data.data.work_experience}
+              educationData={data.data.education}
+              languageData={data.data.languages}
             />
           </div>
         </>

@@ -12,7 +12,7 @@ const LicenseCard = ({ languageData, metaData }: LicenseCardProps) => {
 
   // 언어설정 화면으로 이동
   const handleEnterButton = () => {
-    navigate('/profile/language');
+    navigate('/resume/language');
   };
 
   const emptyLevel = (): boolean => {
@@ -44,7 +44,7 @@ const LicenseCard = ({ languageData, metaData }: LicenseCardProps) => {
           <div className="flex items-center gap-2">
             <div className="button-2 text-[#464646]">Industries</div>
             <div className="caption-1 text-[#656565]">
-              {metaData.is_topik_4_or_more
+              {metaData.is_language_skill_4_or_more
                 ? // 토픽 4급 이상
                   'Everywhere possible'
                 : // 토픽 4급 이하

@@ -10,26 +10,15 @@ const Splash = () => {
   // 계정 타입(유학생, 고용주), 유저 이름 업데이트 함수
   const { updateAccountType, updateName } = useUserStore();
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      handleApiCall();
-    }, 3000); // 3초 대기
-
-    return () => clearTimeout(timeoutId);
-  }, []);
-
   const { data: UserTypeResponse } = useGetUserType();
   const { mutate: reIssueToken } = useReIssueToken();
 
-  // 유저 타입 판단 함수
-  const handleGetUserType = () => {
-    if (UserTypeResponse && UserTypeResponse.success) {
-      const { account_type, name } = UserTypeResponse.data;
-      updateAccountType(account_type);
-      updateName(name);
-      navigate('/');
-    }
-  };
+  useEffect(() => {
+    handleApiCall();
+    const timeoutId = setTimeout(() => {}, 3000); // 3초 대기
+
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   // 비로그인 상태 설정 함수
   const setGuest = () => {
@@ -38,38 +27,38 @@ const Splash = () => {
   };
 
   // API 호출 핸들러
+  useEffect(() => {
+    if (UserTypeResponse === undefined) return;
+    handleApiCall();
+  }, [UserTypeResponse]);
+
   const handleApiCall = async () => {
     const access = getAccessToken();
     const refresh = getRefreshToken();
 
     try {
-      // 1. access, refresh 모두 없는 경우
       if (!access && !refresh) {
         setGuest();
-        navigate('/'); // 비로그인 상태로 메인 이동
+        navigate('/');
         return;
       }
 
-      // 2. access, refresh 모두 있는 경우
       if (access && refresh) {
-        // 2-1. user type 응답 성공
-        if (UserTypeResponse) {
-          handleGetUserType(); // 유저 타입을 처리하는 함수 호출
-
-          // 2-2. access 토큰이 만료되었을 경우(401)
-          if (UserTypeResponse.error?.code == 401) {
-            setGuest();
-            // 2-2-1. API 호출 JWT 재발급
-            reIssueToken(); // 토큰 재발급을 기다림
-          }
+        if (UserTypeResponse?.success) {
+          const { account_type, name } = UserTypeResponse.data;
+          updateAccountType(account_type);
+          updateName(name);
+          navigate('/');
+        } else if (UserTypeResponse?.error?.code === 401) {
+          reIssueToken();
         } else {
-          // UserTypeResponse가 정의되지 않은 경우
           setGuest();
         }
       }
     } catch (error) {
+      alert('로그인 오류입니다 다시 시도해주세요');
       setGuest();
-      navigate('/'); // 비로그인 상태로 메인 이동
+      navigate('/');
     }
   };
 

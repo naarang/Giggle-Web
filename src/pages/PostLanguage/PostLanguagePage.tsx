@@ -4,7 +4,7 @@ import EtcLanguageCard from '@/components/Language/EtcLanguageCard';
 import EtcLanguageSection from '@/components/Language/EtcLanguageSection';
 import EtcLevelSection from '@/components/Language/EtcLevelSection';
 import { buttonTypeKeys } from '@/constants/components';
-import { LanguageList } from '@/constants/language';
+import { LanguageList } from '@/constants/language_data';
 import { EtcLanguageData } from '@/types/manageResume/manageResume';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -13,12 +13,13 @@ import { useNavigate } from 'react-router-dom';
 const initialLanguage = {
   id: 0,
   language: '',
+  country_name: '',
   img_url: '',
 };
 
 const PostLanguagePage = () => {
   const navigate = useNavigate();
-  // 추후 언어 리스트 json으로 전달 받아 업데이트 예정
+
   const languageList = LanguageList;
   // 선택한 언어 상태 관리
   const [selectedLanguage, setSelectedLanguage] =
