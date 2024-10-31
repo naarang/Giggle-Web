@@ -2,8 +2,11 @@ import Button from '@/components/Common/Button';
 import { buttonTypeKeys } from '@/constants/components';
 import { useState } from 'react';
 import EmployerPostDeleteBottomSheet from '@/components/Employer/PostDetail/EmployerPostDeleteBottomSheet';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const EmployerPostDetailButton = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [isOpenDeleteBottomSheet, setIsOpenDeleteBottomSheet] =
     useState<boolean>(false);
   return (
@@ -23,6 +26,13 @@ const EmployerPostDetailButton = () => {
           fontColor="text-[#1E1926]"
           isBorder={false}
           title="Edit"
+          onClick={() =>
+            navigate(`/employer/post/create/${id}`, {
+              state: {
+                isEdit: true,
+              },
+            })
+          }
           // TODO: 고용주 - 공고 수정 - 1단계로 이동하기
         />
       </footer>
