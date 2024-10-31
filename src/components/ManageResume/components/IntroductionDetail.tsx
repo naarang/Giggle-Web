@@ -22,7 +22,7 @@ const IntroductionDetail = ({ data }: IntroductionDetailProps) => {
       </div>
       <div className="flex justify-center items-center gap-2.5 ml-1">
         <EditIcon
-          onClick={() => navigate('/resume/introduction')}
+          onClick={() => navigate('/resume/introduction', { state: { data } })}
           className="cursor-pointer"
         />
         <DeleteIcon onClick={handleDelete} className="cursor-pointer" />
