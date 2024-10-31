@@ -1,7 +1,13 @@
 import SearchSortDropdown from '@/components/Common/SearchSortDropdown';
 import EmployerApplicationCard from '@/components/Employer/ApplicantList/EmployerApplicantCard';
-import { KO_APPLICATION_STATUS_TYPE } from '@/constants/application';
-import { KO_ASCENDING_SORT_TYPE } from '@/constants/sort';
+import {
+  EN_APPLICATION_STATUS_TYPE,
+  KO_APPLICATION_STATUS_TYPE,
+} from '@/constants/application';
+import {
+  KO_ASCENDING_SORT_TYPE,
+  MATCH_KO_EN_ASCENDING_SORT,
+} from '@/constants/sort';
 import { useGetApplicantList } from '@/hooks/api/usePost';
 import { ApplicantItemType } from '@/types/application/applicationItem';
 import { KoApplicationStatusType } from '@/types/application/applicationStatus';
@@ -27,8 +33,8 @@ const EmployerApplicationList = ({
 
   const { data, refetch } = useGetApplicantList(
     Number(id),
-    selectedSort,
-    selectedStatus,
+    MATCH_KO_EN_ASCENDING_SORT[selectedSort],
+    EN_APPLICATION_STATUS_TYPE[selectedStatus],
     !isNaN(Number(id)) ? true : false,
   );
 

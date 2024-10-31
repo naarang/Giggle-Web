@@ -35,6 +35,15 @@ export const KO_APPLICATION_STATUS_TYPE = {
   PENDING: '대기',
 } as const;
 
+export const EN_APPLICATION_STATUS_TYPE = {
+  ['전체']: 'Total',
+  ['진행중']: 'Application in progress',
+  ['계약 성공']: 'Application success',
+  ['시간제취업허가 실패']: 'Application rejected',
+  ['이력서 거절']: 'resume rejected',
+  ['대기']: 'pending',
+} as const;
+
 // 지원자 리스트 더미데이터
 export const APPLICANT_LIST_DATA: ApplicantItemType[] = [
   {

@@ -4,11 +4,12 @@ import RightArrowIcon from '@/assets/icons/Home/RightArrowIcon.svg?react';
 import Tag from '@/components/Common/Tag';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { POST_SEARCH_MENU } from '@/constants/postSearch';
+import { POST_SEARCH_MENU, POST_SORTING } from '@/constants/postSearch';
 import { usePostSearchStore } from '@/store/postSearch';
 import { useUserStore } from '@/store/user';
 import { UserType } from '@/constants/user';
 import { useGetPostGuestList, useGetPostList } from '@/hooks/api/usePost';
+import { PostSortingType } from '@/types/PostSearchFilter/PostSearchFilterItem';
 
 const HomeJobPostingList = () => {
   const { account_type } = useUserStore();
@@ -79,7 +80,7 @@ const HomeJobPostingList = () => {
     setSelectedMenu(menu);
   };
 
-  const goToSearchPage = (type: POST_SEARCH_MENU) => {
+  const goToSearchPage = (type: PostSortingType) => {
     updateSortType(type);
     navigate('/search');
   };
@@ -143,7 +144,7 @@ const HomeJobPostingList = () => {
             <h3 className="head-3 text-black">🔥 Popular Job Lists for You</h3>
             <button
               className="flex items-center gap-[0.625rem] button-2 text-[#1E1926]"
-              onClick={() => goToSearchPage(POST_SEARCH_MENU.TRENDING)}
+              onClick={() => goToSearchPage(POST_SORTING.POPULAR)}
             >
               See more <RightArrowIcon />
             </button>
@@ -162,7 +163,7 @@ const HomeJobPostingList = () => {
             <h3 className="head-3 text-black">🌟 Recently Added Job</h3>
             <button
               className="flex items-center gap-[0.625rem] button-2 text-[#1E1926]"
-              onClick={() => goToSearchPage(POST_SEARCH_MENU.RECENTLY)}
+              onClick={() => goToSearchPage(POST_SORTING.RECENT)}
             >
               See more <RightArrowIcon />
             </button>
