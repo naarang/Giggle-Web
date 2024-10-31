@@ -20,7 +20,7 @@ export const postPartTimeEmployPermit = async ({
 }: {
   id: number;
   document: PartTimePermitFormRequest;
-}): Promise<{ id: number }> => {
+}): Promise<RESTYPE<{id: number}>> => {
   const response = await api.post(
     `/users/user-owner-job-postings/${id}/documents/part-time-employment-permits`,
     document,
@@ -65,7 +65,7 @@ export const postStandardLaborContracts = async ({
 }: {
   id: number;
   document: LaborContractEmployeeInfo;
-}): Promise<{ id: number }> => {
+}): Promise<RESTYPE<{id: number}>> => {
   const response = await api.post(
     `/users/user-owner-job-postings/${id}/documents/standard-labor-contracts`,
     document,
@@ -80,7 +80,7 @@ export const putStandardLaborContracts = async ({
 }: {
   id: number;
   document: LaborContractEmployeeInfo;
-}): Promise<{ success: boolean }> => {
+}): Promise<RESTYPE<null>> => {
   const response = await api.put(
     `/users/documents/${id}/standard-labor-contracts`,
     document,
@@ -110,7 +110,7 @@ export const postIntegratedApplications = async ({
 }: {
   id: number;
   document: IntegratedApplicationData;
-}): Promise<{ id: number }> => {
+}): Promise<RESTYPE<{id: number}>> => {
   const response = await api.post(
     `/users/user-owner-job-postings/${id}/documents/integrated_applications`,
     document,
@@ -125,7 +125,7 @@ export const putIntegratedApplications = async ({
 }: {
   id: number;
   document: IntegratedApplicationData;
-}): Promise<{ success: boolean }> => {
+}): Promise<RESTYPE<null>> => {
   const response = await api.post(
     `/users/documents/${id}/integrated-applications`,
     document,
@@ -150,7 +150,7 @@ export const postRequest = async ({
 }: {
   id: number;
   reason: string;
-}): Promise<{ id: number }> => {
+}): Promise<RESTYPE<{id: number}>> => {
   const response = await api.post(`/users/documents/${id}/status/requestion`, {
     reason: reason,
   });

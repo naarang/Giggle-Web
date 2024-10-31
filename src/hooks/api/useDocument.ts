@@ -42,12 +42,12 @@ export const useGetDocumentsEmployer = (id: number) => {
 };
 
 // 시간제취업허가서 작성 api 통신 커스텀 훅
-export const usePostPartTimeEmployPermit = () => {
+export const usePostPartTimeEmployPermit = (id: number) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: postPartTimeEmployPermit,
     onSuccess: () => {
-      navigate('/');
+      navigate(`/application-documents/${id}`);
     },
     onError: () =>
       navigate('/write-documents', {
@@ -60,12 +60,12 @@ export const usePostPartTimeEmployPermit = () => {
 
 // 8.10 (유학생)시간제취업허가서 수정 api 통신 커스텀 훅
 //TODO: ID값 사용해 redirect 해야
-export const usePutPartTimeEmployPermit = () => {
+export const usePutPartTimeEmployPermit = (id: number) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: putPartTimeEmployPermit,
     onSuccess: () => {
-      navigate('/');
+      navigate(`/application-documents/${id}`);
     },
     onError: () =>
       navigate('/write-documents', {
@@ -94,15 +94,15 @@ export const usePutPartTimeEmployPermitEmployer = (id: number) => {
 };
 
 //표준 근로계약서 작성 api 통신 커스텀 훅
-export const usePostStandardLaborContracts = () => {
+export const usePostStandardLaborContracts = (id: number) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: postStandardLaborContracts,
     onSuccess: () => {
-      navigate('/');
+      navigate(`/application-documents/${id}`);
     },
     onError: () =>
-      navigate('/write-documents', {
+      navigate(`/write-documents/${id}`, {
         state: {
           type: DocumentType.LABOR_CONTRACT,
         },
@@ -111,12 +111,12 @@ export const usePostStandardLaborContracts = () => {
 };
 
 // 8.12 (유학생) 표준 근로계약서 수정 api 통신 커스텀 훅
-export const usePutStandardLaborContracts = () => {
+export const usePutStandardLaborContracts = (id: number) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: putStandardLaborContracts,
     onSuccess: () => {
-      navigate('/');
+      navigate(`/application-documents/${id}`);
     },
     onError: () =>
       navigate('/write-documents', {
@@ -145,12 +145,12 @@ export const usePutLaborContractEmployer = (id: number) => {
 };
 
 // 8.8 통합신청서 생성 api 통신 커스텀 훅
-export const usePostIntegratedApplicants = () => {
+export const usePostIntegratedApplicants = (id: number) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: postIntegratedApplications,
     onSuccess: () => {
-      navigate('/');
+      navigate(`/application-documents/${id}`);
     },
     onError: () =>
       navigate('/write-documents', {
