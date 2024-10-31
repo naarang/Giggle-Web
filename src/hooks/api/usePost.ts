@@ -173,7 +173,7 @@ export const useGetInterviewList = (page: number, size: number) => {
 // 6.6 (고용주) 등록한 공고 리스트 조회하기 훅
 export const useGetEmployerPostList = (sorting: MatchKoEnAscendingSortType) => {
   return useQuery({
-    queryKey: ['post'],
+    queryKey: ['post', sorting],
     queryFn: () => getEmployerPostList(sorting),
   });
 };
