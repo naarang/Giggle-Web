@@ -5,7 +5,7 @@ import DocumentCardList from '@/components/Document/DocumentCardList';
 import { DocumentsSummaryResponse } from '@/types/api/document';
 
 const mockDocumentsSummaryResponse: DocumentsSummaryResponse = {
-
+  part_time_employment_permits: null,
   standard_labor_contract: {
     id: 2001,
     hwp_url: 'https://example.com/contracts/standard_2001.hwp',
@@ -16,6 +16,7 @@ const mockDocumentsSummaryResponse: DocumentsSummaryResponse = {
     id: 3001,
     hwp_url: 'https://example.com/applications/integrated_3001.hwp',
     word_url: 'https://example.com/applications/integrated_3001.docx',
+    status: null,
   },
 };
 

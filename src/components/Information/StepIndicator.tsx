@@ -1,39 +1,62 @@
-const StepIndicator = ({ currentStep }: { currentStep: number }) => {
+import React from 'react';
+
+interface StepIndicatorProps {
+  length: number;
+  currentStep: number;
+  mainColor?: string;
+  backgroundColor?: string;
+  borderColor?: string;
+  textColor?: string;
+  inactiveTextColor?: string;
+}
+
+const StepIndicator = ({
+  length = 3,
+  currentStep = 1,
+  mainColor = '#FEF387',
+  backgroundColor = '#F4F4F9',
+  borderColor = '#F4F4F9',
+  textColor = '#ffffff',
+}: StepIndicatorProps) => {
+  const steps = Array.from({ length }, (_, i) => i + 1);
+
   return (
-    <div className="relative w-full flex flex-row items-center justify-center text-center body-3 text-[#bdbdbd]">
-      <div
-        className={`relative flex items-center justify-center w-[1.5rem] h-[1.5rem] text-[#464646]`}
-      >
-        <div
-          className={`flex items-center justify-center w-[1.25rem] h-[1.25rem] rounded-full bg-[#FEF387]`}
-        >
-          1
-        </div>
-      </div>
-      <div
-        className={`relative w-[1rem] h-[0.125rem] ${currentStep !== 1 ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'}`}
-      />
-      <div
-        className={`relative flex items-center justify-center w-[1.5rem] h-[1.5rem] ${currentStep >= 2 && 'text-[#464646]'}`}
-      >
-        <div
-          className={`flex items-center justify-center w-[1.25rem] h-[1.25rem] rounded-full ${currentStep >= 2 ? 'bg-[#FEF387]' : 'border border-[#F4F4F9] bg-white'}`}
-        >
-          2
-        </div>
-      </div>
-      <div
-        className={`relative w-[1rem] h-[0.125rem] ${currentStep === 3 ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'}`}
-      />
-      <div
-        className={`relative flex items-center justify-center w-[1.5rem] h-[1.5rem] ${currentStep === 3 && 'text-[#464646]'}`}
-      >
-        <div
-          className={`flex items-center justify-center w-[1.25rem] h-[1.25rem] rounded-full ${currentStep === 3 ? 'bg-[#FEF387]' : 'border border-[#F4F4F9] bg-white'}`}
-        >
-          3
-        </div>
-      </div>
+    <div
+      className="relative w-full flex flex-row items-center justify-center text-center body-3"
+    >
+      {steps.map((step, index) => (
+        <React.Fragment key={step}>
+          {/* Step Circle */}
+          <div
+            className="relative flex items-center justify-center w-6 h-6"
+            style={{
+              color: textColor ,
+            }}
+          >
+            <div
+              className="flex items-center justify-center w-5 h-5 rounded-full"
+              style={{
+                backgroundColor:
+                  currentStep >= step ? mainColor : backgroundColor,
+                border:
+                  currentStep >= step ? 'none' : `1px solid ${borderColor}`,
+              }}
+            >
+              {step}
+            </div>
+          </div>
+
+          {/* Connector Line (don't render after last step) */}
+          {index < length - 1 && (
+            <div
+              className="relative w-4 h-0.5"
+              style={{
+                backgroundColor: currentStep > step ? mainColor : borderColor,
+              }}
+            />
+          )}
+        </React.Fragment>
+      ))}
     </div>
   );
 };
