@@ -61,12 +61,14 @@ export const useSignIn = () => {
   return useMutation({
     mutationFn: signIn,
     onSuccess: (data: RESTYPE<SignInResponse>) => {
-      setAccessToken(data.data.access_token);
-      setRefreshToken(data.data.refresh_token);
-      navigate('/splash');
+      if (data.success) {
+        setAccessToken(data.data.access_token);
+        setRefreshToken(data.data.refresh_token);
+        navigate('/splash');
+      }
     },
     onError: () => {
-      navigate('/signin');
+      alert('아이디 혹은 비밀번호를 다시 확인해주세요.');
     },
   });
 };
@@ -88,6 +90,7 @@ export const useLogout = () => {
       navigate('/splash');
     },
     onError: () => {
+      alert('로그아웃을 다시 시도해주세요.');
       navigate('/profile');
     },
   });
@@ -102,6 +105,10 @@ export const useReIssueToken = () => {
       setAccessToken(data.data.access_token);
       setRefreshToken(data.data.refresh_token);
       navigate('/splash'); // 재발급 후 유형 확인
+    },
+    onError: () => {
+      alert('만료되었습니다. 다시 로그인해주세요.');
+      navigate('/signin');
     },
   });
 };
@@ -151,6 +158,7 @@ export const useSignUp = () => {
       setRefreshToken(data.data.refresh_token);
     },
     onError: () => {
+      alert('회원가입에 실패하였습니다. 다시 시도해주세요.');
       navigate('/');
     },
   });
@@ -158,14 +166,13 @@ export const useSignUp = () => {
 
 // 2.7 이메일 인증코드 검증 훅
 export const usePatchAuthentication = () => {
-  const navigate = useNavigate();
   return useMutation({
     mutationFn: patchAuthentication,
     onSuccess: (data: RESTYPE<AuthenticationResponse>) => {
       setTemporaryToken(data.data.temporary_token);
-      navigate('/information');
     },
     onError: (error) => {
+      alert('인증코드를 다시 확인해주세요.');
       console.log(error);
     },
   });
@@ -182,6 +189,7 @@ export const useReIssueAuthentication = () => {
       updateTryCnt(data.data.try_cnt);
     },
     onError: () => {
+      alert('인증코드 재발송이 실패하였습니다. 회원가입을 다시 시도해주세요.');
       navigate('/signup');
     },
   });
@@ -204,6 +212,7 @@ export const useWithdraw = () => {
       navigate('/splash');
     },
     onError: () => {
+      alert('탈퇴에 실패하였습니다.');
       navigate('/splash');
     },
   });

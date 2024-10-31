@@ -12,7 +12,7 @@ const LicenseCard = ({ languageData, metaData }: LicenseCardProps) => {
 
   // 언어설정 화면으로 이동
   const handleEnterButton = () => {
-    navigate('/profile/language');
+    navigate('/resume/language');
   };
 
   const emptyLevel = (): boolean => {

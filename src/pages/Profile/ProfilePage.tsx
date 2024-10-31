@@ -7,17 +7,14 @@ import ProfileCard from '@/components/Profile/ProfileCard';
 import ProfileHeader from '@/components/Profile/ProfileHeader';
 import ProfileMenuList from '@/components/Profile/ProfileMenuList';
 import LogoutBottomSheet from '@/components/Profile/LogoutBottomSheet';
-import { UserProfileSummaryData } from '@/constants/profile';
 import { useLogout } from '@/hooks/api/useAuth';
-// import { useGetUserSummaries } from '@/hooks/api/useProfile';
+import { useGetUserSummaries } from '@/hooks/api/useProfile';
 
 const ProfilePage = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [bottomSheetOpen, setBottomSheetOpen] = useState<boolean>(false);
 
-  // TODO: API 완료, 퍼블리싱 작업 중 주석 처리
-  // const { data } = useGetUserSummaries();
-  const data = UserProfileSummaryData;
+  const { data } = useGetUserSummaries();
 
   // 계정 삭제 모달 핸들러
   const handleDeleteButton = (value: boolean) => {
@@ -29,9 +26,9 @@ const ProfilePage = () => {
   };
 
   // API - 1.2 사용자 로그아웃
-  const { mutate: logout } = useLogout();
+  const { mutate } = useLogout();
   const handleLogout = () => {
-    logout;
+    mutate();
   };
 
   const handleLogoutCancel = () => {
