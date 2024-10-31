@@ -61,9 +61,12 @@ export const postEducation = async ({
 };
 
 // 7.7 언어 - ETC 생성하기
-export const postEtcLanguageLevel = async () => {
+export const postEtcLanguageLevel = async (
+  etcLanguage: AdditionalLanguageRequest,
+) => {
   const response = await api.post(
     '/users/resumes/languages/additional-languages',
+    etcLanguage,
   );
   return response.data;
 };

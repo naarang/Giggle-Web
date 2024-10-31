@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
 import LanguageCard from '@/components/Language/LanguageCard';
-import { LanguageData } from '@/constants/manageResume';
 import { LanguagesSummariesResponse } from '@/types/api/resumes';
 import AddIcon from '@/assets/icons/Language/AddIcon.svg?react';
 import { useNavigate } from 'react-router-dom';
+import { useGetLanguagesSummaries } from '@/hooks/api/useResume';
 
 const LanguageSection = () => {
+  const { data } = useGetLanguagesSummaries();
   const navigage = useNavigate();
   const [languageData, SetLanguageData] =
     useState<LanguagesSummariesResponse>();
 
   useEffect(() => {
-    SetLanguageData(LanguageData);
-  }, []);
+    SetLanguageData(data);
+  }, [data]);
 
   return (
     <>
