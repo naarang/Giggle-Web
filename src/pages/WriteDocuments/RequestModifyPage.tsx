@@ -3,12 +3,13 @@ import Button from '@/components/Common/Button';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import { usePostRequest } from '@/hooks/api/useDocument';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const RequestModifyPage = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [reasonInput, setReasonInput] = useState('');
-  const { mutate: sendRequest } = usePostRequest();
+  const { mutate: sendRequest } = usePostRequest(Number(id));
   return (
     <div>
       <BaseHeader
