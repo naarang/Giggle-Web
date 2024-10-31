@@ -5,20 +5,29 @@ import Input from '@/components/Common/Input';
 import RadioButton from '@/components/Information/RadioButton';
 import EditProfilePicture from '@/components/Profile/EditProfilePicture';
 import { buttonTypeKeys } from '@/constants/components';
-import { GenderType, NationalityType, VisaType } from '@/constants/profile';
-import { UserProfileDetailDataType } from '@/types/api/profile';
+import { GenderType } from '@/constants/profile';
+import {
+  InitialUserProfileDetail,
+  UserEditRequestBody,
+} from '@/types/api/profile';
 import { InputType } from '@/types/common/input';
-import { transformToProfileRequest } from '@/utils/editProfileData';
+import {
+  changeValidData,
+  transformToProfileRequest,
+} from '@/utils/editProfileData';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { country, phone, visa } from '@/constants/information';
 import useNavigateBack from '@/hooks/useNavigateBack';
+import { useGetUserProfile, usePatchUserProfile } from '@/hooks/api/useProfile';
 
 const EditProfilePage = () => {
-  const navigate = useNavigate();
-  const [userData, setUserData] = useState<
-    UserProfileDetailDataType | undefined
-  >(undefined);
+  const { data: userProfile } = useGetUserProfile();
+  const { mutate } = usePatchUserProfile();
+
+  const [originalData, setOriginalData] = useState<UserEditRequestBody>();
+  const [userData, setUserData] = useState<UserEditRequestBody>(
+    InitialUserProfileDetail,
+  );
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [phoneNum, setPhoneNum] = useState({
     start: '',
@@ -26,53 +35,33 @@ const EditProfilePage = () => {
     end: '',
   });
 
-  const handleInputChange =
-    (field: keyof UserProfileDetailDataType) => (value: string) => {
-      setUserData((prevData) => {
-        if (!prevData) {
-          return { [field]: value } as UserProfileDetailDataType;
-        }
-        return {
-          ...prevData,
-          [field]: value,
-        };
-      });
-    };
-
   const handleBackButtonClick = useNavigateBack();
 
-  const handleSubmit = async (): Promise<void> => {
-    // TODO : API - 3.5 (유학생) 프로필 수정
+  const handleSubmit = () => {
+    // API - 3.5 (유학생) 프로필 수정
     if (!userData) return;
 
-    navigate('/profile');
-
-    // get -> patch 데이터 변환
-    const transformedData = transformToProfileRequest(
-      userData,
+    // api 요청 형식과 일치시키는 함수(유효성 검증)
+    const transformedData = changeValidData(
+      userData as UserEditRequestBody,
       phoneNum,
-      profileImage,
       Boolean(profileImage), // 이미지 변경 여부 확인
     );
-    try {
-      const formData = new FormData();
 
-      // 이미지가 있을 경우 FormData에 추가
-      if (transformedData.image) {
-        formData.append('image', transformedData.image);
-      }
-
-      // JSON 데이터를 Blob으로 변환 후 FormData에 추가
-      formData.append(
-        'body',
-        new Blob([JSON.stringify(transformedData.body)], {
-          type: 'application/json',
-        }),
-      );
-      navigate('/profile');
-    } catch (error) {
-      console.error('API 호출 중 에러 발생:', error);
+    const formData = new FormData();
+    // 이미지가 있을 경우 FormData에 추가
+    if (profileImage) {
+      formData.append('image', profileImage);
     }
+    // JSON 데이터를 Blob으로 변환 후 FormData에 추가
+    formData.append(
+      'body',
+      new Blob([JSON.stringify(transformedData)], {
+        type: 'application/json',
+      }),
+    );
+    // mutate 호출
+    mutate(formData);
   };
 
   // 전화번호를 3개의 파트로 구분
@@ -83,24 +72,18 @@ const EditProfilePage = () => {
     }
   }, [userData]);
 
+  // 수정을 위한 초기 데이터 세팅
   useEffect(() => {
-    // TODO : API - 3.1 (유학생) 유저 프로필 조회하기
-    setUserData({
-      profile_img_url:
-        'https://images.pexels.com/photos/1458926/pexels-photo-1458926.jpeg?cs=srgb&dl=pexels-poodles2doodles-1458926.jpg&fm=jpg',
-      first_name: 'Hyeona',
-      last_name: 'Seol',
-      birth: '2001-02-09',
-      gender: GenderType.FEMALE,
-      nationality: NationalityType.SOUTH_KOREA,
-      visa: VisaType.D_2_1,
-      phone_number: '010-1111-2222',
-    });
+    if (userProfile) {
+      const initailData = transformToProfileRequest(userProfile.data);
+      setOriginalData(initailData);
+      setUserData(initailData);
+    }
   }, []);
 
   return (
     <>
-      {userData ? (
+      {userProfile ? (
         <div className="w-full h-full">
           <BaseHeader
             hasBackButton={true}
@@ -110,7 +93,7 @@ const EditProfilePage = () => {
           />
           <div className="flex flex-col px-6 gap-9 mb-32">
             <EditProfilePicture
-              profileImgUrl={userData.profile_img_url}
+              profileImgUrl={userProfile.data.profile_img_url}
               onImageUpdate={setProfileImage}
             />
 
@@ -123,7 +106,12 @@ const EditProfilePage = () => {
                 inputType={InputType.TEXT}
                 placeholder="First Name"
                 value={userData.first_name}
-                onChange={handleInputChange('first_name')}
+                onChange={(value) =>
+                  setUserData({
+                    ...userData,
+                    first_name: value,
+                  })
+                }
                 canDelete={false}
               />
             </div>
@@ -136,7 +124,12 @@ const EditProfilePage = () => {
                 inputType={InputType.TEXT}
                 placeholder="Last Name"
                 value={userData.last_name}
-                onChange={handleInputChange('last_name')}
+                onChange={(value) =>
+                  setUserData({
+                    ...userData,
+                    last_name: value,
+                  })
+                }
                 canDelete={false}
               />
             </div>
@@ -214,7 +207,7 @@ const EditProfilePage = () => {
                 placeholder="Select Visa Status"
                 options={visa}
                 setValue={(value: string) =>
-                  setUserData({ ...userData, visa: value as VisaType })
+                  setUserData({ ...userData, visa: value })
                 }
               />
             </div>
@@ -257,9 +250,13 @@ const EditProfilePage = () => {
             <Button
               type={buttonTypeKeys.LARGE}
               title="Save"
-              bgColor="bg-[#FEF387]"
-              fontColor="text-[#1E1926]"
-              onClick={handleSubmit}
+              bgColor={
+                originalData == userData ? 'bg-[#F4F4F9]' : 'bg-[#FEF387]'
+              }
+              fontColor={
+                originalData == userData ? 'text-[#BDBDBD]' : 'text-[#1E1926]'
+              }
+              onClick={originalData == userData ? undefined : handleSubmit}
               isBorder={false}
             />
           </div>

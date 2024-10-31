@@ -3,12 +3,16 @@ import {
   EducationRequest,
   IntroDuctionRequest,
   LanguagesLevelType,
+  UserResumeDetailResponse,
   WorkExperienctRequest,
 } from '@/types/api/resumes';
 import { api } from '.';
+import { RESTYPE } from '@/types/api/common';
 
 // 7.1 (유학생/고용주) 이력서 조회하기
-export const getResume = async () => {
+export const getResume = async (): Promise<
+  RESTYPE<UserResumeDetailResponse>
+> => {
   const response = await api.get('/resumes/details');
   return response.data;
 };

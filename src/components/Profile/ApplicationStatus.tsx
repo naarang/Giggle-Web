@@ -1,7 +1,13 @@
+import {
+  useGetApplicationCounts,
+  useGetOwnerApplicationCounts,
+} from '@/hooks/api/useProfile';
 import { ApplicationCountType, BookmarkCountType } from '@/types/api/profile';
 import { useEffect, useState } from 'react';
 
 const ApplicationStatus = () => {
+  const { data: applcationData } = useGetApplicationCounts();
+  const { data: bookmarkData } = useGetOwnerApplicationCounts();
   const [applicationCounts, setApplicationCounts] =
     useState<ApplicationCountType>({
       application_counts: 7,
@@ -12,14 +18,17 @@ const ApplicationStatus = () => {
   });
 
   useEffect(() => {
-    // TODO : API 로직 추가
-    setApplicationCounts({
-      application_counts: 7,
-      successful_hire_counts: 2,
-    });
-    setBookmarkCounts({
-      book_mark_counts: 10,
-    });
+    if (applcationData?.success) {
+      setApplicationCounts({
+        application_counts: applcationData.data.application_counts,
+        successful_hire_counts: applcationData.data.successful_hire_counts,
+      });
+    }
+    if (bookmarkData?.success) {
+      setBookmarkCounts({
+        book_mark_counts: bookmarkData.data.applicants_counts,
+      });
+    }
   }, []);
 
   return (
