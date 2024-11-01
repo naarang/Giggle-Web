@@ -246,6 +246,7 @@ export const useSignupEmployer = (setSuccess: () => void) => {
         deleteTemporaryToken();
         setAccessToken(data.data.access_token);
         setRefreshToken(data.data.refresh_token);
+        navigate('/splash');
         setSuccess();
       }
     },
