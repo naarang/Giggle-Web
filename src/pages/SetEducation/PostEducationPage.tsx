@@ -35,7 +35,6 @@ const PostEducationPage = () => {
 
   useEffect(() => {
     setIsValid(educationDataValidation(educationData));
-    console.log(educationData);
   }, [educationData]);
 
   return (
