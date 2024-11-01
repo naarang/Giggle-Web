@@ -1,4 +1,5 @@
 import BaseHeader from '@/components/Common/Header/BaseHeader';
+import InfoAlert from '@/components/Document/write/InfoAlert';
 import DocumentSubHeaderEmployer from '@/components/Employer/ApplicantDocumentsDetail/DocumentSubHeaderEmployer';
 import EmployeeInfoSectionKOR from '@/components/Employer/WriteDocument/EmployeeInfoSectionKOR';
 import EmployerLaborContractForm from '@/components/Employer/WriteDocument/EmployerLaborContractForm';
@@ -59,7 +60,8 @@ const EmployerWriteDocumentsPage = () => {
           } // 서류관리 페이지로 이동 요망
         />
         <DocumentSubHeaderEmployer type={type as DocumentType} />
-        <div className="px-6 pt-6">
+        <div className="flex flex-col items-center justify-start gap-6 px-6 pt-6">
+          <InfoAlert content="유학생의 정보가 알맞은지 확인하세요." />
           <EmployeeInfoSectionKOR
             employee={mockPartTimePermitForm}
             type={DocumentType.PART_TIME_PERMIT}
