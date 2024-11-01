@@ -128,7 +128,7 @@ export const withdraw = async (): Promise<RESTYPE<null>> => {
 
 // 고용주 회원가입
 export const signUpEmployer = async (
-  signupInfo: EmployerRegistrationRequest,
+  signupInfo: FormData,
 ): Promise<RESTYPE<SignUpResponse>> => {
   const response = await api.post(`/auth/owners`, signupInfo);
   return response.data;

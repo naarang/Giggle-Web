@@ -31,14 +31,26 @@ const EmployerSignupInfoPage = () => {
   // 최종 완료 시 호출, 서버 api 호출 및 완료 modal 표시
   const handleSubmit = () => {
     if (isValidEmployerRegistration(newEmployData)) {
-      mutate({
-        image: logoFile,
-        body: {
-          ...newEmployData,
-        },
-      });
+      const formData = new FormData();
+
+      // 이미지 파일이 있는 경우에만 추가
+      if (logoFile) {
+        formData.append('image', logoFile);
+      }
+
+      // JSON 데이터를 Blob으로 변환하여 추가
+      formData.append(
+        'body',
+        new Blob([JSON.stringify(newEmployData)], {
+          type: 'application/json',
+        }),
+      );
+
+      // mutate 호출로 서버에 전송
+      mutate(formData);
     }
   };
+
   return (
     <div className="last:pb-[10rem]">
       <BaseHeader
