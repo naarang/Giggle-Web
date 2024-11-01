@@ -48,7 +48,7 @@ export const getApplicantList = async (
   const page = 1;
   const size = 10;
   const response = await api.get(
-    `/owners/job-postings/${id}/user-owner-job-postings/users/overviews?page=${page}&size=${size}&sorting=${sorting}&status=${status}`,
+    `/owners/job-postings/${id}/user-owner-job-postings/users/overviews?page=${page}&size=${size}&sorting=${sorting}${status !== 'TOTAL' ? `&status=${status}` : ''}`,
   );
   return response.data;
 };
@@ -66,7 +66,13 @@ export const createPost = async (newPost: FormData) => {
 };
 
 // 4.10 (고용주) 공고 수정하기
-export const editPost = async ({newPost, id}: {newPost: FormData, id: number}) => {
+export const editPost = async ({
+  newPost,
+  id,
+}: {
+  newPost: FormData;
+  id: number;
+}) => {
   const response = await api.put(`/owners/job-postings/${id}`, newPost);
   return response.data;
 };
