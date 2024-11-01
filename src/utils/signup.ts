@@ -8,13 +8,15 @@ export const isValidEmployerRegistration = (
   data: EmployerRegistrationRequestBody,
 ): boolean => {
   const phonePattern = /.*-\d{4}-\d{4}$/;
+  const companyRegisterNumPattern = /^\d{3}\/\d{2}\/\d{5}$/;
   // owner_info의 모든 필드 체크
   const { owner_info } = data;
   if (
     !isValidString(owner_info.company_name) ||
     !isValidString(owner_info.owner_name) ||
     !isValidString(owner_info.company_registration_number) ||
-    !phonePattern.test(owner_info.phone_number)
+    !phonePattern.test(owner_info.phone_number) ||
+    !companyRegisterNumPattern.test(owner_info.company_registration_number)
   ) {
     return false;
   }
