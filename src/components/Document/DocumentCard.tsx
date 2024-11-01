@@ -7,7 +7,8 @@ import FolderIcon from '@/assets/icons/FolderIcon.svg?react';
 import DownloadIcon from '@/assets/icons/DownloadIcon.svg?react';
 import CheckIconGreen from '@/assets/icons/CheckIconGreen.svg?react';
 import WriteIcon from '@/assets/icons/WriteIcon.svg?react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useConfirmDocuments, useSubmitDocumentEmployee } from '@/hooks/api/useDocument';
 
 const enum DocumentStatus {
   TEMPORARY_SAVE = 'TEMPORARY_SAVE',
@@ -21,7 +22,7 @@ type DocumentCardProps = {
   document: DocumentInfo;
   title: string;
   type: string;
-  onNext: () => void;
+  onNext?: () => void;
 };
 
 const TemporarySaveCard = ({
@@ -338,9 +339,11 @@ const DocumentCardDispenser = ({
   document,
   title,
   type,
-  onNext,
 }: DocumentCardProps) => {
+  const { mutate: submitDocument } = useSubmitDocumentEmployee();
+  const { mutate: confirmDocument} = useConfirmDocuments();
   const navigate = useNavigate();
+  const {id} = useParams();
   const handleDownload = (url: string) => {
     window.open(url, '_blank');
   };
@@ -364,7 +367,7 @@ const DocumentCardDispenser = ({
       return (
         <TemporarySaveCard
           title={title}
-          onNext={onNext}
+          onNext={()=> submitDocument(Number(id))}
           onEdit={() =>
             navigate('/write-documents', {
               state: {
@@ -381,7 +384,7 @@ const DocumentCardDispenser = ({
       return (
         <BeforeConfirmationCard
           title={title}
-          onNext={onNext}
+          onNext={()=> confirmDocument(Number(id))}
           onRequest={() =>
             navigate('/request-modify', {
               state: {

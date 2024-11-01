@@ -41,7 +41,7 @@ const EmployerCreatePostPage = () => {
       {devIsModal ? (
         <CompleteModal
           title="공고 등록이 완료되었습니다."
-          onNext={() => {}} // 생성한 공고에 대한 공고 상세 페이지로 이동 요망
+          onNext={() => {}}
         />
       ) : (
         <>

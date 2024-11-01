@@ -42,7 +42,6 @@ const ApplicantDocumentsDetailPage = () => {
             }
             title={DocumentTypeInfo[DocumentType.PART_TIME_PERMIT].name}
             type={DocumentType.PART_TIME_PERMIT}
-            onNext={() => {}}
           />
         ) : (
           <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-start justify-start py-6 cursor-pointer text-left text-[#1e1926]">
@@ -60,7 +59,6 @@ const ApplicantDocumentsDetailPage = () => {
             document={data.data[DocumentType.LABOR_CONTRACT] as EmployDocumentInfo}
             title={DocumentTypeInfo[DocumentType.LABOR_CONTRACT].name}
             type={DocumentType.LABOR_CONTRACT}
-            onNext={() => {}}
           />
         ) : (
           <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-start justify-start py-6 cursor-pointer text-left text-[#1e1926]">

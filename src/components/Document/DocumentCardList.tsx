@@ -9,10 +9,6 @@ const DocumentCardList = ({
   documents: DocumentsSummaryResponse;
 }) => {
   const documentTypes = Object.values(DocumentType);
-  const handleOnNext = () => {
-    //추후 api 작성 시 완성
-    alert('onNext');
-  };
 
   return (
     <div className="flex flex-col w-full px-6 gap-2">
@@ -22,7 +18,6 @@ const DocumentCardList = ({
             document={documents[property]}
             title={DocumentTypeInfo[property].name}
             type={property}
-            onNext={handleOnNext}
           />
         ) : (
           <MakeDocumentButton type={property} />

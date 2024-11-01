@@ -1,4 +1,5 @@
 import {
+  confirmDocuments,
   getDocumentsEmployee,
   getIntegratedApplication,
   getPartTimeEmployPermit,
@@ -13,6 +14,8 @@ import {
   putPartTimeEmployPermitEmployer,
   putStandardLaborContracts,
   searchSchool,
+  submitDocumentEmployee,
+  submitDocumentEmployer,
 } from '@/api/document';
 import {
   DocumentType,
@@ -175,6 +178,45 @@ export const usePutIntegratedApplicants = (id: number) => {
           type: DocumentType.INTEGRATED_APPLICATION,
         },
       }),
+  });
+};
+
+// 8.15 (유학생) 서류 제출하기 커스텀 훅
+export const useSubmitDocumentEmployee = () => {
+  return useMutation({
+    mutationFn: submitDocumentEmployee,
+    onSuccess: () => {
+      window.location.reload();
+    },
+    onError: (error) => {
+      console.error('서류 제출중 오류 발생:', error);
+    },
+  });
+};
+
+// 8.16 (고용주) 서류 제출하기 커스텀 훅
+export const useSubmitDocumentEmployer = () => {
+  return useMutation({
+    mutationFn: submitDocumentEmployer,
+    onSuccess: () => {
+      window.location.reload();
+    },
+    onError: (error) => {
+      console.error('서류 제출 중 오류 발생:', error);
+    },
+  });
+};
+
+// 8.17 (유학생) 서류 컨펌하기 커스텀 훅
+export const useConfirmDocuments = () => {
+  return useMutation({
+    mutationFn: confirmDocuments,
+    onSuccess: () => {
+      window.location.reload();
+    },
+    onError: (error) => {
+      console.error('서류 제출 중 오류 발생:', error);
+    },
   });
 };
 
