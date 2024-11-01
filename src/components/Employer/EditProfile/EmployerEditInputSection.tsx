@@ -165,7 +165,6 @@ const EmployerEditInputSection = ({
         setLogoStatus(LogoType.SELECTED);
       };
       reader.readAsDataURL(file);
-      console.log(file);
     }
   };
   // Giggle 기본로고 선택 handler
