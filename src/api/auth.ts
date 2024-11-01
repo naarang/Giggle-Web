@@ -14,7 +14,6 @@ import {
 import { api } from '@/api/index.ts';
 import { apiWithoutAuth } from '@/api/index.ts';
 import { RESTYPE } from '@/types/api/common';
-import { EmployerRegistrationRequest } from '@/types/api/employ';
 
 /**
  * 사용자 로그인을 처리하는 함수

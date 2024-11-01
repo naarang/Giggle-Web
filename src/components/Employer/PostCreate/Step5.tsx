@@ -55,13 +55,6 @@ const Step5 = ({
         type: 'application/json',
       }),
     );
-    formData.forEach((value, key) => {
-      if (value instanceof Blob) {
-        console.log(`${key}:`, `Blob size: ${value.size}, type: ${value.type}`);
-      } else {
-        console.log(`${key}:`, value);
-      }
-    });
 
     onNext({
       ...postInfo,

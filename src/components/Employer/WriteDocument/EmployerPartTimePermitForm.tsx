@@ -189,7 +189,7 @@ const EmployerPartTimePermitForm = ({
         <InputLayout title="사업자등록번호" isEssential>
           <Input
             inputType={InputType.TEXT}
-            placeholder="사업자등록번호를 입력해주세요"
+            placeholder="000/00/00000"
             value={newDocumentData.company_registration_number}
             onChange={(value) =>
               setNewDocumentData({
@@ -328,6 +328,7 @@ const EmployerPartTimePermitForm = ({
                 signature_base64: '',
               })
             }
+            isKorean
           />
         </InputLayout>
         {/* 근무 기간 입력 */}

@@ -281,7 +281,7 @@ const InformationInputSection = ({
           <InputLayout title="사업자 등록번호" isEssential>
             <Input
               inputType={InputType.TEXT}
-              placeholder="사업자등록번호를 입력해주세요"
+              placeholder="000/00/00000"
               value={newEmployData.owner_info.company_registration_number}
               onChange={(value) =>
                 setNewEmployData({
@@ -359,7 +359,7 @@ const InformationInputSection = ({
                   <input
                     id="logo-upload"
                     type="file"
-                    accept="image/*"
+                    accept="image/jpeg, image/png"
                     onChange={handleImageChange}
                     className="hidden"
                     // input을 재선택할 수 있도록 key를 추가

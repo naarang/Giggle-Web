@@ -7,7 +7,6 @@ import {
   usePatchOwnerProfile,
 } from '@/hooks/api/useProfile';
 import {
-  EmployerProfileDetailResponse,
   EmployerProfileRequestBody,
   initialEmployerProfile,
 } from '@/types/api/profile';
@@ -18,8 +17,6 @@ import { useNavigate } from 'react-router-dom';
 
 const EmployerEditProfilePage = () => {
   const navigate = useNavigate();
-  const [originalData, setOriginalData] =
-    useState<EmployerProfileDetailResponse>();
   const [newEmployData, setNewEmployData] =
     useState<EmployerProfileRequestBody>(initialEmployerProfile);
   const [logoFile, setLogoFile] = useState<File | undefined>(undefined);
@@ -32,8 +29,6 @@ const EmployerEditProfilePage = () => {
 
   useEffect(() => {
     if (data) {
-      setOriginalData(data.data); // 수정 전 데이터
-
       // get 타입에서 patch 타입으로 변환
       setNewEmployData(transformToEmployerProfileRequest(data.data)); // 수정 데이터
     }
@@ -66,7 +61,6 @@ const EmployerEditProfilePage = () => {
         }),
       );
 
-      console.log('formData 준비 완료');
       mutate(formData); // PATCH 요청 전송
     }
   };
