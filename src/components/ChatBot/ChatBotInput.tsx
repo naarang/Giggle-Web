@@ -1,5 +1,6 @@
 import ChatSubmitIcon from '@/assets/icons/ChatSubmitIcon.svg?react';
 import { ChatItemType } from '@/types/api/chatbot';
+import axios from 'axios';
 import { useState } from 'react';
 
 type ChatBotInputProps = {
@@ -9,7 +10,7 @@ type ChatBotInputProps = {
 const ChatBotInput = ({ addChatData }: ChatBotInputProps) => {
   const [text, setText] = useState<string>('');
 
-  const onClickSubmit = (text: string) => {
+  const onClickSubmit = async (text: string) => {
     if (!text) return;
 
     const newUserChatData = {
@@ -19,6 +20,24 @@ const ChatBotInput = ({ addChatData }: ChatBotInputProps) => {
     addChatData(newUserChatData);
     setText('');
     // TODO: 채팅 api 호출하기
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_APP_API_CHAT_BASE_URL}/chat/v1/chatbot`,
+        {
+          message: text,
+        },
+      );
+
+      if (response?.data) {
+        const newChatBotData = {
+          isBot: true,
+          message: response?.data?.data,
+        };
+        addChatData(newChatBotData);
+      }
+    } catch (error) {
+      console.error('Error sending text to chatbot:', error);
+    }
   };
 
   return (
