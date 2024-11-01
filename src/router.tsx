@@ -48,6 +48,7 @@ import ChatBotPage from '@/pages/ChatBot/ChatBotPage';
 import Splash from '@/components/Splash/Splash';
 import ApplicantDocumentsDetailPage from '@/pages/Employer/WriteDocuments/ApplicantDocumentsDetailPage';
 import EmployerWriteDocumentsPage from '@/pages/Employer/WriteDocuments/EmployerWriteDocumentsPage';
+import EmployerEditPostPage from './pages/Employer/Post/EmployerEditPostPage';
 
 const Layout = () => {
   const location = useLocation();
@@ -136,8 +137,12 @@ const Router = () => {
           />
           <Route path="/employer/post" element={<EmployerPostPage />} />
           <Route
-            path="/employer/post/create/:id"
+            path="/employer/post/create/"
             element={<EmployerCreatePostPage />}
+          />
+          <Route
+            path="/employer/post/edit/:id"
+            element={<EmployerEditPostPage />}
           />
           <Route
             path="/employer/post/:id"
