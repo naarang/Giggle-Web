@@ -14,7 +14,7 @@ const HomeEmployerBanner = () => {
         {/* TODO: 공고 작성 페이지로 이동 필요 */}
         <button
           className="px-[1.5rem] py-[0.5rem] rounded-[1.313rem] bg-[#1B1B1B]"
-          onClick={() => navigate(`/employer/post`)}
+          onClick={() => navigate(`/employer/post/create`)}
         >
           <PlusIcon />
         </button>
