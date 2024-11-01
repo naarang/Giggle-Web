@@ -12,7 +12,7 @@ import {
   JobPostingForm,
 } from '@/types/postCreate/postCreate';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const EmployerCreatePostPage = () => {
   const location = useLocation();
@@ -24,6 +24,8 @@ const EmployerCreatePostPage = () => {
 
   const { mutate } = useCreatePost(); // 공고 생성 시 호출하느 ㄴ훅
   const [devIsModal, setDevIsModal] = useState(false);
+
+  const navigate = useNavigate(); // navigate 변수를 정의합니다.
 
   // 다음 step으로 넘어갈 때 호출되며, 각 step에서 입력한 정보를 userInfo에 저장, 다음 step으로 이동한다.
   const handleNext = (newInfo: JobPostingForm) => {
@@ -37,7 +39,7 @@ const EmployerCreatePostPage = () => {
   };
   return (
     <div>
-      <BaseHeader hasBackButton hasMenuButton={false} title="공고등록" />
+      <BaseHeader hasBackButton onClickBackButton={() => navigate('/')} hasMenuButton={false} title="공고등록" />
       {devIsModal ? (
         <CompleteModal
           title="공고 등록이 완료되었습니다."
