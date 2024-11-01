@@ -64,7 +64,7 @@ export const useGetPostDetail = (id: number, isEnabled: boolean) => {
 // 4.5 (유학생) 추천 공고 리스트 조회하기 훅
 export const useGetRecommendPostList = () => {
   return useQuery({
-    queryKey: ['post'],
+    queryKey: ['post', 'recommend'],
     queryFn: () => getRecommendPostList(),
   });
 };
@@ -195,7 +195,7 @@ export const useGetInterviewList = (page: number, size: number) => {
 // 6.6 (고용주) 등록한 공고 리스트 조회하기 훅
 export const useGetEmployerPostList = (sorting: MatchKoEnAscendingSortType) => {
   return useQuery({
-    queryKey: ['post'],
+    queryKey: ['post', sorting],
     queryFn: () => getEmployerPostList(sorting),
   });
 };

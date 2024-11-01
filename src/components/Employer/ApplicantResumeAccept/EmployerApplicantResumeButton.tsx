@@ -1,17 +1,23 @@
 import { buttonTypeKeys } from '@/constants/components';
 import Button from '@/components/Common/Button';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { usePatchResumeAccepted } from '@/hooks/api/useApplication';
 
 const EmployerApplicantResumeButton = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
 
-  const { mutate } = usePatchResumeAccepted();
+  const { mutateAsync } = usePatchResumeAccepted();
 
-  const onClickAcceptButton = (isAccepted: boolean) => {
+  const onClickAcceptButton = async (isAccepted: boolean) => {
     if (isNaN(Number(id))) return;
 
-    mutate({ id: Number(id), isAccepted: { is_accepted: isAccepted } });
+    const { data } = await mutateAsync({
+      id: Number(id),
+      isAccepted: { is_accepted: isAccepted },
+    });
+
+    if (data?.success) navigate(`/employer/applicant/${id}`);
   };
 
   return (

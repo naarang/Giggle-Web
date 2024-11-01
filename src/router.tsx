@@ -136,7 +136,7 @@ const Router = () => {
           />
           <Route path="/employer/post" element={<EmployerPostPage />} />
           <Route
-            path="/employer/post/create"
+            path="/employer/post/create/:id"
             element={<EmployerCreatePostPage />}
           />
           <Route
