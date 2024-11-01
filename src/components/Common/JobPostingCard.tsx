@@ -78,7 +78,7 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
         </div>
         <div className="flex items-center gap-[0.5rem]">
           <Tag
-            value={calculateDDay(jobPostingData.recruitment_dead_line)}
+            value={jobPostingData.recruitment_dead_line === '상시모집' ? '상시모집' : calculateDDay(jobPostingData.recruitment_dead_line)}
             padding="0.313rem 0.875rem"
             isRounded={false}
             hasCheckIcon={false}
