@@ -172,8 +172,7 @@ export const useSignUp = () => {
       }
     },
     onError: () => {
-      alert('회원가입에 실패하였습니다. 다시 시도해주세요.');
-      navigate('/');
+      navigate('/splash');
     },
   });
 };
@@ -251,8 +250,7 @@ export const useSignupEmployer = (setSuccess: () => void) => {
       }
     },
     onError: () => {
-      alert('회원가입에 실패하였습니다. 다시 시도해주세요.');
-      navigate('/signin');
+      navigate('/splash');
     },
   });
 };

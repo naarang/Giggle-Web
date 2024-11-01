@@ -7,7 +7,6 @@ import {
   usePatchOwnerProfile,
 } from '@/hooks/api/useProfile';
 import {
-  EmployerProfileDetailResponse,
   EmployerProfileRequestBody,
   initialEmployerProfile,
 } from '@/types/api/profile';
@@ -18,8 +17,6 @@ import { useNavigate } from 'react-router-dom';
 
 const EmployerEditProfilePage = () => {
   const navigate = useNavigate();
-  const [originalData, setOriginalData] =
-    useState<EmployerProfileDetailResponse>();
   const [newEmployData, setNewEmployData] =
     useState<EmployerProfileRequestBody>(initialEmployerProfile);
   const [logoFile, setLogoFile] = useState<File | undefined>(undefined);
@@ -32,8 +29,6 @@ const EmployerEditProfilePage = () => {
 
   useEffect(() => {
     if (data) {
-      setOriginalData(data.data); // 수정 전 데이터
-
       // get 타입에서 patch 타입으로 변환
       setNewEmployData(transformToEmployerProfileRequest(data.data)); // 수정 데이터
     }
@@ -45,27 +40,28 @@ const EmployerEditProfilePage = () => {
 
   const handleSubmit = () => {
     if (isValidEmployerProfile(newEmployData)) {
-      // 로고 이미지 변경 여부
-      if (originalData?.logo_img_url === logoFile) {
-        setNewEmployData({ ...newEmployData, is_icon_img_changed: false });
-      } else {
-        setNewEmployData({ ...newEmployData, is_icon_img_changed: true });
-      }
-      // patch 훅 호출
+      // 이미지 변경 여부를 설정하여 프로필 수정 데이터를 업데이트합니다.
+      const updatedEmployData = {
+        ...newEmployData,
+        is_icon_img_changed: Boolean(logoFile),
+      };
 
       const formData = new FormData();
-      // 이미지가 있을 경우 FormData에 추가
+
+      // 이미지 파일이 있을 경우 image로 추가
       if (logoFile) {
         formData.append('image', logoFile);
       }
-      // JSON 데이터를 Blob으로 변환 후 FormData에 추가
+
+      // JSON 데이터를 Blob으로 변환하여 body라는 이름으로 추가
       formData.append(
         'body',
-        new Blob([JSON.stringify(newEmployData)], {
+        new Blob([JSON.stringify(updatedEmployData)], {
           type: 'application/json',
         }),
       );
-      mutate(formData);
+
+      mutate(formData); // PATCH 요청 전송
     }
   };
 
@@ -81,6 +77,7 @@ const EmployerEditProfilePage = () => {
         newEmployData={newEmployData}
         setNewEmployData={setNewEmployData}
         setLogoFile={(file: File | undefined) => setLogoFile(file)}
+        initialPhonNum={newEmployData.owner_info.phone_number}
       />
       <BottomButtonPanel>
         <Button
