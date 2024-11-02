@@ -135,12 +135,12 @@ export const usePutStandardLaborContracts = (id: number) => {
 };
 
 // 8.13 (고용주) 표준 근로계약서 수정 api 통신 커스텀 훅
-export const usePutLaborContractEmployer = () => {
+export const usePutLaborContractEmployer = (id: number) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: putLaborContractEmployer,
     onSuccess: () => {
-      navigate(`/employer/applicant/document-detail`);
+      navigate(`/employer/applicant/${id}/document-detail`);
     },
     onError: () =>
       navigate('/write-documents', {
