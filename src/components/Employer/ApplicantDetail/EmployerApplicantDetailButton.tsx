@@ -29,7 +29,7 @@ const EmployerApplicantDetailButton = ({
             fontColor="text-[#1E1926]"
             title="이력서 확인하기"
             isBorder={false}
-            onClick={() => navigate(`/employer/applicant/${id}/resume/accept`)}
+            onClick={() => navigate(`/employer/applicant/${applicant_id}/resume/accept`)}
           />
         );
       case 2:
