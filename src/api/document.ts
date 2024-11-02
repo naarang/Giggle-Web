@@ -20,7 +20,7 @@ export const postPartTimeEmployPermit = async ({
 }: {
   id: number;
   document: PartTimePermitFormRequest;
-}): Promise<RESTYPE<{id: number}>> => {
+}): Promise<RESTYPE<{ id: number }>> => {
   const response = await api.post(
     `/users/user-owner-job-postings/${id}/documents/part-time-employment-permits`,
     document,
@@ -65,7 +65,7 @@ export const postStandardLaborContracts = async ({
 }: {
   id: number;
   document: LaborContractEmployeeInfo;
-}): Promise<RESTYPE<{id: number}>> => {
+}): Promise<RESTYPE<{ id: number }>> => {
   const response = await api.post(
     `/users/user-owner-job-postings/${id}/documents/standard-labor-contracts`,
     document,
@@ -110,7 +110,7 @@ export const postIntegratedApplications = async ({
 }: {
   id: number;
   document: IntegratedApplicationData;
-}): Promise<RESTYPE<{id: number}>> => {
+}): Promise<RESTYPE<{ id: number }>> => {
   const response = await api.post(
     `/users/user-owner-job-postings/${id}/documents/integrated-applications`,
     document,
@@ -174,7 +174,7 @@ export const postRequest = async ({
 }: {
   id: number;
   reason: string;
-}): Promise<RESTYPE<{id: number}>> => {
+}): Promise<RESTYPE<{ id: number }>> => {
   const response = await api.post(`/users/documents/${id}/status/requestion`, {
     reason: reason,
   });
@@ -228,5 +228,27 @@ export const getIntegratedApplication = async (
   const response = await api.get(
     `documents/${id}/integrated-application/details`,
   );
+  return response.data;
+};
+
+// 8.15 (유학생) 서류 제출하기
+export const submitDocumentEmployee = async (
+  id: number,
+): Promise<RESTYPE<null>> => {
+  const response = await api.patch(`users/documents/${id}/status/submission`);
+  return response.data;
+};
+
+// 8.16 (고용주) 서류 제출하기
+export const submitDocumentEmployer = async (
+  id: number,
+): Promise<RESTYPE<null>> => {
+  const response = await api.patch(`owners/documents/${id}/status/submission`);
+  return response.data;
+};
+
+// 8.17 (유학생) 서류 컨펌하기
+export const confirmDocuments = async (id: number): Promise<RESTYPE<null>> => {
+  const response = await api.patch(`users/documents/${id}/status/confirmation`);
   return response.data;
 };

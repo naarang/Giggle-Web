@@ -9,13 +9,14 @@ import CheckIconGreen from '@/assets/icons/CheckIconGreen.svg?react';
 import WriteIcon from '@/assets/icons/WriteIcon.svg?react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { DocumentStatusEmployer } from '@/constants/documents';
+import { useSubmitDocumentEmployer } from '@/hooks/api/useDocument';
 
 type DocumentCardProps = {
   document: EmployDocumentInfo;
   title: string;
   type: string;
   reason?: string;
-  onNext: () => void;
+  onNext?: () => void;
 };
 
 const NullCard = ({
@@ -350,7 +351,6 @@ const DocumentCardDispenserEmployer = ({
   document,
   title,
   type,
-  onNext,
   reason,
 }: DocumentCardProps) => {
   const navigate = useNavigate();
@@ -358,14 +358,14 @@ const DocumentCardDispenserEmployer = ({
     window.open(url, '_blank');
   };
 
+  const { mutate: submitDocument } = useSubmitDocumentEmployer();
   if (!document.status) return <NullCard title={title} />;
-
   switch (document.status) {
     case DocumentStatusEmployer.TEMPORARY_SAVE:
       return (
         <TemporarySaveCard
           title={title}
-          onNext={onNext}
+          onNext={() => submitDocument(Number(id))} // 고용주가 서류 제출
           onEdit={() =>
             navigate(`/employer/write-documents/${document.id}`, {
               state: {
@@ -384,7 +384,7 @@ const DocumentCardDispenserEmployer = ({
           <RewritingCard
             title={title}
             reason={reason}
-            onNext={onNext}
+            onNext={() => submitDocument(Number(id))} // 고용주가 서류 제출
             onEdit={() =>
               navigate(`/employer/write-documents/${document.id}`, {
                 state: {
