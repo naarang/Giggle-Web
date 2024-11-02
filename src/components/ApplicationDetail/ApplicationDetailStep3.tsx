@@ -1,8 +1,8 @@
 import { buttonTypeKeys } from '@/constants/components';
 import Button from '@/components/Common/Button';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const ApplicationDetailStep3 = ({ applicant_id }: { applicant_id: number }) => {
+const ApplicationDetailStep3 = () => {
   const navigate = useNavigate();
 
   return (
@@ -13,7 +13,7 @@ const ApplicationDetailStep3 = ({ applicant_id }: { applicant_id: number }) => {
         fontColor="text-[#F4F4F9]"
         isBorder={false}
         title="Check the application documents"
-        onClick={() => navigate(`/application-documents/${applicant_id}`)}
+        onClick={() => navigate(`/application-documents`)}
       />
     </section>
   );

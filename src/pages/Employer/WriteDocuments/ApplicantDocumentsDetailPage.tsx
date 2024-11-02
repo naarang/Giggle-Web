@@ -7,13 +7,14 @@ import {
   EmployDocumentInfo,
 } from '@/types/api/document';
 import DocumentCardDispenserEmployer from '@/components/Employer/ApplicantDocumentsDetail/DocumentCardDispenserEmployer';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useGetDocumentsEmployer, usePatchStatusSubmissionEmployer } from '@/hooks/api/useDocument';
+import { useRouteIdStore } from '@/store/route';
 
 
 const ApplicantDocumentsDetailPage = () => {
-  const {id} = useParams();
-  const { data } = useGetDocumentsEmployer(Number(id));
+  const {routeId} = useRouteIdStore();
+  const { data } = useGetDocumentsEmployer(Number(routeId));
   const navigate = useNavigate();
 
   // patch api mutate 설정 (8.16 고용주가 서류 제출하기)
@@ -22,6 +23,7 @@ const ApplicantDocumentsDetailPage = () => {
   const handleOnNext = async (id: number) => {
     mutate(id);
   };
+  //여기
 
   {
     /*
