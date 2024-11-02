@@ -41,6 +41,8 @@ const DocumentFormDispenser = ({
   });
   {
     useEffect(() => {
+      {/* applicant_id가 null인 경우 (서류를 새로 생성하는 경우) 조회 api를 호출하지 않음. */}
+      if (!applicant_id) return;
       switch (type) {
         case DocumentType.PART_TIME_PERMIT:
           getPartTimeEmployPermit(Number(applicant_id));
@@ -52,7 +54,7 @@ const DocumentFormDispenser = ({
           getIntegratedApplication(Number(applicant_id));
           break;
       }
-    }, [type]);
+    }, [type, applicant_id]);
   }
   switch (type) {
     case DocumentType.PART_TIME_PERMIT:
