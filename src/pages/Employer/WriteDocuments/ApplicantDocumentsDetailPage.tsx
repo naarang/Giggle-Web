@@ -8,13 +8,21 @@ import {
 } from '@/types/api/document';
 import DocumentCardDispenserEmployer from '@/components/Employer/ApplicantDocumentsDetail/DocumentCardDispenserEmployer';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetDocumentsEmployer } from '@/hooks/api/useDocument';
+import { useGetDocumentsEmployer, usePatchStatusSubmissionEmployer } from '@/hooks/api/useDocument';
 
 
 const ApplicantDocumentsDetailPage = () => {
   const {id} = useParams();
   const { data } = useGetDocumentsEmployer(Number(id));
   const navigate = useNavigate();
+
+  // patch api mutate 설정 (8.16 고용주가 서류 제출하기)
+  const { mutate } = usePatchStatusSubmissionEmployer();
+
+  const handleOnNext = async (id: number) => {
+    mutate(id);
+  };
+
   {
     /*
   integrated_application: {
@@ -42,7 +50,8 @@ const ApplicantDocumentsDetailPage = () => {
             }
             title={DocumentTypeInfo[DocumentType.PART_TIME_PERMIT].name}
             type={DocumentType.PART_TIME_PERMIT}
-            onNext={() => {}}
+            reason={data?.data[DocumentType.PART_TIME_PERMIT].reason || undefined}
+            onNext={() => handleOnNext(Number(id))}
           />
         ) : (
           <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-start justify-start py-6 cursor-pointer text-left text-[#1e1926]">

@@ -18,6 +18,45 @@ type DocumentCardProps = {
   onNext: () => void;
 };
 
+const NullCard = ({
+  title,
+}: {
+  title: string;
+}) => {
+  return (
+    <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-center justify-center gap-2 caption-2 text-left text-[#1e1926]">
+      <div className="self-stretch rounded-t-[1.125rem] bg-[#fef387] h-7 flex items-center justify-between px-4 pl-6 py-2 relative">
+        <div className="flex items-center justify-start relative ">
+          대기...
+        </div>
+        <div className="w-1.5 absolute !m-0 top-[0.4rem] left-[8rem] rounded-full bg-[#ff6f61] h-1.5 z-[1]" />
+        <div className="w-[0.75rem] relative h-[0.75rem] z-[2]">
+          <div className="absolute w-full h-full top-0 righ-0 bottom-0 left-0" />
+          <ArrowrightIcon />
+        </div>
+      </div>
+      <div className="self-stretch flex flex-col items-start px-4 gap-4 body-1">
+        <div className="self-stretch border-b border-[#dcdcdc] h-10 flex items-center justify-center pl-2 pb-2 gap-4">
+          <div className="flex-1 flex items-center justify-start">
+            <div className="relative head-3">{title}</div>
+          </div>
+          <div className="overflow-hidden flex items-center justify-center p-2">
+            <TalkBallonIcon />
+          </div>
+        </div>
+
+        <div className="self-stretch flex items-center justify-center px-3 text-[#656565] caption-1">
+          <div className="flex-1 relative">
+            <p className="m-0">
+              유학생이 서류를 작성 중이에요.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const TemporarySaveCard = ({
   title,
   onNext,
@@ -316,7 +355,12 @@ const DocumentCardDispenserEmployer = ({
     window.open(url, '_blank');
   };
   if (!document.status) return <BeforeConfirmationCard title={title} />;
+  
+  console.log('status : ', document);
   switch (document.status) {
+    case null:
+      return <NullCard title={title} />;
+
     case DocumentStatusEmployer.TEMPORARY_SAVE:
       return (
         <TemporarySaveCard

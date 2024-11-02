@@ -351,7 +351,7 @@ const DocumentCardDispenser = ({
         document={document}
         onDownload={handleDownload}
         onPreview={() =>
-          navigate(`/document-preview/${id}`, {
+          navigate(`/document-preview/${document.id}`, {
             state: {
               type: type,
             },
