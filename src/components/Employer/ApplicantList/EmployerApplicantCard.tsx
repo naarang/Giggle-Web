@@ -8,6 +8,7 @@ import MoneyIcon from '@/assets/icons/MoneyIcon.svg?react';
 import RightArrowIcon from '@/assets/icons/RightArrowIcon.svg?react';
 import Tag from '@/components/Common/Tag';
 import { useNavigate } from 'react-router-dom';
+import { useRouteIdStore } from '@/store/route';
 
 const statusStyler = (status: ApplicationStepType) => {
   switch (status) {
@@ -32,6 +33,7 @@ const EmployerApplicantCard = ({
   applicantData,
 }: EmployerApplicantCardPropsType) => {
   const navigate = useNavigate();
+  const { updateRouteId } = useRouteIdStore();
   return (
     <article className="w-full border-[0.031rem] border-[#1E19263D] rounded-[1.125rem] overflow-hidden">
       <div
@@ -44,7 +46,10 @@ const EmployerApplicantCard = ({
           <div className="w-[0.375rem] h-[0.375rem] rounded-full bg-[#FF6F61]"></div>
         </div>
         <RightArrowIcon
-          onClick={() => navigate(`/employer/applicant/${applicantData.id}`)}
+          onClick={() => {
+            updateRouteId(applicantData.id);
+            navigate(`/employer/applicant`);
+          }}
         />
       </div>
       <div className="flex justify-between w-full px-[1.5rem] pt-[1rem] pb-[0.75rem]">
@@ -99,14 +104,14 @@ const EmployerApplicantCard = ({
       <div className="flex flex-col gap-[0.625rem] px-[1rem] pb-[1rem]">
         <button
           className="w-full px-[1.5rem] py-[0.75rem] text-center rounded-full bg-[#1E1926] text-[#F4F4F9] caption-1-sb"
-          onClick={() => navigate(`/employer/applicant/${applicantData.id}`)}
+          onClick={() => navigate(`/employer/applicant`)}
         >
           Check Application Status
         </button>
         <button
           className="w-full px-[1.5rem] py-[0.75rem] text-center rounded-full bg-[#FEF387] text-[#1E1926] caption-1-sb"
           onClick={() =>
-            navigate(`/employer/applicant/${applicantData.id}/resume`)
+            navigate(`/employer/applicant/resume`)
           }
         >
           See Resume
