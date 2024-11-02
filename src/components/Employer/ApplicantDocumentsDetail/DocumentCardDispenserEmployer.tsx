@@ -25,14 +25,9 @@ const NullCard = ({
 }) => {
   return (
     <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-center justify-center gap-2 caption-2 text-left text-[#1e1926]">
-      <div className="self-stretch rounded-t-[1.125rem] bg-[#fef387] h-7 flex items-center justify-between px-4 pl-6 py-2 relative">
-        <div className="flex items-center justify-start relative ">
-          대기...
-        </div>
-        <div className="w-1.5 absolute !m-0 top-[0.4rem] left-[8rem] rounded-full bg-[#ff6f61] h-1.5 z-[1]" />
-        <div className="w-[0.75rem] relative h-[0.75rem] z-[2]">
-          <div className="absolute w-full h-full top-0 righ-0 bottom-0 left-0" />
-          <ArrowrightIcon />
+      <div className="self-stretch rounded-t-[1.125rem] bg-[#1e1926] h-7 flex items-center justify-between px-4 pl-6 py-2 relative">
+        <div className="flex items-center justify-start relative text-[#f4f4f9]">
+          대기 ...
         </div>
       </div>
       <div className="self-stretch flex flex-col items-start px-4 gap-4 body-1">
@@ -47,9 +42,18 @@ const NullCard = ({
 
         <div className="self-stretch flex items-center justify-center px-3 text-[#656565] caption-1">
           <div className="flex-1 relative">
-            <p className="m-0">
-              유학생이 서류를 작성 중이에요.
-            </p>
+            <p className="m-0">유학생이 서류를 작성 중이에요.</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col w-full items-start justify-start py-2 px-4 text-[#464646]">
+        <div className="w-full rounded-3xl bg-[#f4f4f9] flex items-center justify-start border border-[#dcdcdc] px-4 py-2 pl-2.5">
+          <div className="flex items-center justify-start gap-2">
+            <div className="w-[1.375rem] h-[1.375rem] flex items-center justify-center rounded-full bg-[#1e1926]">
+              <TalkBallonIconGrey />
+            </div>
+            <div className="relative body-3 opacity-75">작성 중 ...</div>
           </div>
         </div>
       </div>
@@ -349,25 +353,21 @@ const DocumentCardDispenserEmployer = ({
   onNext,
   reason,
 }: DocumentCardProps) => {
-  const {id} = useParams();
   const navigate = useNavigate();
   const handleDownload = (url: string) => {
     window.open(url, '_blank');
   };
-  if (!document.status) return <BeforeConfirmationCard title={title} />;
-  
-  console.log('status : ', document);
-  switch (document.status) {
-    case null:
-      return <NullCard title={title} />;
 
+  if (!document.status) return <NullCard title={title} />;
+
+  switch (document.status) {
     case DocumentStatusEmployer.TEMPORARY_SAVE:
       return (
         <TemporarySaveCard
           title={title}
           onNext={onNext}
           onEdit={() =>
-            navigate(`/employer/write-documents/${id}`, {
+            navigate(`/employer/write-documents/${document.id}`, {
               state: {
                 type: type,
                 isEdit: true,
@@ -386,7 +386,7 @@ const DocumentCardDispenserEmployer = ({
             reason={reason}
             onNext={onNext}
             onEdit={() =>
-              navigate(`/employer/write-documents/${id}`, {
+              navigate(`/employer/write-documents/${document.id}`, {
                 state: {
                   type: type,
                   isEdit: true,
