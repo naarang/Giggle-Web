@@ -12,6 +12,8 @@ const HomeRecommendPostCard = ({
 }: HomeRecommendPostCardProps) => {
   const navigate = useNavigate();
 
+  const { name } = useUserStore();
+
   return (
     <article
       className="flex flex-col justify-between min-w-[11.25rem] w-[11.25rem] h-[8.75rem] pt-[0.75rem] pb-[1.125rem] px-[1.125rem] rounded-[1.5rem] border-[0.031rem] border-[#F4F4F9] shadow-cardShadow bg-cover bg-center bg-[url('/src/assets/images/yellowGradient.png')]"
@@ -28,10 +30,10 @@ const HomeRecommendPostCard = ({
       <MessageIcon />
       <div>
         <p className="pb-[0.5rem] caption-1 text-[#656565]">
-          한은서님을 위한 추천 공고 도착!
+        he recommendation notice for {name.replace(/-/g, ' ')} has arrived !
         </p>
         <div className="button-2 text-[#1E1926] break-keep whitespace-normal">
-          공고제목{')'} {jobPostingData.title}
+          Job Title {')'} {jobPostingData.title}
         </div>
       </div>
     </article>
