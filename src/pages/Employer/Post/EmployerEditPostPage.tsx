@@ -12,7 +12,7 @@ import {
   JobPostingForm,
 } from '@/types/postCreate/postCreate';
 import { useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 
 const EmployerEditPostPage = () => {
   const location = useLocation();
@@ -25,6 +25,7 @@ const EmployerEditPostPage = () => {
 
   const { mutate: editPost } = useEditPost(); //  공고 수정 시 호출하는 훅
   const [devIsModal, setDevIsModal] = useState(false);
+  const navigate = useNavigate();
 
   // 다음 step으로 넘어갈 때 호출되며, 각 step에서 입력한 정보를 userInfo에 저장, 다음 step으로 이동한다.
   const handleNext = (newInfo: JobPostingForm) => {
@@ -40,7 +41,7 @@ const EmployerEditPostPage = () => {
   };
   return (
     <div>
-      <BaseHeader hasBackButton hasMenuButton={false} title="공고등록" />
+      <BaseHeader hasBackButton onClickBackButton={() => navigate(-1)} hasMenuButton={false} title="공고등록" />
       {devIsModal ? (
         <CompleteModal
           title="공고 등록이 완료되었습니다."

@@ -2,7 +2,7 @@ import BaseHeader from '@/components/Common/Header/BaseHeader';
 import DocumentSubHeader from '@/components/Document/write/DocumentSubHeader';
 import { DocumentType } from '@/types/api/document';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   PartTimePermitData,
   LaborContractDataResponse,
@@ -17,9 +17,12 @@ import {
 import EmployeeInfoSection from '@/components/Document/write/EmployeeInfoSection';
 import InfoAlert from '@/components/Document/write/InfoAlert';
 import IntegratedApplicationPreview from '@/components/Document/write/IntegratedApplicationPreview';
+
 const DocumentPreview = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { id } = useParams();
+
   const { type } = location.state || {};
   const [document, setDocument] = useState<
     PartTimePermitData | LaborContractDataResponse | IntegratedApplicationData
@@ -78,7 +81,7 @@ const DocumentPreview = () => {
         hasBackButton={true}
         hasMenuButton={true}
         title="Fill in document"
-        onClickBackButton={() => navigate('/application-documents')}
+        onClickBackButton={() => navigate(`/application-documents/${id}`)}
       />
       <DocumentSubHeader type={type as DocumentType} />
       {type === DocumentType.INTEGRATED_APPLICATION ? (

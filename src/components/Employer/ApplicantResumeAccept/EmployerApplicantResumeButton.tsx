@@ -17,7 +17,8 @@ const EmployerApplicantResumeButton = () => {
       isAccepted: { is_accepted: isAccepted },
     });
 
-    if (data?.success) navigate(`/employer/applicant/${id}`);
+    {/* 왜 data에 null 값이 들어오는데 isAccepted에는 값이 있는걸까요? */}
+    if (isAccepted) navigate(`/employer/applicant/${id}`);
   };
 
   return (

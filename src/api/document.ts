@@ -112,7 +112,7 @@ export const postIntegratedApplications = async ({
   document: IntegratedApplicationData;
 }): Promise<RESTYPE<{ id: number }>> => {
   const response = await api.post(
-    `/users/user-owner-job-postings/${id}/documents/integrated_applications`,
+    `/users/user-owner-job-postings/${id}/documents/integrated-applications`,
     document,
   );
   return response.data;
@@ -129,6 +129,30 @@ export const putIntegratedApplications = async ({
   const response = await api.post(
     `/users/documents/${id}/integrated-applications`,
     document,
+  );
+  return response.data;
+};
+
+// 8.15 (유학생) 서류 (근로계약서, 시간제 취업허가서, 통합 신청서) 제출하기
+export const patchStatusSubmission = async (id: number) => {
+  const response = await api.patch(
+    `/users/documents/${id}/status/submission`,
+  );
+  return response.data;
+};
+
+// 8.16 (고용주) 서류 (근로계약서, 시간제 취업허가서, 통합 신청서) 제출하기
+export const patchStatusSubmissionEmployer = async (id: number) => {
+  const response = await api.patch(
+    `/owners/documents/${id}/status/submission`,
+  );
+  return response.data;
+};
+
+// 8.17 (유학생) 서류 (근로계약서, 시간제 취업허가서) 컴펌하기
+export const patchDocumentsStatusConfirmation = async (id: number) => {
+  const response = await api.patch(
+    `/users/documents/${id}/status/confirmation`,
   );
   return response.data;
 };

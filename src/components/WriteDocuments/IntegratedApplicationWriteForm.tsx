@@ -159,7 +159,7 @@ const IntegratedApplicationWriteForm = ({
   const handleNext = () => {
     const finalDocument = {
       ...newDocumentData,
-      birth: newDocumentData.birth.replace(/\//g, '.'),
+      birth: newDocumentData.birth.replace(/\//g, '-'),
       tele_phone_number: formatPhoneNumber(phoneNum),
       cell_phone_number: formatPhoneNumber(cellPhoneNum),
       school_phone_number: formatPhoneNumber(schoolPhoneNum),

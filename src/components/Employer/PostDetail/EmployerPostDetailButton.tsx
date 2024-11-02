@@ -27,7 +27,7 @@ const EmployerPostDetailButton = () => {
           isBorder={false}
           title="Edit"
           onClick={() =>
-            navigate(`/employer/post/create/${id}`, {
+            navigate(`/employer/post/edit/${id}`, {
               state: {
                 isEdit: true,
               },

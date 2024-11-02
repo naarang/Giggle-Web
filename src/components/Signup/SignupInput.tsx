@@ -157,7 +157,7 @@ const SignupInput = ({
             </p>
             {/* 로그인 화면 이동 */}
             <button
-              className="text-[#695F96] text-sm font-semibold"
+              className="text-[#7872ED] text-sm font-semibold"
               onClick={() => navigate('/signin')}
             >
               {signInputTranclation.signin[isEmployer(pathname)]}
@@ -165,7 +165,10 @@ const SignupInput = ({
           </div>
         </div>
       </div>
+      {/* 소셜은 잠깐 제외 */}
+      {/* 
       <SigninSocialButtons />
+      */}
     </>
   );
 };

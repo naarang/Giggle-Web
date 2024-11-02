@@ -2,6 +2,7 @@ import TextFieldHeader from '@/components/Common/Header/TextFieldHeader';
 import PostSearchFilterList from '@/components/PostSearch/PostSearchFilterList';
 import PostSearchResult from '@/components/PostSearch/PostSearchResult';
 import { FILTER_CATEGORY, POST_SORTING } from '@/constants/postSearch';
+import { UserType } from '@/constants/user';
 import { useGetPostGuestList, useGetPostList } from '@/hooks/api/usePost';
 import { usePostSearchStore } from '@/store/postSearch';
 import { useUserStore } from '@/store/user';
@@ -97,7 +98,7 @@ const PostSearchPage = () => {
       <TextFieldHeader
         onClickBackButton={() => navigate('/')}
         onClickSearchButton={onClickSearch}
-        placeholder="Search for job posting name"
+        placeholder={account_type === UserType.OWNER ? "이름으로 검색" : "Search for job posting name"}
         initialValue={searchText}
       />
       <PostSearchFilterList />

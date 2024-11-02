@@ -34,10 +34,10 @@ const HomeRecommendPost = () => {
             <MessageIcon />
             <div>
               <p className="pb-[0.5rem] caption-1 text-[#656565]">
-                프로필 채우기
+              Filling your resume
               </p>
               <div className="button-2 text-[#1E1926] break-keep whitespace-normal">
-                프로필을 작성하면 추천 공고를 열람할 수 있어요
+              If you fill out your resume, you can browse the recommendation notice!
               </div>
             </div>
           </article>
@@ -48,10 +48,10 @@ const HomeRecommendPost = () => {
             <MessageIcon />
             <div>
               <p className="pb-[0.5rem] caption-1 text-[#656565]">
-                공고 찾아보기
+              Search for job postings
               </p>
               <div className="button-2 text-[#1E1926] break-keep whitespace-normal">
-                맘에 쏙 드는 공고들을 저장해보세요
+              Save your favorite job posting!
               </div>
             </div>
           </article>
