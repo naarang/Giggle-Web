@@ -180,7 +180,12 @@ const PostDetailContent = ({ postDetailData }: PostDetailContentProps) => {
                 Working Hours
               </h5>
               <p className="text-[#656565] caption-1">
+                {/* day_of_week이 요일무관인 경우, start time, end time에도 예외처리 */}
                 {postDetailData.working_conditions.work_day_times
+                  .filter(
+                    (value) =>
+                      !(value.work_start_time === "시간" && value.work_end_time === "무관")
+                  )
                   .map(
                     (value) =>
                       `${value.work_start_time} - ${value.work_end_time}`,

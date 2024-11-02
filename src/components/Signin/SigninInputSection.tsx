@@ -80,10 +80,12 @@ const SigninInputSection = () => {
             <p className="text-[#FF6F61] text-xs p-2">{passwordError}</p>
           )}
         </div>
-        {/* TODO: 비밀번호 찾기 화면 이동 */}
+        {/* TODO: 비밀번호 찾기 화면 이동 (아직 구현 안 해서 가림) */}
+        {/* 
         <button className="w-full text-end text-[#1E1926] text-xs font-normal">
           Forgot Password?
         </button>
+        */}
       </div>
       <div className="py-6 flex flex-col items-center gap-2">
         <Button
@@ -100,7 +102,7 @@ const SigninInputSection = () => {
           </p>
           {/* 회원가입 화면 이동 */}
           <button
-            className="text-[#1E1926] text-sm font-semibold"
+            className="text-[#7872ED] text-sm font-semibold"
             onClick={() => navigate('/signup')}
           >
             Create Account

@@ -17,12 +17,14 @@ import {
   PartTimePermitData,
 } from '@/types/api/document';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const EmployerWriteDocumentsPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { type, isEdit } = location.state || {};
+  const {id} = useParams();
+
   const [document, setDocument] = useState<
     PartTimePermitData | LaborContractDataResponse | IntegratedApplicationData
   >();
@@ -35,17 +37,18 @@ const EmployerWriteDocumentsPage = () => {
   const { mutate: getIntegratedApplication } = useGetIntegratedApplication({
     onSuccess: (data) => setDocument(data.data),
   });
+
   {
     useEffect(() => {
       switch (type) {
         case DocumentType.PART_TIME_PERMIT:
-          getPartTimeEmployPermit(1);
+          getPartTimeEmployPermit(Number(id));
           break;
         case DocumentType.LABOR_CONTRACT:
-          getStandardLaborContract(1);
+          getStandardLaborContract(Number(id));
           break;
         case DocumentType.INTEGRATED_APPLICATION:
-          getIntegratedApplication(1);
+          getIntegratedApplication(Number(id));
           break;
       }
     }, [type]);

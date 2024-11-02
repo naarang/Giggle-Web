@@ -127,17 +127,11 @@ export const validateLaborContractEmployerInformation = (
     return false;
   }
 
-  // 초과 근무에 따른 가산임금률 유효성 검사(0이 아닌지)
-  if (!info.wage_rate || Number(info.wage_rate) === 0) {
-    console.log('가산임금');
-    return false;
-  }
-
   // 급료 지급일 유효성 검사(0이 아닌지)
   if (
-    !info.wage_rate ||
-    Number(info.wage_rate) > 31 ||
-    Number(info.wage_rate) < 1
+    !info.payment_day ||
+    Number(info.payment_day) > 31 ||
+    Number(info.payment_day) < 1
   ) {
     console.log('급료지급일');
     return false;

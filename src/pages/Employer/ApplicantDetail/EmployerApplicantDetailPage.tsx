@@ -32,7 +32,7 @@ const EmployerApplicantDetailPage = () => {
           isKorean={true}
         />
       </div>
-      <EmployerApplicantDetailButton step={data?.data.step} />
+      <EmployerApplicantDetailButton applicant_id={Number(id)} step={data?.data.step} />
     </>
   );
 };

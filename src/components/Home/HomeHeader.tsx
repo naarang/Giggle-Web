@@ -1,4 +1,5 @@
 import AlarmIcon from '@/assets/icons/Home/AlarmIcon.svg?react';
+import { UserType } from '@/constants/user';
 import { useGetAlarms } from '@/hooks/api/useAlarm';
 import { useUserStore } from '@/store/user';
 import { useNavigate } from 'react-router-dom';
@@ -11,12 +12,12 @@ const HomeHeader = () => {
   return (
     <section className="w-full pt-[3.125rem] pb-[1rem] px-[1.5rem] bg-[#FEF387]">
       <p className="pb-[0.375rem] body-2 text-[#37383C9C]">
-        Welcome! {name.replace(/-/g, ' ')}
+      {account_type === UserType.OWNER ? "환영합니다!" : "Welcome!"} {name.replace(/-/g, ' ')} {account_type === UserType.OWNER ? "고용주님" : ""}
       </p>
       <div className="w-full flex">
         <h1 className="flex-1 title-1 text-[#0A0909]">
-          Find your <br />
-          perfect job
+          {account_type === UserType.OWNER ? "최고의 근로자를" : "Find your"} <br />
+          {account_type === UserType.OWNER ? "찾을 수 있습니다." : "perfect job"}
         </h1>
         {/* TODO: 로그인 시에만 표시하기 */}
         {account_type && (

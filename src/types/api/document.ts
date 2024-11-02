@@ -21,6 +21,7 @@ export type EmployDocumentInfo = {
   id: number;
   hwp_url: string | null;
   word_url: string | null;
+  reason: string | null;
   status: DocumentStatusEmployer | null;
 };
 

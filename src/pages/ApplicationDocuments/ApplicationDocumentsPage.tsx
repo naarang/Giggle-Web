@@ -4,15 +4,17 @@ import BaseHeader from '@/components/Common/Header/BaseHeader';
 import DocumentCardList from '@/components/Document/DocumentCardList';
 import { useGetDocumentsEmployee } from '@/hooks/api/useDocument';
 import { DocumentsSummaryResponse } from '@/types/api/document';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const ApplicationDocumentsPage = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const { data, isPending } = useGetDocumentsEmployee(Number(id));
   return (
     <div>
       <BaseHeader
         hasBackButton={true}
+        onClickBackButton={() => navigate(-1)}
         hasMenuButton={true}
         title="Application Documents"
       />

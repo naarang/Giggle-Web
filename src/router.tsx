@@ -120,8 +120,8 @@ const Router = () => {
           <Route path="/post/apply/:id" element={<PostApplyPage />} />
           <Route path="/write-documents/:id" element={<WriteDocumentsPage />} />
 
-          <Route path="/document-preview" element={<DocumentPreview />} />
-          <Route path="/request-modify" element={<RequestModifyPage />} />
+          <Route path="/document-preview/:id" element={<DocumentPreview />} />
+          <Route path="/request-modify/:id" element={<RequestModifyPage />} />
 
           <Route path="/application" element={<ApplicationPage />} />
           <Route path="/application/:id" element={<ApplicationDetailPage />} />
@@ -166,7 +166,7 @@ const Router = () => {
             element={<EmployerApplicantResumeAcceptPage />}
           />
           <Route
-            path="/employer/applicant/document-detail"
+            path="/employer/applicant/document-detail/:id"
             element={<ApplicantDocumentsDetailPage />}
           />
           <Route

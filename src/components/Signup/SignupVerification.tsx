@@ -173,7 +173,7 @@ const SignupVerification = ({
               {signInputTranclation.requestResend[isEmployer(pathname)]}
             </p>
             <button
-              className="text-[#695F96] text-sm font-semibold"
+              className="text-[#7872ED] text-sm font-semibold"
               onClick={handleResendClick} // 이메일 인증코드 재전송 API 호출
             >
               {signInputTranclation.resend[isEmployer(pathname)]}

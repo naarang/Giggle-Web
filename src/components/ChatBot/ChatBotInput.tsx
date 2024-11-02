@@ -1,5 +1,6 @@
 import ChatSubmitIcon from '@/assets/icons/ChatSubmitIcon.svg?react';
 import { ChatItemType } from '@/types/api/chatbot';
+import { getAccessToken } from '@/utils/auth';
 import axios from 'axios';
 import { useState } from 'react';
 
@@ -22,16 +23,21 @@ const ChatBotInput = ({ addChatData }: ChatBotInputProps) => {
     // TODO: 채팅 api 호출하기
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_APP_API_CHAT_BASE_URL}/chat/v1/chatbot`,
+        `${import.meta.env.VITE_APP_API_CHAT_BASE_URL}/chatbot`,
         {
-          message: text,
+          prompt: text,
         },
+        {
+          headers: {
+            Authorization: `Bearer ${getAccessToken()}`, // 토큰을 헤더에 추가
+          },
+        }
       );
 
       if (response?.data) {
         const newChatBotData = {
           isBot: true,
-          message: response?.data?.data,
+          message: response?.data?.data.content,
         };
         addChatData(newChatBotData);
       }
