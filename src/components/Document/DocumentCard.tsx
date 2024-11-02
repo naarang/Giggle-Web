@@ -351,7 +351,7 @@ const DocumentCardDispenser = ({
         document={document}
         onDownload={handleDownload}
         onPreview={() =>
-          navigate('/document-preview', {
+          navigate(`/document-preview/${id}`, {
             state: {
               type: type,
             },
@@ -366,7 +366,7 @@ const DocumentCardDispenser = ({
           title={title}
           onNext={onNext}
           onEdit={() =>
-            navigate('/write-documents', {
+            navigate(`/write-documents/${document.id}`, {
               state: {
                 type: type,
                 isEdit: true,
@@ -383,14 +383,14 @@ const DocumentCardDispenser = ({
           title={title}
           onNext={onNext}
           onRequest={() =>
-            navigate('/request-modify', {
+            navigate(`/request-modify/${document.id}`, {
               state: {
                 type: type,
               },
             })
           }
           onPreview={() =>
-            navigate('/document-preview', {
+            navigate(`/document-preview/${document.id}`, {
               state: {
                 type: type,
               },
@@ -407,7 +407,7 @@ const DocumentCardDispenser = ({
           document={document}
           onDownload={handleDownload}
           onPreview={() =>
-            navigate('/document-preview', {
+            navigate(`/document-preview/${document.id}`, {
               state: {
                 type: type,
               },

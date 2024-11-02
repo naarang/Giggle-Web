@@ -1,5 +1,6 @@
 import {
   getDocumentsEmployee,
+  getDocumentsEmployer,
   getIntegratedApplication,
   getPartTimeEmployPermit,
   getStandardLaborContract,
@@ -37,7 +38,7 @@ export const useGetDocumentsEmployee = (id: number) => {
 export const useGetDocumentsEmployer = (id: number) => {
   return useQuery({
     queryKey: ['application', id],
-    queryFn: () => getDocumentsEmployee(id),
+    queryFn: () => getDocumentsEmployer(id),
   });
 };
 

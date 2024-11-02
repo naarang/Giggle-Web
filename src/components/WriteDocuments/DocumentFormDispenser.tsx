@@ -18,13 +18,15 @@ import { useParams } from 'react-router-dom';
 type DocumentFormDispenserProps = {
   type: DocumentType;
   isEdit: boolean;
+  applicant_id: number;
 };
 
 const DocumentFormDispenser = ({
   type,
   isEdit,
+  applicant_id
 }: DocumentFormDispenserProps) => {
-  const { id } = useParams();
+  // const { id } = useParams();
   const [document, setDocument] = useState<
     PartTimePermitData | LaborContractDataResponse | IntegratedApplicationData
   >();
@@ -41,13 +43,13 @@ const DocumentFormDispenser = ({
     useEffect(() => {
       switch (type) {
         case DocumentType.PART_TIME_PERMIT:
-          getPartTimeEmployPermit(Number(id));
+          getPartTimeEmployPermit(Number(applicant_id));
           break;
         case DocumentType.LABOR_CONTRACT:
-          getStandardLaborContract(Number(id));
+          getStandardLaborContract(Number(applicant_id));
           break;
         case DocumentType.INTEGRATED_APPLICATION:
-          getIntegratedApplication(Number(id));
+          getIntegratedApplication(Number(applicant_id));
           break;
       }
     }, [type]);

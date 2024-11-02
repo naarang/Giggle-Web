@@ -8,14 +8,15 @@ import { ApplicationStepType } from '@/types/application/applicationItem';
 import { APPLICATION_STEP } from '@/constants/application';
 
 type EmployerApplicantDetailButtonPropsType = {
+  applicant_id: number;
   step: ApplicationStepType;
 };
 
 const EmployerApplicantDetailButton = ({
+  applicant_id,
   step,
 }: EmployerApplicantDetailButtonPropsType) => {
   const navigate = useNavigate();
-  const { id } = useParams();
   const [isShowBottomsheet, setIsShowBottomSheet] = useState<boolean>(false);
 
   const renderCurrentStepButton = (currentStep: number) => {
@@ -56,7 +57,7 @@ const EmployerApplicantDetailButton = ({
             fontColor="text-[#F4F4F9]"
             title="신청 서류 확인하기"
             isBorder={false}
-            // TODO: 고용주 지원자 서류 상세 페이지
+            onClick={() => navigate(`/employer/applicant/document-detail/${applicant_id}`)}
           />
         );
       case 4:
