@@ -153,27 +153,27 @@ const Router = () => {
             element={<EmployerApplicantListPage />}
           />
           <Route
-            path="/employer/applicant"
+            path="/employer/applicant/:id"
             element={<EmployerApplicantDetailPage />}
           />
           <Route
-            path="/employer/applicant/resume"
+            path="/employer/applicant/:id/resume"
             element={<EmployerApplicantResumePage />}
           />
 
           <Route
-            path="/employer/applicant/resume/accept"
+            path="/employer/applicant/:id/resume/accept"
             element={<EmployerApplicantResumeAcceptPage />}
           />
           <Route
-            path="/employer/applicant/document-detail"
+            path="/employer/applicant/document-detail/:id"
             element={<ApplicantDocumentsDetailPage />}
           />
           <Route
             path="/employer/write-documents/:id"
             element={<EmployerWriteDocumentsPage />}
           />
-          <Route path="/write-documents/:id" element={<WriteDocumentsPage />} />
+          <Route path="/write-documents" element={<WriteDocumentsPage />} />
           <Route path="/document-preview" element={<DocumentPreview />} />
           <Route path="/request-modify" element={<RequestModifyPage />} />
 

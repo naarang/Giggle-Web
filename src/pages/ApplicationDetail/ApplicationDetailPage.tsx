@@ -8,19 +8,18 @@ import ApplicationDetailCard from '@/components/ApplicationDetail/ApplicationDet
 import ApplicationDetailInfo from '@/components/ApplicationDetail/ApplicationDetailInfo';
 import ApplicationDetailSteps from '@/components/ApplicationDetail/ApplicationDetailSteps';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ApplicationDetailStep7 from '@/components/ApplicationDetail/ApplicationDetailStep7';
 import { findCurrentStep } from '@/utils/application';
 import ApplicationDetailStepEtc from '@/components/ApplicationDetail/ApplicationDetailStepEtc';
 import { useGetApplicationDetail } from '@/hooks/api/useApplication';
-import { useRouteIdStore } from '@/store/route';
 
 const ApplicationDetailPage = () => {
   const navigate = useNavigate();
-  const { routeId } = useRouteIdStore();
+  const { id } = useParams();
   const { data } = useGetApplicationDetail(
-    Number(routeId),
-    !isNaN(Number(routeId)) ? true : false,
+    Number(id),
+    !isNaN(Number(id)) ? true : false,
   );
 
   if (!data?.success) return <></>;
@@ -32,7 +31,7 @@ const ApplicationDetailPage = () => {
       case 2:
         return <ApplicationDetailStep2 />;
       case 3:
-        return <ApplicationDetailStep3 />;
+        return <ApplicationDetailStep3 applicant_id={id} />;
       case 4:
         return <ApplicationDetailStep4 />;
       case 5:

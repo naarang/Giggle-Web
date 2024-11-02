@@ -3,16 +3,16 @@ import BaseHeader from '@/components/Common/Header/BaseHeader';
 import EmployerApplicantDetailButton from '@/components/Employer/ApplicantDetail/EmployerApplicantDetailButton';
 import EmployerApplicantDetailCard from '@/components/Employer/ApplicantDetail/EmployerApplicantDetailCard';
 import { useGetEmployerApplicationDetail } from '@/hooks/api/useApplication';
-import { useRouteIdStore } from '@/store/route';
 import { findCurrentStep } from '@/utils/application';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const EmployerApplicantDetailPage = () => {
   const navigate = useNavigate();
-  const { routeId } = useRouteIdStore();
+  const { id } = useParams();
+
   const { data } = useGetEmployerApplicationDetail(
-    Number(routeId),
-    !isNaN(Number(routeId)),
+    Number(id),
+    !isNaN(Number(id)),
   );
 
   if (!data?.success) return <></>;
@@ -32,7 +32,7 @@ const EmployerApplicantDetailPage = () => {
           isKorean={true}
         />
       </div>
-      <EmployerApplicantDetailButton step={data?.data.step} />
+      <EmployerApplicantDetailButton applicant_id={Number(id)} step={data?.data.step} />
     </>
   );
 };
