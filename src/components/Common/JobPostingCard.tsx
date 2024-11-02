@@ -87,7 +87,7 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
             color="#1E1926"
             fontStyle="button-2"
           />
-          {account_type = UserType.USER &&
+          {account_type === UserType.USER &&
             (jobPostingData?.is_book_marked ? (
               <BookmarkCheckedIcon onClick={(e) => onClickBookmark(e)} />
             ) : (
