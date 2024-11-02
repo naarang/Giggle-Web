@@ -1,5 +1,4 @@
 import {
-  confirmDocuments,
   getDocumentsEmployee,
   getDocumentsEmployer,
   getIntegratedApplication,
@@ -18,8 +17,6 @@ import {
   putPartTimeEmployPermitEmployer,
   putStandardLaborContracts,
   searchSchool,
-  submitDocumentEmployee,
-  submitDocumentEmployer,
 } from '@/api/document';
 import {
   DocumentType,

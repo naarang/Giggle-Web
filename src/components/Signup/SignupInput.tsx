@@ -7,7 +7,6 @@ import {
   validateId,
   validatePassword,
 } from '@/utils/signin';
-import SigninSocialButtons from '@/components/Signin/SigninSocialButtons';
 import { isEmployer } from '@/utils/signup';
 import { signInputTranclation } from '@/constants/translation';
 import { useGetIdValidation } from '@/hooks/api/useAuth';

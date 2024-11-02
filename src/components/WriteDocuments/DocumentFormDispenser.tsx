@@ -13,7 +13,6 @@ import {
   useGetPartTimeEmployPermit,
   useGetStandardLaborContract,
 } from '@/hooks/api/useDocument';
-import { useParams } from 'react-router-dom';
 
 type DocumentFormDispenserProps = {
   type: DocumentType;

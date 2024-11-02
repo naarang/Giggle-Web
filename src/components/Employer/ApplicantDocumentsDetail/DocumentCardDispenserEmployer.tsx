@@ -7,9 +7,9 @@ import FolderIcon from '@/assets/icons/FolderIcon.svg?react';
 import DownloadIcon from '@/assets/icons/DownloadIcon.svg?react';
 import CheckIconGreen from '@/assets/icons/CheckIconGreen.svg?react';
 import WriteIcon from '@/assets/icons/WriteIcon.svg?react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { DocumentStatusEmployer } from '@/constants/documents';
-import { useSubmitDocumentEmployer } from '@/hooks/api/useDocument';
+import { usePatchStatusSubmissionEmployer } from '@/hooks/api/useDocument';
 
 type DocumentCardProps = {
   document: EmployDocumentInfo;
@@ -128,7 +128,8 @@ const TemporarySaveCard = ({
   );
 };
 
-const BeforeConfirmationCard = ({ title }: { title: string }) => {
+{/* 
+  const BeforeConfirmationCard = ({ title }: { title: string }) => {
   return (
     <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-center justify-center gap-2 caption-2 text-left text-[#1e1926]">
       <div className="self-stretch rounded-t-[1.125rem] bg-[#1e1926] h-7 flex items-center justify-between px-4 pl-6 py-2 relative">
@@ -166,6 +167,7 @@ const BeforeConfirmationCard = ({ title }: { title: string }) => {
     </div>
   );
 };
+  */}
 
 const SubmittedCard = ({ title }: { title: string }) => {
   return (
@@ -358,14 +360,14 @@ const DocumentCardDispenserEmployer = ({
     window.open(url, '_blank');
   };
 
-  const { mutate: submitDocument } = useSubmitDocumentEmployer();
+  const { mutate: submitDocument } = usePatchStatusSubmissionEmployer();
   if (!document.status) return <NullCard title={title} />;
   switch (document.status) {
     case DocumentStatusEmployer.TEMPORARY_SAVE:
       return (
         <TemporarySaveCard
           title={title}
-          onNext={() => submitDocument(Number(id))} // 고용주가 서류 제출
+          onNext={() => submitDocument(Number(document.id))} // 고용주가 서류 제출
           onEdit={() =>
             navigate(`/employer/write-documents/${document.id}`, {
               state: {
@@ -384,7 +386,7 @@ const DocumentCardDispenserEmployer = ({
           <RewritingCard
             title={title}
             reason={reason}
-            onNext={() => submitDocument(Number(id))} // 고용주가 서류 제출
+            onNext={() => submitDocument(Number(document.id))} // 고용주가 서류 제출
             onEdit={() =>
               navigate(`/employer/write-documents/${document.id}`, {
                 state: {
