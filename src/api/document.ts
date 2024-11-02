@@ -112,7 +112,7 @@ export const postIntegratedApplications = async ({
   document: IntegratedApplicationData;
 }): Promise<RESTYPE<{id: number}>> => {
   const response = await api.post(
-    `/users/user-owner-job-postings/${id}/documents/integrated_applications`,
+    `/users/user-owner-job-postings/${id}/documents/integrated-applications`,
     document,
   );
   return response.data;
