@@ -96,8 +96,18 @@ const EmployerLaborContractForm = ({
     });
   }, [isSuccess]);
 
+  // 휴대번호 매핑
+  useEffect(() => {
+    setNewDocumentData({
+      ...newDocumentData,
+      phone_number: formatPhoneNumber(phoneNum),
+    });
+  }, [phoneNum]);
+
   /* 정보 입력 시마다 유효성을 검사해 모든 값이 유효하면 버튼이 활성화 */
   useEffect(() => {
+    {/* work_day_time_list 데이터가 안 들어가서 계속 유효성 실패 중 */ }
+    console.log(newDocumentData.work_day_time_list);
     setIsInvalid(
       !validateLaborContractEmployerInformation({
         ...newDocumentData,
