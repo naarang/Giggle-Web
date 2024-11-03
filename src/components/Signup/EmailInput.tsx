@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Input from '@/components/Common/Input';
 import Button from '@/components/Common/Button';
-import SigninSocialButtons from '@/components/Signin/SigninSocialButtons';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { validateEmail } from '@/utils/signin';
 import { signInputTranclation } from '@/constants/translation';

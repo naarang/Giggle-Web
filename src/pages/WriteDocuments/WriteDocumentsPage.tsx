@@ -21,7 +21,7 @@ const WriteDocumentsPage = () => {
         onClickBackButton={() => navigate(`/application-documents/${id}`)}
       />
       <DocumentSubHeader type={type as DocumentType} />
-      <DocumentFormDispenser type={type as DocumentType} isEdit={isEdit} applicant_id={id} />
+      <DocumentFormDispenser type={type as DocumentType} isEdit={isEdit} applicant_id={Number(id)} />
     </div>
   );
 };
