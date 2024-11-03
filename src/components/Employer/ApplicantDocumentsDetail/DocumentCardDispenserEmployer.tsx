@@ -10,6 +10,7 @@ import WriteIcon from '@/assets/icons/WriteIcon.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { DocumentStatusEmployer } from '@/constants/documents';
 import { usePatchStatusSubmissionEmployer } from '@/hooks/api/useDocument';
+import { useCurrentDocumentIdStore } from '@/store/url';
 
 type DocumentCardProps = {
   document: EmployDocumentInfo;
@@ -359,7 +360,7 @@ const DocumentCardDispenserEmployer = ({
   const handleDownload = (url: string) => {
     window.open(url, '_blank');
   };
-
+  const {updateCurrentDocumentId} = useCurrentDocumentIdStore();
   const { mutate: submitDocument } = usePatchStatusSubmissionEmployer();
   if (!document.status) return <NullCard title={title} />;
   switch (document.status) {
@@ -368,14 +369,15 @@ const DocumentCardDispenserEmployer = ({
         <TemporarySaveCard
           title={title}
           onNext={() => submitDocument(Number(document.id))} // 고용주가 서류 제출
-          onEdit={() =>
+          onEdit={() => {
+            updateCurrentDocumentId(document.id);
             navigate(`/employer/write-documents/${document.id}`, {
               state: {
                 type: type,
                 isEdit: true,
               },
-            })
-          }
+            });
+          }}
         />
       );
     case DocumentStatusEmployer.SUBMITTED:
@@ -387,14 +389,16 @@ const DocumentCardDispenserEmployer = ({
             title={title}
             reason={reason}
             onNext={() => submitDocument(Number(document.id))} // 고용주가 서류 제출
-            onEdit={() =>
+            onEdit={() => {
+              console.log(document.id)
+              updateCurrentDocumentId(document.id);
               navigate(`/employer/write-documents/${document.id}`, {
                 state: {
                   type: type,
                   isEdit: true,
                 },
-              })
-            }
+              });
+            }}
           />
         );
       break;

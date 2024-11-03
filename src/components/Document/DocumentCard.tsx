@@ -7,8 +7,9 @@ import FolderIcon from '@/assets/icons/FolderIcon.svg?react';
 import DownloadIcon from '@/assets/icons/DownloadIcon.svg?react';
 import CheckIconGreen from '@/assets/icons/CheckIconGreen.svg?react';
 import WriteIcon from '@/assets/icons/WriteIcon.svg?react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { usePatchDocumentsStatusConfirmation } from '@/hooks/api/useDocument';
+import { useCurrentDocumentIdStore } from '@/store/url';
 
 const enum DocumentStatus {
   TEMPORARY_SAVE = 'TEMPORARY_SAVE',
@@ -342,7 +343,7 @@ const DocumentCardDispenser = ({
 }: DocumentCardProps) => {
   const { mutate: submitDocument } = usePatchDocumentsStatusConfirmation();
   const navigate = useNavigate();
-  const {id} = useParams();
+  const { updateCurrentDocumentId } = useCurrentDocumentIdStore();
   const handleDownload = (url: string) => {
     window.open(url, '_blank');
   };
@@ -352,13 +353,14 @@ const DocumentCardDispenser = ({
         title={title}
         document={document}
         onDownload={handleDownload}
-        onPreview={() =>
+        onPreview={() => {
+          updateCurrentDocumentId(document.id);
           navigate(`/document-preview/${document.id}`, {
             state: {
               type: type,
             },
-          })
-        }
+          });
+        }}
       />
     );
   switch (document.status) {
@@ -366,15 +368,16 @@ const DocumentCardDispenser = ({
       return (
         <TemporarySaveCard
           title={title}
-          onNext={()=> submitDocument(Number(id))}
-          onEdit={() =>
+          onNext={() => submitDocument(Number(document.id))}
+          onEdit={() => {
+            updateCurrentDocumentId(document.id);
             navigate(`/write-documents/${document.id}`, {
               state: {
                 type: type,
                 isEdit: true,
               },
-            })
-          }
+            });
+          }}
         />
       );
     case DocumentStatus.SUBMITTED:
@@ -383,21 +386,23 @@ const DocumentCardDispenser = ({
       return (
         <BeforeConfirmationCard
           title={title}
-          onNext={()=> submitDocument(Number(id))}
-          onRequest={() =>
+          onNext={() => submitDocument(Number(document.id))}
+          onRequest={() => {
+            updateCurrentDocumentId(document.id);
             navigate(`/request-modify/${document.id}`, {
               state: {
                 type: type,
               },
             })
-          }
-          onPreview={() =>
+          }}
+          onPreview={() => {
+            updateCurrentDocumentId(document.id);
             navigate(`/document-preview/${document.id}`, {
               state: {
                 type: type,
               },
-            })
-          }
+            });
+          }}
         />
       );
     case DocumentStatus.REQUEST:
@@ -408,13 +413,14 @@ const DocumentCardDispenser = ({
           title={title}
           document={document}
           onDownload={handleDownload}
-          onPreview={() =>
+          onPreview={() => {
+            updateCurrentDocumentId(document.id);
             navigate(`/document-preview/${document.id}`, {
               state: {
                 type: type,
               },
-            })
-          }
+            });
+          }}
         />
       );
   }

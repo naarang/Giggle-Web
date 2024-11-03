@@ -19,3 +19,13 @@ export const useCurrentApplicantIdStore = create<CurrentApplicantIdStore>()((set
   currentApplicantId: null,
   updateCurrentApplicantId: (newId: number) => set(() => ({ currentApplicantId: newId })),
 }));
+
+type CurrentDocumentIdStore = {
+  currentDocumentId: number | null;
+  updateCurrentDocumentId: (id: number) => void;
+};
+
+export const useCurrentDocumentIdStore = create<CurrentDocumentIdStore>()((set) => ({
+  currentDocumentId: null,
+  updateCurrentDocumentId: (newId: number) => set(() => ({ currentDocumentId: newId })),
+}));
