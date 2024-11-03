@@ -22,18 +22,20 @@ const HomeRecommendPostCard = ({
     >
       <div className="flex justify-end gap-[0.375rem]">
         <div className="h-fit py-[0.125rem] px-[0.438rem] border-[0.031rem] border-[#1E1926] rounded-[0.5rem]  bg-[#FFFFFFCC] text-[#1E1926] caption-2">
-          {calculateDDay(jobPostingData.recruitment_dead_line)}
+          {jobPostingData.recruitment_dead_line === '상시모집'
+            ? '상시모집'
+            : calculateDDay(jobPostingData.recruitment_dead_line)}
         </div>
-        <div className="h-fit py-[0.125rem] px-[0.438rem] border-[0.031rem] border-[#1E1926] rounded-[0.5rem]  bg-[#1E1926] text-[#F4F4F9] caption-2 break-keep whitespace-normal">
+        <div className="h-fit py-[0.125rem] px-[0.438rem] border-[0.031rem] border-[#1E1926] rounded-[0.5rem]  bg-[#1E1926] text-[#F4F4F9] caption-2 break-words whitespace-normal">
           {jobPostingData.job_category.replace(/_/g, ' ').toLowerCase()}
         </div>
       </div>
       <MessageIcon />
       <div>
-        <p className="pb-[0.5rem] caption-1 text-[#656565]">
-        he recommendation notice for {name.replace(/-/g, ' ')} has arrived !
+        <p className="pb-[0.5rem] caption-1 text-[#656565] break-words whitespace-normal">
+          he recommendation notice for {name.replace(/-/g, ' ')} has arrived !
         </p>
-        <div className="button-2 text-[#1E1926] break-keep whitespace-normal">
+        <div className="button-2 text-[#1E1926] break-words whitespace-normal">
           Job Title {')'} {jobPostingData.title}
         </div>
       </div>
