@@ -72,10 +72,7 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
             <div className="flex items-center gap-[0.625rem]">
               <CalendarIcon />
               <p className="caption-1 text-[#464646]">
-                {jobPostingData.summaries.work_days_per_week}{' '}
-                {jobPostingData.summaries.work_days_per_week === '협의 가능'
-                  ? ''
-                  : 'days a week'}
+                {jobPostingData.summaries.work_days_per_week}
               </p>
             </div>
           </div>

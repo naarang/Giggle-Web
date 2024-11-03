@@ -30,6 +30,7 @@ export const DropdownModal = ({
           <div
             className={`self-stretch overflow-hidden ${value == option && 'bg-[#f4f4f9] text-[#1e1926]'} rounded-lg flex flex-row items-center justify-start p-2.5`}
             onClick={() => onSelect(option)}
+            key={option}
           >
             {option}
           </div>
