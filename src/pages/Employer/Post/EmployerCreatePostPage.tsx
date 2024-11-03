@@ -7,6 +7,7 @@ import Step4 from '@/components/Employer/PostCreate/Step4';
 import Step5 from '@/components/Employer/PostCreate/Step5';
 import StepIndicator from '@/components/Information/StepIndicator';
 import { useCreatePost } from '@/hooks/api/usePost';
+import { useCurrentPostIdStore } from '@/store/url';
 import {
   initialJobPostingState,
   JobPostingForm,
@@ -17,12 +18,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const EmployerCreatePostPage = () => {
   const location = useLocation();
   const { isEdit } = location.state || {};
+
+  const { updateCurrentPostId } = useCurrentPostIdStore();
+
   const [currentStep, setCurrentStep] = useState(1);
   const [postInfo, setPostInfo] = useState<JobPostingForm>(
     initialJobPostingState,
   );
 
-  const { mutate } = useCreatePost(); // 공고 생성 시 호출하느 ㄴ훅
+  const { mutate } = useCreatePost(updateCurrentPostId); // 공고 생성 시 호출하느 ㄴ훅
   const [devIsModal, setDevIsModal] = useState(false);
 
   const navigate = useNavigate(); // navigate 변수를 정의합니다.
@@ -39,12 +43,14 @@ const EmployerCreatePostPage = () => {
   };
   return (
     <div>
-      <BaseHeader hasBackButton onClickBackButton={() => navigate('/')} hasMenuButton={false} title="공고등록" />
+      <BaseHeader
+        hasBackButton
+        onClickBackButton={() => navigate('/')}
+        hasMenuButton={false}
+        title="공고등록"
+      />
       {devIsModal ? (
-        <CompleteModal
-          title="공고 등록이 완료되었습니다."
-          onNext={() => {}}
-        />
+        <CompleteModal title="공고 등록이 완료되었습니다." onNext={() => {}} />
       ) : (
         <>
           <div className="w-full flex flex-row p-6 items-center justify-between">

@@ -93,7 +93,7 @@ export const useGetPostSummary = (id: number, isEnabled: boolean) => {
 };
 
 // 4.10 (고용주) 공고 등록하기 훅
-export const useCreatePost = () => {
+export const useCreatePost = (updateCurrentPostId: (id: number) => void) => {
   const navigate = useNavigate();
 
   return useMutation({
@@ -101,6 +101,8 @@ export const useCreatePost = () => {
     onSuccess: (response) => {
       // response는 API 응답 데이터
       // { success: true, data: { id: Long }, error: null }
+      updateCurrentPostId(Number(response.data.id));
+
       setTimeout(() => {
         navigate(`/employer/post/${response.data.id}`);
       }, 1000);
