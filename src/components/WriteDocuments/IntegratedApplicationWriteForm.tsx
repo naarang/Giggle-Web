@@ -21,7 +21,7 @@ import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
 import { usePostIntegratedApplicants } from '@/hooks/api/useDocument';
 import { formatPhoneNumber } from '@/utils/information';
-import { useParams } from 'react-router-dom';
+import { useCurrentPostIdEmployeeStore } from '@/store/url';
 
 type IntegratedApplicationFormProps = {
   document?: IntegratedApplicationData;
@@ -32,7 +32,7 @@ const IntegratedApplicationWriteForm = ({
   document,
   isEdit,
 }: IntegratedApplicationFormProps) => {
-  const { id } = useParams();
+  const { currentPostId } = useCurrentPostIdEmployeeStore();
   const [newDocumentData, setNewDocumentData] =
     useState<IntegratedApplicationData>(initialIntegratedApplication);
 
@@ -72,8 +72,8 @@ const IntegratedApplicationWriteForm = ({
   const { searchAddress } = useSearchAddress({
     onSuccess: (data) => setAddressSearchResult(data),
   });
-  const { mutate: postDocument } = usePostIntegratedApplicants(Number(id)); // 통합신청서 생성 훅
-  const { mutate: updateDocument } = usePostIntegratedApplicants(Number(id)); // 통합신청서 수정 훅
+  const { mutate: postDocument } = usePostIntegratedApplicants(Number(currentPostId)); // 통합신청서 생성 훅
+  const { mutate: updateDocument } = usePostIntegratedApplicants(Number(currentPostId)); // 통합신청서 수정 훅
   // 문서 편집일 시 페이지 진입과 동시에 기존 내용 자동 입력
   useEffect(() => {
     if (isEdit && document) {
@@ -165,7 +165,7 @@ const IntegratedApplicationWriteForm = ({
       school_phone_number: formatPhoneNumber(schoolPhoneNum),
     };
     const payload = {
-      id: 1,
+      id: Number(currentPostId),
       document: finalDocument, // TODO: 로그인 연결 후 userId를 넣어야 하는 것으로 추정
     };
 
