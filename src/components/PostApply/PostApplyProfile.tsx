@@ -5,7 +5,7 @@ type PostApplyProfileProps = {
 
 const PostApplyProfile = ({ profileImgUrl, name }: PostApplyProfileProps) => {
   return (
-    <div>
+    <div className="w-full flex flex-col items-center">
       {profileImgUrl ? (
         <div
           className="w-[5.125rem] h-[5.125rem] mb-[1rem] rounded-full bg-cover bg-center"
@@ -16,7 +16,9 @@ const PostApplyProfile = ({ profileImgUrl, name }: PostApplyProfileProps) => {
       ) : (
         <div className="w-[5.125rem] h-[5.125rem] mb-[1rem] rounded-full bg-[#F4F4F9]]"></div>
       )}
-      <p className=" text-[#33384B] font-bold text-lg">{name}</p>
+      <p className=" text-[#33384B] font-bold text-lg">
+        {name.replace(/-/g, ' ')}
+      </p>
     </div>
   );
 };
