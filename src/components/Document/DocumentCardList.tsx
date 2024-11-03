@@ -2,7 +2,10 @@ import { DocumentsSummaryResponse, DocumentType } from '@/types/api/document';
 import DocumentCardDispenser from '@/components/Document/DocumentCard';
 import MakeDocumentButton from '@/components/Document/MakeDocumentButton';
 import { DocumentTypeInfo } from '@/constants/documents';
-import { usePatchDocumentsStatusConfirmation, usePatchStatusSubmission } from '@/hooks/api/useDocument';
+import {
+  usePatchDocumentsStatusConfirmation,
+  usePatchStatusSubmission,
+} from '@/hooks/api/useDocument';
 
 const DocumentCardList = ({
   documents,
@@ -14,11 +17,12 @@ const DocumentCardList = ({
   const { mutate: patchStatusSubmission } = usePatchStatusSubmission();
 
   // patch api mutate 설정 (8.17 유학생이 서류 컨펌하기)
-  const { mutate: patchStatusConfirmation } = usePatchDocumentsStatusConfirmation();
+  const { mutate: patchStatusConfirmation } =
+    usePatchDocumentsStatusConfirmation();
 
   const handleOnNext = async (id: number, status: string) => {
     // 컨펌하기
-    if(status === 'BEFORE_CONFIRMATION') {
+    if (status === 'BEFORE_CONFIRMATION') {
       patchStatusConfirmation(id);
     } else {
       // 이외의 제출하기
@@ -27,7 +31,7 @@ const DocumentCardList = ({
   };
 
   return (
-    <div className="flex flex-col w-full px-6 gap-2">
+    <div className="flex flex-col w-full px-6 gap-2 pb-[8rem]">
       {documentTypes.map((property) =>
         documents[property] ? (
           <DocumentCardDispenser
