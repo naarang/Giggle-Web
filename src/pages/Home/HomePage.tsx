@@ -29,12 +29,14 @@ const HomePage = () => {
         </>
       )}
       <HomeJobPostingList />
-      <button
-        className="fixed w-[3rem] h-[3rem] flex justify-center items-center rounded-full right-[1.5rem] bottom-[4.75rem] bg-[#FEF387]"
-        onClick={() => navigate('/chatbot')}
-      >
-        <ChatIcon />
-      </button>
+      {account_type && (
+        <button
+          className="fixed w-[3rem] h-[3rem] flex justify-center items-center rounded-full right-[1.5rem] bottom-[4.75rem] bg-[#FEF387]"
+          onClick={() => navigate('/chatbot')}
+        >
+          <ChatIcon />
+        </button>
+      )}
     </>
   );
 };
