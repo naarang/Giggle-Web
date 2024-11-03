@@ -1,4 +1,5 @@
 import { AlarmItemType } from '@/types/api/alarm';
+import YelloLogoIcon from '@/assets/icons/YellowLogoIcon.svg?react';
 
 type AlarmCardProps = {
   alarmData: AlarmItemType;
@@ -11,7 +12,9 @@ const AlarmCard = ({ alarmData, readAlarm }: AlarmCardProps) => {
       className={`flex items-center gap-[0.5rem] w-full px-[1rem] py-[0.5rem] rounded-[0.5rem] shadow-alarmShadow ${alarmData.is_read ? 'bg-[#F4F4F9]' : 'bg-white'}`}
       onClick={() => !alarmData.is_read && readAlarm(alarmData.id)}
     >
-      <div className='min-w-[3.375rem] w-[3.375rem] h-[3.375rem] rounded-full bg-cover bg-center bg-[url("/src/assets/images/JobIconExample.jpeg")]'></div>
+      <div className="flex justify-center items-center min-w-[3.375rem] w-[3.375rem] h-[3.375rem] rounded-full bg-black">
+        <YelloLogoIcon />
+      </div>
       <div className="flex flex-col gap-[0.25rem]">
         <h5 className="text-sm font-bold text-[#252B36]">{alarmData.title}</h5>
         <p className="body-3 text-[#252B36]">{alarmData.description}</p>

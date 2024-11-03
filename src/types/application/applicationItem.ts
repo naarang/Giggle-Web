@@ -14,7 +14,7 @@ export type ApplicationStepType =
   | 'APPLICATION_REJECTED' // 7
   | 'RESUME_REJECTED'
   | 'PENDING'
-  | 'REGISTRATION_RESULTS'; // 6;
+  | 'REGISTERING_RESULTS'; // 6;
 
 export type AppicationItemType = {
   job_posting_id: number;
