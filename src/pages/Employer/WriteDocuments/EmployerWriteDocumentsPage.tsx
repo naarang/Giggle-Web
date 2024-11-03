@@ -10,6 +10,7 @@ import {
   useGetPartTimeEmployPermit,
   useGetStandardLaborContract,
 } from '@/hooks/api/useDocument';
+import { useCurrentApplicantIdStore } from '@/store/url';
 import {
   DocumentType,
   IntegratedApplicationData,
@@ -17,13 +18,13 @@ import {
   PartTimePermitData,
 } from '@/types/api/document';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const EmployerWriteDocumentsPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { type, isEdit } = location.state || {};
-  const {id} = useParams();
+  const { currentApplicantId } = useCurrentApplicantIdStore();
 
   const [document, setDocument] = useState<
     PartTimePermitData | LaborContractDataResponse | IntegratedApplicationData
@@ -42,13 +43,13 @@ const EmployerWriteDocumentsPage = () => {
     useEffect(() => {
       switch (type) {
         case DocumentType.PART_TIME_PERMIT:
-          getPartTimeEmployPermit(Number(id));
+          getPartTimeEmployPermit(Number(currentApplicantId));
           break;
         case DocumentType.LABOR_CONTRACT:
-          getStandardLaborContract(Number(id));
+          getStandardLaborContract(Number(currentApplicantId));
           break;
         case DocumentType.INTEGRATED_APPLICATION:
-          getIntegratedApplication(Number(id));
+          getIntegratedApplication(Number(currentApplicantId));
           break;
       }
     }, [type]);
@@ -59,7 +60,7 @@ const EmployerWriteDocumentsPage = () => {
           hasMenuButton={false}
           title="서류 작성"
           onClickBackButton={() =>
-            navigate('/employer/applicant/document-detail')
+            navigate(`/employer/applicant/document-detail/${currentApplicantId}`)
           } // 서류관리 페이지로 이동 요망
         />
         <DocumentSubHeaderEmployer type={type as DocumentType} />

@@ -3,16 +3,17 @@ import BaseHeader from '@/components/Common/Header/BaseHeader';
 import EmployerApplicantDetailButton from '@/components/Employer/ApplicantDetail/EmployerApplicantDetailButton';
 import EmployerApplicantDetailCard from '@/components/Employer/ApplicantDetail/EmployerApplicantDetailCard';
 import { useGetEmployerApplicationDetail } from '@/hooks/api/useApplication';
+import { useCurrentApplicantIdStore } from '@/store/url';
 import { findCurrentStep } from '@/utils/application';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const EmployerApplicantDetailPage = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { currentApplicantId } = useCurrentApplicantIdStore();
 
   const { data } = useGetEmployerApplicationDetail(
-    Number(id),
-    !isNaN(Number(id)),
+    Number(currentApplicantId),
+    !isNaN(Number(currentApplicantId)),
   );
 
   if (!data?.success) return <></>;
@@ -21,7 +22,7 @@ const EmployerApplicantDetailPage = () => {
     <>
       <BaseHeader
         hasBackButton={true}
-        onClickBackButton={() => navigate(-1)}
+        onClickBackButton={() => navigate(`/employer/post/${currentApplicantId}/applicant`)}
         hasMenuButton={false}
         title="서류 신청 관리하기"
       />
@@ -32,7 +33,7 @@ const EmployerApplicantDetailPage = () => {
           isKorean={true}
         />
       </div>
-      <EmployerApplicantDetailButton applicant_id={Number(id)} step={data?.data.step} />
+      <EmployerApplicantDetailButton applicant_id={Number(currentApplicantId)} step={data?.data.step} />
     </>
   );
 };
