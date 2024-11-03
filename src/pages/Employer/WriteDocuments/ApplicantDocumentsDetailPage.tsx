@@ -1,19 +1,17 @@
 import BaseHeader from '@/components/Common/Header/BaseHeader';
-import {
-  DocumentTypeInfo,
-} from '@/constants/documents';
-import {
-  DocumentType,
-  EmployDocumentInfo,
-} from '@/types/api/document';
+import { DocumentTypeInfo } from '@/constants/documents';
+import { DocumentType, EmployDocumentInfo } from '@/types/api/document';
 import DocumentCardDispenserEmployer from '@/components/Employer/ApplicantDocumentsDetail/DocumentCardDispenserEmployer';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useGetDocumentsEmployer, usePatchStatusSubmissionEmployer } from '@/hooks/api/useDocument';
-
+import { useNavigate } from 'react-router-dom';
+import {
+  useGetDocumentsEmployer,
+  usePatchStatusSubmissionEmployer,
+} from '@/hooks/api/useDocument';
+import { useCurrentApplicantIdStore } from '@/store/url';
 
 const ApplicantDocumentsDetailPage = () => {
-  const {id} = useParams();
-  const { data } = useGetDocumentsEmployer(Number(id));
+  const { currentApplicantId } = useCurrentApplicantIdStore();
+  const { data } = useGetDocumentsEmployer(Number(currentApplicantId));
   const navigate = useNavigate();
 
   // patch api mutate 설정 (8.16 고용주가 서류 제출하기)
@@ -50,8 +48,12 @@ const ApplicantDocumentsDetailPage = () => {
             }
             title={DocumentTypeInfo[DocumentType.PART_TIME_PERMIT].name}
             type={DocumentType.PART_TIME_PERMIT}
-            reason={data?.data[DocumentType.PART_TIME_PERMIT].reason || undefined}
-            onNext={() => handleOnNext(data.data[DocumentType.PART_TIME_PERMIT]?.id || 0)}
+            reason={
+              data?.data[DocumentType.PART_TIME_PERMIT].reason || undefined
+            }
+            onNext={() =>
+              handleOnNext(data.data[DocumentType.PART_TIME_PERMIT]?.id || 0)
+            }
           />
         ) : (
           <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-start justify-start py-6 cursor-pointer text-left text-[#1e1926]">
@@ -66,11 +68,15 @@ const ApplicantDocumentsDetailPage = () => {
         )}
         {data && data?.data[DocumentType.LABOR_CONTRACT] ? (
           <DocumentCardDispenserEmployer
-            document={data.data[DocumentType.LABOR_CONTRACT] as EmployDocumentInfo}
+            document={
+              data.data[DocumentType.LABOR_CONTRACT] as EmployDocumentInfo
+            }
             title={DocumentTypeInfo[DocumentType.LABOR_CONTRACT].name}
             type={DocumentType.LABOR_CONTRACT}
             reason={data?.data[DocumentType.LABOR_CONTRACT].reason || undefined}
-            onNext={() => handleOnNext(data.data[DocumentType.LABOR_CONTRACT]?.id || 0)}
+            onNext={() =>
+              handleOnNext(data.data[DocumentType.LABOR_CONTRACT]?.id || 0)
+            }
           />
         ) : (
           <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-start justify-start py-6 cursor-pointer text-left text-[#1e1926]">

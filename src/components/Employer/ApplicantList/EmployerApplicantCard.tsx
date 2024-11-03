@@ -8,6 +8,7 @@ import MoneyIcon from '@/assets/icons/MoneyIcon.svg?react';
 import RightArrowIcon from '@/assets/icons/RightArrowIcon.svg?react';
 import Tag from '@/components/Common/Tag';
 import { useNavigate } from 'react-router-dom';
+import { useCurrentApplicantIdStore } from '@/store/url';
 
 const statusStyler = (status: ApplicationStepType) => {
   switch (status) {
@@ -32,6 +33,7 @@ const EmployerApplicantCard = ({
   applicantData,
 }: EmployerApplicantCardPropsType) => {
   const navigate = useNavigate();
+  const { updateCurrentApplicantId } = useCurrentApplicantIdStore();
   return (
     <article className="w-full border-[0.031rem] border-[#1E19263D] rounded-[1.125rem] overflow-hidden">
       <div
@@ -99,7 +101,10 @@ const EmployerApplicantCard = ({
       <div className="flex flex-col gap-[0.625rem] px-[1rem] pb-[1rem]">
         <button
           className="w-full px-[1.5rem] py-[0.75rem] text-center rounded-full bg-[#1E1926] text-[#F4F4F9] caption-1-sb"
-          onClick={() => navigate(`/employer/applicant/${applicantData.id}`)}
+          onClick={() => {
+            updateCurrentApplicantId(applicantData.id);
+            navigate(`/employer/applicant/${applicantData.id}`);
+          }}
         >
           Check Application Status
         </button>
