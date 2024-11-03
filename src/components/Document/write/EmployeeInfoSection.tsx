@@ -10,7 +10,11 @@ import {
   LaborContractEmployeeInfo,
 } from '@/types/api/document';
 import { Address } from '@/types/api/users';
-import { getDetailAddress, propertyToString } from '@/utils/document';
+import {
+  getDetailAddress,
+  getImageType,
+  propertyToString,
+} from '@/utils/document';
 import { renderMap } from '@/utils/map';
 import InputLayout from './InputLayout';
 
@@ -74,8 +78,9 @@ const EmployeeInfoSection = ({
                   <div className="border border-gray-200 rounded-xl">
                     {value !== '' && (
                       <img
-                        src={value as string}
+                        src={`data:image/${getImageType(value)};base64,${value}`}
                         className="w-full h-full object-cover"
+                        alt="signature preview"
                       />
                     )}
                   </div>
