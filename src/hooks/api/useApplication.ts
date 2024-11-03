@@ -87,11 +87,12 @@ export const usePatchResumeAccepted = () => {
 };
 
 // 6.11 (고용주) 인터뷰 완료하기 훅
-export const usePatchInterviewFinish = () => {
+export const usePatchInterviewFinish = (id: number) => {
+  const navigate = useNavigate();
   return useMutation({
     mutationFn: patchInterviewFinish,
     onSuccess: () => {
-      window.location.reload();
+      navigate(`/employer/applicant/${id}`);
     },
     onError: (error) => {
       console.error('인터뷰 완료하기 실패', error);
