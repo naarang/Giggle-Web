@@ -1,7 +1,6 @@
 import ChatSubmitIcon from '@/assets/icons/ChatSubmitIcon.svg?react';
+import { usePostChatBotMessage } from '@/hooks/api/useChatBot';
 import { ChatItemType } from '@/types/api/chatbot';
-import { getAccessToken } from '@/utils/auth';
-import axios from 'axios';
 import { useState } from 'react';
 
 type ChatBotInputProps = {
@@ -10,6 +9,7 @@ type ChatBotInputProps = {
 };
 
 const ChatBotInput = ({ addChatData, setIsChatLoading }: ChatBotInputProps) => {
+  const { mutateAsync } = usePostChatBotMessage();
   const [text, setText] = useState<string>('');
 
   const onClickSubmit = async (text: string) => {
@@ -22,31 +22,17 @@ const ChatBotInput = ({ addChatData, setIsChatLoading }: ChatBotInputProps) => {
     addChatData([newUserChatData]);
     setText('');
     setIsChatLoading(true);
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_APP_API_CHAT_BASE_URL}/chatbot`,
-        {
-          prompt: text,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${getAccessToken()}`, // 토큰을 헤더에 추가
-          },
-        },
-      );
 
-      if (response?.data) {
-        const newChatBotData = {
-          isBot: true,
-          message: response?.data?.data.content,
-        };
-        addChatData([newUserChatData, newChatBotData]);
-      }
-      setIsChatLoading(false);
-    } catch (error) {
-      console.error('Error sending text to chatbot:', error);
-      setIsChatLoading(false);
+    const { data } = await mutateAsync(text);
+
+    if (data?.content) {
+      const newChatBotData = {
+        isBot: true,
+        message: data?.content,
+      };
+      addChatData([newUserChatData, newChatBotData]);
     }
+    setIsChatLoading(false);
   };
 
   return (
