@@ -29,3 +29,14 @@ export const useCurrentDocumentIdStore = create<CurrentDocumentIdStore>()((set) 
   currentDocumentId: null,
   updateCurrentDocumentId: (newId: number) => set(() => ({ currentDocumentId: newId })),
 }));
+
+
+type CurrentPostIdStoreEmployee = {
+  currentPostId: number | null;
+  updateCurrentPostId: (id: number) => void;
+};
+
+export const useCurrentPostIdEmployeeStore = create<CurrentPostIdStoreEmployee>()((set) => ({
+  currentPostId: null,
+  updateCurrentPostId: (newId: number) => set(() => ({ currentPostId: newId })),
+}));

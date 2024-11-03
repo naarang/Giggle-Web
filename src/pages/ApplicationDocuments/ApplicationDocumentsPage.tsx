@@ -3,13 +3,14 @@ import Button from '@/components/Common/Button';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import DocumentCardList from '@/components/Document/DocumentCardList';
 import { useGetDocumentsEmployee } from '@/hooks/api/useDocument';
+import { useCurrentPostIdEmployeeStore } from '@/store/url';
 import { DocumentsSummaryResponse } from '@/types/api/document';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ApplicationDocumentsPage = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
-  const { data, isPending } = useGetDocumentsEmployee(Number(id));
+  const { currentPostId } = useCurrentPostIdEmployeeStore();
+  const { data, isPending } = useGetDocumentsEmployee(Number(currentPostId));
   return (
     <div>
       <BaseHeader

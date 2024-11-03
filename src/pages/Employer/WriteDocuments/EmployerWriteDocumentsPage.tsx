@@ -4,7 +4,6 @@ import DocumentSubHeaderEmployer from '@/components/Employer/ApplicantDocumentsD
 import EmployeeInfoSectionKOR from '@/components/Employer/WriteDocument/EmployeeInfoSectionKOR';
 import EmployerLaborContractForm from '@/components/Employer/WriteDocument/EmployerLaborContractForm';
 import EmployerPartTimePermitForm from '@/components/Employer/WriteDocument/EmployerPartTimePermitForm';
-import { mockPartTimePermitForm } from '@/constants/documents';
 import {
   useGetIntegratedApplication,
   useGetPartTimeEmployPermit,
@@ -66,10 +65,15 @@ const EmployerWriteDocumentsPage = () => {
         <DocumentSubHeaderEmployer type={type as DocumentType} />
         <div className="flex flex-col items-center justify-start gap-6 px-6 pt-6">
           <InfoAlert content="유학생의 정보가 알맞은지 확인하세요." />
-          <EmployeeInfoSectionKOR
-            employee={mockPartTimePermitForm}
-            type={DocumentType.PART_TIME_PERMIT}
-          />
+          {type !== DocumentType.INTEGRATED_APPLICATION && document && (
+            <EmployeeInfoSectionKOR
+              employee={
+                (document as PartTimePermitData | LaborContractDataResponse)
+                  .employee_information
+              }
+              type={type as DocumentType}
+            />
+          )}
         </div>
         {type === DocumentType.PART_TIME_PERMIT && (
           <EmployerPartTimePermitForm
