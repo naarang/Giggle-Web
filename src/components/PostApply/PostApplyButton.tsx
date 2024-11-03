@@ -4,6 +4,8 @@ import CompleteButtonModal from '@/components/Common/CompleteButtonModal';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { usePostApplyPost } from '@/hooks/api/useApplication';
+import PostApplyErrorBottomSheet from '@/components/PostApply/PostApplyErrorBottomSheet';
+import { AxiosError } from 'axios';
 
 const PostApplyButton = () => {
   const navigate = useNavigate();
@@ -11,15 +13,25 @@ const PostApplyButton = () => {
 
   const [isComplete, setIsComplete] = useState<boolean>(false);
   const [postId, setPostId] = useState<number | undefined>();
+  const [isShowBottomsheet, setIsShowBottomSheet] = useState<boolean>(false);
 
   const { mutateAsync } = usePostApplyPost();
 
   const onClickApply = async () => {
     if (isNaN(Number(id))) return;
-    const result = await mutateAsync(Number(id));
-    if (result?.success) {
-      setPostId(result?.data?.id);
-      setIsComplete(true);
+    try {
+      const result = await mutateAsync(Number(id));
+
+      if (result?.success) {
+        setPostId(result?.data?.id);
+        setIsComplete(true);
+      }
+    } catch (error) {
+      const axiosError = error as AxiosError<{ error: { code: number } }>;
+
+      if (axiosError.response?.data.error.code === 40011) {
+        setIsShowBottomSheet(true);
+      }
     }
   };
 
@@ -53,6 +65,10 @@ const PostApplyButton = () => {
           onClick={() => navigate(`/application/${postId}`)}
         />
       )}
+      <PostApplyErrorBottomSheet
+        isShowBottomsheet={isShowBottomsheet}
+        setIsShowBottomSheet={setIsShowBottomSheet}
+      />
     </>
   );
 };
