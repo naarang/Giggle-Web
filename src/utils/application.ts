@@ -13,7 +13,7 @@ export const findCurrentStep = (step: ApplicationStepType) => {
       return 4;
     case APPLICATION_STEP.APPLICATION_IN_PROGRESS:
       return 5;
-    case APPLICATION_STEP.REGISTRATION_RESULTS:
+    case APPLICATION_STEP.REGISTERING_RESULTS:
       return 6;
     case APPLICATION_STEP.APPLICATION_SUCCESS:
       return 7;

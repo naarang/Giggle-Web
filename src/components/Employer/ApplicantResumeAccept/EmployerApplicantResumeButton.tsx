@@ -2,7 +2,6 @@ import { buttonTypeKeys } from '@/constants/components';
 import Button from '@/components/Common/Button';
 import { useNavigate, useParams } from 'react-router-dom';
 import { usePatchResumeAccepted } from '@/hooks/api/useApplication';
-// import { usePatchResumeAccepted } from '@/hooks/api/useApplication';
 
 const EmployerApplicantResumeButton = () => {
   const navigate = useNavigate();
@@ -14,12 +13,11 @@ const EmployerApplicantResumeButton = () => {
     if (isNaN(Number(id))) return;
 
     // data 사용 안 하고있어서 우선 제외
-      const { data } = await mutateAsync({
+    const data = await mutateAsync({
       id: Number(id),
       isAccepted: { is_accepted: isAccepted },
     });
 
-    {/* 왜 data에 null 값이 들어오는데 isAccepted에는 값이 있는걸까요? */}
     if (data?.success) navigate(`/employer/applicant/${id}`);
   };
 

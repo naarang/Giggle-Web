@@ -72,14 +72,18 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
             <div className="flex items-center gap-[0.625rem]">
               <CalendarIcon />
               <p className="caption-1 text-[#464646]">
-                {jobPostingData.summaries.work_days_per_week} days a week
+                {jobPostingData.summaries.work_days_per_week}
               </p>
             </div>
           </div>
         </div>
         <div className="flex items-center gap-[0.5rem]">
           <Tag
-            value={jobPostingData.recruitment_dead_line === '상시모집' ? '상시모집' : calculateDDay(jobPostingData.recruitment_dead_line)}
+            value={
+              jobPostingData.recruitment_dead_line === '상시모집'
+                ? '상시모집'
+                : calculateDDay(jobPostingData.recruitment_dead_line)
+            }
             padding="0.313rem 0.875rem"
             isRounded={false}
             hasCheckIcon={false}
