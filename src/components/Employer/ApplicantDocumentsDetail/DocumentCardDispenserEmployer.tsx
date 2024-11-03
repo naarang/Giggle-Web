@@ -390,7 +390,6 @@ const DocumentCardDispenserEmployer = ({
             reason={reason}
             onNext={() => submitDocument(Number(document.id))} // 고용주가 서류 제출
             onEdit={() => {
-              console.log(document.id)
               updateCurrentDocumentId(document.id);
               navigate(`/employer/write-documents/${document.id}`, {
                 state: {

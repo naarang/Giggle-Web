@@ -39,7 +39,6 @@ const PartTimePermitWriteForm = ({
     Number(currentPostId),
   ); // 수정된 문서 제출 훅
   // 세 부분으로 나누어 입력받는 방식을 위해 전화번호만 별도의 state로 분리, 추후 유효성 검사 단에서 통합
-  console.log(parsePhoneNumber(newDocumentData.phone_number).start);
   const [phoneNum, setPhoneNum] = useState({
     start: newDocumentData.phone_number
       ? parsePhoneNumber(newDocumentData.phone_number).start

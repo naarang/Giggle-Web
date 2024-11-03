@@ -84,9 +84,7 @@ const EmployerLaborContractForm = ({
   // 입력 완료 시 제출
   const { mutate: putDocument } = usePutLaborContractEmployer(Number(currentDocumentId));
   useEffect(() => {
-    console.log(document?.employer_information)
     if (isEdit && document?.employer_information) {
-      console.log("됐는데")
       setNewDocumentData(document?.employer_information);
     }
 
