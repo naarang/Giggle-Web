@@ -9,7 +9,7 @@ import CheckIconGreen from '@/assets/icons/CheckIconGreen.svg?react';
 import WriteIcon from '@/assets/icons/WriteIcon.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { usePatchDocumentsStatusConfirmation } from '@/hooks/api/useDocument';
-import { useCurrentDocumentIdStore } from '@/store/url';
+import { useCurrentDocumentIdStore, useCurrentPostIdEmployeeStore } from '@/store/url';
 
 const enum DocumentStatus {
   TEMPORARY_SAVE = 'TEMPORARY_SAVE',
@@ -30,10 +30,12 @@ const TemporarySaveCard = ({
   title,
   onNext,
   onEdit,
+  onPreview,
 }: {
   title: string;
   onNext: () => void;
   onEdit: () => void;
+  onPreview?: () => void;
 }) => {
   return (
     <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-center justify-center gap-2 caption-2 text-left text-[#1e1926]">
@@ -43,7 +45,10 @@ const TemporarySaveCard = ({
         </div>
         <div className="w-1.5 absolute !m-0 top-[0.4rem] left-[8rem] rounded-full bg-[#ff6f61] h-1.5 z-[1]" />
         <div className="w-[0.75rem] relative h-[0.75rem] z-[2]">
-          <div className="absolute w-full h-full top-0 righ-0 bottom-0 left-0" />
+          <div
+            className="absolute w-full h-full top-0 righ-0 bottom-0 left-0"
+            onClick={onPreview}
+          />
           <ArrowrightIcon />
         </div>
       </div>
@@ -344,6 +349,8 @@ const DocumentCardDispenser = ({
   const { mutate: submitDocument } = usePatchDocumentsStatusConfirmation();
   const navigate = useNavigate();
   const { updateCurrentDocumentId } = useCurrentDocumentIdStore();
+  const { currentPostId }= useCurrentPostIdEmployeeStore();
+  console.log(`current: ${currentPostId}`) // 지원자 조회 - 지원자 상세 - 서류 상세 간 뒤로가기 문제 관련
   const handleDownload = (url: string) => {
     window.open(url, '_blank');
   };
@@ -378,6 +385,14 @@ const DocumentCardDispenser = ({
               },
             });
           }}
+          onPreview={() => {
+            updateCurrentDocumentId(document.id);
+            navigate(`/document-preview/${document.id}`, {
+              state: {
+                type: type,
+              },
+            });
+          }}
         />
       );
     case DocumentStatus.SUBMITTED:
@@ -393,7 +408,7 @@ const DocumentCardDispenser = ({
               state: {
                 type: type,
               },
-            })
+            });
           }}
           onPreview={() => {
             updateCurrentDocumentId(document.id);

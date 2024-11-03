@@ -15,7 +15,7 @@ const ApplicationDocumentsPage = () => {
     <div>
       <BaseHeader
         hasBackButton={true}
-        onClickBackButton={() => navigate(-1)}
+        onClickBackButton={() => navigate(`/application/${currentPostId}`)}
         hasMenuButton={true}
         title="Application Documents"
       />
