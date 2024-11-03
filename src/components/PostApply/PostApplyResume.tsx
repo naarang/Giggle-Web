@@ -6,9 +6,9 @@ import {
   WorkExperienceType,
 } from '@/types/postApply/resumeDetailItem';
 import { useGetApplicantResume, useGetResume } from '@/hooks/api/useResume';
-import { useParams } from 'react-router-dom';
 import { useUserStore } from '@/store/user';
 import { UserType } from '@/constants/user';
+import { useCurrentApplicantIdStore } from '@/store/url';
 
 const EDUCATION_PERIOD = {
   BACHELOR: 4,
@@ -17,13 +17,13 @@ const EDUCATION_PERIOD = {
 } as const;
 
 const PostApplyResume = () => {
-  const { id } = useParams();
+  const { currentApplicantId } = useCurrentApplicantIdStore();
   const { account_type } = useUserStore();
 
   const { data: userData } = useGetResume(account_type === UserType.USER);
   const { data: ownerData } = useGetApplicantResume(
-    Number(id),
-    !isNaN(Number(id)) && account_type === UserType.OWNER ? true : false,
+    Number(currentApplicantId),
+    !isNaN(Number(currentApplicantId)) && account_type === UserType.OWNER ? true : false,
   );
 
   const data = account_type === UserType.OWNER ? ownerData : userData;

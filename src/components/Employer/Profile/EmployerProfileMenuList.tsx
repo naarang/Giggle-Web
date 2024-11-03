@@ -1,6 +1,6 @@
 import { IconType } from '@/constants/profile';
 import { useNavigate } from 'react-router-dom';
-import EmployerProfileMenu from './EmployerProfileMenu';
+import EmployerProfileMenu from '@/components/Employer/Profile/EmployerProfileMenu';
 
 type EmployerProfileMenuListProps = {
   handleBottomSheetOpen: () => void;

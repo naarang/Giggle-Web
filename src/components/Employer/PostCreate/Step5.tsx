@@ -55,13 +55,8 @@ const Step5 = ({
         type: 'application/json',
       }),
     );
-    formData.forEach((value, key) => {
-      if (value instanceof Blob) {
-        console.log(`${key}:`, `Blob size: ${value.size}, type: ${value.type}`);
-      } else {
-        console.log(`${key}:`, value);
-      }
-    });
+
+    console.log('postInfo : ', postInfo);
 
     onNext({
       ...postInfo,
@@ -89,7 +84,7 @@ const Step5 = ({
                   className="w-full h-[40vh] px-[1rem] py-[0.75rem] border border-[#E2E5EB] rounded-[0.75rem] body-2 outline-none resize-none"
                   placeholder="상세요강을 작성해주세요"
                   value={newPostInfo.body.description}
-                  maxLength={100}
+                  maxLength={1000}
                   onChange={(e) =>
                     setNewPostInfo({
                       ...newPostInfo,

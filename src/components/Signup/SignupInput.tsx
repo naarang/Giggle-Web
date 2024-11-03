@@ -7,7 +7,6 @@ import {
   validateId,
   validatePassword,
 } from '@/utils/signin';
-import SigninSocialButtons from '@/components/Signin/SigninSocialButtons';
 import { isEmployer } from '@/utils/signup';
 import { signInputTranclation } from '@/constants/translation';
 import { useGetIdValidation } from '@/hooks/api/useAuth';
@@ -157,7 +156,7 @@ const SignupInput = ({
             </p>
             {/* 로그인 화면 이동 */}
             <button
-              className="text-[#695F96] text-sm font-semibold"
+              className="text-[#7872ED] text-sm font-semibold"
               onClick={() => navigate('/signin')}
             >
               {signInputTranclation.signin[isEmployer(pathname)]}
@@ -165,7 +164,10 @@ const SignupInput = ({
           </div>
         </div>
       </div>
+      {/* 소셜은 잠깐 제외 */}
+      {/* 
       <SigninSocialButtons />
+      */}
     </>
   );
 };

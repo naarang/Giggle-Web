@@ -60,6 +60,7 @@ export const propertyToString = (value: string) => {
 export const validateEmployerInformation = (
   info: EmployerInformation,
 ): boolean => {
+  const companyRegistrationNumPattern = /^\d{3}\/\d{2}\/\d{5}$/;
   // 빈 문자열 체크
   if (
     !info.company_name ||
@@ -70,8 +71,8 @@ export const validateEmployerInformation = (
     return false;
   }
 
-  // 사업자등록번호 유효성 검사 (12자리 숫자)
-  if (!info.company_registration_number?.match(/^\d{12}$/)) {
+  // 사업자등록번호 유효성 검사 (000/00/00000) 양식
+  if (!info.company_registration_number || !companyRegistrationNumPattern.test(info.company_registration_number)) {
     return false;
   }
 
@@ -100,6 +101,7 @@ export const validateEmployerInformation = (
 export const validateLaborContractEmployerInformation = (
   info: LaborContractEmployerInfo,
 ): boolean => {
+  const companyRegistrationNumPattern = /^\d{3}\/\d{2}\/\d{5}$/;
   // 빈 문자열 체크
   if (
     !info.company_name ||
@@ -112,7 +114,7 @@ export const validateLaborContractEmployerInformation = (
   }
 
   // 사업자등록번호 유효성 검사 (12자리 숫자)
-  if (!info.company_registration_number?.match(/^\d{12}$/)) {
+  if (!info.company_registration_number || !companyRegistrationNumPattern.test(info.company_registration_number)) {
     return false;
   }
 
@@ -125,17 +127,11 @@ export const validateLaborContractEmployerInformation = (
     return false;
   }
 
-  // 초과 근무에 따른 가산임금률 유효성 검사(0이 아닌지)
-  if (!info.wage_rate || Number(info.wage_rate) === 0) {
-    console.log('가산임금');
-    return false;
-  }
-
   // 급료 지급일 유효성 검사(0이 아닌지)
   if (
-    !info.wage_rate ||
-    Number(info.wage_rate) > 31 ||
-    Number(info.wage_rate) < 1
+    !info.payment_day ||
+    Number(info.payment_day) > 31 ||
+    Number(info.payment_day) < 1
   ) {
     console.log('급료지급일');
     return false;

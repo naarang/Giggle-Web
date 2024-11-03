@@ -7,15 +7,59 @@ import FolderIcon from '@/assets/icons/FolderIcon.svg?react';
 import DownloadIcon from '@/assets/icons/DownloadIcon.svg?react';
 import CheckIconGreen from '@/assets/icons/CheckIconGreen.svg?react';
 import WriteIcon from '@/assets/icons/WriteIcon.svg?react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { DocumentStatusEmployer } from '@/constants/documents';
+import { usePatchStatusSubmissionEmployer } from '@/hooks/api/useDocument';
 
 type DocumentCardProps = {
   document: EmployDocumentInfo;
   title: string;
   type: string;
   reason?: string;
-  onNext: () => void;
+  onNext?: () => void;
+};
+
+const NullCard = ({
+  title,
+}: {
+  title: string;
+}) => {
+  return (
+    <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-center justify-center gap-2 caption-2 text-left text-[#1e1926]">
+      <div className="self-stretch rounded-t-[1.125rem] bg-[#1e1926] h-7 flex items-center justify-between px-4 pl-6 py-2 relative">
+        <div className="flex items-center justify-start relative text-[#f4f4f9]">
+          대기 ...
+        </div>
+      </div>
+      <div className="self-stretch flex flex-col items-start px-4 gap-4 body-1">
+        <div className="self-stretch border-b border-[#dcdcdc] h-10 flex items-center justify-center pl-2 pb-2 gap-4">
+          <div className="flex-1 flex items-center justify-start">
+            <div className="relative head-3">{title}</div>
+          </div>
+          <div className="overflow-hidden flex items-center justify-center p-2">
+            <TalkBallonIcon />
+          </div>
+        </div>
+
+        <div className="self-stretch flex items-center justify-center px-3 text-[#656565] caption-1">
+          <div className="flex-1 relative">
+            <p className="m-0">유학생이 서류를 작성 중이에요.</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col w-full items-start justify-start py-2 px-4 text-[#464646]">
+        <div className="w-full rounded-3xl bg-[#f4f4f9] flex items-center justify-start border border-[#dcdcdc] px-4 py-2 pl-2.5">
+          <div className="flex items-center justify-start gap-2">
+            <div className="w-[1.375rem] h-[1.375rem] flex items-center justify-center rounded-full bg-[#1e1926]">
+              <TalkBallonIconGrey />
+            </div>
+            <div className="relative body-3 opacity-75">작성 중 ...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 const TemporarySaveCard = ({
@@ -84,7 +128,8 @@ const TemporarySaveCard = ({
   );
 };
 
-const BeforeConfirmationCard = ({ title }: { title: string }) => {
+{/* 
+  const BeforeConfirmationCard = ({ title }: { title: string }) => {
   return (
     <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-center justify-center gap-2 caption-2 text-left text-[#1e1926]">
       <div className="self-stretch rounded-t-[1.125rem] bg-[#1e1926] h-7 flex items-center justify-between px-4 pl-6 py-2 relative">
@@ -122,6 +167,7 @@ const BeforeConfirmationCard = ({ title }: { title: string }) => {
     </div>
   );
 };
+  */}
 
 const SubmittedCard = ({ title }: { title: string }) => {
   return (
@@ -307,23 +353,23 @@ const DocumentCardDispenserEmployer = ({
   document,
   title,
   type,
-  onNext,
   reason,
 }: DocumentCardProps) => {
-  const {id} = useParams();
   const navigate = useNavigate();
   const handleDownload = (url: string) => {
     window.open(url, '_blank');
   };
-  if (!document.status) return <BeforeConfirmationCard title={title} />;
+
+  const { mutate: submitDocument } = usePatchStatusSubmissionEmployer();
+  if (!document.status) return <NullCard title={title} />;
   switch (document.status) {
     case DocumentStatusEmployer.TEMPORARY_SAVE:
       return (
         <TemporarySaveCard
           title={title}
-          onNext={onNext}
+          onNext={() => submitDocument(Number(document.id))} // 고용주가 서류 제출
           onEdit={() =>
-            navigate(`/employer/write-documents/${id}`, {
+            navigate(`/employer/write-documents/${document.id}`, {
               state: {
                 type: type,
                 isEdit: true,
@@ -340,9 +386,9 @@ const DocumentCardDispenserEmployer = ({
           <RewritingCard
             title={title}
             reason={reason}
-            onNext={onNext}
+            onNext={() => submitDocument(Number(document.id))} // 고용주가 서류 제출
             onEdit={() =>
-              navigate(`/employer/write-documents/${id}`, {
+              navigate(`/employer/write-documents/${document.id}`, {
                 state: {
                   type: type,
                   isEdit: true,

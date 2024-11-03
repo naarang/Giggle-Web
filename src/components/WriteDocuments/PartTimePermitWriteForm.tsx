@@ -32,6 +32,7 @@ const PartTimePermitWriteForm = ({
   const { id } = useParams();
   const [newDocumentData, setNewDocumentData] =
     useState<PartTimePermitFormRequest>(initialPartTimePermitForm);
+    {/* 동일한 id 값이라서 문제가 생길리가 없는데, usePostPartTimeEmployPermit hook 이후에만 라우팅 에러 발생(id 값을 못 가져옴) */}
   const { mutate: postDocument } = usePostPartTimeEmployPermit(Number(id)); // 작성된 문서 제출 훅
   const { mutate: updateDocument } = usePutPartTimeEmployPermit(Number(id)); // 수정된 문서 제출 훅
   // 세 부분으로 나누어 입력받는 방식을 위해 전화번호만 별도의 state로 분리, 추후 유효성 검사 단에서 통합

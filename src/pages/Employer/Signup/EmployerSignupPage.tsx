@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Stroke from '@/assets/icons/SignupStroke.svg?react';
 import SignupInput from '@/components/Signup/SignupInput';
 import EmailInput from '@/components/Signup/EmailInput';
@@ -6,8 +6,12 @@ import SignupVerification from '@/components/Signup/SignupVerification';
 import VerificationSuccessful from '@/components/Signup/VerificationSuccessful';
 import { usePatchAuthentication, useTempSignUp } from '@/hooks/api/useAuth';
 import { UserType } from '@/constants/user';
+import { deleteAccessToken, deleteRefreshToken } from '@/utils/auth';
+import { useUserStore } from '@/store/user';
 
 const EmployerSignupPage = () => {
+  const { updateAccountType, updateName } = useUserStore();
+
   // sign up 단계(총 4단계)
   const [currentStep, setCurrentStep] = useState<number>(1);
 
@@ -61,6 +65,15 @@ const EmployerSignupPage = () => {
       { onSuccess: () => setCurrentStep(currentStep + 1) },
     );
   };
+
+  useEffect(() => {
+    // 토큰 삭제
+    deleteAccessToken();
+    deleteRefreshToken();
+    // 유저 타입 전역 변수 초기화
+    updateAccountType(undefined);
+    updateName('');
+  }, []);
 
   return (
     <div className="flex flex-col w-[100vw] h-[100vh] bg-white">

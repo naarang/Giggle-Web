@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 const HomePage = () => {
   const navigate = useNavigate();
   const { account_type } = useUserStore();
+  console.log(account_type);
 
   return (
     <>
@@ -29,7 +30,8 @@ const HomePage = () => {
         </>
       )}
       <HomeJobPostingList />
-      {account_type && (
+      {/* 유학생인 경우에만 챗봇 표시 */}
+      {account_type === UserType.USER && (
         <button
           className="fixed w-[3rem] h-[3rem] flex justify-center items-center rounded-full right-[1.5rem] bottom-[4.75rem] bg-[#FEF387]"
           onClick={() => navigate('/chatbot')}

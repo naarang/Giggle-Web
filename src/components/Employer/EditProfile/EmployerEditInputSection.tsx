@@ -19,6 +19,7 @@ type EmployerEditInputSectionProps = {
   newEmployData: EmployerProfileRequestBody;
   setNewEmployData: (newData: EmployerProfileRequestBody) => void;
   setLogoFile: (file: File | undefined) => void;
+  initialPhonNum: string;
 };
 
 const enum LogoType {
@@ -31,6 +32,7 @@ const EmployerEditInputSection = ({
   newEmployData,
   setNewEmployData,
   setLogoFile,
+  initialPhonNum,
 }: EmployerEditInputSectionProps) => {
   // 주소 검색용 input 저장하는 state
   const [addressInput, setAddressInput] = useState('');
@@ -49,6 +51,18 @@ const EmployerEditInputSection = ({
     middle: '',
     end: '',
   });
+
+  useEffect(() => {
+    if (initialPhonNum) {
+      const splitPhoneNum = initialPhonNum.split('-');
+      setPhoneNum({
+        start: splitPhoneNum[0] || '',
+        middle: splitPhoneNum[1] || '',
+        end: splitPhoneNum[2] || '',
+      });
+    }
+  }, [initialPhonNum]);
+
   const [logoStatus, setLogoStatus] = useState<LogoType>(LogoType.NONE);
   const [selectedImage, setSelectedImage] = useState<string>();
   // 현재 좌표 기준 주소 획득
@@ -77,7 +91,7 @@ const EmployerEditInputSection = ({
       },
     });
   }, [phoneNum]);
-
+  
   // 검색할 주소 입력 시 실시간 검색
   const handleAddressSearch = useCallback(
     (address: string) => {
@@ -143,7 +157,7 @@ const EmployerEditInputSection = ({
   // 로고 선택
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
+    if (file && file.type.startsWith('image/')) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setSelectedImage(reader.result as string);
@@ -281,7 +295,7 @@ const EmployerEditInputSection = ({
           <InputLayout title="사업자 등록번호" isEssential>
             <Input
               inputType={InputType.TEXT}
-              placeholder="사업자등록번호를 입력해주세요"
+              placeholder="000/00/00000"
               value={newEmployData.owner_info.company_registration_number}
               onChange={(value) =>
                 setNewEmployData({

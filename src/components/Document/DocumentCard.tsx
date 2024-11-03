@@ -7,7 +7,8 @@ import FolderIcon from '@/assets/icons/FolderIcon.svg?react';
 import DownloadIcon from '@/assets/icons/DownloadIcon.svg?react';
 import CheckIconGreen from '@/assets/icons/CheckIconGreen.svg?react';
 import WriteIcon from '@/assets/icons/WriteIcon.svg?react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { usePatchDocumentsStatusConfirmation } from '@/hooks/api/useDocument';
 
 const enum DocumentStatus {
   TEMPORARY_SAVE = 'TEMPORARY_SAVE',
@@ -21,7 +22,7 @@ type DocumentCardProps = {
   document: DocumentInfo;
   title: string;
   type: string;
-  onNext: () => void;
+  onNext?: () => void;
 };
 
 const TemporarySaveCard = ({
@@ -338,9 +339,10 @@ const DocumentCardDispenser = ({
   document,
   title,
   type,
-  onNext,
 }: DocumentCardProps) => {
+  const { mutate: submitDocument } = usePatchDocumentsStatusConfirmation();
   const navigate = useNavigate();
+  const {id} = useParams();
   const handleDownload = (url: string) => {
     window.open(url, '_blank');
   };
@@ -351,7 +353,7 @@ const DocumentCardDispenser = ({
         document={document}
         onDownload={handleDownload}
         onPreview={() =>
-          navigate('/document-preview', {
+          navigate(`/document-preview/${document.id}`, {
             state: {
               type: type,
             },
@@ -364,9 +366,9 @@ const DocumentCardDispenser = ({
       return (
         <TemporarySaveCard
           title={title}
-          onNext={onNext}
+          onNext={()=> submitDocument(Number(id))}
           onEdit={() =>
-            navigate('/write-documents', {
+            navigate(`/write-documents/${document.id}`, {
               state: {
                 type: type,
                 isEdit: true,
@@ -381,16 +383,16 @@ const DocumentCardDispenser = ({
       return (
         <BeforeConfirmationCard
           title={title}
-          onNext={onNext}
+          onNext={()=> submitDocument(Number(id))}
           onRequest={() =>
-            navigate('/request-modify', {
+            navigate(`/request-modify/${document.id}`, {
               state: {
                 type: type,
               },
             })
           }
           onPreview={() =>
-            navigate('/document-preview', {
+            navigate(`/document-preview/${document.id}`, {
               state: {
                 type: type,
               },
@@ -407,7 +409,7 @@ const DocumentCardDispenser = ({
           document={document}
           onDownload={handleDownload}
           onPreview={() =>
-            navigate('/document-preview', {
+            navigate(`/document-preview/${document.id}`, {
               state: {
                 type: type,
               },

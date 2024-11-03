@@ -52,10 +52,10 @@ const EmployerLaborContractForm = ({
     start: newDocumentData.phone_number
       ? parsePhoneNumber(newDocumentData.phone_number).start
       : '',
-    middle: newDocumentData.company_registration_number
+    middle: newDocumentData.phone_number
       ? parsePhoneNumber(newDocumentData.phone_number).middle
       : '',
-    end: newDocumentData.company_registration_number
+    end: newDocumentData.phone_number
       ? parsePhoneNumber(newDocumentData.phone_number).end
       : '',
   });
@@ -96,8 +96,18 @@ const EmployerLaborContractForm = ({
     });
   }, [isSuccess]);
 
+  // 휴대번호 매핑
+  useEffect(() => {
+    setNewDocumentData({
+      ...newDocumentData,
+      phone_number: formatPhoneNumber(phoneNum),
+    });
+  }, [phoneNum]);
+
   /* 정보 입력 시마다 유효성을 검사해 모든 값이 유효하면 버튼이 활성화 */
   useEffect(() => {
+    {/* work_day_time_list 데이터가 안 들어가서 계속 유효성 실패 중 */ }
+    console.log(newDocumentData.work_day_time_list);
     setIsInvalid(
       !validateLaborContractEmployerInformation({
         ...newDocumentData,
@@ -207,10 +217,10 @@ const EmployerLaborContractForm = ({
           />
         </InputLayout>
         {/* 사업자등록번호 입력 */}
-        <InputLayout title="사업자등록번호 " isEssential>
+        <InputLayout title="사업자 등록번호" isEssential>
           <Input
             inputType={InputType.TEXT}
-            placeholder="회사/점포명을 작성해주세요"
+            placeholder="000/00/00000"
             value={newDocumentData.company_registration_number}
             onChange={(value) =>
               setNewDocumentData({
@@ -639,6 +649,7 @@ const EmployerLaborContractForm = ({
                 signature_base64: '',
               })
             }
+            isKorean
           />
         </InputLayout>
       </div>

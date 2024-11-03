@@ -1,4 +1,5 @@
 import BaseHeader from '@/components/Common/Header/BaseHeader';
+import InfoAlert from '@/components/Document/write/InfoAlert';
 import DocumentSubHeaderEmployer from '@/components/Employer/ApplicantDocumentsDetail/DocumentSubHeaderEmployer';
 import EmployeeInfoSectionKOR from '@/components/Employer/WriteDocument/EmployeeInfoSectionKOR';
 import EmployerLaborContractForm from '@/components/Employer/WriteDocument/EmployerLaborContractForm';
@@ -9,6 +10,7 @@ import {
   useGetPartTimeEmployPermit,
   useGetStandardLaborContract,
 } from '@/hooks/api/useDocument';
+import { useCurrentApplicantIdStore } from '@/store/url';
 import {
   DocumentType,
   IntegratedApplicationData,
@@ -22,6 +24,8 @@ const EmployerWriteDocumentsPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { type, isEdit } = location.state || {};
+  const { currentApplicantId } = useCurrentApplicantIdStore();
+
   const [document, setDocument] = useState<
     PartTimePermitData | LaborContractDataResponse | IntegratedApplicationData
   >();
@@ -34,17 +38,18 @@ const EmployerWriteDocumentsPage = () => {
   const { mutate: getIntegratedApplication } = useGetIntegratedApplication({
     onSuccess: (data) => setDocument(data.data),
   });
+
   {
     useEffect(() => {
       switch (type) {
         case DocumentType.PART_TIME_PERMIT:
-          getPartTimeEmployPermit(1);
+          getPartTimeEmployPermit(Number(currentApplicantId));
           break;
         case DocumentType.LABOR_CONTRACT:
-          getStandardLaborContract(1);
+          getStandardLaborContract(Number(currentApplicantId));
           break;
         case DocumentType.INTEGRATED_APPLICATION:
-          getIntegratedApplication(1);
+          getIntegratedApplication(Number(currentApplicantId));
           break;
       }
     }, [type]);
@@ -55,11 +60,12 @@ const EmployerWriteDocumentsPage = () => {
           hasMenuButton={false}
           title="서류 작성"
           onClickBackButton={() =>
-            navigate('/employer/applicant/document-detail')
+            navigate(`/employer/applicant/document-detail/${currentApplicantId}`)
           } // 서류관리 페이지로 이동 요망
         />
         <DocumentSubHeaderEmployer type={type as DocumentType} />
-        <div className="px-6 pt-6">
+        <div className="flex flex-col items-center justify-start gap-6 px-6 pt-6">
+          <InfoAlert content="유학생의 정보가 알맞은지 확인하세요." />
           <EmployeeInfoSectionKOR
             employee={mockPartTimePermitForm}
             type={DocumentType.PART_TIME_PERMIT}

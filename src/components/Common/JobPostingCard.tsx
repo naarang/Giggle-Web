@@ -10,6 +10,7 @@ import { calculateDDay } from '@/utils/calculateDDay';
 import { useNavigate } from 'react-router-dom';
 import { usePutPostBookmark } from '@/hooks/api/usePost';
 import { useUserStore } from '@/store/user';
+import { UserType } from '@/constants/user';
 
 type JobPostingCardProps = {
   jobPostingData: JobPostingItemType;
@@ -78,7 +79,7 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
         </div>
         <div className="flex items-center gap-[0.5rem]">
           <Tag
-            value={calculateDDay(jobPostingData.recruitment_dead_line)}
+            value={jobPostingData.recruitment_dead_line === '상시모집' ? '상시모집' : calculateDDay(jobPostingData.recruitment_dead_line)}
             padding="0.313rem 0.875rem"
             isRounded={false}
             hasCheckIcon={false}
@@ -86,7 +87,7 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
             color="#1E1926"
             fontStyle="button-2"
           />
-          {account_type &&
+          {account_type === UserType.USER &&
             (jobPostingData?.is_book_marked ? (
               <BookmarkCheckedIcon onClick={(e) => onClickBookmark(e)} />
             ) : (

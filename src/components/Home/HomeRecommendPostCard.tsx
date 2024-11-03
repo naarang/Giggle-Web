@@ -1,4 +1,5 @@
 import MessageIcon from '@/assets/icons/Home/MessageIcon.svg?react';
+import { useUserStore } from '@/store/user';
 import { RecommendJobPostingItemType } from '@/types/home/recommendJobPostingItem';
 import { calculateDDay } from '@/utils/calculateDDay';
 import { useNavigate } from 'react-router-dom';
@@ -11,6 +12,8 @@ const HomeRecommendPostCard = ({
   jobPostingData,
 }: HomeRecommendPostCardProps) => {
   const navigate = useNavigate();
+
+  const { name } = useUserStore();
 
   return (
     <article
@@ -28,10 +31,10 @@ const HomeRecommendPostCard = ({
       <MessageIcon />
       <div>
         <p className="pb-[0.5rem] caption-1 text-[#656565]">
-          한은서님을 위한 추천 공고 도착!
+        he recommendation notice for {name.replace(/-/g, ' ')} has arrived !
         </p>
         <div className="button-2 text-[#1E1926] break-keep whitespace-normal">
-          공고제목{')'} {jobPostingData.title}
+          Job Title {')'} {jobPostingData.title}
         </div>
       </div>
     </article>

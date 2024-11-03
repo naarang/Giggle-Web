@@ -1,4 +1,5 @@
 import Tag from '@/components/Common/Tag';
+import { useCurrentPostIdStore } from '@/store/url';
 import { EmployerPostItemType } from '@/types/post/employerPostItem';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,7 +9,7 @@ type EmployerPostCardType = {
 
 const EmployerPostCard = ({ postData }: EmployerPostCardType) => {
   const navigate = useNavigate();
-
+  const { updateCurrentPostId } = useCurrentPostIdStore();
   return (
     <article className="w-full border-[0.031rem] border-[#1E19263D] rounded-[1.125rem] overflow-hidden">
       <div className="flex flex-col gap-[1.25rem] w-full px-[1.5rem] pt-[1.5rem] pb-[1rem]">
@@ -49,14 +50,19 @@ const EmployerPostCard = ({ postData }: EmployerPostCardType) => {
       <div className="flex">
         <button
           className="flex-1 py-[0.75rem] caption-1-sb text-[#464646] bg-[#F4F4F9]  text-center"
-          onClick={() => navigate(`/employer/post/${postData.id}`)}
+          onClick={() => {
+            updateCurrentPostId(postData.id);
+            navigate(`/employer/post/${postData.id}`)}
+          }
         >
           공고 상세보기
         </button>
         <button
           className="flex-1 py-[0.75rem] caption-1-sb text-[#1E1926] bg-[#FEF387]  text-center"
-          onClick={() => navigate(`/employer/post/${postData.id}/applicant`)}
-        >
+          onClick={() => {
+            updateCurrentPostId(postData.id);
+            navigate(`/employer/post/${postData.id}/applicant`)}
+          }>
           지원자 확인
         </button>
       </div>

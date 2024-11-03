@@ -92,6 +92,23 @@ const EmployerPartTimePermitForm = ({
     });
   }, [isSuccess]);
 
+  {/* 시급, 휴대번호 데이터 업데이트 */}
+  // 시급 업데이트
+  useEffect(() => {
+    setNewDocumentData({
+      ...newDocumentData,
+      hourly_rate: extractNumbersAsNumber(hourlyRate),
+    });
+  }, [hourlyRate]);
+
+  // 휴대번호 데이터 업데이트
+  useEffect(() => {
+    setNewDocumentData({
+      ...newDocumentData,
+      phone_number: formatPhoneNumber(phoneNum),
+    });
+  }, [phoneNum]);
+
   /* 정보 입력 시마다 유효성을 검사해 모든 값이 유효하면 버튼이 활성화 */
   useEffect(() => {
     setIsInvalid(
@@ -101,6 +118,8 @@ const EmployerPartTimePermitForm = ({
         phone_number: formatPhoneNumber(phoneNum),
       }),
     );
+
+    console.log(newDocumentData);
   }, [newDocumentData, hourlyRate, phoneNum]);
 
   // 검색할 주소 입력 시 실시간 검색
@@ -189,7 +208,7 @@ const EmployerPartTimePermitForm = ({
         <InputLayout title="사업자등록번호" isEssential>
           <Input
             inputType={InputType.TEXT}
-            placeholder="사업자등록번호를 입력해주세요"
+            placeholder="000/00/00000"
             value={newDocumentData.company_registration_number}
             onChange={(value) =>
               setNewDocumentData({
@@ -328,6 +347,7 @@ const EmployerPartTimePermitForm = ({
                 signature_base64: '',
               })
             }
+            isKorean
           />
         </InputLayout>
         {/* 근무 기간 입력 */}

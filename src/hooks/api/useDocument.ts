@@ -1,8 +1,12 @@
 import {
   getDocumentsEmployee,
+  getDocumentsEmployer,
   getIntegratedApplication,
   getPartTimeEmployPermit,
   getStandardLaborContract,
+  patchDocumentsStatusConfirmation,
+  patchStatusSubmission,
+  patchStatusSubmissionEmployer,
   postIntegratedApplications,
   postPartTimeEmployPermit,
   postRequest,
@@ -37,7 +41,7 @@ export const useGetDocumentsEmployee = (id: number) => {
 export const useGetDocumentsEmployer = (id: number) => {
   return useQuery({
     queryKey: ['application', id],
-    queryFn: () => getDocumentsEmployee(id),
+    queryFn: () => getDocumentsEmployer(id),
   });
 };
 
@@ -82,7 +86,7 @@ export const usePutPartTimeEmployPermitEmployer = (id: number) => {
   return useMutation({
     mutationFn: putPartTimeEmployPermitEmployer,
     onSuccess: () => {
-      navigate(`/employer/applicant/${id}/document-detail`);
+      navigate(`/employer/applicant/document-detail/${id}`);
     },
     onError: () =>
       navigate('/write-documents', {
@@ -175,6 +179,45 @@ export const usePutIntegratedApplicants = (id: number) => {
           type: DocumentType.INTEGRATED_APPLICATION,
         },
       }),
+  });
+};
+
+// 8.15 (유학생) 서류 (근로계약서, 시간제 취업허가서, 통합 신청서) 제출하기 api hook
+export const usePatchStatusSubmission = () => {
+  return useMutation({
+    mutationFn: patchStatusSubmission,
+    onSuccess: () => {
+      window.location.reload();
+    },
+    onError: (error) => {
+      console.error('유학생의 서류 제출 실패', error);
+    },
+  });
+};
+
+// 8.16 (고용주) 서류 (근로계약서, 시간제 취업허가서, 통합 신청서) 제출하기 api hook
+export const usePatchStatusSubmissionEmployer = () => {
+  return useMutation({
+    mutationFn: patchStatusSubmissionEmployer,
+    onSuccess: () => {
+      window.location.reload();
+    },
+    onError: (error) => {
+      console.error('고용주의 서류 제출 실패', error);
+    },
+  });
+};
+
+// 8.17 (유학생) 서류 (근로계약서, 시간제 취업허가서) 컴펌하기
+export const usePatchDocumentsStatusConfirmation = () => {
+  return useMutation({
+    mutationFn: patchDocumentsStatusConfirmation,
+    onSuccess: () => {
+      window.location.reload();
+    },
+    onError: (error) => {
+      console.error('유학생의 서류 컨펌 실패', error);
+    },
   });
 };
 

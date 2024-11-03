@@ -8,7 +8,7 @@ import Input from '@/components/Common/Input';
 import { InputType } from '@/types/common/input';
 import { School } from '@/types/api/document';
 import { schoolMockData } from '@/constants/documents';
-import { RESTYPE } from '../../../types/api/common';
+import { RESTYPE } from '@/types/api/common';
 
 type SearchSchoolBottomSheetProps = {
   newDocumentData: IntegratedApplicationData;

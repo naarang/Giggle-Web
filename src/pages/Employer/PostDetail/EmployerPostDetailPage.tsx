@@ -5,17 +5,18 @@ import PostDetailContent from '@/components/PostDetail/PostDetailContent';
 import PostDetailTitle from '@/components/PostDetail/PostDetailTitle';
 import { UserType } from '@/constants/user';
 import { useGetPostDetail } from '@/hooks/api/usePost';
+import { useCurrentPostIdStore } from '@/store/url';
 import { useUserStore } from '@/store/user';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const EmployerPostDetailPage = () => {
   const { account_type } = useUserStore();
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { currentPostId } = useCurrentPostIdStore();
 
   const { data } = useGetPostDetail(
-    Number(id),
-    account_type === UserType.OWNER && !isNaN(Number(id)) ? true : false,
+    Number(currentPostId),
+    account_type === UserType.OWNER && !isNaN(Number(currentPostId)) ? true : false,
   );
 
   if (!data?.success) return <></>;

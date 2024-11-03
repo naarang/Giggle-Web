@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FindJourney from '@/components/Signup/FindJourney';
 import Stroke from '@/assets/icons/SignupStroke.svg?react';
 import SignupInput from '@/components/Signup/SignupInput';
@@ -8,9 +8,12 @@ import SignupVerification from '@/components/Signup/SignupVerification';
 import VerificationSuccessful from '@/components/Signup/VerificationSuccessful';
 import { useNavigate } from 'react-router-dom';
 import { usePatchAuthentication, useTempSignUp } from '@/hooks/api/useAuth';
+import { deleteAccessToken, deleteRefreshToken } from '@/utils/auth';
+import { useUserStore } from '@/store/user';
 
 const SignupPage = () => {
   const navigate = useNavigate();
+  const { updateAccountType, updateName } = useUserStore();
 
   // sign up 단계(총 5단계)
   const [currentStep, setCurrentStep] = useState<number>(1);
@@ -67,6 +70,15 @@ const SignupPage = () => {
       { onSuccess: () => setCurrentStep(currentStep + 1) },
     );
   };
+
+  useEffect(() => {
+    // 토큰 삭제
+    deleteAccessToken();
+    deleteRefreshToken();
+    // 유저 타입 전역 변수 초기화
+    updateAccountType(undefined);
+    updateName('');
+  }, []);
 
   return (
     <div

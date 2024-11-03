@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Input from '@/components/Common/Input';
 import Button from '@/components/Common/Button';
-import SigninSocialButtons from '@/components/Signin/SigninSocialButtons';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { validateEmail } from '@/utils/signin';
 import { signInputTranclation } from '@/constants/translation';
@@ -85,13 +84,16 @@ const EmailInput = ({ email, onEmailChange, onSubmit }: EmailInputProps) => {
           </p>
           {/* 로그인 화면 이동 */}
           <button
-            className="text-[#1E1926] text-sm font-semibold"
+            className="text-[#7872ED] text-sm font-semibold"
             onClick={() => navigate('/signin')}
           >
             {signInputTranclation.signin[isEmployer(pathname)]}
           </button>
         </div>
+        {/* 소셜은 잠깐 제외 */}
+        {/* 
         <SigninSocialButtons />
+        */}
       </div>
     </>
   );

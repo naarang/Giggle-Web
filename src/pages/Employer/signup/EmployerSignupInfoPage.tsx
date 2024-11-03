@@ -10,6 +10,7 @@ import {
   EmployerRegistrationRequestBody,
   initialEmployerRegistration,
 } from '@/types/api/employ';
+import { getTemporaryToken } from '@/utils/auth';
 import { isValidEmployerRegistration } from '@/utils/signup';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -31,14 +32,32 @@ const EmployerSignupInfoPage = () => {
   // 최종 완료 시 호출, 서버 api 호출 및 완료 modal 표시
   const handleSubmit = () => {
     if (isValidEmployerRegistration(newEmployData)) {
-      mutate({
-        image: logoFile,
-        body: {
-          ...newEmployData,
-        },
-      });
+      const formData = new FormData();
+
+      // temporary_token을 포함한 요청 데이터 생성
+      const requestData = {
+        ...newEmployData,
+        temporary_token: String(getTemporaryToken()), // temporary_token 추가
+      };
+
+      // 이미지 파일이 있는 경우에만 추가
+      if (logoFile) {
+        formData.append('image', logoFile);
+      }
+
+      // JSON 데이터를 Blob으로 변환하여 추가
+      formData.append(
+        'body',
+        new Blob([JSON.stringify(requestData)], {
+          type: 'application/json',
+        }),
+      );
+
+      // mutate 호출
+      mutate(formData);
     }
   };
+
   return (
     <div className="last:pb-[10rem]">
       <BaseHeader
