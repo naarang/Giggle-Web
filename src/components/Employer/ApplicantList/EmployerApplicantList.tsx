@@ -9,12 +9,11 @@ import {
   MATCH_KO_EN_ASCENDING_SORT,
 } from '@/constants/sort';
 import { useGetApplicantList } from '@/hooks/api/usePost';
+import { useCurrentPostIdStore } from '@/store/url';
 import { ApplicantItemType } from '@/types/application/applicationItem';
 import { KoApplicationStatusType } from '@/types/application/applicationStatus';
 import { KoAscendingSortType } from '@/types/common/sort';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-
 type EmployerApplicationListPropsType = {
   title: string;
 };
@@ -22,7 +21,7 @@ type EmployerApplicationListPropsType = {
 const EmployerApplicationList = ({
   title,
 }: EmployerApplicationListPropsType) => {
-  const { id } = useParams();
+  const { currentPostId} = useCurrentPostIdStore();
 
   const [selectedSort, setSelectedSort] = useState<KoAscendingSortType>(
     KO_ASCENDING_SORT_TYPE.ASCENDING,
@@ -32,17 +31,17 @@ const EmployerApplicationList = ({
   );
 
   const { data, refetch } = useGetApplicantList(
-    Number(id),
+    Number(currentPostId),
     MATCH_KO_EN_ASCENDING_SORT[selectedSort],
     EN_APPLICATION_STATUS_TYPE[selectedStatus]
       .replace(/\s/g, '_')
       .toUpperCase(),
-    !isNaN(Number(id)) ? true : false,
+    !isNaN(Number(currentPostId)) ? true : false,
   );
 
   useEffect(() => {
-    if (!isNaN(Number(id))) refetch();
-  }, [id, selectedSort, selectedStatus, refetch]);
+    if (!isNaN(Number(currentPostId))) refetch();
+  }, [currentPostId, selectedSort, selectedStatus, refetch]);
 
   if (!data?.success) return <></>;
 

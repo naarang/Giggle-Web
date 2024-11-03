@@ -1,16 +1,17 @@
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import EmployerApplicantListTitle from '@/components/Employer/ApplicantList/EmployerApplicantListTitle';
 import EmployerApplicantList from '@/components/Employer/ApplicantList/EmployerApplicantList';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useGetPostSummary } from '@/hooks/api/usePost';
+import { useCurrentPostIdStore } from '@/store/url';
 
 const EmployerApplicantListPage = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { currentPostId } = useCurrentPostIdStore();
 
   const { data } = useGetPostSummary(
-    Number(id),
-    !isNaN(Number(id)) ? true : false,
+    Number(currentPostId),
+    !isNaN(Number(currentPostId)) ? true : false,
   );
 
   if (!data?.success) return <></>;
