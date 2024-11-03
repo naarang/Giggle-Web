@@ -12,7 +12,6 @@ import {
 import { Address } from '@/types/api/users';
 import {
   getDetailAddress,
-  getImageType,
   propertyToString,
 } from '@/utils/document';
 import { renderMap } from '@/utils/map';
@@ -78,7 +77,7 @@ const EmployeeInfoSection = ({
                   <div className="border border-gray-200 rounded-xl">
                     {value !== '' && (
                       <img
-                        src={`data:image/${getImageType(value)};base64,${value}`}
+                      src={`data:image/svg+xml;base64,${value}`}
                         className="w-full h-full object-cover"
                         alt="signature preview"
                       />

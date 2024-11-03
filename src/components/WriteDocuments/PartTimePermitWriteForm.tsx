@@ -13,7 +13,7 @@ import EmployerInfoSection from '@/components/Document/write/EmployerInfoSection
 import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
 import { isNotEmpty } from '@/utils/document';
-import { formatPhoneNumber } from '@/utils/information';
+import { formatPhoneNumber, parsePhoneNumber } from '@/utils/information';
 import {
   usePostPartTimeEmployPermit,
   usePutPartTimeEmployPermit,
@@ -32,13 +32,24 @@ const PartTimePermitWriteForm = ({
   const { currentPostId } = useCurrentPostIdEmployeeStore();
   const [newDocumentData, setNewDocumentData] =
     useState<PartTimePermitFormRequest>(initialPartTimePermitForm);
-  const { mutate: postDocument } = usePostPartTimeEmployPermit(Number(currentPostId)); // 작성된 문서 제출 훅
-  const { mutate: updateDocument } = usePutPartTimeEmployPermit(Number(currentPostId)); // 수정된 문서 제출 훅
+  const { mutate: postDocument } = usePostPartTimeEmployPermit(
+    Number(currentPostId),
+  ); // 작성된 문서 제출 훅
+  const { mutate: updateDocument } = usePutPartTimeEmployPermit(
+    Number(currentPostId),
+  ); // 수정된 문서 제출 훅
   // 세 부분으로 나누어 입력받는 방식을 위해 전화번호만 별도의 state로 분리, 추후 유효성 검사 단에서 통합
+  console.log(parsePhoneNumber(newDocumentData.phone_number).start);
   const [phoneNum, setPhoneNum] = useState({
-    start: '',
-    middle: '',
-    end: '',
+    start: newDocumentData.phone_number
+      ? parsePhoneNumber(newDocumentData.phone_number).start
+      : '',
+    middle: newDocumentData.phone_number
+      ? parsePhoneNumber(newDocumentData.phone_number).middle
+      : '',
+    end: newDocumentData.phone_number
+      ? parsePhoneNumber(newDocumentData.phone_number).end
+      : '',
   });
   // 문서 편집일 시 페이지 진입과 동시에 기존 내용 자동 입력
   useEffect(() => {
@@ -50,6 +61,11 @@ const PartTimePermitWriteForm = ({
         term_of_completion: document.employee_information.term_of_completion,
         phone_number: document.employee_information.phone_number,
         email: document.employee_information.email,
+      });
+      setPhoneNum({
+        start: parsePhoneNumber(newDocumentData.phone_number).start,
+        middle: parsePhoneNumber(newDocumentData.phone_number).middle,
+        end: parsePhoneNumber(newDocumentData.phone_number).end,
       });
     }
   }, [document, isEdit]);
