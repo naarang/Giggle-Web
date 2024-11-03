@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { buttonTypeKeys } from '@/constants/components';
 import Button from '@/components/Common/Button';
 import { useState } from 'react';

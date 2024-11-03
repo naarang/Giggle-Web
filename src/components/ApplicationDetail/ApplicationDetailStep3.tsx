@@ -1,6 +1,6 @@
 import { buttonTypeKeys } from '@/constants/components';
 import Button from '@/components/Common/Button';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ApplicationDetailStep3 = ({ applicant_id }: { applicant_id: number }) => {
   const navigate = useNavigate();

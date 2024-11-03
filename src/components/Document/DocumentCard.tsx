@@ -8,7 +8,7 @@ import DownloadIcon from '@/assets/icons/DownloadIcon.svg?react';
 import CheckIconGreen from '@/assets/icons/CheckIconGreen.svg?react';
 import WriteIcon from '@/assets/icons/WriteIcon.svg?react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useConfirmDocuments, useSubmitDocumentEmployee } from '@/hooks/api/useDocument';
+import { usePatchDocumentsStatusConfirmation } from '@/hooks/api/useDocument';
 
 const enum DocumentStatus {
   TEMPORARY_SAVE = 'TEMPORARY_SAVE',
@@ -340,8 +340,7 @@ const DocumentCardDispenser = ({
   title,
   type,
 }: DocumentCardProps) => {
-  const { mutate: submitDocument } = useSubmitDocumentEmployee();
-  const { mutate: confirmDocument} = useConfirmDocuments();
+  const { mutate: submitDocument } = usePatchDocumentsStatusConfirmation();
   const navigate = useNavigate();
   const {id} = useParams();
   const handleDownload = (url: string) => {
@@ -384,7 +383,7 @@ const DocumentCardDispenser = ({
       return (
         <BeforeConfirmationCard
           title={title}
-          onNext={()=> confirmDocument(Number(id))}
+          onNext={()=> submitDocument(Number(id))}
           onRequest={() =>
             navigate(`/request-modify/${document.id}`, {
               state: {

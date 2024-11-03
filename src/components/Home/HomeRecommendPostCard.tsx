@@ -1,4 +1,5 @@
 import MessageIcon from '@/assets/icons/Home/MessageIcon.svg?react';
+import { useUserStore } from '@/store/user';
 import { RecommendJobPostingItemType } from '@/types/home/recommendJobPostingItem';
 import { calculateDDay } from '@/utils/calculateDDay';
 import { useNavigate } from 'react-router-dom';
