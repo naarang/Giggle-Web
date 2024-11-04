@@ -1,6 +1,7 @@
 import RightArrowIcon from '@/assets/icons/RightArrowIcon.svg?react';
 import Tag from '@/components/Common/Tag';
 import { APPLICATION_STEP } from '@/constants/application';
+import { useCurrentPostIdEmployeeStore } from '@/store/url';
 import {
   AppicationItemType,
   ApplicationStepType,
@@ -28,7 +29,7 @@ type ApplicationCardPropsType = {
 
 const ApplicationCard = ({ applicationData }: ApplicationCardPropsType) => {
   const navigate = useNavigate();
-
+  const { updateCurrentPostId } = useCurrentPostIdEmployeeStore();
   return (
     <article className="w-full border-[0.031rem] border-[#1E19263D] rounded-[1.125rem] overflow-hidden">
       <div
@@ -41,11 +42,12 @@ const ApplicationCard = ({ applicationData }: ApplicationCardPropsType) => {
           <div className="w-[0.375rem] h-[0.375rem] rounded-full bg-[#FF6F61]"></div>
         </div>
         <RightArrowIcon
-          onClick={() =>
+          onClick={() => {
+            updateCurrentPostId(applicationData.user_owner_job_posting_id);
             navigate(
               `/application/${applicationData.user_owner_job_posting_id}`,
-            )
-          }
+            );
+          }}
         />
       </div>
       <div className="flex flex-col gap-[1.25rem] w-full px-[1.5rem] pt-[1.5rem] pb-[1rem]">
@@ -88,17 +90,23 @@ const ApplicationCard = ({ applicationData }: ApplicationCardPropsType) => {
       <div className="flex">
         <button
           className="flex-1 py-[0.75rem] caption-1-sb text-[#F4F4F9] bg-[#1E1926]  text-center"
-          onClick={() => navigate(`/post/${applicationData.job_posting_id}`)}
+          onClick={() => {
+            updateCurrentPostId(applicationData.user_owner_job_posting_id);
+            navigate(
+              `/application/${applicationData.user_owner_job_posting_id}`,
+            );
+          }}
         >
           Read More Posting
         </button>
         <button
           className="flex-1 py-[0.75rem] caption-1-sb text-[#1E1926] bg-[#FEF387]  text-center"
-          onClick={() =>
+          onClick={() => {
+            updateCurrentPostId(applicationData.user_owner_job_posting_id);
             navigate(
               `/application/${applicationData.user_owner_job_posting_id}`,
-            )
-          }
+            );
+          }}
         >
           Check Application Status
         </button>

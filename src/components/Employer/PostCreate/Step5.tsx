@@ -56,8 +56,6 @@ const Step5 = ({
       }),
     );
 
-    console.log('postInfo : ', postInfo);
-
     onNext({
       ...postInfo,
       body: {
