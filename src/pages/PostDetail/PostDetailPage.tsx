@@ -3,6 +3,7 @@ import PostDetailApplyButton from '@/components/PostDetail/PostDetailApplyButton
 import PostDetailCompanyImageList from '@/components/PostDetail/PostDetailCompanyImageList';
 import PostDetailContent from '@/components/PostDetail/PostDetailContent';
 import PostDetailTitle from '@/components/PostDetail/PostDetailTitle';
+import { UserType } from '@/constants/user';
 import { useGetPostDetail, useGetPostDetailGuest } from '@/hooks/api/usePost';
 import { useUserStore } from '@/store/user';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -42,9 +43,11 @@ const PostDetailPage = () => {
       />
       <PostDetailTitle postDetailData={postDetailData.data} />
       <PostDetailContent postDetailData={postDetailData.data} />
-      <PostDetailApplyButton
-        isBookmarked={postDetailData.data?.is_book_marked ?? false}
-      />
+      {account_type !== UserType.OWNER && (
+        <PostDetailApplyButton
+          isBookmarked={postDetailData.data?.is_book_marked ?? false}
+        />
+      )}
     </>
   );
 };
