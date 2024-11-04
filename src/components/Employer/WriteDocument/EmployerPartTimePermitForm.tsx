@@ -118,8 +118,6 @@ const EmployerPartTimePermitForm = ({
         phone_number: formatPhoneNumber(phoneNum),
       }),
     );
-
-    console.log(newDocumentData);
   }, [newDocumentData, hourlyRate, phoneNum]);
 
   // 검색할 주소 입력 시 실시간 검색

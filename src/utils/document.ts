@@ -165,3 +165,27 @@ export const parseStringToSafeNumber = (value: string): number => {
   if (isNaN(numberValue)) return 0;
   else return numberValue;
 };
+
+// base64 데이터를 디코딩해 이미지 타입을 추론하는 함수
+export const getImageType = (base64String: string) => {
+  // base64 디코딩
+  const stringHeader = atob(base64String).slice(0, 4);
+  const header = new Uint8Array(stringHeader.length);
+  for (let i = 0; i < stringHeader.length; i++) {
+    header[i] = stringHeader.charCodeAt(i);
+  }
+
+  // 시그니처 체크
+  if (header[0] === 0xFF && header[1] === 0xD8 && header[2] === 0xFF) {
+    return 'jpeg';
+  }
+  if (header[0] === 0x89 && header[1] === 0x50 && header[2] === 0x4E && header[3] === 0x47) {
+    return 'png';
+  }
+  if (header[0] === 0x47 && header[1] === 0x49 && header[2] === 0x46) {
+    return 'gif';
+  }
+  
+  // 기본값
+  return 'jpeg';
+};

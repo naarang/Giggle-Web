@@ -4,7 +4,7 @@ import {
   LaborContractDataResponse,
   LaborContractEmployeeInfo,
 } from '@/types/api/document';
-import { formatPhoneNumber } from '@/utils/information';
+import { formatPhoneNumber, parsePhoneNumber } from '@/utils/information';
 import { useCallback, useEffect, useState } from 'react';
 import Input from '@/components/Common/Input';
 import { InputType } from '@/types/common/input';
@@ -23,7 +23,7 @@ import {
   usePostStandardLaborContracts,
   usePutStandardLaborContracts,
 } from '@/hooks/api/useDocument';
-import { useParams } from 'react-router-dom';
+import { useCurrentPostIdEmployeeStore } from '@/store/url';
 
 type LaborContractFormProps = {
   document?: LaborContractDataResponse;
@@ -36,7 +36,7 @@ const LaborContractWriteForm = ({
 }: LaborContractFormProps) => {
   const [newDocumentData, setNewDocumentData] =
     useState<LaborContractEmployeeInfo>(initialLaborContractEmployeeInfo);
-  const { id } = useParams();
+  const { currentPostId } = useCurrentPostIdEmployeeStore();
   // 세 부분으로 나누어 입력받는 방식을 위해 전화번호만 별도의 state로 분리, 추후 유효성 검사 단에서 통합
   const [phoneNum, setPhoneNum] = useState({
     start: '',
@@ -60,8 +60,12 @@ const LaborContractWriteForm = ({
     onSuccess: (data) => setAddressSearchResult(data),
   });
 
-  const { mutate: postDocument } = usePostStandardLaborContracts(Number(id)); // 작성된 근로계약서 제출 훅
-  const { mutate: updateDocument } = usePutStandardLaborContracts(Number(id)); // 수정된 근로계약서 제출 훅
+  const { mutate: postDocument } = usePostStandardLaborContracts(
+    Number(currentPostId),
+  ); // 작성된 근로계약서 제출 훅
+  const { mutate: updateDocument } = usePutStandardLaborContracts(
+    Number(currentPostId),
+  ); // 수정된 근로계약서 제출 훅
   // 문서 편집일 시 페이지 진입과 동시에 기존 내용 자동 입력
   useEffect(() => {
     if (isEdit && document) {
@@ -72,6 +76,12 @@ const LaborContractWriteForm = ({
         phone_number: document.employee_information.phone_number,
         signature_base64: document.employee_information.signature_base64,
       });
+      setPhoneNum({
+        start: parsePhoneNumber(newDocumentData.phone_number).start,
+        middle: parsePhoneNumber(newDocumentData.phone_number).middle,
+        end: parsePhoneNumber(newDocumentData.phone_number).end,
+      });
+      setAddressInput(newDocumentData.address.address_name as string);
     }
   }, [document, isEdit]);
 
@@ -157,7 +167,7 @@ const LaborContractWriteForm = ({
       phone_number: formatPhoneNumber(phoneNum),
     };
     const payload = {
-      id: 1,
+      id: Number(currentPostId),
       document: finalDocument, // TODO: 로그인 연결 후 userId를 넣어야 하는 것으로 추정
     };
 
@@ -341,6 +351,7 @@ const LaborContractWriteForm = ({
                   signature_base64: '',
                 })
               }
+              previewImg={newDocumentData.signature_base64}
             />
           </div>
         </div>
