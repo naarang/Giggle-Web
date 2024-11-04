@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { usePutPostBookmark } from '@/hooks/api/usePost';
 import { useUserStore } from '@/store/user';
 import { UserType } from '@/constants/user';
+import { useCurrentPostIdStore } from '@/store/url';
 
 type JobPostingCardProps = {
   jobPostingData: JobPostingItemType;
@@ -19,6 +20,7 @@ type JobPostingCardProps = {
 const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
   const { account_type } = useUserStore();
   const { mutate } = usePutPostBookmark();
+  const { updateCurrentPostId } = useCurrentPostIdStore();
 
   const navigate = useNavigate();
 
@@ -31,6 +33,7 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
   };
 
   const goToPostDetailPage = () => {
+    updateCurrentPostId(Number(jobPostingData.id));
     navigate(`/post/${jobPostingData.id}`);
   };
 
