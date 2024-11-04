@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Input from '@/components/Common/Input';
 import Button from '@/components/Common/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -21,25 +21,34 @@ const EmailInput = ({ email, onEmailChange, onSubmit }: EmailInputProps) => {
 
   const { data: ValidationResponse } = useGetEmailValidation(email);
 
-  // ===== handler =====
-  const handleEmailChange = async (value: string) => {
-    onEmailChange(value);
+  useEffect(() => {
+    const validateEmailAsync = async () => {
+      if (!email) return; // 이메일이 없을 경우 바로 반환
 
-    // 이메일 형식 유효성 검사
-    if (!validateEmail(value, setEmailError, pathname)) {
-      setIsValid(false); // 유효성 검사 실패 시 버튼 비활성화
-      return;
-    }
+      onEmailChange(email);
 
-    // 이메일 중복 검사 API 호출 결과 처리
-    if (ValidationResponse && ValidationResponse.data.is_valid) {
-      setEmailError(null); // email 중복 오류 메시지 초기화
-      setIsValid(true); // 중복 검사 통과 시 버튼 활성화
-    } else {
-      setEmailError(signInputTranclation.invalidEmail[isEmployer(pathname)]); // email 중복 오류 메시지
-      setIsValid(false); // 중복 검사 실패 시 버튼 비활성화
-    }
-  };
+      // 이메일 형식 유효성 검사
+      if (!validateEmail(email, setEmailError, pathname)) {
+        setIsValid(false); // 유효성 검사 실패 시 버튼 비활성화
+        return;
+      }
+
+      // 이메일 중복 검사 API 호출 결과 처리
+      if (ValidationResponse && ValidationResponse.data.is_valid === false) {
+        setEmailError(
+          signInputTranclation.emailAvailability[isEmployer(pathname)],
+        );
+        setIsValid(false); // 중복 검사 실패 시 버튼 비활성화
+      } else if (ValidationResponse && ValidationResponse.data.is_valid) {
+        setEmailError(null); // email 중복 오류 메시지 초기화
+        setIsValid(true); // 중복 검사 통과 시 버튼 활성화
+      } else {
+        setIsValid(false); // 예외처리
+      }
+    };
+
+    validateEmailAsync();
+  }, [email, pathname, ValidationResponse, onEmailChange]);
 
   const handleSignupClick = () => {
     if (!isValid) return;
@@ -60,7 +69,7 @@ const EmailInput = ({ email, onEmailChange, onSubmit }: EmailInputProps) => {
             inputType="TEXT"
             placeholder={signInputTranclation.enterEmail[isEmployer(pathname)]}
             value={email}
-            onChange={handleEmailChange}
+            onChange={onEmailChange}
             canDelete={false}
             isInvalid={!isValid}
           />
