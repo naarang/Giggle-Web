@@ -14,6 +14,7 @@ type SignaturePadProps = {
   width?: number;
   height?: number;
   isKorean?: boolean;
+  previewImg?: string;
 };
 
 const SignaturePad: React.FC<SignaturePadProps> = ({
@@ -21,6 +22,7 @@ const SignaturePad: React.FC<SignaturePadProps> = ({
   onReset,
   height = 120,
   isKorean,
+  previewImg,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState<number>(0);
@@ -146,6 +148,12 @@ const SignaturePad: React.FC<SignaturePadProps> = ({
               style: { borderRadius: '12px' },
             }}
             backgroundColor="white"
+          />
+        ) : previewImg && previewImg !== '' ? (
+          <img
+          src={`data:image/svg+xml;base64,${previewImg}`}
+            className="w-full h-full object-cover"
+            alt="signature preview"
           />
         ) : (
           <div className="w-full h-[7.5rem]" />

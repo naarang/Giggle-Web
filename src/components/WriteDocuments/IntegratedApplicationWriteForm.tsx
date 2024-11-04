@@ -1,5 +1,5 @@
 import { initialIntegratedApplication } from '@/constants/documents';
-import { useGetGeoInfo, useSearchAddress } from '@/hooks/api/useKaKaoMap';
+import { useSearchAddress } from '@/hooks/api/useKaKaoMap';
 import { IntegratedApplicationData } from '@/types/api/document';
 import { AddressType, Document } from '@/types/api/map';
 import { pick } from '@/utils/map';
@@ -20,8 +20,8 @@ import SignaturePad from '@/components/Document/write/SignaturePad';
 import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
 import { usePostIntegratedApplicants } from '@/hooks/api/useDocument';
-import { formatPhoneNumber } from '@/utils/information';
-import { useParams } from 'react-router-dom';
+import { formatPhoneNumber, parsePhoneNumber } from '@/utils/information';
+import { useCurrentPostIdEmployeeStore } from '@/store/url';
 
 type IntegratedApplicationFormProps = {
   document?: IntegratedApplicationData;
@@ -32,7 +32,7 @@ const IntegratedApplicationWriteForm = ({
   document,
   isEdit,
 }: IntegratedApplicationFormProps) => {
-  const { id } = useParams();
+  const { currentPostId } = useCurrentPostIdEmployeeStore();
   const [newDocumentData, setNewDocumentData] =
     useState<IntegratedApplicationData>(initialIntegratedApplication);
 
@@ -66,30 +66,38 @@ const IntegratedApplicationWriteForm = ({
   // 학교 선택 모달 출현 여부 관리 state
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // 현재 좌표 기준 주소 획득
-  const { data, isSuccess } = useGetGeoInfo(setCurrentGeoInfo);
   // 키워드로 주소 검색
   const { searchAddress } = useSearchAddress({
     onSuccess: (data) => setAddressSearchResult(data),
   });
-  const { mutate: postDocument } = usePostIntegratedApplicants(Number(id)); // 통합신청서 생성 훅
-  const { mutate: updateDocument } = usePostIntegratedApplicants(Number(id)); // 통합신청서 수정 훅
+  const { mutate: postDocument } = usePostIntegratedApplicants(
+    Number(currentPostId),
+  ); // 통합신청서 생성 훅
+  const { mutate: updateDocument } = usePostIntegratedApplicants(
+    Number(currentPostId),
+  ); // 통합신청서 수정 훅
   // 문서 편집일 시 페이지 진입과 동시에 기존 내용 자동 입력
   useEffect(() => {
     if (isEdit && document) {
       setNewDocumentData(document);
+      setPhoneNum({
+        start: parsePhoneNumber(newDocumentData.tele_phone_number).start,
+        middle: parsePhoneNumber(newDocumentData.tele_phone_number).middle,
+        end: parsePhoneNumber(newDocumentData.tele_phone_number).end,
+      });
+      setCellPhoneNum({
+        start: parsePhoneNumber(newDocumentData.cell_phone_number).start,
+        middle: parsePhoneNumber(newDocumentData.cell_phone_number).middle,
+        end: parsePhoneNumber(newDocumentData.cell_phone_number).end,
+      });
+      setSchoolPhoneNum({
+        start: parsePhoneNumber(newDocumentData.school_phone_number).start,
+        middle: parsePhoneNumber(newDocumentData.school_phone_number).middle,
+        end: parsePhoneNumber(newDocumentData.school_phone_number).end,
+      });
+      setAddressInput(newDocumentData.address.address_name as string);
     }
   }, [document, isEdit]);
-  // 첫 로딩 시 현재 사용자의 위치 파악 해 지도에 표기
-  useEffect(() => {
-    setNewDocumentData({
-      ...newDocumentData,
-      address: {
-        ...newDocumentData.address,
-        address_name: String(data?.address.address_name),
-      },
-    });
-  }, [isSuccess]);
 
   // 검색할 주소 입력 시 실시간 검색
   const handleAddressSearch = useCallback(
@@ -165,7 +173,7 @@ const IntegratedApplicationWriteForm = ({
       school_phone_number: formatPhoneNumber(schoolPhoneNum),
     };
     const payload = {
-      id: 1,
+      id: Number(currentPostId),
       document: finalDocument, // TODO: 로그인 연결 후 userId를 넣어야 하는 것으로 추정
     };
 

@@ -25,8 +25,10 @@ import { workDayTimeToString } from '@/utils/post';
 import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
 import { usePutLaborContractEmployer } from '@/hooks/api/useDocument';
-import { useParams } from 'react-router-dom';
-import { parseStringToSafeNumber, validateLaborContractEmployerInformation } from '@/utils/document';
+import {
+  parseStringToSafeNumber,
+  validateLaborContractEmployerInformation,
+} from '@/utils/document';
 import { formatPhoneNumber, parsePhoneNumber } from '@/utils/information';
 import { phone } from '@/constants/information';
 import { formatDateToDash } from '@/utils/editResume';
@@ -34,6 +36,7 @@ import AddTimeIcon from '@/assets/icons/FileAddIcon.svg?react';
 import WorkDayTimeWithRestBottomSheet from '@/components/Common/WorkDayTimeWithRestBottomSheet';
 import RadioButton from '@/components/Information/RadioButton';
 import CheckIcon from '@/assets/icons/CheckOfBoxIcon.svg?react';
+import { useCurrentDocumentIdStore } from '@/store/url';
 
 type LaborContractFormProps = {
   document?: LaborContractDataResponse;
@@ -44,7 +47,7 @@ const EmployerLaborContractForm = ({
   document,
   isEdit,
 }: LaborContractFormProps) => {
-  const { id } = useParams();
+  const { currentDocumentId } = useCurrentDocumentIdStore();
   const [newDocumentData, setNewDocumentData] =
     useState<LaborContractEmployerInfo>(initialLaborContractEmployerInfo);
   // 세 부분으로 나누어 입력받는 방식을 위해 전화번호만 별도의 state로 분리, 추후 유효성 검사 단에서 통합
@@ -79,10 +82,12 @@ const EmployerLaborContractForm = ({
     onSuccess: (data) => setAddressSearchResult(data),
   });
   // 입력 완료 시 제출
-  const { mutate: putDocument } = usePutLaborContractEmployer(Number(id));
+  const { mutate: putDocument } = usePutLaborContractEmployer(Number(currentDocumentId));
   useEffect(() => {
-    if (isEdit && document?.employer_information)
+    if (isEdit && document?.employer_information) {
       setNewDocumentData(document?.employer_information);
+    }
+
   }, [document, isEdit]);
 
   // 첫 로딩 시 현재 사용자의 위치 파악 해 지도에 표기
@@ -106,7 +111,9 @@ const EmployerLaborContractForm = ({
 
   /* 정보 입력 시마다 유효성을 검사해 모든 값이 유효하면 버튼이 활성화 */
   useEffect(() => {
-    {/* work_day_time_list 데이터가 안 들어가서 계속 유효성 실패 중 */ }
+    {
+      /* work_day_time_list 데이터가 안 들어가서 계속 유효성 실패 중 */
+    }
     console.log(newDocumentData.work_day_time_list);
     setIsInvalid(
       !validateLaborContractEmployerInformation({
@@ -197,7 +204,6 @@ const EmployerLaborContractForm = ({
     }
   };
 
-
   return (
     <div className="w-full p-6 flex flex-col">
       <div className="[&>*:last-child]:mb-40 flex flex-col gap-4">
@@ -225,9 +231,7 @@ const EmployerLaborContractForm = ({
             onChange={(value) =>
               setNewDocumentData({
                 ...newDocumentData,
-                company_registration_number: String(
-                  parseStringToSafeNumber(value),
-                ),
+                company_registration_number: value,
               })
             }
             canDelete={false}
@@ -666,7 +670,7 @@ const EmployerLaborContractForm = ({
               ? undefined
               : () =>
                   putDocument({
-                    id: Number(id),
+                    id: Number(currentDocumentId),
                     document: {
                       ...newDocumentData,
                       phone_number: formatPhoneNumber(phoneNum),

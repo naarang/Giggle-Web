@@ -8,19 +8,21 @@ import ApplicationDetailCard from '@/components/ApplicationDetail/ApplicationDet
 import ApplicationDetailInfo from '@/components/ApplicationDetail/ApplicationDetailInfo';
 import ApplicationDetailSteps from '@/components/ApplicationDetail/ApplicationDetailSteps';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ApplicationDetailStep7 from '@/components/ApplicationDetail/ApplicationDetailStep7';
 import { findCurrentStep } from '@/utils/application';
 import ApplicationDetailStepEtc from '@/components/ApplicationDetail/ApplicationDetailStepEtc';
 import { useGetApplicationDetail } from '@/hooks/api/useApplication';
+import { useCurrentPostIdEmployeeStore } from '@/store/url';
 
 const ApplicationDetailPage = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { currentPostId } = useCurrentPostIdEmployeeStore();
   const { data } = useGetApplicationDetail(
-    Number(id),
-    !isNaN(Number(id)) ? true : false,
+    Number(currentPostId),
+    !isNaN(Number(currentPostId)) ? true : false,
   );
+  console.log(`현재 ${currentPostId}`); // 지원자 조회 - 지원자 상세 - 서류 상세 간 뒤로가기 문제 관련
 
   if (!data?.success) return <></>;
 
@@ -31,7 +33,7 @@ const ApplicationDetailPage = () => {
       case 2:
         return <ApplicationDetailStep2 />;
       case 3:
-        return <ApplicationDetailStep3 applicant_id={Number(id)} />;
+        return <ApplicationDetailStep3 applicant_id={Number(currentPostId)} />;
       case 4:
         return <ApplicationDetailStep4 />;
       case 5:
@@ -49,16 +51,20 @@ const ApplicationDetailPage = () => {
     <>
       <BaseHeader
         hasBackButton={true}
-        onClickBackButton={() => navigate(-1)}
+        onClickBackButton={() => navigate('/application')}
         hasMenuButton={false}
         title="Applicants"
       />
-      <div className="w-full flex flex-col gap-[2.25rem] p-[1.5rem]">
-        <ApplicationDetailCard applicationData={data?.data} />
-        <ApplicationDetailInfo applicationData={data?.data} />
-        <ApplicationDetailSteps step={findCurrentStep(data?.data?.step)} />
-      </div>
-      {showCurrentStepButton(findCurrentStep(data?.data?.step))}
+      {data && (
+        <>
+          <div className="w-full flex flex-col gap-[2.25rem] p-[1.5rem]">
+            <ApplicationDetailCard applicationData={data?.data} />
+            <ApplicationDetailInfo applicationData={data?.data} />
+            <ApplicationDetailSteps step={findCurrentStep(data?.data?.step)} />
+          </div>
+          {showCurrentStepButton(findCurrentStep(data?.data?.step))}{' '}
+        </>
+      )}
     </>
   );
 };

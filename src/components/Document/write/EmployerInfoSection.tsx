@@ -14,6 +14,7 @@ import { WorkDayTime } from '@/types/api/document';
 import {
   arrayToString,
   getDetailAddress,
+  getImageType,
   propertyToString,
   workDayTimeToString,
 } from '@/utils/document';
@@ -96,8 +97,9 @@ const EmployerInfoSection = ({
                   <div className="border border-gray-200 rounded-xl">
                     {value !== '' && (
                       <img
-                        src={value as string}
+                        src={`data:image/${getImageType(value as string)};base64,${value}`}
                         className="w-full h-full object-cover"
+                        alt="signature preview"
                       />
                     )}
                   </div>

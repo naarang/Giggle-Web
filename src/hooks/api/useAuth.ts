@@ -28,12 +28,10 @@ import {
 } from '@/utils/auth';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import {
-  useEmailTryCountStore,
-  useUserInfoforSigninStore,
-} from '@/store/signup';
-import { useUserStore } from '@/store/user';
+import { useUserInfoforSigninStore } from '@/store/signup';
+import { useEmailTryCountStore } from '@/store/signup';
 import { RESTYPE } from '@/types/api/common';
+import { clearAllStore } from '@/utils/clearAllStore';
 
 /**
  * 로그인 프로세스를 처리하는 커스텀 훅
@@ -81,7 +79,6 @@ export const useSignIn = () => {
 // 1.2 사용자 로그아웃 훅
 export const useLogout = () => {
   const navigate = useNavigate();
-  const { updateAccountType, updateName } = useUserStore();
   return useMutation({
     mutationFn: logout,
     onSuccess: (data: RESTYPE<null>) => {
@@ -89,9 +86,8 @@ export const useLogout = () => {
         // 토큰 삭제
         deleteAccessToken();
         deleteRefreshToken();
-        // 유저 타입 전역 변수 초기화
-        updateAccountType(undefined);
-        updateName('');
+        // store 전역 변수 초기화
+        clearAllStore();
         // 스플래시 이동
         navigate('/splash');
       }
@@ -241,7 +237,6 @@ export const useReIssueAuthentication = () => {
 // 2.9 탈퇴하기 훅
 export const useWithdraw = () => {
   const navigate = useNavigate();
-  const { updateAccountType, updateName } = useUserStore();
   return useMutation({
     mutationFn: withdraw,
     onSuccess: (data: RESTYPE<null>) => {
@@ -249,9 +244,8 @@ export const useWithdraw = () => {
         // 토큰 삭제
         deleteAccessToken();
         deleteRefreshToken();
-        // 유저 타입 전역 변수 초기화
-        updateAccountType(undefined);
-        updateName('');
+        // store 전역 변수 초기화
+        clearAllStore();
         // 스플래시 이동
         navigate('/splash');
       }
