@@ -4,6 +4,7 @@ import Button from '@/components/Common/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { validateId, validatePassword } from '@/utils/signin';
 import { useSignIn } from '@/hooks/api/useAuth';
+import { useUserInfoforSigninStore } from '@/store/signup';
 
 const SigninInputSection = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const SigninInputSection = () => {
   const [isValid, setIsValid] = useState(false);
 
   const { mutate: signIn } = useSignIn();
+  const { updateId, updatePassword } = useUserInfoforSigninStore();
 
   // ===== handler =====
   const handleIdChange = (value: string) => {
@@ -36,6 +38,11 @@ const SigninInputSection = () => {
     formData.append('serial_id', idValue);
     formData.append('password', passwordValue);
 
+    // 전역 상태 업데이트
+    updateId(idValue);
+    updatePassword(passwordValue);
+
+    // api 훅 호출
     signIn(formData);
   };
 

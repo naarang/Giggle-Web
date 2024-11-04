@@ -28,6 +28,7 @@ import {
 } from '@/utils/auth';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { useUserInfoforSigninStore } from '@/store/signup';
 import { useEmailTryCountStore } from '@/store/signup';
 import { RESTYPE } from '@/types/api/common';
 import { clearAllStore } from '@/utils/clearAllStore';
@@ -160,6 +161,9 @@ export const useTempSignUp = () => {
 // 2.5  기본 유저 회원가입 훅
 export const useSignUp = () => {
   const navigate = useNavigate();
+  const { id, password, updateId, updatePassword } =
+    useUserInfoforSigninStore();
+
   return useMutation({
     mutationFn: signUp,
     onSuccess: (data: RESTYPE<SignInResponse>) => {
@@ -167,6 +171,26 @@ export const useSignUp = () => {
         deleteTemporaryToken();
         setAccessToken(data.data.access_token);
         setRefreshToken(data.data.refresh_token);
+
+        // 회원가입 후 자동 로그인
+        const signinData = new FormData();
+        signinData.append('serial_id', id);
+        signinData.append('password', password);
+
+        // 로그인 hook 호출
+        const { mutate: signin } = useSignIn();
+        signin(signinData, {
+          onSuccess: () => {
+            navigate('/splash');
+          },
+          onError: () => {
+            navigate('/signin');
+          },
+        });
+
+        // id, password 저장소 삭제
+        updateId('');
+        updatePassword('');
       }
     },
     onError: () => {

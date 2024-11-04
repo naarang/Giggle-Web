@@ -23,13 +23,11 @@ const EtcLevelSection = ({ level, setLevel }: EtcLevelSectionProps) => {
       </p>
       {/* 레벨 선택 바텀시트 */}
       {bottomSheetOpen && (
-        <div className="w-screen h-screen">
-          <LevelBottomSheet
-            level={level}
-            setLevel={setLevel}
-            setBottomSheetOpen={setBottomSheetOpen}
-          />
-        </div>
+        <LevelBottomSheet
+          level={level}
+          setLevel={setLevel}
+          setBottomSheetOpen={setBottomSheetOpen}
+        />
       )}
     </>
   );
