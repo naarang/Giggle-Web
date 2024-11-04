@@ -1,8 +1,17 @@
 import InputLayout from '@/components/WorkExperience/InputLayout';
-import { EmployeePropertyInfo, LaborContractEmployeePropertyInfo, PartTimePermitFormProperty } from '@/constants/documents';
-import { DocumentType, EmployeeInformation, LaborContractEmployeeInfo, LaborContractEmployeeInfoProperty } from '@/types/api/document';
+import {
+  EmployeePropertyInfo,
+  LaborContractEmployeePropertyInfo,
+  PartTimePermitFormProperty,
+} from '@/constants/documents';
+import {
+  DocumentType,
+  EmployeeInformation,
+  LaborContractEmployeeInfo,
+  LaborContractEmployeeInfoProperty,
+} from '@/types/api/document';
 import { Address } from '@/types/api/users';
-import { getDetailAddress } from '@/utils/document';
+import { getDetailAddress, getImageType } from '@/utils/document';
 import { renderMap } from '@/utils/map';
 
 const EmployeeInfoSectionKOR = ({
@@ -18,7 +27,7 @@ const EmployeeInfoSectionKOR = ({
         <div className="w-full self-stretch flex flex-col items-center justify-start text-left">
           {/* 추후 UI 재사용 위한 고용주 정보 property를 반복문으로 ui 나열 */}
           {Object.entries(employee).map(([key, value]) => (
-            <div className='w-full'>
+            <div className="w-full">
               <InputLayout
                 isEssential
                 title={
@@ -32,9 +41,7 @@ const EmployeeInfoSectionKOR = ({
               >
                 {!['address', 'signature_base64'].includes(key) && (
                   <div className="w-full self-stretch drop-shadow-[0_1px_2px_rgba(107,110,116,0.04)] rounded-xl flex items-center justify-start py-2.5 pr-3.5 pl-4 body-2">
-                    <div className="w-full flex-1 relative">
-                      {value}
-                    </div>
+                    <div className="w-full flex-1 relative">{value}</div>
                   </div>
                 )}
               </InputLayout>
@@ -47,9 +54,7 @@ const EmployeeInfoSectionKOR = ({
                 <div className="w-full self-stretch flex flex-col text-left items-center justify-start px-1 py-1.5">
                   <div className="w-full flex-1 flex flex-col items-start justify-start">
                     <div className="w-full self-stretch flex items-center justify-start">
-                      <div className="w-full relative">
-                        한국 상세 주소
-                      </div>
+                      <div className="w-full relative">한국 상세 주소</div>
                     </div>
                   </div>
                   <div className="w-full self-stretch drop-shadow-[0_1px_2px_rgba(107,110,116,0.04)] rounded-xl flex items-center justify-start py-2.5 pr-3.5 pl-4">
@@ -65,8 +70,9 @@ const EmployeeInfoSectionKOR = ({
                   <div className="border border-gray-200 rounded-xl">
                     {value !== '' && (
                       <img
-                        src={value as string}
+                        src={`data:image/${getImageType(value)};base64,${value}`}
                         className="w-full h-full object-cover"
+                        alt="signature preview"
                       />
                     )}
                   </div>
@@ -80,4 +86,4 @@ const EmployeeInfoSectionKOR = ({
   );
 };
 
-export default EmployeeInfoSectionKOR
+export default EmployeeInfoSectionKOR;

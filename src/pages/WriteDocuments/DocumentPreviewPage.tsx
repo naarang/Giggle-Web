@@ -2,7 +2,7 @@ import BaseHeader from '@/components/Common/Header/BaseHeader';
 import DocumentSubHeader from '@/components/Document/write/DocumentSubHeader';
 import { DocumentType } from '@/types/api/document';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   PartTimePermitData,
   LaborContractDataResponse,
@@ -17,18 +17,20 @@ import {
 import EmployeeInfoSection from '@/components/Document/write/EmployeeInfoSection';
 import InfoAlert from '@/components/Document/write/InfoAlert';
 import IntegratedApplicationPreview from '@/components/Document/write/IntegratedApplicationPreview';
+import { useCurrentDocumentIdStore } from '@/store/url';
 
 const DocumentPreview = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { id } = useParams();
-
+  const { currentDocumentId } = useCurrentDocumentIdStore();
   const { type } = location.state || {};
   const [document, setDocument] = useState<
     PartTimePermitData | LaborContractDataResponse | IntegratedApplicationData
   >();
   const { mutate: getPartTimeEmployPermit } = useGetPartTimeEmployPermit({
-    onSuccess: (data) => setDocument(data.data),
+    onSuccess: (data) => {
+      setDocument(data.data);
+    },
   });
   const { mutate: getStandardLaborContract } = useGetStandardLaborContract({
     onSuccess: (data) => setDocument(data.data),
@@ -40,18 +42,17 @@ const DocumentPreview = () => {
     useEffect(() => {
       switch (type) {
         case DocumentType.PART_TIME_PERMIT:
-          getPartTimeEmployPermit(1);
+          getPartTimeEmployPermit(Number(currentDocumentId));
           break;
         case DocumentType.LABOR_CONTRACT:
-          getStandardLaborContract(1);
+          getStandardLaborContract(Number(currentDocumentId));
           break;
         case DocumentType.INTEGRATED_APPLICATION:
-          getIntegratedApplication(1);
+          getIntegratedApplication(Number(currentDocumentId));
           break;
       }
     }, [type]);
   }
-
   const hasInfo = (
     doc:
       | PartTimePermitData
@@ -70,7 +71,7 @@ const DocumentPreview = () => {
   ) => {
     return (
       <EmployeeInfoSection
-        employee={document.employee_information}
+        employee={document?.employee_information}
         type={type as DocumentType}
       />
     );
@@ -81,7 +82,9 @@ const DocumentPreview = () => {
         hasBackButton={true}
         hasMenuButton={true}
         title="Fill in document"
-        onClickBackButton={() => navigate(`/application-documents/${id}`)}
+        onClickBackButton={() =>
+          navigate(`/application-documents/${currentDocumentId}`)
+        }
       />
       <DocumentSubHeader type={type as DocumentType} />
       {type === DocumentType.INTEGRATED_APPLICATION ? (
@@ -89,6 +92,7 @@ const DocumentPreview = () => {
           document={document as IntegratedApplicationData}
         />
       ) : (
+        document &&
         renderDocument(
           document as PartTimePermitData | LaborContractDataResponse,
         )
