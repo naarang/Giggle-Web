@@ -58,8 +58,6 @@ const SignupInput = ({
     // ID 중복 검사
     const validateIdAsync = async () => {
       if (validationResponse && validationResponse.data.is_valid === false) {
-        console.log(signInputTranclation.idAvailability[isEmployer(pathname)]);
-
         setIdError(signInputTranclation.idAvailability[isEmployer(pathname)]);
         setIdValid(false);
       }
