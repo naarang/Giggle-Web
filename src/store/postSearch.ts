@@ -8,6 +8,7 @@ import {
   PostSortingType,
 } from '@/types/PostSearchFilter/PostSearchFilterItem';
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 type PostSearchStore = {
   sortType: PostSortingType | POST_SEARCH_MENU;
@@ -18,12 +19,19 @@ type PostSearchStore = {
   updateFilterList: (newFilterList: PostSearchFilterItemType) => void;
 };
 
-export const usePostSearchStore = create<PostSearchStore>()((set) => ({
-  sortType: POST_SORTING.RECENT,
-  searchText: '',
-  filterList: initialFilterList,
-  updateSortType: (type) => set(() => ({ sortType: type })),
-  updateSearchText: (text) => set(() => ({ searchText: text })),
-  updateFilterList: (newFilterList) =>
-    set(() => ({ filterList: newFilterList })),
-}));
+export const usePostSearchStore = create(
+  persist<PostSearchStore>(
+    (set) => ({
+      sortType: POST_SORTING.RECENT,
+      searchText: '',
+      filterList: initialFilterList,
+      updateSortType: (type) => set(() => ({ sortType: type })),
+      updateSearchText: (text) => set(() => ({ searchText: text })),
+      updateFilterList: (newFilterList) =>
+        set(() => ({ filterList: newFilterList })),
+    }),
+    {
+      name: 'postSearchStore',
+    },
+  ),
+);

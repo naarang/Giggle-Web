@@ -22,7 +22,7 @@ const EmployerApplicantContactBottomSheet = ({
     Number(id),
     !isNaN(Number(id)),
   );
-  const { mutate } = usePatchInterviewFinish(Number(id));
+  const { mutate } = usePatchInterviewFinish();
 
   const onClickComplete = () => {
     if (!isNaN(Number(id))) mutate(Number(id));
