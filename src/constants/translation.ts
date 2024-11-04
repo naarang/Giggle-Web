@@ -19,6 +19,10 @@ export const signInputTranclation = {
     ko: '아이디를 입력해주세요',
     en: 'Invalid id format',
   },
+  idAvailability: {
+    ko: '아이디가 이미 존재합니다',
+    en: 'This id already exists',
+  },
   password: {
     ko: '비밀번호',
     en: 'Password',
