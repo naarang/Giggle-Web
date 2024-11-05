@@ -107,7 +107,6 @@ const Step1 = ({
                   <div
                     key={index}
                     className="flex-shrink-0"
-                    style={{ width: '124px' }}
                   >
                     <div className="w-full h-6 flex items-center justify-center px-3 py-1 bg-[#FEF387] button-2 rounded-[1.125rem] whitespace-nowrap">
                       {workDayTimeToString(workdaytime)}

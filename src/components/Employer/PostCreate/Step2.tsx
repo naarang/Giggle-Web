@@ -3,7 +3,7 @@ import Button from '@/components/Common/Button';
 import Dropdown, { DropdownModal } from '@/components/Common/Dropdown';
 import Input from '@/components/Common/Input';
 import InputLayout from '@/components/WorkExperience/InputLayout';
-import { useGetGeoInfo, useSearchAddress } from '@/hooks/api/useKaKaoMap';
+import { useSearchAddress } from '@/hooks/api/useKaKaoMap';
 import { AddressType, Document } from '@/types/api/map';
 import { InputType } from '@/types/common/input';
 import { JobPostingForm } from '@/types/postCreate/postCreate';
@@ -43,27 +43,10 @@ const Step2 = ({
     lon: 0,
   });
 
-  // 현재 좌표 기준 주소 획득
-  const { data, isSuccess } = useGetGeoInfo(setCurrentGeoInfo);
   // 키워드로 주소 검색
   const { searchAddress } = useSearchAddress({
     onSuccess: (data) => setAddressSearchResult(data),
   });
-
-  // 첫 로딩 시 현재 사용자의 위치 파악 해 지도에 표기
-  useEffect(() => {
-    setNewPostInfo({
-      ...newPostInfo,
-      body: {
-        ...newPostInfo.body,
-        address: {
-          ...newPostInfo.body.address,
-          address_name: String(data?.address.address_name),
-        },
-      },
-    });
-  }, [isSuccess]);
-
   // 검색할 주소 입력 시 실시간 검색
   const handleAddressSearch = useCallback(
     (address: string) => {
@@ -76,6 +59,10 @@ const Step2 = ({
     },
     [searchAddress],
   );
+
+  useEffect(() => {
+    if(addressInput !== '') handleAddressSearch(addressInput);
+  }, []);
 
   // 검색 결과 중 원하는 주소를 선택할 시 state에 입력
   const handleAddressSelect = (selectedAddressName: string) => {

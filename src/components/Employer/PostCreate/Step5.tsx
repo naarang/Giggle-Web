@@ -45,17 +45,38 @@ const Step5 = ({
 
   const handleSubmit = () => {
     if (isInvalid) return;
-    const formData = new FormData();
-    newPostInfo.images.forEach((image) => {
-      formData.append('image', image);
-    });
-    formData.append(
-      'body',
-      new Blob([JSON.stringify(newPostInfo.body)], {
-        type: 'application/json',
+    const updatedWorkDayTimes = newPostInfo.body.work_day_times.map(
+      (workday) => ({
+        ...workday,
+        work_start_time:
+          workday.work_start_time === '협의가능'
+            ? null
+            : workday.work_start_time,
+        work_end_time:
+          workday.work_end_time === '협의가능' ? null : workday.work_end_time,
       }),
     );
 
+    const formData = new FormData();
+    newPostInfo.images
+      .filter((image): image is File => image instanceof File)
+      .forEach((image) => {
+        formData.append('image', image as File);
+      });
+    formData.append(
+      'body',
+      new Blob(
+        [
+          JSON.stringify({
+            ...newPostInfo.body,
+            work_day_times: updatedWorkDayTimes,
+          }),
+        ],
+        {
+          type: 'application/json',
+        },
+      ),
+    );
     onNext({
       ...postInfo,
       body: {
