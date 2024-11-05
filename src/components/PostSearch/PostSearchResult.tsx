@@ -7,15 +7,18 @@ import { usePostSearchStore } from '@/store/postSearch';
 import { PostSortingType } from '@/types/PostSearchFilter/PostSearchFilterItem';
 import { useUserStore } from '@/store/user';
 import { UserType } from '@/constants/user';
+import LoadingItem from '@/components/Common/LoadingItem';
 
 type PostSearchResultProps = {
   postData: JobPostingItemType[];
   onChangeSortType: (sort: PostSortingType) => void;
+  isLoading: boolean;
 };
 
 const PostSearchResult = ({
   postData,
   onChangeSortType,
+  isLoading,
 }: PostSearchResultProps) => {
   const { sortType } = usePostSearchStore();
 
@@ -34,9 +37,12 @@ const PostSearchResult = ({
         />
       </div>
       {postData?.length ? (
-        postData.map((value: JobPostingItemType) => (
-          <JobPostingCard key={value.id} jobPostingData={value} />
-        ))
+        <>
+          {postData.map((value: JobPostingItemType) => (
+            <JobPostingCard key={value.id} jobPostingData={value} />
+          ))}
+          {isLoading && <LoadingItem />}
+        </>
       ) : (
         <>
           <img

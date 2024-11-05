@@ -7,8 +7,7 @@ export const formatSearchFilter = (
   filterList: PostSearchFilterItemType,
 ) => {
   const newSearchFilter = {
-    page: 1,
-    size: 10,
+    size: 5,
     search: searchText ?? null,
     sorting: sortType,
     region_1depth: filterList[FILTER_CATEGORY.REGION_1DEPTH].join(','),
