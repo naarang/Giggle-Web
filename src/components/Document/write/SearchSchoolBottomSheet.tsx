@@ -7,7 +7,6 @@ import {
 import Input from '@/components/Common/Input';
 import { InputType } from '@/types/common/input';
 import { School } from '@/types/api/document';
-import { schoolMockData } from '@/constants/documents';
 import { RESTYPE } from '@/types/api/common';
 
 type SearchSchoolBottomSheetProps = {
@@ -22,7 +21,7 @@ const SearchSchoolBottomSheet = ({
   onClose,
 }: SearchSchoolBottomSheetProps) => {
   // TODO: 학교 검색 API와 연결 후 mock data 제거, 함수는 작성완료된 상태
-  const [searchResult, setSearchResult] = useState<School[]>(schoolMockData);
+  const [searchResult, setSearchResult] = useState<School[]>();
   const { searchSchool } = useSearchSchool({
     onSuccess: (data: RESTYPE<SearchSchoolResponse>) =>
       setSearchResult(data.data.school_list),
@@ -71,7 +70,7 @@ const SearchSchoolBottomSheet = ({
             }
           />
           <div className="w-full h-[30vh]">
-            {searchResult?.length > 0 && (
+            {searchResult && searchResult?.length > 0 && (
               <div className="w-full relative rounded-2xl bg-white flex flex-row items-start justify-start pl-1 text-left text-[#656565] body-2">
                 <div className="flex-1 flex flex-col items-start justify-start gap-1">
                   {searchResult.map((school) => (

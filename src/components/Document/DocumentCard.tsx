@@ -8,7 +8,7 @@ import DownloadIcon from '@/assets/icons/DownloadIcon.svg?react';
 import CheckIconGreen from '@/assets/icons/CheckIconGreen.svg?react';
 import WriteIcon from '@/assets/icons/WriteIcon.svg?react';
 import { useNavigate } from 'react-router-dom';
-import { usePatchDocumentsStatusConfirmation } from '@/hooks/api/useDocument';
+import { usePatchStatusSubmission } from '@/hooks/api/useDocument';
 import { useCurrentDocumentIdStore, useCurrentPostIdEmployeeStore } from '@/store/url';
 
 const enum DocumentStatus {
@@ -346,7 +346,7 @@ const DocumentCardDispenser = ({
   title,
   type,
 }: DocumentCardProps) => {
-  const { mutate: submitDocument } = usePatchDocumentsStatusConfirmation();
+  const { mutate: submitDocument } = usePatchStatusSubmission();
   const navigate = useNavigate();
   const { updateCurrentDocumentId } = useCurrentDocumentIdStore();
   const { currentPostId }= useCurrentPostIdEmployeeStore();
