@@ -251,16 +251,29 @@ export const useGetBookmarkPostList = (page: number, size: number) => {
 
 // 6.1 (유학생) 지원한 공고 리스트 조회하기 훅
 export const useGetApplyPostList = ({
-  page,
   size,
   sorting,
   status,
 }: GetApplyPostListReqType) => {
-  return useQuery({
-    queryKey: ['post'],
-    queryFn: () => getApplyPostList({ page, size, sorting, status }),
-    enabled: false,
-  });
+  const { data, isLoading, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ['post', sorting, status],
+      queryFn: ({ pageParam = 1 }) =>
+        getApplyPostList({ page: pageParam, size, sorting, status }),
+      initialPageParam: 1,
+      getNextPageParam: (lastPage, allPage) => {
+        return lastPage.data.has_next ? allPage.length + 1 : undefined;
+      },
+      retry: 1,
+    });
+
+  return {
+    data,
+    isLoading,
+    fetchNextPage,
+    hasNextPage: data?.pages[data?.pages.length - 1].data.has_next,
+    isFetchingNextPage,
+  };
 };
 
 // 6.3 (유학생) 현재 진행중인 인터뷰 리스트 조회하기 훅

@@ -21,7 +21,7 @@ export type GetPostListReqType = {
 };
 
 export type GetApplyPostListReqType = {
-  page: number;
+  page?: number;
   size: number;
   sorting: AscendingSortType;
   status: ApplicationStatusType;
