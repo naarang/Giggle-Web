@@ -87,7 +87,7 @@ const DocumentPreview = () => {
         }
       />
       <DocumentSubHeader type={type as DocumentType} />
-      {type === DocumentType.INTEGRATED_APPLICATION ? (
+      {document && type === DocumentType.INTEGRATED_APPLICATION ? (
         <IntegratedApplicationPreview
           document={document as IntegratedApplicationData}
         />

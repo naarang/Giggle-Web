@@ -31,44 +31,60 @@ const SignupInput = ({
 
   // // ===== state =====
   const [confirmPasswordValue, setConfirmPasswordValue] = useState<string>('');
-  const [idError, setIdError] = useState<string | null>(null);
-  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [idError, setIdError] = useState<string | null>();
+  const [passwordError, setPasswordError] = useState<string | null>();
   const [confirmPasswordError, setConfirmPasswordError] = useState<
     string | null
   >(null);
   const [isValid, setIsValid] = useState(false);
+  const [idValid, setIdValid] = useState(false);
 
   const { data: validationResponse } = useGetIdValidation(id);
 
-  // ===== handler =====
-  const handleIdChange = async (value: string) => {
-    onIdChange(value);
+  // ID 검사
+  useEffect(() => {
+    if (!id) {
+      setIdError(null);
+      setIdValid(false);
+      return;
+    }
+    onIdChange(id);
 
     // ID 유효성 검사
-    if (validateId(value, setIdError, pathname)) {
-      // ID 중복 검사 API 호출 결과 처리
-      if (validationResponse && validationResponse.data.is_valid) {
-        setIdError(null); // ID 중복 오류 메시지 초기화
-      } else {
-        setIdError(signInputTranclation.invalidId[isEmployer(pathname)]); // ID 중복 오류 메시지
-      }
+    if (validateId(id, setIdError, pathname)) {
+      setIdValid(true);
     }
-  };
 
-  const handlePasswordChange = (value: string) => {
-    onPasswordChange(value);
-    validatePassword(value, setPasswordError, pathname); // 비밀번호 입력 시 유효성 검사
-  };
+    // ID 중복 검사
+    const validateIdAsync = async () => {
+      if (validationResponse && validationResponse.data.is_valid === false) {
+        setIdError(signInputTranclation.idAvailability[isEmployer(pathname)]);
+        setIdValid(false);
+      }
+    };
 
-  const handleConfirmPasswordChange = (value: string) => {
-    setConfirmPasswordValue(value);
-    validatedConfirmPassword(
-      password,
-      value,
-      setConfirmPasswordError,
-      pathname,
-    );
-  };
+    validateIdAsync();
+  }, [id, onIdChange, validationResponse, idError, idValid]);
+
+  // password 유효성 검사
+  useEffect(() => {
+    if (password) {
+      onPasswordChange(password);
+      validatePassword(password, setPasswordError, pathname);
+    }
+  }, [password, pathname, onPasswordChange]);
+
+  // password 일치 유효성 검사
+  useEffect(() => {
+    if (confirmPasswordValue) {
+      validatedConfirmPassword(
+        password,
+        confirmPasswordValue,
+        setConfirmPasswordError,
+        pathname,
+      );
+    }
+  }, [password, confirmPasswordValue, pathname]);
 
   // 모든 필드의 유효성 검사 후, Continue 버튼 활성화
   useEffect(() => {
@@ -80,6 +96,10 @@ const SignupInput = ({
       setIsValid(true);
     }
   }, [id, password, confirmPasswordValue]);
+
+  const handleConfirmPasswordChange = (value: string) => {
+    setConfirmPasswordValue(value);
+  };
 
   return (
     <>
@@ -96,11 +116,13 @@ const SignupInput = ({
               inputType="TEXT"
               placeholder={signInputTranclation.enterId[isEmployer(pathname)]}
               value={id}
-              onChange={handleIdChange}
+              onChange={onIdChange}
               canDelete={false}
-              isInvalid={!!idError}
+              isInvalid={!idValid}
             />
-            {idError && <p className="text-[#FF6F61] text-xs p-2">{idError}</p>}
+            {!idValid && (
+              <p className="text-[#FF6F61] text-xs p-2">{idError}</p>
+            )}
           </div>
           <div>
             <p className="py-2 px-1 body-2 text-[#656565]">
@@ -112,9 +134,9 @@ const SignupInput = ({
                 signInputTranclation.enterPassword[isEmployer(pathname)]
               }
               value={password}
-              onChange={handlePasswordChange}
+              onChange={onPasswordChange}
               canDelete={false}
-              isInvalid={!!passwordError}
+              isInvalid={passwordError ? true : false}
             />
             {passwordError && (
               <p className="text-[#FF6F61] text-xs p-2">{passwordError}</p>
@@ -132,7 +154,7 @@ const SignupInput = ({
               value={confirmPasswordValue}
               onChange={handleConfirmPasswordChange}
               canDelete={false}
-              isInvalid={!!confirmPasswordError}
+              isInvalid={confirmPasswordError ? true : false}
             />
             {confirmPasswordError && (
               <p className="text-[#FF6F61] text-xs p-2">
