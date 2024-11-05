@@ -12,7 +12,10 @@ import { country, gender, phone } from '@/constants/information';
 import RadioButton from '@/components/Information/RadioButton';
 import { Gender } from '@/types/api/users';
 import InputLayout from '@/components/Document/write/InputLayout';
-import { isNotEmpty, propertyToString } from '@/utils/document';
+import {
+  propertyToString,
+  validateIntegratedApplication,
+} from '@/utils/document';
 import Notice from '@/components/Document/write/Notice';
 import BottomSheetLayout from '@/components/Common/BottomSheetLayout';
 import SearchSchoolBottomSheet from '@/components/Document/write/SearchSchoolBottomSheet';
@@ -20,7 +23,11 @@ import SignaturePad from '@/components/Document/write/SignaturePad';
 import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
 import { usePostIntegratedApplicants } from '@/hooks/api/useDocument';
-import { formatPhoneNumber, parsePhoneNumber } from '@/utils/information';
+import {
+  formatPhoneNumber,
+  isValidPhoneNumber,
+  parsePhoneNumber,
+} from '@/utils/information';
 import { useCurrentPostIdEmployeeStore } from '@/store/url';
 
 type IntegratedApplicationFormProps = {
@@ -32,6 +39,7 @@ const IntegratedApplicationWriteForm = ({
   document,
   isEdit,
 }: IntegratedApplicationFormProps) => {
+  const [isInvalid, setIsInvalid] = useState(false);
   const { currentPostId } = useCurrentPostIdEmployeeStore();
   const [newDocumentData, setNewDocumentData] =
     useState<IntegratedApplicationData>(initialIntegratedApplication);
@@ -98,6 +106,18 @@ const IntegratedApplicationWriteForm = ({
       setAddressInput(newDocumentData.address.address_name as string);
     }
   }, [document, isEdit]);
+  // 데이터 입력 시 실시간으로 유효성 검사
+  useEffect(() => {
+    setIsInvalid(
+      !validateIntegratedApplication({
+        ...newDocumentData,
+        birth: newDocumentData.birth.replace(/\//g, '-'),
+      }) &&
+        isValidPhoneNumber(phoneNum) &&
+        isValidPhoneNumber(cellPhoneNum) &&
+        isValidPhoneNumber(schoolPhoneNum),
+    );
+  }, [newDocumentData, phoneNum, cellPhoneNum, schoolPhoneNum]);
 
   // 검색할 주소 입력 시 실시간 검색
   const handleAddressSearch = useCallback(
@@ -483,7 +503,7 @@ const IntegratedApplicationWriteForm = ({
         >
           <Input
             inputType={InputType.TEXT}
-            placeholder="Business Registration No."
+            placeholder="000/00/00000"
             value={newDocumentData.new_work_place_registration_number}
             onChange={(value) =>
               setNewDocumentData({
@@ -500,17 +520,22 @@ const IntegratedApplicationWriteForm = ({
             inputType={InputType.TEXT}
             placeholder="0"
             value={String(newDocumentData.annual_income_amount)}
-            onChange={(value) =>
-              setNewDocumentData({
-                ...newDocumentData,
-                annual_income_amount: Number(value),
-              })
-            }
+            onChange={(value) => {
+              if (typeof value === 'string' && !isNaN(Number(value))) {
+                setNewDocumentData({
+                  ...newDocumentData,
+                  annual_income_amount: Number(value),
+                });
+              }
+            }}
             canDelete={false}
           />
         </InputLayout>
         {/* 직업 입력 */}
         <InputLayout title="Occupation" isEssential>
+          <div className="w-full relative body-3 text-[#bdbdbd] text-left">
+            If you are a college student, please write 'student'.
+          </div>
           <Input
             inputType={InputType.TEXT}
             placeholder="Occupation"
@@ -588,11 +613,16 @@ const IntegratedApplicationWriteForm = ({
         </BottomSheetLayout>
       )}
       <BottomButtonPanel>
-        {/* 입력된 정보 중 빈 칸이 없다면 활성화 */}
-        {isNotEmpty(newDocumentData) &&
-        isNotEmpty(phoneNum) &&
-        isNotEmpty(cellPhoneNum) &&
-        isNotEmpty(schoolPhoneNum) ? (
+        {/* 입력된 정보들이 유효성 검사를 통과했다면 활성화 */}
+        {isInvalid ? (
+          <Button
+            type="large"
+            bgColor="bg-[#F4F4F9]"
+            fontColor=""
+            isBorder={false}
+            title={isEdit ? 'Modify' : 'Create'}
+          />
+        ) : (
           <Button
             type="large"
             bgColor="bg-[#fef387]"
@@ -600,14 +630,6 @@ const IntegratedApplicationWriteForm = ({
             isBorder={false}
             title={isEdit ? 'Modify' : 'Create'}
             onClick={handleNext}
-          />
-        ) : (
-          <Button
-            type="large"
-            bgColor="bg-[#F4F4F9]"
-            fontColor=""
-            isBorder={false}
-            title={isEdit ? 'Modify' : 'Create'}
           />
         )}
       </BottomButtonPanel>
