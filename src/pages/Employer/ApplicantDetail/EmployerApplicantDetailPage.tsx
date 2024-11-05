@@ -22,7 +22,7 @@ const EmployerApplicantDetailPage = () => {
     <>
       <BaseHeader
         hasBackButton={true}
-        onClickBackButton={() => navigate(-1)}
+        onClickBackButton={() => navigate('/employer/post')}
         hasMenuButton={false}
         title="서류 신청 관리하기"
       />
