@@ -60,12 +60,17 @@ import { clearAllStore } from '@/utils/clearAllStore';
 // 1.1 사용자 로그인 훅
 export const useSignIn = () => {
   const navigate = useNavigate();
+  const { updateId, updatePassword } = useUserInfoforSigninStore();
   return useMutation({
     mutationFn: signIn,
     onSuccess: (data: RESTYPE<SignInResponse>) => {
       if (data.success) {
         setAccessToken(data.data.access_token);
         setRefreshToken(data.data.refresh_token);
+
+        updateId('');
+        updatePassword('');
+
         navigate('/splash');
         window.location.reload();
       }
@@ -159,10 +164,8 @@ export const useTempSignUp = () => {
 };
 
 // 2.5  기본 유저 회원가입 훅
-export const useSignUp = () => {
+export const useSignUp = (setSuccess: () => void) => {
   const navigate = useNavigate();
-  const { id, password, updateId, updatePassword } =
-    useUserInfoforSigninStore();
 
   return useMutation({
     mutationFn: signUp,
@@ -171,26 +174,29 @@ export const useSignUp = () => {
         deleteTemporaryToken();
         setAccessToken(data.data.access_token);
         setRefreshToken(data.data.refresh_token);
+        navigate('/splash');
+        setSuccess();
+      }
+    },
+    onError: () => {
+      navigate('/splash');
+    },
+  });
+};
 
-        // 회원가입 후 자동 로그인
-        const signinData = new FormData();
-        signinData.append('serial_id', id);
-        signinData.append('password', password);
+// 2.6 고용주 회원가입 훅
+export const useSignupEmployer = (setSuccess: () => void) => {
+  const navigate = useNavigate();
 
-        // 로그인 hook 호출
-        const { mutate: signin } = useSignIn();
-        signin(signinData, {
-          onSuccess: () => {
-            navigate('/splash');
-          },
-          onError: () => {
-            navigate('/signin');
-          },
-        });
-
-        // id, password 저장소 삭제
-        updateId('');
-        updatePassword('');
+  return useMutation({
+    mutationFn: signUpEmployer,
+    onSuccess: (data: RESTYPE<SignUpResponse>) => {
+      if (data.success) {
+        deleteTemporaryToken();
+        setAccessToken(data.data.access_token);
+        setRefreshToken(data.data.refresh_token);
+        navigate('/splash');
+        setSuccess();
       }
     },
     onError: () => {
@@ -252,25 +258,6 @@ export const useWithdraw = () => {
     },
     onError: () => {
       alert('탈퇴에 실패하였습니다.');
-      navigate('/splash');
-    },
-  });
-};
-
-export const useSignupEmployer = (setSuccess: () => void) => {
-  const navigate = useNavigate();
-  return useMutation({
-    mutationFn: signUpEmployer,
-    onSuccess: (data: RESTYPE<SignUpResponse>) => {
-      if (data.success) {
-        deleteTemporaryToken();
-        setAccessToken(data.data.access_token);
-        setRefreshToken(data.data.refresh_token);
-        navigate('/splash');
-        setSuccess();
-      }
-    },
-    onError: () => {
       navigate('/splash');
     },
   });

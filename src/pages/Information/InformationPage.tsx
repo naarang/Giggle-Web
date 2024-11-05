@@ -22,10 +22,10 @@ const InformationPage = () => {
   const [userInfo, setUserInfo] = useState<UserInfoRequestBody>(
     initialUserInfoRequestBody,
   );
-  const { mutate } = useSignUp();
   const [isAgreeModal, setIsAgreeModal] = useState(true);
   const [devIsModal, setDevIsModal] = useState(false);
   const [marketingAllowed, setMarketAllowed] = useState(false);
+  const { mutate } = useSignUp(() => setDevIsModal(true));
   const navigate = useNavigate();
 
   // 다음 step으로 넘어갈 때 호출되며, 각 step에서 입력한 정보를 userInfo에 저장, 다음 step으로 이동한다.
@@ -42,7 +42,6 @@ const InformationPage = () => {
       temporary_token: String(getTemporaryToken()),
       language: language,
     });
-    setDevIsModal(true);
   };
   return (
     <div className="m-auto max-w-[500px] relative h-screen flex flex-col items-center justify-start border border-black overflow-y-scroll scrollbar-hide">

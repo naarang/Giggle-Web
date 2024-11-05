@@ -1,5 +1,10 @@
 import { getAlarms, patchReadAlarm } from '@/api/alarm';
-import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 // 10.1 (유학생/고용주) 알림 조회 훅
 export const useGetAlarms = (
@@ -37,8 +42,15 @@ export const useInfiniteGetAlarms = (size: number) => {
 
 // 10.2 (유학생/고용주) 알림 읽음 상태 변경 훅
 export const usePatchReadAlarm = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: patchReadAlarm,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ['alarm'],
+      });
+    },
     onError: (error) => {
       console.error('알림 읽음 상태 변경 실패', error);
     },

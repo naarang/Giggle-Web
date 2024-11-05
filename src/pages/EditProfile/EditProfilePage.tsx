@@ -24,6 +24,7 @@ const EditProfilePage = () => {
   const { data: userProfile } = useGetUserProfile();
   const { mutate } = usePatchUserProfile();
 
+  const [isChanged, setIsChanged] = useState(false);
   const [originalData, setOriginalData] = useState<UserEditRequestBody>();
   const [userData, setUserData] = useState<UserEditRequestBody>(
     InitialUserProfileDetail,
@@ -80,6 +81,13 @@ const EditProfilePage = () => {
       setUserData(initailData);
     }
   }, [userProfile]);
+
+  // 수정 여부를 확인(프로필 사진만 변경했을 경우 포함)
+  useEffect(() => {
+    if (profileImage || userProfile === originalData) {
+      setIsChanged(true);
+    }
+  }, [userProfile, profileImage]);
 
   return (
     <>
@@ -250,13 +258,9 @@ const EditProfilePage = () => {
             <Button
               type={buttonTypeKeys.LARGE}
               title="Save"
-              bgColor={
-                originalData == userData ? 'bg-[#F4F4F9]' : 'bg-[#FEF387]'
-              }
-              fontColor={
-                originalData == userData ? 'text-[#BDBDBD]' : 'text-[#1E1926]'
-              }
-              onClick={originalData == userData ? undefined : handleSubmit}
+              bgColor={isChanged ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'}
+              fontColor={isChanged ? 'text-[#1E1926]' : 'text-[#BDBDBD]'}
+              onClick={isChanged ? handleSubmit : undefined}
               isBorder={false}
             />
           </div>
