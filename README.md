@@ -1,6 +1,32 @@
 # Giggle-Web
 
-추후에 실행 방법 적어야 함
+## Features
+
+- ⚡️ Vite for fast builds and HMR
+- ⚛️ React for the user interface
+- 📝 TypeScript for type safety
+- 📦 pnpm for efficient package management
+- 🌐 TanStack Query for data synchronization and caching
+- 🗂 zustand for lightweight and flexible state management
+
+## Getting Started
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Team-inglo/Giggle-Web.git
+   cd Giggle-Web
+   ```
+   
+2. **Install dependencies:**
+   ```bash
+   pnpm install
+   ```
+
+3. **Run the development server:**
+   ```bash
+   pnpm dev
+   ```
+
 
 ## commit convention
 
