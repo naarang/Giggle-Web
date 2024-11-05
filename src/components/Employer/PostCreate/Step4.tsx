@@ -6,7 +6,7 @@ import InputLayout from '@/components/WorkExperience/InputLayout';
 import { buttonTypeKeys } from '@/constants/components';
 import { phone } from '@/constants/information';
 import { InputType } from '@/types/common/input';
-import { JobPostingForm } from '@/types/postCreate/postCreate';
+import { Image, JobPostingForm } from '@/types/postCreate/postCreate';
 import { useEffect, useState } from 'react';
 import AddFileIcon from '@/assets/icons/FileAddIcon.svg?react';
 import {
@@ -20,13 +20,21 @@ const Step4 = ({
   postInfo,
   onNext,
   onPrev,
+  isEdit,
 }: {
   postInfo: JobPostingForm;
   onNext: (postInfo: JobPostingForm) => void;
   onPrev: () => void;
+  isEdit?: boolean;
 }) => {
   // 현재 step내에서 입력받는 정보를 따로 관리할 state, 추후 다음 step으로 넘어갈 때 funnel 관리 페이지의 state로 통합된다.
-  const [newPostInfo, setNewPostInfo] = useState<JobPostingForm>(postInfo);
+  const [newPostInfo, setNewPostInfo] = useState<JobPostingForm>({
+    images: [],
+    body: { ...postInfo.body },
+  });
+  const [storedImageUrls, setStoredImageUrls] = useState<Image[]>(
+    isEdit ? (postInfo.images as Image[]) : [],
+  );
   // 세 부분으로 나누어 입력받는 방식을 위해 전화번호만 별도의 state로 분리, 추후 유효성 검사 단에서 통합
   const [phoneNum, setPhoneNum] = useState({
     start: newPostInfo.body.recruiter_phone_number
@@ -51,7 +59,7 @@ const Step4 = ({
       recruiter_name !== '' &&
       basicEmailRegex.test(recruiter_email) &&
       isValidPhoneNumber(phoneNum) &&
-      newPostInfo.images.length > 0;
+      newPostInfo.images.length > 0 || storedImageUrls.length > 0;
     setIsInvalid(!isFormValid);
   }, [newPostInfo, phoneNum]);
 
@@ -59,7 +67,7 @@ const Step4 = ({
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const newFiles = newPostInfo.images;
+      const newFiles = newPostInfo.images as File[];
       newFiles.push(file);
       setNewPostInfo({ ...newPostInfo, images: newFiles });
     }
@@ -145,12 +153,44 @@ const Step4 = ({
                 />
               </label>
             )}
+            {storedImageUrls[0] &&
+              storedImageUrls.map((image, idx) => (
+                <div className="w-[7.5rem] h-[7.5rem] relative rounded-lg flex flex-row items-center justify-center  bg-no-repeat bg-top text-left text-gray-400">
+                  <div className="w-[7.5rem] h-[7.5rem] flex items-center justify-center rounded-lg">
+                    <img
+                      src={String(image.img_url)}
+                      className="w-[7.5rem] h-[7.5rem] rounded-lg object-cover"
+                    />
+                    <div
+                      className="absolute top-[0.625rem] right-[0.625rem]"
+                      onClick={() => {
+                        const deletedImgs = newPostInfo.body.deleted_img_ids
+                          ? newPostInfo.body.deleted_img_ids
+                          : [];
+                        deletedImgs.push(Number(image.id));
+                        setStoredImageUrls((prev) =>
+                          prev.filter((_, i) => i !== idx),
+                        );
+                        setNewPostInfo({
+                          ...newPostInfo,
+                          body: {
+                            ...newPostInfo.body,
+                            deleted_img_ids: deletedImgs,
+                          },
+                        });
+                      }}
+                    >
+                      <CircleDeleteIcon />
+                    </div>
+                  </div>
+                </div>
+              ))}
             {newPostInfo.images[0] &&
               newPostInfo.images.map((image, idx) => (
                 <div className="w-[7.5rem] h-[7.5rem] relative rounded-lg flex flex-row items-center justify-center  bg-no-repeat bg-top text-left text-gray-400">
                   <div className="w-[7.5rem] h-[7.5rem] flex items-center justify-center rounded-lg">
                     <img
-                      src={URL.createObjectURL(image)}
+                      src={URL.createObjectURL(image as File)}
                       className="w-[7.5rem] h-[7.5rem] rounded-lg object-cover"
                     />
                     <div
@@ -158,7 +198,9 @@ const Step4 = ({
                       onClick={() => {
                         setNewPostInfo((prev) => ({
                           ...prev,
-                          images: prev.images.filter((_, i) => i !== idx),
+                          images: prev.images.filter(
+                            (_, i) => i !== idx,
+                          ) as File[],
                         }));
                       }}
                     >

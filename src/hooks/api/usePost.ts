@@ -191,16 +191,16 @@ export const useCreatePost = (updateCurrentPostId: (id: number) => void) => {
 };
 
 // 4.10 (고용주) 공고 수정하기 훅
-export const useEditPost = () => {
+export const useEditPost = (id: number) => {
   const navigate = useNavigate();
 
   return useMutation({
     mutationFn: editPost,
-    onSuccess: (response) => {
+    onSuccess: () => {
       // response는 API 응답 데이터
       // { success: true, data: { id: Long }, error: null }
       setTimeout(() => {
-        navigate(`/employer/post/${response.data.id}`);
+        navigate(`/employer/post/${id}`);
       }, 1000);
     },
     onError: (error) => {

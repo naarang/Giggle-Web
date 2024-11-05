@@ -67,8 +67,13 @@ export type Address = {
   latitude: number;
 };
 
+export type Image = {
+  id: number,
+  img_url: string;
+}
+
 export type JobPostingForm = {
-  images: File[];
+  images: File[] | Image[];
   body: {
     title: string;
     job_category: JobCategory | string;
@@ -88,6 +93,7 @@ export type JobPostingForm = {
     recruiter_phone_number: string;
     description: string;
     preferred_conditions: string;
+    deleted_img_ids?: number[];
   };
 };
 
