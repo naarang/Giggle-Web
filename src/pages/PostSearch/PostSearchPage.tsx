@@ -1,13 +1,18 @@
 import TextFieldHeader from '@/components/Common/Header/TextFieldHeader';
 import PostSearchFilterList from '@/components/PostSearch/PostSearchFilterList';
 import PostSearchResult from '@/components/PostSearch/PostSearchResult';
-import { FILTER_CATEGORY, POST_SORTING } from '@/constants/postSearch';
 import { UserType } from '@/constants/user';
-import { useGetPostGuestList, useGetPostList } from '@/hooks/api/usePost';
+import {
+  useInfiniteGetPostGuestList,
+  useInfiniteGetPostList,
+} from '@/hooks/api/usePost';
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { usePostSearchStore } from '@/store/postSearch';
 import { useUserStore } from '@/store/user';
 import { GetPostListReqType } from '@/types/api/post';
+import { JobPostingItemType } from '@/types/common/jobPostingItem';
 import { PostSortingType } from '@/types/PostSearchFilter/PostSearchFilterItem';
+import { formatSearchFilter } from '@/utils/formatSearchFilter';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,65 +22,38 @@ const PostSearchPage = () => {
   const { account_type } = useUserStore();
   const { searchText, updateSearchText, filterList, sortType, updateSortType } =
     usePostSearchStore();
-  const [searchParams, setSearchParams] = useState<GetPostListReqType>({
-    page: 1,
-    size: 10,
-    sorting: POST_SORTING.RECENT,
-  });
-
-  const { data: guestPostData, refetch: guestRefetch } = useGetPostGuestList(
-    searchParams,
-    true,
+  const [searchParams, setSearchParams] = useState<GetPostListReqType>(
+    formatSearchFilter(searchText, sortType, filterList),
   );
 
-  const { data: userPostData, refetch: userRefetch } = useGetPostList(
-    searchParams,
-    true,
-  );
+  const [postData, setPostData] = useState<JobPostingItemType[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const {
+    data: guestPostData,
+    fetchNextPage: guestFetchNextPage,
+    hasNextPage: guesthasNextPage,
+    isFetchingNextPage: guestIsFetchingNextPage,
+  } = useInfiniteGetPostGuestList(searchParams, !account_type ? true : false);
+
+  const {
+    data: userPostData,
+    fetchNextPage: userFetchNextPage,
+    hasNextPage: userhasNextPage,
+    isFetchingNextPage: userIsFetchingNextPage,
+  } = useInfiniteGetPostList(searchParams, account_type ? true : false);
 
   const data = account_type ? userPostData : guestPostData;
+  const fetchNextPage = account_type ? userFetchNextPage : guestFetchNextPage;
+  const hasNextPage = account_type ? userhasNextPage : guesthasNextPage;
+  const isFetchingNextPage = account_type
+    ? userIsFetchingNextPage
+    : guestIsFetchingNextPage;
 
   const onClickSearch = (text: string) => {
     updateSearchText(text);
-    const trendingDataRequest = {
-      page: 1,
-      size: 10,
-      search: text ?? null,
-      sorting: sortType,
-      region_1depth: filterList[FILTER_CATEGORY.REGION_1DEPTH].join(','),
-      region_2depth: filterList[FILTER_CATEGORY.REGION_2DEPTH].join(','),
-      region_3depth: filterList[FILTER_CATEGORY.REGION_3DEPTH]
-        .map((value) => (value === '' ? 'none' : value))
-        .join(','),
-      industry: filterList[FILTER_CATEGORY.INDUSTRY]
-        .join(',')
-        .toUpperCase()
-        .replace(/\s+/g, '_'),
-      work_period: filterList[FILTER_CATEGORY.WORK_PERIOD]
-        .join(',')
-        .toUpperCase()
-        .replace(/\s+/g, '_'),
-      work_days_per_week: filterList[FILTER_CATEGORY.WORK_DAYS_PER_WEEK]
-        .join(',')
-        .toUpperCase()
-        .replace(/\s+/g, '_'),
-      working_day: filterList[FILTER_CATEGORY.WORKING_DAY]
-        .join(',')
-        .toUpperCase()
-        .replace(/\s+/g, '_'),
-      working_hours: filterList[FILTER_CATEGORY.WORKING_HOURS]
-        .join(',')
-        .toUpperCase()
-        .replace(/\s+/g, '_'),
-      recruitment_period: filterList[FILTER_CATEGORY.RECRUITMENT_PERIOD]
-        .join(',')
-        .toUpperCase()
-        .replace(/\s+/g, '_'),
-      employment_type:
-        filterList[FILTER_CATEGORY.EMPLOYMENT_TYPE]?.[0]?.toUpperCase() ?? null,
-      visa: filterList[FILTER_CATEGORY.VISA]?.[0]?.replace(/-/g, '_') ?? null,
-    };
-    setSearchParams(trendingDataRequest);
+    const newSearchParams = formatSearchFilter(text, sortType, filterList);
+    setSearchParams(newSearchParams);
   };
 
   const onChangeSortType = (selectedSortType: PostSortingType) => {
@@ -83,29 +61,39 @@ const PostSearchPage = () => {
     setSearchParams({ ...searchParams, sorting: selectedSortType });
   };
 
-  useEffect(() => {
-    if (account_type) {
-      userRefetch();
-    } else {
-      guestRefetch();
+  const targetRef = useInfiniteScroll(() => {
+    if (hasNextPage && !isFetchingNextPage) {
+      setIsLoading(true);
+      fetchNextPage().finally(() => setIsLoading(false));
     }
-  }, [searchParams, account_type, guestRefetch, userRefetch]);
+  }, !!hasNextPage);
 
-  if (!data?.success) return <></>;
+  useEffect(() => {
+    if (data && data.pages.length > 0) {
+      const result = data.pages.flatMap((page) => page.data.job_posting_list);
+      setPostData(result);
+    }
+  }, [data]);
 
   return (
     <>
       <TextFieldHeader
         onClickBackButton={() => navigate('/')}
         onClickSearchButton={onClickSearch}
-        placeholder={account_type === UserType.OWNER ? "이름으로 검색" : "Search for job posting name"}
+        placeholder={
+          account_type === UserType.OWNER
+            ? '이름으로 검색'
+            : 'Search for job posting name'
+        }
         initialValue={searchText}
       />
       <PostSearchFilterList />
       <PostSearchResult
-        postData={data?.data?.job_posting_list ?? []}
+        postData={postData}
         onChangeSortType={onChangeSortType}
+        isLoading={isLoading}
       />
+      <div ref={targetRef} className="h-1"></div>
     </>
   );
 };

@@ -19,7 +19,7 @@ export const useGetChatHistory = () => {
     data,
     isLoading,
     fetchNextPage,
-    hasNextPage: data?.pages[0].data.has_next,
+    hasNextPage: data?.pages[data?.pages.length - 1].data.has_next,
     isFetchingNextPage,
   };
 };

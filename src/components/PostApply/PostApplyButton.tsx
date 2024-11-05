@@ -6,16 +6,18 @@ import { useState } from 'react';
 import { usePostApplyPost } from '@/hooks/api/useApplication';
 import PostApplyErrorBottomSheet from '@/components/PostApply/PostApplyErrorBottomSheet';
 import { AxiosError } from 'axios';
+import { useCurrentPostIdEmployeeStore } from '@/store/url';
 
 const PostApplyButton = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
   const [isComplete, setIsComplete] = useState<boolean>(false);
-  const [postId, setPostId] = useState<number | undefined>();
   const [isShowBottomsheet, setIsShowBottomSheet] = useState<boolean>(false);
 
   const { mutateAsync } = usePostApplyPost();
+  const { updateCurrentPostId, currentPostId } =
+    useCurrentPostIdEmployeeStore();
 
   const onClickApply = async () => {
     if (isNaN(Number(id))) return;
@@ -23,7 +25,7 @@ const PostApplyButton = () => {
       const result = await mutateAsync(Number(id));
 
       if (result?.success) {
-        setPostId(result?.data?.id);
+        updateCurrentPostId(result?.data?.id);
         setIsComplete(true);
       }
     } catch (error) {
@@ -62,7 +64,7 @@ const PostApplyButton = () => {
           content="You can check the status of your documents"
           buttonContent="Check Now"
           // TODO: 추후에 지원상태 - 상세 페이지로 이동시키기
-          onClick={() => navigate(`/application/${postId}`)}
+          onClick={() => navigate(`/application/${currentPostId}`)}
         />
       )}
       <PostApplyErrorBottomSheet

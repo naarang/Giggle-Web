@@ -1,5 +1,6 @@
 import {
   EmployerInformation,
+  IntegratedApplicationData,
   LaborContractEmployerInfo,
   WorkDayTime,
 } from '@/types/api/document';
@@ -72,7 +73,10 @@ export const validateEmployerInformation = (
   }
 
   // 사업자등록번호 유효성 검사 (000/00/00000) 양식
-  if (!info.company_registration_number || !companyRegistrationNumPattern.test(info.company_registration_number)) {
+  if (
+    !info.company_registration_number ||
+    !companyRegistrationNumPattern.test(info.company_registration_number)
+  ) {
     return false;
   }
 
@@ -114,7 +118,10 @@ export const validateLaborContractEmployerInformation = (
   }
 
   // 사업자등록번호 유효성 검사 (12자리 숫자)
-  if (!info.company_registration_number || !companyRegistrationNumPattern.test(info.company_registration_number)) {
+  if (
+    !info.company_registration_number ||
+    !companyRegistrationNumPattern.test(info.company_registration_number)
+  ) {
     return false;
   }
 
@@ -176,16 +183,61 @@ export const getImageType = (base64String: string) => {
   }
 
   // 시그니처 체크
-  if (header[0] === 0xFF && header[1] === 0xD8 && header[2] === 0xFF) {
+  if (header[0] === 0xff && header[1] === 0xd8 && header[2] === 0xff) {
     return 'jpeg';
   }
-  if (header[0] === 0x89 && header[1] === 0x50 && header[2] === 0x4E && header[3] === 0x47) {
+  if (
+    header[0] === 0x89 &&
+    header[1] === 0x50 &&
+    header[2] === 0x4e &&
+    header[3] === 0x47
+  ) {
     return 'png';
   }
   if (header[0] === 0x47 && header[1] === 0x49 && header[2] === 0x46) {
     return 'gif';
   }
-  
+
   // 기본값
   return 'jpeg';
+};
+
+export const validateIntegratedApplication = (
+  data: IntegratedApplicationData,
+): boolean => {
+  // 주소 검사
+  const isAddressValid = data.address.region_1depth_name !== '';
+
+  // annual_income_amount 검사
+  const isIncomeValid = data.annual_income_amount !== 0;
+
+  // 이메일 검사
+  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+  if (!emailRegex.test(data.email)) {
+    return false;}
+
+  // 사업자등록번호 유효성 검사 (000/00/00000) 양식
+  const companyRegistrationNumPattern = /^\d{3}\/\d{2}\/\d{5}$/;
+  if (
+    !data.new_work_place_registration_number ||
+    !companyRegistrationNumPattern.test(data.new_work_place_registration_number)
+  ) {
+    return false;
+  }
+  // 나머지 필드 검사
+  const otherFieldsValid = Object.entries(data).every(([key, value]) => {
+    // address와 annual_income_amount는 이미 위에서 검사했으므로 스킵
+    if (
+      key === 'address' ||
+      key === 'annual_income_amount' ||
+      key === 'new_work_place_registration_number' ||
+      key === 'email'
+    ) {
+      return true;
+    }
+    // 나머지 필드는 빈 문자열이 아닌지 확인
+    return value !== '';
+  });
+
+  return isAddressValid && isIncomeValid && otherFieldsValid;
 };
