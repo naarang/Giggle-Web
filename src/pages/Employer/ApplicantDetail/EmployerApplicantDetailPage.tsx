@@ -22,7 +22,7 @@ const EmployerApplicantDetailPage = () => {
     <>
       <BaseHeader
         hasBackButton={true}
-        onClickBackButton={() => navigate(`/employer/post/${currentApplicantId}/applicant`)}
+        onClickBackButton={() => navigate(-1)}
         hasMenuButton={false}
         title="서류 신청 관리하기"
       />
@@ -33,7 +33,10 @@ const EmployerApplicantDetailPage = () => {
           isKorean={true}
         />
       </div>
-      <EmployerApplicantDetailButton applicant_id={Number(currentApplicantId)} step={data?.data.step} />
+      <EmployerApplicantDetailButton
+        applicant_id={Number(currentApplicantId)}
+        step={data?.data.step}
+      />
     </>
   );
 };
