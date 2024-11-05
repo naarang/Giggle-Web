@@ -2,10 +2,15 @@ import TextFieldHeader from '@/components/Common/Header/TextFieldHeader';
 import PostSearchFilterList from '@/components/PostSearch/PostSearchFilterList';
 import PostSearchResult from '@/components/PostSearch/PostSearchResult';
 import { UserType } from '@/constants/user';
-import { useGetPostGuestList, useGetPostList } from '@/hooks/api/usePost';
+import {
+  useInfiniteGetPostGuestList,
+  useInfiniteGetPostList,
+} from '@/hooks/api/usePost';
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { usePostSearchStore } from '@/store/postSearch';
 import { useUserStore } from '@/store/user';
 import { GetPostListReqType } from '@/types/api/post';
+import { JobPostingItemType } from '@/types/common/jobPostingItem';
 import { PostSortingType } from '@/types/PostSearchFilter/PostSearchFilterItem';
 import { formatSearchFilter } from '@/utils/formatSearchFilter';
 import { useEffect, useState } from 'react';
@@ -21,17 +26,29 @@ const PostSearchPage = () => {
     formatSearchFilter(searchText, sortType, filterList),
   );
 
-  const { data: guestPostData, refetch: guestRefetch } = useGetPostGuestList(
-    searchParams,
-    true,
-  );
+  const [postData, setPostData] = useState<JobPostingItemType[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { data: userPostData, refetch: userRefetch } = useGetPostList(
-    searchParams,
-    true,
-  );
+  const {
+    data: guestPostData,
+    fetchNextPage: guestFetchNextPage,
+    hasNextPage: guesthasNextPage,
+    isFetchingNextPage: guestIsFetchingNextPage,
+  } = useInfiniteGetPostGuestList(searchParams, !account_type ? true : false);
+
+  const {
+    data: userPostData,
+    fetchNextPage: userFetchNextPage,
+    hasNextPage: userhasNextPage,
+    isFetchingNextPage: userIsFetchingNextPage,
+  } = useInfiniteGetPostList(searchParams, account_type ? true : false);
 
   const data = account_type ? userPostData : guestPostData;
+  const fetchNextPage = account_type ? userFetchNextPage : guestFetchNextPage;
+  const hasNextPage = account_type ? userhasNextPage : guesthasNextPage;
+  const isFetchingNextPage = account_type
+    ? userIsFetchingNextPage
+    : guestIsFetchingNextPage;
 
   const onClickSearch = (text: string) => {
     updateSearchText(text);
@@ -44,15 +61,19 @@ const PostSearchPage = () => {
     setSearchParams({ ...searchParams, sorting: selectedSortType });
   };
 
-  useEffect(() => {
-    if (account_type) {
-      userRefetch();
-    } else {
-      guestRefetch();
+  const targetRef = useInfiniteScroll(() => {
+    if (hasNextPage && !isFetchingNextPage) {
+      setIsLoading(true);
+      fetchNextPage().finally(() => setIsLoading(false));
     }
-  }, [searchParams, account_type, guestRefetch, userRefetch]);
+  }, !!hasNextPage);
 
-  if (!data?.success) return <></>;
+  useEffect(() => {
+    if (data && data.pages.length > 0) {
+      const result = data.pages.flatMap((page) => page.data.job_posting_list);
+      setPostData(result);
+    }
+  }, [data]);
 
   return (
     <>
@@ -68,9 +89,11 @@ const PostSearchPage = () => {
       />
       <PostSearchFilterList />
       <PostSearchResult
-        postData={data?.data?.job_posting_list ?? []}
+        postData={postData}
         onChangeSortType={onChangeSortType}
+        isLoading={isLoading}
       />
+      <div ref={targetRef} className="h-1"></div>
     </>
   );
 };

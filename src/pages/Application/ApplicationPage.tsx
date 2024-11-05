@@ -1,9 +1,12 @@
 import ApplicationCardList from '@/components/Application/ApplicationCardList';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
+import LoadingItem from '@/components/Common/LoadingItem';
 import SearchSortDropdown from '@/components/Common/SearchSortDropdown';
 import { APPLICATION_STATUS_TYPE } from '@/constants/application';
 import { ASCENDING_SORT_TYPE } from '@/constants/sort';
 import { useGetApplyPostList } from '@/hooks/api/usePost';
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
+import { AppicationItemType } from '@/types/application/applicationItem';
 import { ApplicationStatusType } from '@/types/application/applicationStatus';
 import { AscendingSortType } from '@/types/common/sort';
 import { useEffect, useState } from 'react';
@@ -17,13 +20,16 @@ const ApplicationPage = () => {
   );
 
   const [requestParams, setRequestParams] = useState({
-    page: 1,
     size: 10,
     sorting: selectedSort,
     status: selectedStatus,
   });
 
-  const { data, refetch } = useGetApplyPostList(requestParams);
+  const [applicantData, setApplicantData] = useState<AppicationItemType[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useGetApplyPostList(requestParams);
 
   const selectSort = (sort: AscendingSortType) => {
     setSelectedSort(sort);
@@ -35,11 +41,19 @@ const ApplicationPage = () => {
     setRequestParams({ ...requestParams, status: status });
   };
 
-  useEffect(() => {
-    refetch();
-  }, [requestParams, refetch]);
+  const targetRef = useInfiniteScroll(() => {
+    if (hasNextPage && !isFetchingNextPage) {
+      setIsLoading(true);
+      fetchNextPage().finally(() => setIsLoading(false));
+    }
+  }, !!hasNextPage);
 
-  if (!data?.success) return <></>;
+  useEffect(() => {
+    if (data && data.pages.length > 0) {
+      const result = data.pages.flatMap((page) => page.data.job_posting_list);
+      setApplicantData(result);
+    }
+  }, [data]);
 
   return (
     <>
@@ -61,9 +75,9 @@ const ApplicationPage = () => {
             onSelect={(status) => selectStatus(status as ApplicationStatusType)}
           />
         </div>
-        <ApplicationCardList
-          applicationListData={data?.data?.job_posting_list ?? []}
-        />
+        <ApplicationCardList applicationListData={applicantData} />
+        {isLoading && <LoadingItem />}
+        <div ref={targetRef} className="h-1"></div>
       </div>
     </>
   );
