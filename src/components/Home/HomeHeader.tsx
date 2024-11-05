@@ -2,12 +2,20 @@ import AlarmIcon from '@/assets/icons/Home/AlarmIcon.svg?react';
 import { UserType } from '@/constants/user';
 import { useGetAlarms } from '@/hooks/api/useAlarm';
 import { useUserStore } from '@/store/user';
+import { AlarmItemType } from '@/types/api/alarm';
 import { useNavigate } from 'react-router-dom';
 
 const HomeHeader = () => {
   const navigate = useNavigate();
   const { account_type, name } = useUserStore();
-  const { data } = useGetAlarms(1, 1, account_type ? true : false);
+  const { data } = useGetAlarms(1, 50, account_type ? true : false);
+
+  const isReadAlarms = (alarms: AlarmItemType[]) => {
+    const isRead = alarms.some((alarm) => !alarm.is_read);
+    return isRead;
+  };
+
+  if (!data?.success) return <></>;
 
   return (
     <section className="w-full pt-[3.125rem] pb-[1rem] px-[1.5rem] bg-[#FEF387]">
@@ -32,7 +40,7 @@ const HomeHeader = () => {
           >
             <AlarmIcon />
             {/* 알람이 있을 때만 표시하기 */}
-            {data?.data?.notification_list?.length ? (
+            {isReadAlarms(data?.data?.notification_list) ? (
               <div className="absolute top-[0.3rem] right-[0.4rem] w-[0.438rem] h-[0.438rem] rounded-full bg-[#FF6F61]"></div>
             ) : (
               <></>
