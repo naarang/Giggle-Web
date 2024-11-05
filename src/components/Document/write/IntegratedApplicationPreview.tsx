@@ -190,7 +190,7 @@ const IntegratedApplicationPreview = ({
             <div className="border border-gray-200 rounded-xl">
               {document?.signature_base64 !== '' && (
                 <img
-                  src={`data:image/${getImageType(document?.signature_base64 as string)};base64,${document?.signature_base64}`}
+                  src={`data:image/svg+xml;base64,${document?.signature_base64}`}
                   className="w-full h-full object-cover"
                   alt="signature preview"
                 />
