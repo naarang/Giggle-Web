@@ -93,7 +93,7 @@ const PostSearchPage = () => {
         onChangeSortType={onChangeSortType}
         isLoading={isLoading}
       />
-      <div ref={targetRef} style={{ height: 1 }}></div>
+      <div ref={targetRef} className="h-1"></div>
     </>
   );
 };

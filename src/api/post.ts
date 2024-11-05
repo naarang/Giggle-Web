@@ -48,7 +48,6 @@ export const getApplicantList = async (
   sorting: string,
   status: string,
 ) => {
-  // TODO: 무한 스크롤 구현하기
   const size = 10;
   const response = await api.get(
     `/owners/job-postings/${id}/user-owner-job-postings/users/overviews?page=${page}&size=${size}&sorting=${sorting}${status !== 'TOTAL' ? `&status=${status}` : ''}`,

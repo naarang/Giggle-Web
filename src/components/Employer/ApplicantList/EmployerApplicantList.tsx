@@ -1,3 +1,4 @@
+import LoadingItem from '@/components/Common/LoadingItem';
 import SearchSortDropdown from '@/components/Common/SearchSortDropdown';
 import EmployerApplicationCard from '@/components/Employer/ApplicantList/EmployerApplicantCard';
 import {
@@ -9,6 +10,7 @@ import {
   MATCH_KO_EN_ASCENDING_SORT,
 } from '@/constants/sort';
 import { useGetApplicantList } from '@/hooks/api/usePost';
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { useCurrentPostIdStore } from '@/store/url';
 import { ApplicantItemType } from '@/types/application/applicationItem';
 import { KoApplicationStatusType } from '@/types/application/applicationStatus';
@@ -21,7 +23,7 @@ type EmployerApplicationListPropsType = {
 const EmployerApplicationList = ({
   title,
 }: EmployerApplicationListPropsType) => {
-  const { currentPostId} = useCurrentPostIdStore();
+  const { currentPostId } = useCurrentPostIdStore();
 
   const [selectedSort, setSelectedSort] = useState<KoAscendingSortType>(
     KO_ASCENDING_SORT_TYPE.ASCENDING,
@@ -30,23 +32,36 @@ const EmployerApplicationList = ({
     KO_APPLICATION_STATUS_TYPE.TOTAL,
   );
 
-  const { data, refetch } = useGetApplicantList(
-    Number(currentPostId),
-    MATCH_KO_EN_ASCENDING_SORT[selectedSort],
-    EN_APPLICATION_STATUS_TYPE[selectedStatus]
-      .replace(/\s/g, '_')
-      .toUpperCase(),
-    !isNaN(Number(currentPostId)) ? true : false,
-  );
+  const [applicantData, setApplicantData] = useState<ApplicantItemType[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useGetApplicantList(
+      Number(currentPostId),
+      MATCH_KO_EN_ASCENDING_SORT[selectedSort],
+      EN_APPLICATION_STATUS_TYPE[selectedStatus]
+        .replace(/\s/g, '_')
+        .toUpperCase(),
+      !isNaN(Number(currentPostId)) ? true : false,
+    );
 
   useEffect(() => {
-    if (!isNaN(Number(currentPostId))) refetch();
-  }, [currentPostId, selectedSort, selectedStatus, refetch]);
+    if (data && data.pages.length > 0) {
+      const result = data.pages.flatMap((page) => page.data.applicant_list);
 
-  if (!data?.success) return <></>;
+      setApplicantData(result);
+    }
+  }, [data]);
+
+  const targetRef = useInfiniteScroll(() => {
+    if (hasNextPage && !isFetchingNextPage) {
+      setIsLoading(true);
+      fetchNextPage().finally(() => setIsLoading(false));
+    }
+  }, !!hasNextPage);
 
   return (
-    <section className="flex flex-col gap-[1rem] w-full p-[1.5rem] pb-[6.25rem]">
+    <section className="flex flex-col gap-[1rem] w-full p-[1.5rem] pb-[6.25rem] overflow-y-auto h-full">
       <div className="flex justify-between items-center">
         <h3 className="px-[0.5rem] head-3 text-[#1E1926]">
           <span className="pr-[0.25rem] text-[#7872ED]">{title}</span>의 지원자
@@ -66,9 +81,11 @@ const EmployerApplicationList = ({
           />
         </div>
       </div>
-      {data?.data?.applicant_list?.map((data: ApplicantItemType) => (
+      {applicantData?.map((data: ApplicantItemType) => (
         <EmployerApplicationCard key={data.id} applicantData={data} />
       ))}
+      {isLoading && <LoadingItem />}
+      <div ref={targetRef} className="h-1"></div>
     </section>
   );
 };

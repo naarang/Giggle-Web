@@ -138,12 +138,6 @@ export const useGetApplicantList = (
   status: string,
   isEnabled: boolean,
 ) => {
-  // return useQuery({
-  //   queryKey: ['post', id],
-  //   queryFn: () => getApplicantList(page, id, sorting, status),
-  //   enabled: isEnabled,
-  // });
-
   const { data, isLoading, fetchNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey: ['post', id, sorting, status],
