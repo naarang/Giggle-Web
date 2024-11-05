@@ -12,6 +12,7 @@ import { usePutPostBookmark } from '@/hooks/api/usePost';
 import { useUserStore } from '@/store/user';
 import { UserType } from '@/constants/user';
 import { useCurrentPostIdStore } from '@/store/url';
+import { useEffect, useState } from 'react';
 
 type JobPostingCardProps = {
   jobPostingData: JobPostingItemType;
@@ -24,18 +25,27 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
 
   const navigate = useNavigate();
 
+  const [isBookmark, setIsBookmark] = useState<boolean>(false);
+
   const onClickBookmark = async (
     event: React.MouseEvent<SVGSVGElement, MouseEvent>,
   ) => {
     event.stopPropagation();
 
-    if (account_type) mutate(jobPostingData.id);
+    if (account_type) {
+      mutate(jobPostingData.id);
+      setIsBookmark(!isBookmark);
+    }
   };
 
   const goToPostDetailPage = () => {
     updateCurrentPostId(Number(jobPostingData.id));
     navigate(`/post/${jobPostingData.id}`);
   };
+
+  useEffect(() => {
+    setIsBookmark(jobPostingData?.is_book_marked ?? false);
+  }, [setIsBookmark, jobPostingData]);
 
   return (
     <article
@@ -95,7 +105,7 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
             fontStyle="button-2"
           />
           {account_type === UserType.USER &&
-            (jobPostingData?.is_book_marked ? (
+            (isBookmark ? (
               <BookmarkCheckedIcon onClick={(e) => onClickBookmark(e)} />
             ) : (
               <BookmarkIcon onClick={(e) => onClickBookmark(e)} />
