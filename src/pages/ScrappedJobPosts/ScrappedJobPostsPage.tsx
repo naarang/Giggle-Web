@@ -35,7 +35,7 @@ const ScrappedJobPostsPage = () => {
         <div>
           <BaseHeader
             hasBackButton={true}
-            onClickBackButton={() => navigate('/profile/manage-resume')}
+            onClickBackButton={() => navigate('/profile')}
             hasMenuButton={false}
             title="Scrap Job Posting"
           />
