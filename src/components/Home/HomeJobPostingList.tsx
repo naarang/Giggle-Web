@@ -19,7 +19,6 @@ const HomeJobPostingList = () => {
 
   // 인기 공고
   const trendingDataRequest = {
-    page: 1,
     size: 2,
     type: POST_SEARCH_MENU.TRENDING,
   };
@@ -34,7 +33,6 @@ const HomeJobPostingList = () => {
 
   // 최신 공고
   const recentlyDataRequest = {
-    page: 1,
     size: 2,
     type: POST_SEARCH_MENU.RECENTLY,
   };
@@ -51,7 +49,6 @@ const HomeJobPostingList = () => {
 
   // 관심 공고
   const bookmarkedDataRequest = {
-    page: 1,
     size: 2,
     type: POST_SEARCH_MENU.BOOKMARKED,
   };
@@ -90,7 +87,9 @@ const HomeJobPostingList = () => {
       <nav className="flex gap-[0.5rem] w-full py-[1rem] px-[2rem] rounded-t-[1rem] bg-white">
         <button onClick={() => scrollToSelectedMenu(POST_SEARCH_MENU.TRENDING)}>
           <Tag
-            value={account_type === UserType.OWNER ? '🔥 인기 공고' : '🔥 Popular'}
+            value={
+              account_type === UserType.OWNER ? '🔥 인기 공고' : '🔥 Popular'
+            }
             padding="0.5rem 1rem"
             isRounded={true}
             hasCheckIcon={false}
@@ -103,7 +102,9 @@ const HomeJobPostingList = () => {
         </button>
         <button onClick={() => scrollToSelectedMenu(POST_SEARCH_MENU.RECENTLY)}>
           <Tag
-            value={account_type === UserType.OWNER ? '🔥 최신 공고' : '🌟 Recent'}
+            value={
+              account_type === UserType.OWNER ? '🔥 최신 공고' : '🌟 Recent'
+            }
             padding="0.5rem 1rem"
             isRounded={true}
             hasCheckIcon={false}
@@ -141,12 +142,17 @@ const HomeJobPostingList = () => {
           ref={(e) => (scrollRef.current[0] = e)}
         >
           <div className="flex justify-between items-end">
-            <h3 className="head-3 text-black">{account_type === UserType.OWNER ? '🔥 가장 인기있는 공고' : '🔥 Popular Job Lists for You'}</h3>
+            <h3 className="head-3 text-black">
+              {account_type === UserType.OWNER
+                ? '🔥 가장 인기있는 공고'
+                : '🔥 Popular Job Lists for You'}
+            </h3>
             <button
               className="flex items-center gap-[0.625rem] button-2 text-[#1E1926]"
               onClick={() => goToSearchPage(POST_SORTING.POPULAR)}
             >
-              {account_type === UserType.OWNER ? '더보기' : 'See more'} <RightArrowIcon />
+              {account_type === UserType.OWNER ? '더보기' : 'See more'}{' '}
+              <RightArrowIcon />
             </button>
           </div>
           {trendData?.data?.job_posting_list?.map(
@@ -160,12 +166,17 @@ const HomeJobPostingList = () => {
           ref={(e) => (scrollRef.current[1] = e)}
         >
           <div className="flex justify-between items-end">
-            <h3 className="head-3 text-black">{account_type === UserType.OWNER ? '🌟 최근 올라온 공고' : '🌟 Recently Added Job'}</h3>
+            <h3 className="head-3 text-black">
+              {account_type === UserType.OWNER
+                ? '🌟 최근 올라온 공고'
+                : '🌟 Recently Added Job'}
+            </h3>
             <button
               className="flex items-center gap-[0.625rem] button-2 text-[#1E1926]"
               onClick={() => goToSearchPage(POST_SORTING.RECENT)}
             >
-              {account_type === UserType.OWNER ? '더보기' : 'See more'} <RightArrowIcon />
+              {account_type === UserType.OWNER ? '더보기' : 'See more'}{' '}
+              <RightArrowIcon />
             </button>
           </div>
           {recentlyData?.data?.job_posting_list?.map(

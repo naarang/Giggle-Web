@@ -3,7 +3,6 @@ import { ApplicationStatusType } from '../application/applicationStatus';
 import { AscendingSortType } from '../common/sort';
 
 export type GetPostListReqType = {
-  page: number;
   size: number;
   search?: string | null;
   sorting?: string | null;

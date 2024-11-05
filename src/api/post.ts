@@ -5,9 +5,12 @@ import { APPLICATION_STATUS_TYPE } from '@/constants/application';
 import { filterNullParams } from '@/utils/filterNullParams';
 
 // 4.1 (게스트) 공고 리스트 조회
-export const getPostListGuest = async (req: GetPostListReqType) => {
+export const getPostListGuest = async (
+  req: GetPostListReqType,
+  page: number,
+) => {
   const response = await api.get(`/guests/job-postings/overviews`, {
-    params: filterNullParams(req),
+    params: { ...filterNullParams(req), page },
   });
   return response.data;
 };
@@ -19,9 +22,9 @@ export const getPostDetailGuest = async (id: number) => {
 };
 
 // 4.3 (유학생/고용주) 공고 리스트 조회
-export const getPostList = async (req: GetPostListReqType) => {
+export const getPostList = async (req: GetPostListReqType, page: number) => {
   const response = await api.get(`/job-postings/overviews`, {
-    params: filterNullParams(req),
+    params: { ...filterNullParams(req), page },
   });
   return response.data;
 };
@@ -40,12 +43,12 @@ export const getRecommendPostList = async () => {
 
 // 4.6 (고용주) 공고에 대한 지원자 리스트 조회
 export const getApplicantList = async (
+  page: number,
   id: number,
   sorting: string,
   status: string,
 ) => {
   // TODO: 무한 스크롤 구현하기
-  const page = 1;
   const size = 10;
   const response = await api.get(
     `/owners/job-postings/${id}/user-owner-job-postings/users/overviews?page=${page}&size=${size}&sorting=${sorting}${status !== 'TOTAL' ? `&status=${status}` : ''}`,

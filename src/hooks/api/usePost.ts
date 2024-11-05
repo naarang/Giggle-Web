@@ -17,20 +17,52 @@ import {
 } from '@/api/post';
 import { GetApplyPostListReqType, GetPostListReqType } from '@/types/api/post';
 import { MatchKoEnAscendingSortType } from '@/types/common/sort';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 // 4.1 (게스트) 공고 리스트 조회 훅
 export const useGetPostGuestList = (
   req: GetPostListReqType,
   isEnabled: boolean,
+  page: number = 1,
 ) => {
   return useQuery({
     queryKey: ['post', req],
-    queryFn: () => getPostListGuest(req),
+    queryFn: () => getPostListGuest(req, page),
     enabled: isEnabled,
     staleTime: 0,
   });
+};
+
+// 4.1 (게스트) 공고 리스트 조회 - 무한스크롤
+export const useInfiniteGetPostGuestList = (
+  req: GetPostListReqType,
+  isEnabled: boolean,
+) => {
+  const { data, isLoading, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ['post', req],
+      queryFn: ({ pageParam = 1 }) => getPostListGuest(req, pageParam),
+      initialPageParam: 1,
+      getNextPageParam: (lastPage, allPage) => {
+        return lastPage.data.has_next ? allPage.length + 1 : undefined;
+      },
+      enabled: isEnabled,
+      retry: 1,
+    });
+
+  return {
+    data,
+    isLoading,
+    fetchNextPage,
+    hasNextPage: data?.pages[data?.pages.length - 1].data.has_next,
+    isFetchingNextPage,
+  };
 };
 
 // 4.2 (게스트) 공고 상세 조회하기 훅
@@ -43,13 +75,43 @@ export const useGetPostDetailGuest = (id: number, isEnabled: boolean) => {
 };
 
 // 4.3 (유학생/고용주) 공고 리스트 조회 훅
-export const useGetPostList = (req: GetPostListReqType, isEnabled: boolean) => {
+export const useGetPostList = (
+  req: GetPostListReqType,
+  isEnabled: boolean,
+  page: number = 1,
+) => {
   return useQuery({
     queryKey: ['post', req],
-    queryFn: () => getPostList(req),
+    queryFn: () => getPostList(req, page),
     enabled: isEnabled,
     staleTime: 0,
   });
+};
+
+// 4.3 (유학생/고용주) 공고 리스트 조회 - 무한 스크롤
+export const useInfiniteGetPostList = (
+  req: GetPostListReqType,
+  isEnabled: boolean,
+) => {
+  const { data, isLoading, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ['post', req],
+      queryFn: ({ pageParam = 1 }) => getPostList(req, pageParam),
+      initialPageParam: 1,
+      getNextPageParam: (lastPage, allPage) => {
+        return lastPage.data.has_next ? allPage.length + 1 : undefined;
+      },
+      enabled: isEnabled,
+      retry: 1,
+    });
+
+  return {
+    data,
+    isLoading,
+    fetchNextPage,
+    hasNextPage: data?.pages[data?.pages.length - 1].data.has_next,
+    isFetchingNextPage,
+  };
 };
 
 // 4.4 (유학생/고용주) 공고 상세 조회하기 훅
@@ -76,11 +138,32 @@ export const useGetApplicantList = (
   status: string,
   isEnabled: boolean,
 ) => {
-  return useQuery({
-    queryKey: ['post', id],
-    queryFn: () => getApplicantList(id, sorting, status),
-    enabled: isEnabled,
-  });
+  // return useQuery({
+  //   queryKey: ['post', id],
+  //   queryFn: () => getApplicantList(page, id, sorting, status),
+  //   enabled: isEnabled,
+  // });
+
+  const { data, isLoading, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ['post', id, sorting, status],
+      queryFn: ({ pageParam = 1 }) =>
+        getApplicantList(pageParam, id, sorting, status), // API 호출 함수
+      initialPageParam: 1, // 첫 페이지 설정
+      getNextPageParam: (lastPage, allPage) => {
+        return lastPage.data.has_next ? allPage.length + 1 : undefined;
+      },
+      enabled: isEnabled,
+      retry: 1, // 실패 시 재시도 횟수
+    });
+
+  return {
+    data,
+    isLoading,
+    fetchNextPage,
+    hasNextPage: data?.pages[data?.pages.length - 1].data.has_next,
+    isFetchingNextPage,
+  };
 };
 
 // 4.7 (유학생/고용주) 공고 요약 정보 조회하기 훅
