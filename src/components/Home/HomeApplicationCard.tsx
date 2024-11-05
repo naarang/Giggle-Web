@@ -1,4 +1,5 @@
 import TopRightArrowIcons from '@/assets/icons/Home/TopRightArrowIcon.svg?react';
+import { useCurrentPostIdEmployeeStore } from '@/store/url';
 import { OngoingInterviewItemType } from '@/types/home/ongoingInterviewItem';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,6 +9,12 @@ type HomeApplicationCardProps = {
 
 const HomeApplicationCard = ({ applicationData }: HomeApplicationCardProps) => {
   const navigate = useNavigate();
+  const { updateCurrentPostId } = useCurrentPostIdEmployeeStore();
+
+  const goToApplicationDetailPage = () => {
+    updateCurrentPostId(applicationData.id);
+    navigate(`/application/${applicationData.id}`);
+  };
 
   return (
     <article className="flex flex-col gap-[0.5rem] px-[1.25rem] pt-[0.75rem] pb-[1.25rem] min-w-[17.5rem] bg-white rounded-[1rem] shadow-cardShadow">
@@ -26,7 +33,7 @@ const HomeApplicationCard = ({ applicationData }: HomeApplicationCardProps) => {
         </div>
         <button
           className="px-[0.75rem] py-[0.25rem] bg-[#1B1B1B] rounded-[1.313rem]"
-          onClick={() => navigate(`/application/${applicationData.id}`)}
+          onClick={goToApplicationDetailPage}
         >
           <TopRightArrowIcons />
         </button>
