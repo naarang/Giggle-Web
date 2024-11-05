@@ -1,6 +1,6 @@
 import { IntegratedApplicationData } from '@/types/api/document';
 import InputLayout from '@/components/Document/write/InputLayout';
-import { getImageType, propertyToString } from '@/utils/document';
+import { propertyToString } from '@/utils/document';
 import Notice from '@/components/Document/write/Notice';
 import { renderMap } from '@/utils/map';
 import { Address } from '@/types/api/users';
