@@ -17,6 +17,16 @@ const ScrappedJobPostsPage = () => {
     // API - 5.1 (유학생) 북마크한 공고 리스트 조회하
     if (data) {
       setJobPostingData(data.data.job_posting_list);
+
+      const updatedJobPostingData = data.data.job_posting_list.map(
+        (item: ScrappedJobPostingType) => ({
+          ...item,
+          is_book_marked: true,
+        }),
+      );
+
+      // 상태 업데이트
+      setJobPostingData(updatedJobPostingData);
     }
   }, [data]);
   return (
@@ -25,7 +35,7 @@ const ScrappedJobPostsPage = () => {
         <div>
           <BaseHeader
             hasBackButton={true}
-            onClickBackButton={() => navigate('/profile/manage-resume')}
+            onClickBackButton={() => navigate('/profile')}
             hasMenuButton={false}
             title="Scrap Job Posting"
           />
