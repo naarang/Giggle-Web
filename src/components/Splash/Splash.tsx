@@ -62,6 +62,7 @@ const Splash = () => {
           }
         }
       } catch (error) {
+        console.error(error)
         alert('로그인 오류입니다 다시 시도해주세요');
         setGuest();
       } finally {

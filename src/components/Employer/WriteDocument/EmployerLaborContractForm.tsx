@@ -6,7 +6,7 @@ import {
   initialLaborContractEmployerInfo,
   INSURANCES,
 } from '@/constants/documents';
-import { useGetGeoInfo, useSearchAddress } from '@/hooks/api/useKaKaoMap';
+import { useSearchAddress } from '@/hooks/api/useKaKaoMap';
 import {
   DayOfWeek,
   Insurance,
@@ -76,30 +76,31 @@ const EmployerLaborContractForm = ({
   const [isInvalid, setIsInvalid] = useState(false);
   // 근무시간, 요일 선택 모달 활성화 플래그
   const [isModal, setIsModal] = useState(false);
-  const { data, isSuccess } = useGetGeoInfo(setCurrentGeoInfo); // 현재 좌표 기준 주소 획득
   // 키워드로 주소 검색
   const { searchAddress } = useSearchAddress({
     onSuccess: (data) => setAddressSearchResult(data),
   });
   // 입력 완료 시 제출
-  const { mutate: putDocument } = usePutLaborContractEmployer(Number(currentDocumentId));
+  const { mutate: putDocument } = usePutLaborContractEmployer(
+    Number(currentDocumentId),
+  );
   useEffect(() => {
     if (isEdit && document?.employer_information) {
       setNewDocumentData(document?.employer_information);
+      setPhoneNum({
+        start: parsePhoneNumber(document?.employee_information.phone_number)
+          .start,
+        middle: parsePhoneNumber(document?.employee_information.phone_number)
+          .middle,
+        end: parsePhoneNumber(document?.employee_information.phone_number).end,
+      });
+      setAddressInput(document.employer_information.address.address_name ?? '');
     }
-
   }, [document, isEdit]);
 
-  // 첫 로딩 시 현재 사용자의 위치 파악 해 지도에 표기
   useEffect(() => {
-    setNewDocumentData({
-      ...newDocumentData,
-      address: {
-        ...newDocumentData.address,
-        address_name: String(data?.address.address_name),
-      },
-    });
-  }, [isSuccess]);
+    if (addressInput !== '') handleAddressSearch(addressInput);
+  }, []);
 
   // 휴대번호 매핑
   useEffect(() => {

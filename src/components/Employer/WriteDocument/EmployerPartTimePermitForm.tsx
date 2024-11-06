@@ -6,7 +6,7 @@ import {
   WorkPeriodInfo,
   WorkPeriodNames,
 } from '@/constants/documents';
-import { useGetGeoInfo, useSearchAddress } from '@/hooks/api/useKaKaoMap';
+import { useSearchAddress } from '@/hooks/api/useKaKaoMap';
 import {
   EmployerInformation,
   PartTimePermitData,
@@ -23,7 +23,10 @@ import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
 import { usePutPartTimeEmployPermitEmployer } from '@/hooks/api/useDocument';
 import { useParams } from 'react-router-dom';
-import { validateEmployerInformation } from '@/utils/document';
+import {
+  parseStringToSafeNumber,
+  validateEmployerInformation,
+} from '@/utils/document';
 import { formatPhoneNumber, parsePhoneNumber } from '@/utils/information';
 import { phone } from '@/constants/information';
 
@@ -40,9 +43,6 @@ const EmployerPartTimePermitForm = ({
   const [newDocumentData, setNewDocumentData] = useState<EmployerInformation>(
     initialPartTimePermitEmployerForm,
   );
-  const [hourlyRate, setHourlyRate] = useState(
-    String(newDocumentData.hourly_rate) + ' 원',
-  );
   // 세 부분으로 나누어 입력받는 방식을 위해 전화번호만 별도의 state로 분리, 추후 유효성 검사 단에서 통합
   const [phoneNum, setPhoneNum] = useState({
     start: newDocumentData.phone_number
@@ -56,7 +56,11 @@ const EmployerPartTimePermitForm = ({
       : '',
   });
   // 주소 검색용 input 저장하는 state
-  const [addressInput, setAddressInput] = useState('');
+  const [addressInput, setAddressInput] = useState(
+    document?.employer_information?.address.address_name
+      ? document?.employer_information?.address.address_name
+      : '',
+  );
   // 주소 검색 결과를 저장하는 array
   const [addressSearchResult, setAddressSearchResult] = useState<Document[]>(
     [],
@@ -67,7 +71,6 @@ const EmployerPartTimePermitForm = ({
     lon: 0,
   });
   const [isInvalid, setIsInvalid] = useState(false);
-  const { data, isSuccess } = useGetGeoInfo(setCurrentGeoInfo); // 현재 좌표 기준 주소 획득
   // 키워드로 주소 검색
   const { searchAddress } = useSearchAddress({
     onSuccess: (data) => setAddressSearchResult(data),
@@ -76,30 +79,24 @@ const EmployerPartTimePermitForm = ({
   const { mutate: putDocument } = usePutPartTimeEmployPermitEmployer(
     Number(id),
   );
+
   useEffect(() => {
-    if (isEdit && document?.employer_information)
+    if (addressInput !== '') handleAddressSearch(addressInput);
+  }, []);
+
+  useEffect(() => {
+    if (isEdit && document?.employer_information) {
       setNewDocumentData(document?.employer_information);
+      setPhoneNum({
+        start: parsePhoneNumber(document?.employee_information.phone_number)
+          .start,
+        middle: parsePhoneNumber(document?.employee_information.phone_number)
+          .middle,
+        end: parsePhoneNumber(document?.employee_information.phone_number).end,
+      });
+      setAddressInput(document.employer_information.address.address_name ?? '')
+    }
   }, [document, isEdit]);
-
-  // 첫 로딩 시 현재 사용자의 위치 파악 해 지도에 표기
-  useEffect(() => {
-    setNewDocumentData({
-      ...newDocumentData,
-      address: {
-        ...newDocumentData.address,
-        address_name: String(data?.address.address_name),
-      },
-    });
-  }, [isSuccess]);
-
-  {/* 시급, 휴대번호 데이터 업데이트 */}
-  // 시급 업데이트
-  useEffect(() => {
-    setNewDocumentData({
-      ...newDocumentData,
-      hourly_rate: extractNumbersAsNumber(hourlyRate),
-    });
-  }, [hourlyRate]);
 
   // 휴대번호 데이터 업데이트
   useEffect(() => {
@@ -114,11 +111,13 @@ const EmployerPartTimePermitForm = ({
     setIsInvalid(
       !validateEmployerInformation({
         ...newDocumentData,
-        hourly_rate: extractNumbersAsNumber(hourlyRate),
+        hourly_rate: extractNumbersAsNumber(
+          String(newDocumentData.hourly_rate),
+        ),
         phone_number: formatPhoneNumber(phoneNum),
       }),
     );
-  }, [newDocumentData, hourlyRate, phoneNum]);
+  }, [newDocumentData, phoneNum]);
 
   // 검색할 주소 입력 시 실시간 검색
   const handleAddressSearch = useCallback(
@@ -346,6 +345,7 @@ const EmployerPartTimePermitForm = ({
               })
             }
             isKorean
+            previewImg={newDocumentData.signature_base64}
           />
         </InputLayout>
         {/* 근무 기간 입력 */}
@@ -371,9 +371,16 @@ const EmployerPartTimePermitForm = ({
           <Input
             inputType={InputType.TEXT}
             placeholder="시급을 입력해주세요"
-            value={hourlyRate}
-            onChange={(value) => setHourlyRate(value)}
+            value={String(newDocumentData.hourly_rate)}
+            onChange={(value) =>
+              setNewDocumentData({
+                ...newDocumentData,
+                hourly_rate: parseStringToSafeNumber(value),
+              })
+            }
             canDelete={false}
+            isUnit
+            unit="원"
           />
           <div className="w-full relative body-3 px-1 py-1.5 text-[#222] text-left">
             2024년 기준 최저시급은 9,860원입니다.
@@ -428,7 +435,6 @@ const EmployerPartTimePermitForm = ({
                       ...newDocumentData,
                       work_days_weekdays: newDocumentData.work_days_weekdays,
                       work_days_weekends: newDocumentData.work_days_weekends,
-                      hourly_rate: extractNumbersAsNumber(hourlyRate),
                     },
                   })
           }
