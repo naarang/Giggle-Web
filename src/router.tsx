@@ -53,7 +53,6 @@ import EmployerEditPostPage from './pages/Employer/Post/EmployerEditPostPage';
 const Layout = () => {
   const location = useLocation();
   const { account_type } = useUserStore();
-
   // Nav bar 컴포넌트가 랜딩되는 페이지
   const showNavbarPaths = () => {
     if (account_type === UserType.OWNER) {

@@ -7,6 +7,7 @@ import {
   usePatchInterviewFinish,
 } from '@/hooks/api/useApplication';
 import { useParams } from 'react-router-dom';
+import { sendReactNativeMessage } from '@/utils/reactNativeMessage';
 
 type EmployerApplicantContactBottomSheetType = {
   isShowBottomsheet: boolean;
@@ -24,6 +25,13 @@ const EmployerApplicantContactBottomSheet = ({
   );
   const { mutate } = usePatchInterviewFinish();
 
+  const sendPhoneNumberToApp = (phoneNumber: number) => {
+    const message = {
+      type: 'CALL_PHONE',
+      payload: String(phoneNumber).replace(/-/g, ''),
+    };
+    sendReactNativeMessage(message);
+  };
   const onClickComplete = () => {
     if (!isNaN(Number(id))) mutate(Number(id));
   };
@@ -46,7 +54,12 @@ const EmployerApplicantContactBottomSheet = ({
         <p className="mb-[1.25rem] body-3 text-[#656565]">
           지원자와 지원 조건을 확인해보세요
         </p>
-        <div className="mt-[0.5rem] mb-[1.5rem] max-w-[15.438rem] w-full px-[1rem] flex items-center gap-[0.75rem] py-[0.75rem] rounded-[1rem] bg-[#F4F4F9]">
+        <div
+          className="mt-[0.5rem] mb-[1.5rem] max-w-[15.438rem] w-full px-[1rem] flex items-center gap-[0.75rem] py-[0.75rem] rounded-[1rem] bg-[#F4F4F9]"
+          onClick={() =>
+            sendPhoneNumberToApp(data?.data?.applicant_phone_number)
+          }
+        >
           <div className="p-[0.375rem] bg-white rounded-[0.5rem]">
             <PhoneIcon />
           </div>
