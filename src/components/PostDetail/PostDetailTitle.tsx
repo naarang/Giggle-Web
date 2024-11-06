@@ -66,7 +66,7 @@ const PostDetailTitle = ({ postDetailData }: PostDetailTitleProps) => {
         <div className="flex gap-[0.5rem] px-[0.5rem]">
           <ClockIcon className="min-w-[0.5rem]" />
           <p className="text-[#464646] caption-1">
-            {postDetailData.summaries.work_days_per_week} days a week
+            {postDetailData.summaries.work_days_per_week}
           </p>
         </div>
         <div className="flex justify-end gap-[0.5rem] px-[0.5rem]">
