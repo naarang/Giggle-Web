@@ -74,7 +74,7 @@ const EmployeeInfoSection = ({
               {/* 대표 서명 */}
               {key === LaborContractEmployeeInfoProperty.SIGNATURE_BASE64 && (
                 <div className="flex flex-col gap-4">
-                  <div className="border border-gray-200 rounded-xl">
+                  <div className="border border-gray-200 rounded-xl bg-white">
                     {value !== '' && (
                       <img
                       src={`data:image/svg+xml;base64,${value}`}
