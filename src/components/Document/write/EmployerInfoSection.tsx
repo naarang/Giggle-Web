@@ -14,7 +14,6 @@ import { WorkDayTime } from '@/types/api/document';
 import {
   arrayToString,
   getDetailAddress,
-  getImageType,
   propertyToString,
   workDayTimeToString,
 } from '@/utils/document';
@@ -94,10 +93,10 @@ const EmployerInfoSection = ({
               {/* 대표 서명 */}
               {key === LaborContractEmployerInfoProperty.SIGNATURE_BASE64 && (
                 <div className="flex flex-col gap-4">
-                  <div className="border border-gray-200 rounded-xl">
+                  <div className="border border-gray-200 rounded-xl bg-white">
                     {value !== '' && (
                       <img
-                        src={`data:image/${getImageType(value as string)};base64,${value}`}
+                        src={`data:image/svg+xml;base64,${value}`}
                         className="w-full h-full object-cover"
                         alt="signature preview"
                       />
