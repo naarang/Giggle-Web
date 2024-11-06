@@ -1,13 +1,12 @@
 import Router from '@/router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useEffect } from 'react';
-import { useUserFcmTokenStore } from './store/user';
+//import { useEffect } from 'react';
+//import { useUserFcmTokenStore } from './store/user';
 
 const queryClient = new QueryClient();
 
 function App() {
-  const { updateToken } = useUserFcmTokenStore();
-  useEffect(() => {
+  {/*   useEffect(() => {
     const handleToken = (event: MessageEvent) => {
       const parsedData = JSON.parse(event.data);
       if (parsedData?.type === 'RECEIVE_TOKEN') {
@@ -17,7 +16,9 @@ function App() {
 
     window.addEventListener('message', handleToken);
     return () => window.removeEventListener('message', handleToken);
-  }, []);
+  }, [])  const { updateToken } = useUserFcmTokenStore();;*/}
+
+
   return (
     <QueryClientProvider client={queryClient}>
       <Router />
