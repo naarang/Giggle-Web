@@ -168,6 +168,10 @@ export const PartTimeEmployPermitEmployerInfo = {
     name: 'Industry',
     key: 'job_type',
   },
+  [EmployerInfoProperty.NAME]: {
+    name: 'Representative',
+    key: 'name',
+  },
   [EmployerInfoProperty.PHONE_NUMBER]: {
     name: 'Phone number',
     key: 'phone_number',
