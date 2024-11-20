@@ -141,7 +141,7 @@ export const initialPartTimePermitForm: PartTimePermitFormRequest = {
   last_name: '',
   major: '',
   term_of_completion: 0,
-  phone_number: '000-0000-0000',
+  phone_number: '',
   email: '',
 };
 // 시간제 근무 허가 신청서 mock data
