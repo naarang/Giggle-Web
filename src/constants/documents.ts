@@ -141,7 +141,7 @@ export const initialPartTimePermitForm: PartTimePermitFormRequest = {
   last_name: '',
   major: '',
   term_of_completion: 0,
-  phone_number: '000-0000-0000',
+  phone_number: '',
   email: '',
 };
 // 시간제 근무 허가 신청서 mock data
@@ -167,6 +167,10 @@ export const PartTimeEmployPermitEmployerInfo = {
   [EmployerInfoProperty.JOB_TYPE]: {
     name: 'Industry',
     key: 'job_type',
+  },
+  [EmployerInfoProperty.NAME]: {
+    name: 'Representative',
+    key: 'name',
   },
   [EmployerInfoProperty.PHONE_NUMBER]: {
     name: 'Phone number',

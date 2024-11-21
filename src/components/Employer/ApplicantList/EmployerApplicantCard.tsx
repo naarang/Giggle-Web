@@ -110,9 +110,10 @@ const EmployerApplicantCard = ({
         </button>
         <button
           className="w-full px-[1.5rem] py-[0.75rem] text-center rounded-full bg-[#FEF387] text-[#1E1926] caption-1-sb"
-          onClick={() =>
-            navigate(`/employer/applicant/${applicantData.id}/resume`)
-          }
+          onClick={() => {
+            updateCurrentApplicantId(applicantData.id);
+            navigate(`/employer/applicant/${applicantData.id}/resume`);
+          }}
         >
           See Resume
         </button>
