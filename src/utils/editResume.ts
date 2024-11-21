@@ -22,6 +22,7 @@ export const formatDate = (dateString: string) => {
       year: 'numeric',
       month: '2-digit',
     })
+    .replace(' ', '')
     .replace(/\.$/, '');
 };
 // 날짜 형식 포맷팅(서버 데이터와 랜딩되는 데이터간의 변환
