@@ -16,7 +16,7 @@ const RequestModifyPage = () => {
         hasBackButton={true}
         hasMenuButton={true}
         title="Reason for Request"
-        onClickBackButton={() => navigate('/application-documents')}
+        onClickBackButton={() => navigate(`/application-documents/${id}`)}
       />
       <div className="w-full relative flex flex-col items-center justify-start text-left text-[#1e1926] head-1">
         <div className="self-stretch flex items-center justify-start p-6">
