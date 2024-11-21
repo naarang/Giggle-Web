@@ -55,7 +55,7 @@ const ApplicationDetailPage = () => {
         hasMenuButton={false}
         title="Applicants"
       />
-      {data.data.step && (
+      {data && (
         <>
           <div className="w-full flex flex-col gap-[2.25rem] p-[1.5rem]">
             <ApplicationDetailCard applicationData={data?.data} />
