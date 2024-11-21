@@ -55,14 +55,14 @@ const ApplicationDetailPage = () => {
         hasMenuButton={false}
         title="Applicants"
       />
-      {data && (
+      {data.data.step && (
         <>
           <div className="w-full flex flex-col gap-[2.25rem] p-[1.5rem]">
             <ApplicationDetailCard applicationData={data?.data} />
             <ApplicationDetailInfo applicationData={data?.data} />
             <ApplicationDetailSteps step={findCurrentStep(data?.data?.step)} />
           </div>
-          {showCurrentStepButton(findCurrentStep(data?.data?.step))}{' '}
+          {showCurrentStepButton(findCurrentStep(data?.data?.step))}
         </>
       )}
     </>
