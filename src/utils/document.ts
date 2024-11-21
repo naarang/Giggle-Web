@@ -1,11 +1,13 @@
 import {
   EmployerInformation,
+  Insurance,
   IntegratedApplicationData,
   LaborContractEmployerInfo,
   WorkDayTime,
 } from '@/types/api/document';
 import { Address } from '@/types/api/users';
 import { extractNumbersAsNumber } from './post';
+import { InsuranceInfo } from '@/constants/documents';
 
 // 객체의 모든 프로퍼티가 공백이 아닌지 확인하는 함수
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -214,7 +216,8 @@ export const validateIntegratedApplication = (
   // 이메일 검사
   const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
   if (!emailRegex.test(data.email)) {
-    return false;}
+    return false;
+  }
 
   // 사업자등록번호 유효성 검사 (000/00/00000) 양식
   const companyRegistrationNumPattern = /^\d{3}\/\d{2}\/\d{5}$/;
@@ -240,4 +243,21 @@ export const validateIntegratedApplication = (
   });
 
   return isAddressValid && isIncomeValid && otherFieldsValid;
+};
+
+// 보험 이름과 enum 매핑 함수
+export const getInsuranceByName = (name: string): Insurance | undefined => {
+  const entry = Object.entries(InsuranceInfo).find(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    ([_, value]) => value.name === name,
+  );
+  return entry ? (entry[0] as Insurance) : undefined;
+};
+
+export const getInsuranceByKey = (key: string): Insurance | undefined => {
+  const entry = Object.entries(InsuranceInfo).find(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    ([_, value]) => value.key === key,
+  );
+  return entry ? (entry[0] as Insurance) : undefined;
 };

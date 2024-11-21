@@ -674,9 +674,21 @@ export const DAYS = {
   ['일요일']: 'SUNDAY',
 } as const;
 
-export const INSURANCES = {
-  ['고용보험']: 'EMPLOYMENT_INSURANCE',
-  ['산재보험']: 'WORKERS_COMPENSATION_INSURANCE',
-  ['국민연금']: 'NATIONAL_PENSION',
-  ['건강보험']: 'HEALTH_INSURANCE',
-};
+export const InsuranceInfo = {
+  [Insurance.EMPLOYMENT_INSURANCE]: {
+    name: '고용보험',
+    key: 'EMPLOYMENT_INSURANCE',
+  },
+  [Insurance.WORKERS_COMPENSATION_INSURANCE]: {
+    name: '산재보험',
+    key: 'WORKERS_COMPENSATION_INSURANCE',
+  },
+  [Insurance.NATIONAL_PENSION]: {
+    name: '국민연금',
+    key: 'NATIONAL_PENSION',
+  },
+  [Insurance.HEALTH_INSURANCE]: {
+    name: '건강보험',
+    key: 'HEALTH_INSURANCE',
+  },
+} as const;
