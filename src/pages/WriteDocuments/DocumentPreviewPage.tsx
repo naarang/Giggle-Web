@@ -83,7 +83,9 @@ const DocumentPreview = () => {
       <BaseHeader
         hasBackButton={true}
         hasMenuButton={true}
-        title="Fill in document"
+        title={account_type === 'OWNER'
+          ? `문서 미리보기`
+          : `Document Preview`}
         onClickBackButton={() =>
           navigate(
             account_type === 'OWNER'
