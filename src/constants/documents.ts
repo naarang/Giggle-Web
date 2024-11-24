@@ -208,6 +208,14 @@ export const LaborContractEmployerInfoNameMap = {
     name: 'Company name',
     key: 'company_name',
   },
+  [LaborContractEmployerInfoProperty.COMPANY_REGISTRATION_NUMBER]: {
+    name: 'Company Registration Number',
+    key: 'company_registration_number',
+  },
+  [LaborContractEmployerInfoProperty.PHONE_NUMBER]: {
+    name: 'Company Phone Number',
+    key: 'phone_number',
+  },
   [LaborContractEmployerInfoProperty.NAME]: {
     name: 'Representative name',
     key: 'name',

@@ -210,7 +210,9 @@ export type LaborContractEmployerInfo = {
 // 근로계약서 고용주 정보 속성명 enum
 export enum LaborContractEmployerInfoProperty {
   COMPANY_NAME = 'company_name',
+  COMPANY_REGISTRATION_NUMBER = 'company_registration_number',
   NAME = 'name',
+  PHONE_NUMBER = 'phone_number',
   START_DATE = 'start_date', // yyyy-MM-dd format
   END_DATE = 'end_date', // yyyy-MM-dd format
   ADDRESS = 'address',
