@@ -54,14 +54,14 @@ const ApplicationResultPage = () => {
           Contract Feedback
         </h3>
         <textarea
-          className="px-[1rem] py-[0.75rem] border border-[#E2E5EB] rounded-[0.75rem] body-2"
+          className="px-[1rem] py-[0.75rem] border border-[#E2E5EB] rounded-[0.75rem] body-2 focus:outline-none"
           placeholder="Write a contract review"
           maxLength={200}
           value={feedback}
           onChange={(e) => setFeedback(e.target.value)}
         />
       </section>
-      <footer className="fixed bottom-0 left-0 pt-[0.75rem] px-[1.5rem] pb-[3.125rem] bg-white">
+      <footer className="fixed w-full bottom-0 left-0 pt-[0.75rem] px-[1.5rem] pb-[3.125rem] bg-white">
         <Button
           type={buttonTypeKeys.LARGE}
           bgColor={'bg-[#FEF387]'}
