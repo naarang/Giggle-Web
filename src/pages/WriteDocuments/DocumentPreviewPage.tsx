@@ -18,11 +18,13 @@ import EmployeeInfoSection from '@/components/Document/write/EmployeeInfoSection
 import InfoAlert from '@/components/Document/write/InfoAlert';
 import IntegratedApplicationPreview from '@/components/Document/write/IntegratedApplicationPreview';
 import { useCurrentDocumentIdStore } from '@/store/url';
+import { useUserStore } from '@/store/user';
 
 const DocumentPreview = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { currentDocumentId } = useCurrentDocumentIdStore();
+  const { account_type } = useUserStore();
   const { type } = location.state || {};
   const [document, setDocument] = useState<
     PartTimePermitData | LaborContractDataResponse | IntegratedApplicationData
@@ -81,9 +83,15 @@ const DocumentPreview = () => {
       <BaseHeader
         hasBackButton={true}
         hasMenuButton={true}
-        title="Fill in document"
+        title={account_type === 'OWNER'
+          ? `문서 미리보기`
+          : `Document Preview`}
         onClickBackButton={() =>
-          navigate(`/application-documents/${currentDocumentId}`)
+          navigate(
+            account_type === 'OWNER'
+              ? `/employer/applicant/document-detail/${currentDocumentId}`
+              : `/application-documents/${currentDocumentId}`,
+          )
         }
       />
       <DocumentSubHeader type={type as DocumentType} />
