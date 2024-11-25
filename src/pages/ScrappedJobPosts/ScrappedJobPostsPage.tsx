@@ -31,7 +31,7 @@ const ScrappedJobPostsPage = () => {
   }, [data]);
   return (
     <>
-      {jobPostingData ? (
+      {jobPostingData && (
         <div>
           <BaseHeader
             hasBackButton={true}
@@ -45,8 +45,6 @@ const ScrappedJobPostsPage = () => {
             ))}
           </div>
         </div>
-      ) : (
-        <div>로딩 중</div>
       )}
     </>
   );

@@ -20,7 +20,7 @@ const ManageResumePage = () => {
 
   return (
     <>
-      {data ? (
+      {data && (
         <>
           <BaseHeader
             hasBackButton={true}
@@ -47,8 +47,6 @@ const ManageResumePage = () => {
             />
           </div>
         </>
-      ) : (
-        <div>로딩 중</div>
       )}
     </>
   );
