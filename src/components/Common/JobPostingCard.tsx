@@ -57,7 +57,7 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
           <div className="mb-[0.5rem] flex items-center gap-[0.625rem]">
             {jobPostingData?.icon_img_url ? (
               <div
-                className="w-[2rem] h-[2rem] rounded-[0.5rem] bg-cover"
+                className="w-[2rem] h-[2rem] min-w-[2rem] rounded-[0.5rem] bg-cover"
                 style={{
                   backgroundImage: `url(${jobPostingData.icon_img_url})`,
                 }}
@@ -90,7 +90,7 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-[0.5rem]">
+        <div className="flex items-center gap-[0.5rem] min-w-fit">
           <Tag
             value={
               jobPostingData.recruitment_dead_line === '상시모집'
