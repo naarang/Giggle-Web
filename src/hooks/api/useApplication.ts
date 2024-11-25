@@ -11,6 +11,7 @@ import {
   patchContactCoordinator,
   patchApplyHiKorea,
   patchHiKoreaResult,
+  patchWritingDocumentFinish,
 } from '@/api/application';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
@@ -95,6 +96,20 @@ export const usePatchInterviewFinish = () => {
     },
     onError: (error) => {
       console.error('인터뷰 완료하기 실패', error);
+    },
+  });
+};
+
+// 6.12 (유학생) 서류 작성 완료하기 훅
+export const usePatchWritingDocumentFinish = (id: number) => {
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: patchWritingDocumentFinish,
+    onSuccess: () => {
+      navigate(`/application/${id}`);
+    },
+    onError: (error) => {
+      console.error('서류 작성 완료하기 실패', error);
     },
   });
 };

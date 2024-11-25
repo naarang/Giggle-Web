@@ -2,6 +2,7 @@ import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import DocumentCardList from '@/components/Document/DocumentCardList';
+import { usePatchWritingDocumentFinish } from '@/hooks/api/useApplication';
 import { useGetDocumentsEmployee } from '@/hooks/api/useDocument';
 import { useCurrentPostIdEmployeeStore } from '@/store/url';
 import { DocumentsSummaryResponse } from '@/types/api/document';
@@ -11,6 +12,9 @@ const ApplicationDocumentsPage = () => {
   const navigate = useNavigate();
   const { currentPostId } = useCurrentPostIdEmployeeStore();
   const { data, isPending } = useGetDocumentsEmployee(Number(currentPostId));
+  const { mutate: submitDocuments } = usePatchWritingDocumentFinish(
+    Number(currentPostId),
+  );
   return (
     <div>
       <BaseHeader
@@ -25,13 +29,27 @@ const ApplicationDocumentsPage = () => {
             documents={data?.data as DocumentsSummaryResponse}
           />
           <BottomButtonPanel>
-            <Button
-              type="large"
-              bgColor="bg-[#F4F4F9]"
-              fontColor="text-[#bdbdbd]"
-              isBorder={false}
-              title="Next"
-            />
+            {data?.data.part_time_employment_permits?.status ===
+              'CONFIRMATION' &&
+            data?.data.standard_labor_contract?.status === 'CONFIRMATION' &&
+            data?.data.integrated_application?.hwp_url ? (
+              <Button
+                type="large"
+                bgColor={'bg-[#FEF387]'}
+                fontColor="text-[#1E1926]"
+                title="Next"
+                isBorder={false}
+                onClick={() => submitDocuments(Number(currentPostId))}
+              />
+            ) : (
+              <Button
+                type="large"
+                bgColor="bg-[#F4F4F9]"
+                fontColor="text-[#bdbdbd]"
+                isBorder={false}
+                title="Next"
+              />
+            )}
           </BottomButtonPanel>
         </>
       )}
