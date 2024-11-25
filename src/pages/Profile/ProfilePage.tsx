@@ -50,7 +50,7 @@ const ProfilePage = () => {
 
   return (
     <>
-      {data && data.success ? (
+      {data && data.success && (
         <>
           {/* 계정 삭제 modal */}
           {modalOpen && (
@@ -80,8 +80,6 @@ const ProfilePage = () => {
             <DeleteAccount onDeleteButton={handleDeleteButton} />
           </div>
         </>
-      ) : (
-        <div>로딩 중</div>
       )}
     </>
   );
