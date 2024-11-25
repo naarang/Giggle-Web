@@ -32,7 +32,7 @@ import { RESTYPE } from '../../types/api/common';
 // 8.1 (유학생) 서류 조회하기 훅
 export const useGetDocumentsEmployee = (id: number) => {
   return useQuery({
-    queryKey: ['application', id],
+    queryKey: ['application', 'documents', 'employee', id],
     queryFn: () => getDocumentsEmployee(id),
   });
 };
@@ -40,7 +40,7 @@ export const useGetDocumentsEmployee = (id: number) => {
 // 8.2 (고용주) 서류 조회하기 훅
 export const useGetDocumentsEmployer = (id: number) => {
   return useQuery({
-    queryKey: ['application', id],
+    queryKey: ['application', 'documents', 'employer', id],
     queryFn: () => getDocumentsEmployer(id),
   });
 };

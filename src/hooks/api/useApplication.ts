@@ -37,7 +37,7 @@ export const usePostApplyPost = () => {
 // 6.2 (유학생) 지원 상태 상세 조회하기 훅
 export const useGetApplicationDetail = (id: number, isEnabled: boolean) => {
   return useQuery({
-    queryKey: ['application', id],
+    queryKey: ['application', 'detail', id],
     queryFn: () => getApplicationDetail(id),
     enabled: isEnabled,
   });
@@ -70,7 +70,7 @@ export const useGetEmployerApplicationSummary = (
   isEnabled: boolean,
 ) => {
   return useQuery({
-    queryKey: ['application', id],
+    queryKey: ['application', 'information', id],
     queryFn: () => getEmployerApplicationSummary(id),
     enabled: isEnabled,
   });

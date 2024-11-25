@@ -62,7 +62,7 @@ const ApplicationDetailPage = () => {
             <ApplicationDetailInfo applicationData={data?.data} />
             <ApplicationDetailSteps step={findCurrentStep(data?.data?.step)} />
           </div>
-          {showCurrentStepButton(findCurrentStep(data?.data?.step))}{' '}
+          {showCurrentStepButton(findCurrentStep(data?.data?.step))}
         </>
       )}
     </>

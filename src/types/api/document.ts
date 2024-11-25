@@ -84,6 +84,7 @@ export enum LaborContractEmployeeInfoProperty {
 export enum EmployerInfoProperty {
   COMPANY_NAME = 'company_name',
   COMPANY_REGISTRATION_NUMBER = 'company_registration_number',
+  NAME = 'name',
   JOB_TYPE = 'job_type',
   PHONE_NUMBER = 'phone_number',
   SIGNATURE_BASE64 = 'signature_base64',

@@ -17,12 +17,12 @@ const LanguageStep = ({ onNext }: LanguageStepProps) => {
         {/* 언어 선택 작성 */}
         <div className="w-full">
           <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
-            Visa Status
+            Language
           </div>
           <Dropdown
             value={language}
-            placeholder="Select Visa Status"
-            options={languageList} // TODO: 비자 데이터 받으면 교체해야
+            placeholder="Select Language"
+            options={languageList}
             setValue={(value: string) => setLanguage(value)}
           />
         </div>
