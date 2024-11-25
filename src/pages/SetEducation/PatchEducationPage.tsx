@@ -78,7 +78,7 @@ const PatchEducationPage = () => {
 
   return (
     <>
-      {fetchData ? (
+      {fetchData && (
         <>
           <div className="mb-24">
             <BaseHeader
@@ -112,8 +112,6 @@ const PatchEducationPage = () => {
             />
           </div>
         </>
-      ) : (
-        <div>로딩 중</div>
       )}
     </>
   );

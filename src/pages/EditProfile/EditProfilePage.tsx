@@ -91,7 +91,7 @@ const EditProfilePage = () => {
 
   return (
     <>
-      {userProfile ? (
+      {userProfile && (
         <div className="w-full h-full">
           <BaseHeader
             hasBackButton={true}
@@ -265,8 +265,6 @@ const EditProfilePage = () => {
             />
           </div>
         </div>
-      ) : (
-        <div>로딩 중</div>
       )}
     </>
   );
