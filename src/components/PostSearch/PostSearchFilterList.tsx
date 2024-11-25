@@ -130,7 +130,7 @@ const PostSearchFilterList = () => {
         ))}
       </div>
       <button
-        className="absolute top-0 right-0 px-[0.5rem] py-[0.75rem]"
+        className="absolute top-0 right-0 px-2 pr-6 py-[0.75rem] bg-white"
         onClick={goToPostSearchFilterPage}
       >
         <FilterIcon />
