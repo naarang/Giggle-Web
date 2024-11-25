@@ -152,6 +152,12 @@ export const validateLaborContractEmployerInformation = (
     return false;
   }
 
+  // 주휴일 체크
+  if (!info.weekly_last_days || info.weekly_last_days.length === 0) {
+    console.log('주휴일');
+    return false;
+  }
+
   // 서명 체크
   if (!info.signature_base64 || info.signature_base64 === '') {
     console.log('서명');
