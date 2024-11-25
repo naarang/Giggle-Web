@@ -31,8 +31,8 @@ const WorkExperienceDetail = ({ data }: WorkExperienceDetailProps) => {
             </div>
             <p className="caption-1">
               {formatDate(work.start_date)} ~{' '}
-              {work.end_date ? `${formatDate(work.end_date)}• ` : '현재 • '}
-              {(work.duration / 30).toFixed(0)} months
+              {work.end_date ? `${formatDate(work.end_date)} • ` : '현재 • '}
+              {work.duration} months
             </p>
             <p className="body-3">{work.description}</p>
           </div>

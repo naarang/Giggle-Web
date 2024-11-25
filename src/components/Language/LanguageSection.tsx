@@ -22,7 +22,7 @@ const LanguageSection = () => {
 
   return (
     <>
-      {languageData ? (
+      {languageData && (
         <div className="px-6">
           <h1 className="head-2 text-[#1e1926 py-6">Language</h1>
           <div className="w-full flex justify-end gap-3 items-center pb-6 pr-2">
@@ -74,8 +74,6 @@ const LanguageSection = () => {
               ))}
           </div>
         </div>
-      ) : (
-        <div>로딩 중</div>
       )}
     </>
   );

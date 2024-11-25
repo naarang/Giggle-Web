@@ -66,7 +66,7 @@ const SearchSchools = ({
 
   return (
     <>
-      {schoolList ? (
+      {schoolList && (
         <div className="fixed top-0 w-screen h-screen bg-white z-50">
           <BaseHeader
             hasBackButton={true}
@@ -116,8 +116,6 @@ const SearchSchools = ({
             />
           </div>
         </div>
-      ) : (
-        <div>로딩 중</div>
       )}
     </>
   );
