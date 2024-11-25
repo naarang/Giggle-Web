@@ -4,7 +4,7 @@ import InputLayout from '@/components/WorkExperience/InputLayout';
 import {
   DAYS,
   initialLaborContractEmployerInfo,
-  INSURANCES,
+  InsuranceInfo,
 } from '@/constants/documents';
 import { useSearchAddress } from '@/hooks/api/useKaKaoMap';
 import {
@@ -112,10 +112,6 @@ const EmployerLaborContractForm = ({
 
   /* 정보 입력 시마다 유효성을 검사해 모든 값이 유효하면 버튼이 활성화 */
   useEffect(() => {
-    {
-      /* work_day_time_list 데이터가 안 들어가서 계속 유효성 실패 중 */
-    }
-    console.log(newDocumentData.work_day_time_list);
     setIsInvalid(
       !validateLaborContractEmployerInformation({
         ...newDocumentData,
@@ -608,40 +604,53 @@ const EmployerLaborContractForm = ({
           isEssential
         >
           <div className="w-full flex">
-            {Object.keys(INSURANCES).map((value, index) => (
-              <div
-                className="w-full relative flex items-center justify-start py-2 gap-2 text-left body-3 text-[#656565]"
-                key={`${value}_${index}`}
-              >
-                <div className="w-6 h-6 relative">
-                  <div
-                    className={`w-full h-full border border-[#f4f4f9] flex items-center justify-center ${newDocumentData.insurance.includes(value as Insurance) ? 'bg-[#1E1926]' : 'bg-white'}`}
-                    onClick={() => {
-                      const newInsurance = newDocumentData.insurance.includes(
-                        value as Insurance,
-                      )
-                        ? newDocumentData.insurance.filter(
-                            (insurance) => insurance !== value,
-                          )
-                        : [...newDocumentData.insurance, value];
+            {Object.entries(InsuranceInfo).map(
+              ([insuranceType, info], index) => (
+                <div
+                  className="w-full relative flex items-center justify-start py-2 gap-2 text-left body-3 text-[#656565]"
+                  key={`${insuranceType}_${index}`}
+                >
+                  <div className="w-6 h-6 relative">
+                    <div
+                      className={`w-full h-full border border-[#f4f4f9] flex items-center justify-center ${
+                        newDocumentData.insurance.includes(
+                          info.key as Insurance,
+                        )
+                          ? 'bg-[#1E1926]'
+                          : 'bg-white'
+                      }`}
+                      onClick={() => {
+                        const newInsurance = newDocumentData.insurance.includes(
+                          info.key as Insurance,
+                        )
+                          ? newDocumentData.insurance.filter(
+                              (insurance) => insurance !== info.key,
+                            )
+                          : [
+                              ...newDocumentData.insurance,
+                              info.key as Insurance,
+                            ];
 
-                      setNewDocumentData({
-                        ...newDocumentData,
-                        insurance: newInsurance as Insurance[],
-                      });
-                    }}
-                  >
-                    <CheckIcon />
+                        setNewDocumentData({
+                          ...newDocumentData,
+                          insurance: newInsurance,
+                        });
+                      }}
+                    >
+                      <CheckIcon />
+                    </div>
+                  </div>
+                  <div className="flex items-start justify-start">
+                    {info.name}
                   </div>
                 </div>
-                <div className="flex items-start justify-start">{value}</div>
-              </div>
-            ))}
+              ),
+            )}
           </div>
         </InputLayout>
         {/* 서명 입력 */}
         <InputLayout title="서명" isEssential>
-          <SignaturePad
+        <SignaturePad
             onSave={(signature: string) =>
               setNewDocumentData({
                 ...newDocumentData,
@@ -655,6 +664,7 @@ const EmployerLaborContractForm = ({
               })
             }
             isKorean
+            previewImg={newDocumentData.signature_base64}
           />
         </InputLayout>
       </div>

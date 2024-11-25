@@ -60,7 +60,9 @@ const EmployerInfoSection = ({
                 ].includes(key) && (
                   <div className="w-full self-stretch drop-shadow-[0_1px_2px_rgba(107,110,116,0.04)] rounded-xl flex items-center justify-start py-2.5 pr-3.5 pl-4">
                     <div className="w-full flex-1 relative">
-                      {propertyToString(String(value))}
+                      {propertyToString(String(value)) === 'Null'
+                        ? 'none'
+                        : propertyToString(String(value))}
                     </div>
                   </div>
                 )}
