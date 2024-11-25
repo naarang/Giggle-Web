@@ -85,7 +85,7 @@ const Input = ({
 
   return (
     <div
-      className={`w-full flex gap-2 items-center justify-between text-left body-2 border rounded-xl ${inputStyler(currentStatus)} bg-white py-[10px] pl-4 pr-[14px]`}
+      className={`w-full flex gap-2 whitespace-nowrap items-center justify-between text-left body-2 border rounded-xl ${inputStyler(currentStatus)} bg-white py-[10px] pl-4 pr-[14px]`}
     >
       {/* 접두사가 존재할 경우 표시합니다. */}
       {isPrefix && <div className="w-8 body-2 text-[#464646]">{prefix}</div>}

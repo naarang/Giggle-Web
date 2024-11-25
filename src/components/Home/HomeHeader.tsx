@@ -15,8 +15,6 @@ const HomeHeader = () => {
     return isRead;
   };
 
-  if (!data?.success) return <></>;
-
   return (
     <section className="w-full pt-[3.125rem] pb-[1rem] px-[1.5rem] bg-[#FEF387]">
       <p className="pb-[0.375rem] body-2 text-[#37383C9C]">
@@ -40,7 +38,7 @@ const HomeHeader = () => {
           >
             <AlarmIcon />
             {/* 알람이 있을 때만 표시하기 */}
-            {isReadAlarms(data?.data?.notification_list) ? (
+            {data?.success && isReadAlarms(data?.data?.notification_list) ? (
               <div className="absolute top-[0.3rem] right-[0.4rem] w-[0.438rem] h-[0.438rem] rounded-full bg-[#FF6F61]"></div>
             ) : (
               <></>

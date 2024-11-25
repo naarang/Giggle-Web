@@ -11,7 +11,7 @@ import {
   LaborContractEmployeeInfoProperty,
 } from '@/types/api/document';
 import { Address } from '@/types/api/users';
-import { getDetailAddress, getImageType } from '@/utils/document';
+import { getDetailAddress } from '@/utils/document';
 import { renderMap } from '@/utils/map';
 
 const EmployeeInfoSectionKOR = ({
@@ -70,8 +70,8 @@ const EmployeeInfoSectionKOR = ({
                   <div className="border border-gray-200 rounded-xl">
                     {value !== '' && (
                       <img
-                        src={`data:image/${getImageType(value)};base64,${value}`}
-                        className="w-full h-full object-cover"
+                        src={`data:image/svg+xml;base64,${value}`}
+                        className="w-full h-full object-cover bg-white rounded-xl"
                         alt="signature preview"
                       />
                     )}

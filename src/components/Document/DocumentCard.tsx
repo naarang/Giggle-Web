@@ -8,8 +8,14 @@ import DownloadIcon from '@/assets/icons/DownloadIcon.svg?react';
 import CheckIconGreen from '@/assets/icons/CheckIconGreen.svg?react';
 import WriteIcon from '@/assets/icons/WriteIcon.svg?react';
 import { useNavigate } from 'react-router-dom';
-import { usePatchDocumentsStatusConfirmation, usePatchStatusSubmission } from '@/hooks/api/useDocument';
-import { useCurrentDocumentIdStore, useCurrentPostIdEmployeeStore } from '@/store/url';
+import {
+  usePatchDocumentsStatusConfirmation,
+  usePatchStatusSubmission,
+} from '@/hooks/api/useDocument';
+import {
+  useCurrentDocumentIdStore,
+  useCurrentPostIdEmployeeStore,
+} from '@/store/url';
 
 const enum DocumentStatus {
   TEMPORARY_SAVE = 'TEMPORARY_SAVE',
@@ -42,8 +48,8 @@ const TemporarySaveCard = ({
       <div className="self-stretch rounded-t-[1.125rem] bg-[#fef387] h-7 flex items-center justify-between px-4 pl-6 py-2 relative">
         <div className="flex items-center justify-start relative ">
           Check my Work Permit Form
+          <div className="w-1.5 absolute !m-0 top-[-0.3rem] right-[-0.5rem] rounded-full bg-[#ff6f61] h-1.5 z-[1]" />
         </div>
-        <div className="w-1.5 absolute !m-0 top-[0.4rem] left-[8rem] rounded-full bg-[#ff6f61] h-1.5 z-[1]" />
         <div className="w-[0.75rem] relative h-[0.75rem] z-[2]">
           <div
             className="absolute w-full h-full top-0 righ-0 bottom-0 left-0"
@@ -114,13 +120,12 @@ const BeforeConfirmationCard = ({
       <div className="self-stretch rounded-t-[1.125rem] bg-[#fef387] h-7 flex items-center justify-between px-4 pl-6 py-2 relative">
         <div className="flex items-center justify-start relative ">
           Check my Work Permit Form
+          <div className="w-1.5 absolute !m-0 top-[-0.3rem] right-[-0.5rem] rounded-full bg-[#ff6f61] h-1.5 z-[1]" />
         </div>
-        <div className="w-1.5 absolute !m-0 top-[0.4rem] left-[8rem] rounded-full bg-[#ff6f61] h-1.5 z-[1]" />
-        <div className="w-[0.75rem] relative h-[0.75rem] z-[2]">
-          <div
-            className="absolute w-full h-full top-0 righ-0 bottom-0 left-0"
-            onClick={onPreview}
-          />
+        <div
+          className="pl-1 w-[1.25rem] relative h-[1.25rem] z-[2]"
+          onClick={onPreview}
+        >
           <ArrowrightIcon />
         </div>
       </div>
@@ -271,13 +276,12 @@ const ConfirmationCard = ({
       <div className="self-stretch rounded-t-[1.125rem] bg-[#fef387] h-7 flex items-center justify-between px-4 pl-6 py-2 relative">
         <div className="flex items-center justify-start relative ">
           Check my Work Permit Form
+          <div className="w-1.5 absolute !m-0 top-[-0.3rem] right-[-0.5rem] rounded-full bg-[#ff6f61] h-1.5 z-[1]" />
         </div>
-        <div className="w-1.5 absolute !m-0 top-[0.4rem] left-[8rem] rounded-full bg-[#ff6f61] h-1.5 z-[1]" />
-        <div className="w-[0.75rem] relative h-[0.75rem] z-[2]">
-          <div
-            className="absolute w-full h-full top-0 righ-0 bottom-0 left-0"
-            onClick={onPreview}
-          />
+        <div
+          className="pl-1 w-[1.25rem] relative h-[1.25rem] z-[2]"
+          onClick={onPreview}
+        >
           <ArrowrightIcon />
         </div>
       </div>
@@ -350,8 +354,8 @@ const DocumentCardDispenser = ({
   const { mutate: confirmDocument } = usePatchDocumentsStatusConfirmation();
   const navigate = useNavigate();
   const { updateCurrentDocumentId } = useCurrentDocumentIdStore();
-  const { currentPostId }= useCurrentPostIdEmployeeStore();
-  console.log(`current: ${currentPostId}`) // 지원자 조회 - 지원자 상세 - 서류 상세 간 뒤로가기 문제 관련
+  const { currentPostId } = useCurrentPostIdEmployeeStore();
+  console.log(`current: ${currentPostId}`); // 지원자 조회 - 지원자 상세 - 서류 상세 간 뒤로가기 문제 관련
   const handleDownload = (url: string) => {
     window.open(url, '_blank');
   };

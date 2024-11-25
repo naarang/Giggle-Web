@@ -137,7 +137,7 @@ export const usePutLaborContractEmployer = (id: number) => {
   return useMutation({
     mutationFn: putLaborContractEmployer,
     onSuccess: () => {
-      navigate(`/employer/applicant/${id}/document-detail`);
+      navigate(`/employer/applicant/document-detail/${id}`);
     },
     onError: () =>
       navigate('/write-documents', {

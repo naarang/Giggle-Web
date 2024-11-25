@@ -20,11 +20,7 @@ type DocumentCardProps = {
   onNext?: () => void;
 };
 
-const NullCard = ({
-  title,
-}: {
-  title: string;
-}) => {
+const NullCard = ({ title }: { title: string }) => {
   return (
     <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-center justify-center gap-2 caption-2 text-left text-[#1e1926]">
       <div className="self-stretch rounded-t-[1.125rem] bg-[#1e1926] h-7 flex items-center justify-between px-4 pl-6 py-2 relative">
@@ -67,20 +63,24 @@ const TemporarySaveCard = ({
   title,
   onNext,
   onEdit,
+  onPreview,
 }: {
   title: string;
   onNext: () => void;
   onEdit: () => void;
+  onPreview: () => void;
 }) => {
   return (
     <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-center justify-center gap-2 caption-2 text-left text-[#1e1926]">
       <div className="self-stretch rounded-t-[1.125rem] bg-[#fef387] h-7 flex items-center justify-between px-4 pl-6 py-2 relative">
         <div className="flex items-center justify-start relative ">
-          클릭해서 서류 내용을 확인해보세요
+          클릭해서 서류 내용을 확인해보세요.
+          <div className="w-1.5 absolute !m-0 top-[-0.3rem] right-[-0.5rem] rounded-full bg-[#ff6f61] h-1.5 z-[1]" />
         </div>
-        <div className="w-1.5 absolute !m-0 top-[0.4rem] left-[8rem] rounded-full bg-[#ff6f61] h-1.5 z-[1]" />
-        <div className="w-[0.75rem] relative h-[0.75rem] z-[2]">
-          <div className="absolute w-full h-full top-0 righ-0 bottom-0 left-0" />
+        <div
+          className="pl-1 w-[1.25rem] relative h-[1.25rem] z-[2]"
+          onClick={onPreview}
+        >
           <ArrowrightIcon />
         </div>
       </div>
@@ -129,7 +129,8 @@ const TemporarySaveCard = ({
   );
 };
 
-{/* 
+{
+  /* 
   const BeforeConfirmationCard = ({ title }: { title: string }) => {
   return (
     <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-center justify-center gap-2 caption-2 text-left text-[#1e1926]">
@@ -168,7 +169,8 @@ const TemporarySaveCard = ({
     </div>
   );
 };
-  */}
+  */
+}
 
 const SubmittedCard = ({ title }: { title: string }) => {
   return (
@@ -213,22 +215,26 @@ const RewritingCard = ({
   title,
   onNext,
   onEdit,
+  onPreview,
   reason,
 }: {
   title: string;
   onNext: () => void;
   onEdit: () => void;
+  onPreview: () => void;
   reason: string;
 }) => {
   return (
     <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-center justify-center gap-2 caption-2 text-left text-[#1e1926]">
       <div className="self-stretch rounded-t-[1.125rem] bg-[#fef387] h-7 flex items-center justify-between px-4 pl-6 py-2 relative">
         <div className="flex items-center justify-start relative ">
-          Check my Work Permit Form
+          클릭해서 서류 내용을 확인해보세요.
+          <div className="w-1.5 absolute !m-0 top-[-0.3rem] right-[-0.5rem] rounded-full bg-[#ff6f61] h-1.5 z-[1]" />
         </div>
-        <div className="w-1.5 absolute !m-0 top-[0.4rem] left-[8rem] rounded-full bg-[#ff6f61] h-1.5 z-[1]" />
-        <div className="w-[0.75rem] relative h-[0.75rem] z-[2]">
-          <div className="absolute w-full h-full top-0 righ-0 bottom-0 left-0" />
+        <div
+          className="pl-1 w-[1.25rem] relative h-[1.25rem] z-[2]"
+          onClick={onPreview}
+        >
           <ArrowrightIcon />
         </div>
       </div>
@@ -282,6 +288,7 @@ const ConfirmationCard = ({
 }: {
   title: string;
   document: EmployDocumentInfo;
+  
   onDownload: (url: string) => void;
 }) => {
   return (
@@ -289,10 +296,6 @@ const ConfirmationCard = ({
       <div className="self-stretch rounded-t-[1.125rem] bg-[#1e1926] h-7 flex items-center justify-between px-4 pl-6 py-2 relative">
         <div className="flex items-center justify-start relative text-[#fef387]">
           서류 작성이 완료되었습니다.
-        </div>
-        <div className="w-[0.75rem] relative h-[0.75rem] z-[2]">
-          <div className="absolute w-full h-full top-0 righ-0 bottom-0 left-0" />
-          <ArrowrightIcon />
         </div>
       </div>
       <div className="self-stretch flex flex-col items-start px-4 gap-4 body-1">
@@ -360,7 +363,7 @@ const DocumentCardDispenserEmployer = ({
   const handleDownload = (url: string) => {
     window.open(url, '_blank');
   };
-  const {updateCurrentDocumentId} = useCurrentDocumentIdStore();
+  const { updateCurrentDocumentId } = useCurrentDocumentIdStore();
   const { mutate: submitDocument } = usePatchStatusSubmissionEmployer();
   if (!document.status) return <NullCard title={title} />;
   switch (document.status) {
@@ -375,6 +378,14 @@ const DocumentCardDispenserEmployer = ({
               state: {
                 type: type,
                 isEdit: true,
+              },
+            });
+          }}
+          onPreview={() => {
+            updateCurrentDocumentId(document.id);
+            navigate(`/document-preview/${document.id}`, {
+              state: {
+                type: type,
               },
             });
           }}
@@ -395,6 +406,14 @@ const DocumentCardDispenserEmployer = ({
                 state: {
                   type: type,
                   isEdit: true,
+                },
+              });
+            }}
+            onPreview={() => {
+              updateCurrentDocumentId(document.id);
+              navigate(`/document-preview/${document.id}`, {
+                state: {
+                  type: type,
                 },
               });
             }}
