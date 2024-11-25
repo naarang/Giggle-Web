@@ -71,6 +71,14 @@ export const patchInterviewFinish = async (id: number) => {
   return response.data;
 };
 
+// 6.12 (유학생) 서류 작성 완료하기
+export const patchWritingDocumentFinish = async (id: number) => {
+  const response = await api.patch(
+    `/users/user-owner-job-postings/${id}/step-filling-out-documents`,
+  );
+  return response.data;
+};
+
 // 6.13 (유학생) 유학생 담당자 검토 완료
 export const patchContactCoordinator = async (id: number) => {
   const response = await api.patch(
