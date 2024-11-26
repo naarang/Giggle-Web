@@ -12,14 +12,14 @@ import { InsuranceInfo } from '@/constants/documents';
 // 객체의 모든 프로퍼티가 공백이 아닌지 확인하는 함수
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const isNotEmpty = (obj: Record<string, any>): boolean => {
-  return Object.values(obj).every((value) => {
+  return Object.entries(obj).every(([key, value]) => {
     // null 또는 undefined 체크
     if (value === null || value === undefined) {
       return false;
     }
 
-    // 문자열인 경우 trim()으로 공백 제거 후 길이 확인
-    if (typeof value === 'string') {
+    // 문자열이면서 phone_number가 아닌 경우 trim()으로 공백 제거 후 길이 확인
+    if (typeof value === 'string' && key !== 'phone_number') {
       return value.trim().length > 0;
     }
 
