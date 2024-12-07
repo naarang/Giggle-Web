@@ -1,10 +1,14 @@
-import { FILTER_CATEGORY, POST_SEARCH_MENU } from '@/constants/postSearch';
+import {
+  FILTER_CATEGORY,
+  initialFilterList,
+  POST_SEARCH_MENU,
+} from '@/constants/postSearch';
 import { PostSearchFilterItemType } from '@/types/PostSearchFilter/PostSearchFilterItem';
 
 export const formatSearchFilter = (
-  searchText: string,
-  sortType: 'POPULAR' | 'RECENT' | POST_SEARCH_MENU,
-  filterList: PostSearchFilterItemType,
+  searchText: string = '',
+  sortType: 'POPULAR' | 'RECENT' | POST_SEARCH_MENU = 'POPULAR',
+  filterList: PostSearchFilterItemType = initialFilterList,
 ) => {
   const newSearchFilter = {
     size: 5,
