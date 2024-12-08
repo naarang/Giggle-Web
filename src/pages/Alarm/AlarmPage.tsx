@@ -49,7 +49,7 @@ const AlarmPage = () => {
         title="Notification"
       />
       <section className="flex flex-col gap-[1rem] w-full p-[1rem] pb-[5rem]">
-        {!isFetchingNextPage && alarmList?.length > 0 ? (
+        {alarmList?.length > 0 ? (
           alarmList.map((data) => (
             <AlarmCard key={data.id} alarmData={data} readAlarm={readAlarm} />
           ))
