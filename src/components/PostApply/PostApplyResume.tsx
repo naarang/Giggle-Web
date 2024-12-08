@@ -23,7 +23,9 @@ const PostApplyResume = () => {
   const { data: userData } = useGetResume(account_type === UserType.USER);
   const { data: ownerData } = useGetApplicantResume(
     Number(currentApplicantId),
-    !isNaN(Number(currentApplicantId)) && account_type === UserType.OWNER ? true : false,
+    !isNaN(Number(currentApplicantId)) && account_type === UserType.OWNER
+      ? true
+      : false,
   );
 
   const data = account_type === UserType.OWNER ? ownerData : userData;
@@ -151,7 +153,7 @@ const PostApplyResume = () => {
               Social Intergration
             </h5>
             <div className="px-[0.5rem] py-[0.25rem] rounded-[0.188rem] border-[0.031rem] border-[#7872ED] text-[#7872ED] bg-[#2801E81F] caption-2">
-              Level {data?.data?.languages.social_integration}
+              LEVEL {data?.data?.languages.social_integration}
             </div>
           </div>
           <div className="flex justify-between items-center w-full py-[1rem] px-[0.75rem] rounded-[0.75rem] bg-[#F4F4F980]">
@@ -159,7 +161,7 @@ const PostApplyResume = () => {
               Sejong Institute
             </h5>
             <div className="px-[0.5rem] py-[0.25rem] rounded-[0.188rem] border-[0.031rem] border-[#7872ED] text-[#7872ED] bg-[#2801E81F] caption-2">
-              Level {data?.data?.languages.sejong_institute}
+              LEVEL {data?.data?.languages.sejong_institute}
             </div>
           </div>
           {data?.data?.languages.etc?.map((data: LanguageType) => (
