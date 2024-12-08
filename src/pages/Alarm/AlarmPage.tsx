@@ -16,7 +16,6 @@ const AlarmPage = () => {
   const navigate = useNavigate();
 
   const [alarmList, setAlarmList] = useState<AlarmItemType[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const readAlarm = async (id: number) => {
     const result = await mutateAsync(id);
@@ -30,8 +29,7 @@ const AlarmPage = () => {
 
   const targetRef = useInfiniteScroll(() => {
     if (hasNextPage && !isFetchingNextPage) {
-      setIsLoading(true);
-      fetchNextPage().finally(() => setIsLoading(false));
+      fetchNextPage();
     }
   }, !!hasNextPage);
 
@@ -51,10 +49,14 @@ const AlarmPage = () => {
         title="Notification"
       />
       <section className="flex flex-col gap-[1rem] w-full p-[1rem] pb-[5rem]">
-        {alarmList?.map((data) => (
-          <AlarmCard key={data.id} alarmData={data} readAlarm={readAlarm} />
-        ))}
-        {isLoading && <LoadingItem />}
+        {!isFetchingNextPage && alarmList?.length > 0 ? (
+          alarmList.map((data) => (
+            <AlarmCard key={data.id} alarmData={data} readAlarm={readAlarm} />
+          ))
+        ) : (
+          <div className="mt-8 w-full text-center body-2">알람이 없습니다.</div>
+        )}
+        {isFetchingNextPage && <LoadingItem />}
       </section>
       <div ref={targetRef} className="h-1"></div>
     </>
