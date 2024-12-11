@@ -15,9 +15,11 @@ export const formatSearchFilter = (
     search: searchText ?? null,
     sorting: sortType,
     region_1depth: filterList[FILTER_CATEGORY.REGION_1DEPTH].join(','),
-    region_2depth: filterList[FILTER_CATEGORY.REGION_2DEPTH].join(','),
+    region_2depth: filterList[FILTER_CATEGORY.REGION_2DEPTH]
+      .map((value) => (value === '전체' ? 'none' : value))
+      .join(','),
     region_3depth: filterList[FILTER_CATEGORY.REGION_3DEPTH]
-      .map((value) => (value === '' ? 'none' : value))
+      .map((value) => (value === '' || value === '전체' ? 'none' : value))
       .join(','),
     industry: filterList[FILTER_CATEGORY.INDUSTRY]
       .join(',')
