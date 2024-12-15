@@ -84,7 +84,7 @@ const HomeJobPostingList = () => {
 
   return (
     <section className="w-full bg-[#FEF387]">
-      <nav className="flex gap-[0.5rem] w-full py-[1rem] px-[2rem] rounded-t-[1rem] bg-white">
+      <nav className="flex justify-evenly w-full py-4 px-2 rounded-t-2xl bg-white sticky top-0">
         <button onClick={() => scrollToSelectedMenu(POST_SEARCH_MENU.TRENDING)}>
           <Tag
             value={

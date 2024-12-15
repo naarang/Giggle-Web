@@ -81,7 +81,7 @@ const PostSearchFilterArea = ({
 
     const isValidRegionData = REGION_DATA[region1Depth];
     if (isValidRegionData && isValidRegionData[region]) {
-      setRegion3DepthData(isValidRegionData[region]);
+      setRegion3DepthData(['전체', ...isValidRegionData[region]]);
     } else {
       setRegion3DepthData([]);
     }

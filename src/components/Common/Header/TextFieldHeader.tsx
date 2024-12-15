@@ -38,7 +38,7 @@ const TextFieldHeader = ({
           placeholder={placeholder}
         />
         {value && (
-          <button onClick={onClickDeleteButton}>
+          <button onClick={onClickDeleteButton} className="ml-2">
             <CircleDeleteIcon />
           </button>
         )}

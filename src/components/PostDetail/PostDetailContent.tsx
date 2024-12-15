@@ -125,8 +125,6 @@ const PostDetailContent = ({ postDetailData }: PostDetailContentProps) => {
         <div ref={(e) => (scrollRef.current[1] = e)}>
           <div className="flex flex-col gap-[0.25rem] px-[0.5rem] pb-[0.5rem]">
             <h3 className="text-[#1E1926] head-3">Workplace Information</h3>
-            <p className="text-[#656565] button-2">Recruitment Period</p>
-            <p className="text-[#656565] caption-1">Open recruitment</p>
           </div>
           <Map
             center={{
@@ -184,7 +182,10 @@ const PostDetailContent = ({ postDetailData }: PostDetailContentProps) => {
                 {postDetailData.working_conditions.work_day_times
                   .filter(
                     (value) =>
-                      !(value.work_start_time === "시간" && value.work_end_time === "무관")
+                      !(
+                        value.work_start_time === '시간' &&
+                        value.work_end_time === '무관'
+                      ),
                   )
                   .map(
                     (value) =>
