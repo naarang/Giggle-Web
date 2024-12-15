@@ -33,7 +33,6 @@ const EmployerApplicationList = ({
   );
 
   const [applicantData, setApplicantData] = useState<ApplicantItemType[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useGetApplicantList(
@@ -55,8 +54,7 @@ const EmployerApplicationList = ({
 
   const targetRef = useInfiniteScroll(() => {
     if (hasNextPage && !isFetchingNextPage) {
-      setIsLoading(true);
-      fetchNextPage().finally(() => setIsLoading(false));
+      fetchNextPage();
     }
   }, !!hasNextPage);
 
@@ -81,10 +79,14 @@ const EmployerApplicationList = ({
           />
         </div>
       </div>
-      {applicantData?.map((data: ApplicantItemType) => (
-        <EmployerApplicationCard key={data.id} applicantData={data} />
-      ))}
-      {isLoading && <LoadingItem />}
+      {applicantData?.length > 0 ? (
+        applicantData.map((data: ApplicantItemType) => (
+          <EmployerApplicationCard key={data.id} applicantData={data} />
+        ))
+      ) : (
+        <div className="mt-8 w-full text-center body-2">지원자가 없습니다.</div>
+      )}
+      {isFetchingNextPage && <LoadingItem />}
       <div ref={targetRef} className="h-1"></div>
     </section>
   );

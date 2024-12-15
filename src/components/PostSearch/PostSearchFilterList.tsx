@@ -83,7 +83,7 @@ const PostSearchFilterList = () => {
 
       const regionIndex = findFilterIndex(region1, region2, region3);
 
-      if (regionIndex !== -1) return;
+      if (regionIndex === -1) return;
 
       const newFilterList = {
         ...filterList,
@@ -101,20 +101,20 @@ const PostSearchFilterList = () => {
         ),
       };
       updateFilterList(newFilterList);
+    } else {
+      const newFilterList = {
+        ...filterList,
+        [tag.category]: filterList[tag.category as FILTER_CATEGORY].filter(
+          (value) => value !== tag.value,
+        ),
+      };
+      updateFilterList(newFilterList);
     }
-
-    const newFilterList = {
-      ...filterList,
-      [tag.category]: filterList[tag.category as FILTER_CATEGORY].filter(
-        (value) => value !== tag.value,
-      ),
-    };
-    updateFilterList(newFilterList);
   };
 
   return (
-    <section className="relative w-full pt-[0.75rem] pb-[0.5rem] pr-[2.5rem]">
-      <div className="w-full min-h-[1.5rem] pl-[1.5rem] flex items-center gap-[0.5rem] overflow-x-scroll whitespace-nowrap no-scrollbar">
+    <section className="relative w-full pt-3 pb-2 pr-10">
+      <div className="w-full min-h-6 pr-6 pl-6 flex items-center gap-2 overflow-x-scroll whitespace-nowrap no-scrollbar">
         {formatFilterListToTag().map((value, index) => (
           <Tag
             key={`${index}_${value.category}`}
@@ -130,7 +130,7 @@ const PostSearchFilterList = () => {
         ))}
       </div>
       <button
-        className="absolute top-0 right-0 px-2 pr-6 py-[0.75rem] bg-white"
+        className="absolute top-0 right-0 px-2 pr-6 py-3 bg-white"
         onClick={goToPostSearchFilterPage}
       >
         <FilterIcon />

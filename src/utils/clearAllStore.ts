@@ -1,4 +1,3 @@
-import { usePostSearchStore } from '@/store/postSearch';
 import { useEmailTryCountStore } from '@/store/signup';
 import {
   useCurrentApplicantIdStore,
@@ -11,7 +10,6 @@ import { useUserStore } from '@/store/user';
 // store 전역 변수 초기화
 export const clearAllStore = () => {
   useUserStore.persist.clearStorage();
-  usePostSearchStore.persist.clearStorage();
   useEmailTryCountStore.persist.clearStorage();
   useCurrentPostIdStore.persist.clearStorage();
   useCurrentApplicantIdStore.persist.clearStorage();

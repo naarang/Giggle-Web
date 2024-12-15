@@ -33,7 +33,7 @@ const HomeRecommendPostCard = ({
       <MessageIcon />
       <div>
         <p className="pb-[0.5rem] caption-1 text-[#656565] break-words whitespace-normal">
-          he recommendation notice for {name.replace(/-/g, ' ')} has arrived !
+          The recommendation notice for {name.replace(/-/g, ' ')} has arrived !
         </p>
         <div className="button-2 text-[#1E1926] break-words whitespace-normal">
           Job Title {')'} {jobPostingData.title}

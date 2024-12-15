@@ -22,9 +22,8 @@ const PostSearchPage = () => {
   const { account_type } = useUserStore();
   const { searchText, updateSearchText, filterList, sortType, updateSortType } =
     usePostSearchStore();
-  const [searchParams, setSearchParams] = useState<GetPostListReqType>(
-    formatSearchFilter(searchText, sortType, filterList),
-  );
+  const [searchParams, setSearchParams] =
+    useState<GetPostListReqType>(formatSearchFilter());
 
   const [postData, setPostData] = useState<JobPostingItemType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);

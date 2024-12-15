@@ -1,19 +1,25 @@
-import { FILTER_CATEGORY, POST_SEARCH_MENU } from '@/constants/postSearch';
+import {
+  FILTER_CATEGORY,
+  initialFilterList,
+  POST_SEARCH_MENU,
+} from '@/constants/postSearch';
 import { PostSearchFilterItemType } from '@/types/PostSearchFilter/PostSearchFilterItem';
 
 export const formatSearchFilter = (
-  searchText: string,
-  sortType: 'POPULAR' | 'RECENT' | POST_SEARCH_MENU,
-  filterList: PostSearchFilterItemType,
+  searchText: string = '',
+  sortType: 'POPULAR' | 'RECENT' | POST_SEARCH_MENU = 'POPULAR',
+  filterList: PostSearchFilterItemType = initialFilterList,
 ) => {
   const newSearchFilter = {
     size: 5,
     search: searchText ?? null,
     sorting: sortType,
     region_1depth: filterList[FILTER_CATEGORY.REGION_1DEPTH].join(','),
-    region_2depth: filterList[FILTER_CATEGORY.REGION_2DEPTH].join(','),
+    region_2depth: filterList[FILTER_CATEGORY.REGION_2DEPTH]
+      .map((value) => (value === '전체' ? 'none' : value))
+      .join(','),
     region_3depth: filterList[FILTER_CATEGORY.REGION_3DEPTH]
-      .map((value) => (value === '' ? 'none' : value))
+      .map((value) => (value === '' || value === '전체' ? 'none' : value))
       .join(','),
     industry: filterList[FILTER_CATEGORY.INDUSTRY]
       .join(',')

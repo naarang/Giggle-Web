@@ -17,12 +17,21 @@ const HomeApplicationCard = ({ applicationData }: HomeApplicationCardProps) => {
   };
 
   return (
-    <article className="flex flex-col gap-[0.5rem] px-[1.25rem] pt-[0.75rem] pb-[1.25rem] min-w-[17.5rem] bg-white rounded-[1rem] shadow-cardShadow">
-      <div className="w-fit px-[0.438rem] py-[0.125rem] caption-2 bg-[#1E1926] rounded-[0.188rem] text-[#F4F4F9]">
+    <article className="flex flex-col gap-2 px-5 pt-3 pb-5 min-w-fit bg-white rounded-2xl shadow-cardShadow">
+      <div className="w-fit px-[0.438rem] py-[0.125rem] caption-2 bg-[#1E1926] rounded-sm text-[#F4F4F9]">
         Under the Review
       </div>
-      <div className="w-full flex gap-[1rem] items-center">
-        <div className='w-[2rem] h-[2rem] rounded-[0.5rem] bg-cover bg-[url("/src/assets/images/JobIconExample.jpeg")]'></div>
+      <div className="w-full flex gap-4 items-center">
+        {applicationData?.icon_img_url ? (
+          <div
+            className="w-8 min-w-8 h-8 rounded-lg bg-cover bg-[#F4F4F9]"
+            style={{
+              backgroundImage: `url(${applicationData.icon_img_url})`,
+            }}
+          ></div>
+        ) : (
+          <div className="w-8 min-w-8 h-8 rounded-lg bg-[#F4F4F9]"></div>
+        )}
         <div className="flex-1">
           <h5 className="pb-[0.125rem] button-2 text-[#171719]">
             {applicationData.title}
