@@ -23,11 +23,7 @@ import SignaturePad from '@/components/Document/write/SignaturePad';
 import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
 import { usePostIntegratedApplicants } from '@/hooks/api/useDocument';
-import {
-  formatPhoneNumber,
-  isValidPhoneNumber,
-  parsePhoneNumber,
-} from '@/utils/information';
+import { formatPhoneNumber, parsePhoneNumber } from '@/utils/information';
 import { useCurrentPostIdEmployeeStore } from '@/store/url';
 
 type IntegratedApplicationFormProps = {
@@ -56,6 +52,11 @@ const IntegratedApplicationWriteForm = ({
     end: '',
   });
   const [schoolPhoneNum, setSchoolPhoneNum] = useState({
+    start: '',
+    middle: '',
+    end: '',
+  });
+  const [workPlacePhoneNum, setWorkPlacePhoneNum] = useState({
     start: '',
     middle: '',
     end: '',
@@ -112,12 +113,19 @@ const IntegratedApplicationWriteForm = ({
       !validateIntegratedApplication({
         ...newDocumentData,
         birth: newDocumentData.birth.replace(/\//g, '-'),
-      }) &&
-        isValidPhoneNumber(phoneNum) &&
-        isValidPhoneNumber(cellPhoneNum) &&
-        isValidPhoneNumber(schoolPhoneNum),
+        cell_phone_number: formatPhoneNumber(cellPhoneNum),
+        tele_phone_number: formatPhoneNumber(phoneNum),
+        school_phone_number: formatPhoneNumber(schoolPhoneNum),
+        new_work_place_phone_number: formatPhoneNumber(workPlacePhoneNum),
+      }),
     );
-  }, [newDocumentData, phoneNum, cellPhoneNum, schoolPhoneNum]);
+  }, [
+    newDocumentData,
+    phoneNum,
+    cellPhoneNum,
+    schoolPhoneNum,
+    workPlacePhoneNum,
+  ]);
 
   // 검색할 주소 입력 시 실시간 검색
   const handleAddressSearch = useCallback(
@@ -191,6 +199,7 @@ const IntegratedApplicationWriteForm = ({
       tele_phone_number: formatPhoneNumber(phoneNum),
       cell_phone_number: formatPhoneNumber(cellPhoneNum),
       school_phone_number: formatPhoneNumber(schoolPhoneNum),
+      new_work_place_phone_number: formatPhoneNumber(workPlacePhoneNum),
     };
     const payload = {
       id: Number(currentPostId),
@@ -514,6 +523,40 @@ const IntegratedApplicationWriteForm = ({
             canDelete={false}
           />
         </InputLayout>
+        {/* 근무 장소 전화번호 입력 */}
+        <InputLayout title="Phone Number Of New Workplace" isEssential>
+          <div className="w-full flex flex-row gap-2 justify-between">
+            <div className="w-full h-[2.75rem]">
+              <Dropdown
+                value={workPlacePhoneNum.start}
+                placeholder="+82"
+                options={phone}
+                setValue={(value) =>
+                  setWorkPlacePhoneNum({ ...workPlacePhoneNum, start: value })
+                }
+              />
+            </div>
+            <Input
+              inputType={InputType.TEXT}
+              placeholder="0000"
+              value={workPlacePhoneNum.middle}
+              onChange={(value) =>
+                setWorkPlacePhoneNum({ ...workPlacePhoneNum, middle: value })
+              }
+              canDelete={false}
+            />
+            <Input
+              inputType={InputType.TEXT}
+              placeholder="0000"
+              value={workPlacePhoneNum.end}
+              onChange={(value) =>
+                setWorkPlacePhoneNum({ ...workPlacePhoneNum, end: value })
+              }
+              canDelete={false}
+            />
+          </div>
+        </InputLayout>
+
         {/* 연봉 입력 */}
         <InputLayout title="Annual Income Amount" isEssential>
           <Input
