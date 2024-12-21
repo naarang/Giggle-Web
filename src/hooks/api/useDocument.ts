@@ -25,7 +25,11 @@ import {
   PartTimePermitData,
   SearchSchoolResponse,
 } from '@/types/api/document';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import {
+  useMutation,
+  UseMutationOptions,
+  useQuery,
+} from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { RESTYPE } from '../../types/api/common';
 
@@ -149,12 +153,20 @@ export const usePutLaborContractEmployer = (id: number) => {
 };
 
 // 8.8 통합신청서 생성 api 통신 커스텀 훅
-export const usePostIntegratedApplicants = (id: number) => {
+export const usePostIntegratedApplicants = (
+  postId: number,
+  options?: UseMutationOptions<
+    RESTYPE<{ id: number }>,
+    Error,
+    { id: number; document: IntegratedApplicationData }
+  >,
+) => {
   const navigate = useNavigate();
+
   return useMutation({
     mutationFn: postIntegratedApplications,
     onSuccess: () => {
-      navigate(`/application-documents/${id}`);
+      navigate(`/application-documents/${postId}`);
     },
     onError: () =>
       navigate('/write-documents', {
@@ -162,11 +174,19 @@ export const usePostIntegratedApplicants = (id: number) => {
           type: DocumentType.INTEGRATED_APPLICATION,
         },
       }),
+    ...options,
   });
 };
 
 // 8.14 (유학생) 통합신청서 수정 api 통신 커스텀 훅
-export const usePutIntegratedApplicants = (id: number) => {
+export const usePutIntegratedApplicants = (
+  id: number,
+  options?: UseMutationOptions<
+    RESTYPE<null>,
+    Error,
+    { id: number; document: IntegratedApplicationData }
+  >,
+) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: putIntegratedApplications,
@@ -179,6 +199,7 @@ export const usePutIntegratedApplicants = (id: number) => {
           type: DocumentType.INTEGRATED_APPLICATION,
         },
       }),
+    ...options,
   });
 };
 
