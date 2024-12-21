@@ -20,11 +20,13 @@ import {
 } from '@/api/document';
 import {
   DocumentType,
+  EmployerInformation,
   IntegratedApplicationData,
   LaborContractDataResponse,
   LaborContractEmployeeInfo,
   LaborContractEmployerInfo,
   PartTimePermitData,
+  PartTimePermitFormRequest,
   SearchSchoolResponse,
 } from '@/types/api/document';
 import {
@@ -52,7 +54,14 @@ export const useGetDocumentsEmployer = (id: number) => {
 };
 
 // 시간제취업허가서 작성 api 통신 커스텀 훅
-export const usePostPartTimeEmployPermit = (id: number) => {
+export const usePostPartTimeEmployPermit = (
+  id: number,
+  options?: UseMutationOptions<
+    RESTYPE<{ id: number }>,
+    Error,
+    { id: number; document: PartTimePermitFormRequest }
+  >,
+) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: postPartTimeEmployPermit,
@@ -65,12 +74,20 @@ export const usePostPartTimeEmployPermit = (id: number) => {
           type: DocumentType.PART_TIME_PERMIT,
         },
       }),
+    ...options,
   });
 };
 
 // 8.10 (유학생)시간제취업허가서 수정 api 통신 커스텀 훅
 //TODO: ID값 사용해 redirect 해야
-export const usePutPartTimeEmployPermit = (id: number) => {
+export const usePutPartTimeEmployPermit = (
+  id: number,
+  options?: UseMutationOptions<
+    RESTYPE<null>,
+    Error,
+    { id: number; document: PartTimePermitFormRequest }
+  >,
+) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: putPartTimeEmployPermit,
@@ -83,11 +100,19 @@ export const usePutPartTimeEmployPermit = (id: number) => {
           type: DocumentType.PART_TIME_PERMIT,
         },
       }),
+    ...options,
   });
 };
 
 // 8.11 (고용주)시간제취업허가서 수정 api 통신 커스텀 훅
-export const usePutPartTimeEmployPermitEmployer = (id: number) => {
+export const usePutPartTimeEmployPermitEmployer = (
+  id: number,
+  options?: UseMutationOptions<
+    RESTYPE<null>,
+    Error,
+    { id: number; document: EmployerInformation }
+  >,
+) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: putPartTimeEmployPermitEmployer,
@@ -100,6 +125,7 @@ export const usePutPartTimeEmployPermitEmployer = (id: number) => {
           type: DocumentType.PART_TIME_PERMIT,
         },
       }),
+    ...options,
   });
 };
 
