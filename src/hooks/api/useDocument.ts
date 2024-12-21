@@ -22,6 +22,8 @@ import {
   DocumentType,
   IntegratedApplicationData,
   LaborContractDataResponse,
+  LaborContractEmployeeInfo,
+  LaborContractEmployerInfo,
   PartTimePermitData,
   SearchSchoolResponse,
 } from '@/types/api/document';
@@ -102,7 +104,14 @@ export const usePutPartTimeEmployPermitEmployer = (id: number) => {
 };
 
 //표준 근로계약서 작성 api 통신 커스텀 훅
-export const usePostStandardLaborContracts = (id: number) => {
+export const usePostStandardLaborContracts = (
+  id: number,
+  options?: UseMutationOptions<
+    RESTYPE<{ id: number }>,
+    Error,
+    { id: number; document: LaborContractEmployeeInfo }
+  >,
+) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: postStandardLaborContracts,
@@ -115,11 +124,19 @@ export const usePostStandardLaborContracts = (id: number) => {
           type: DocumentType.LABOR_CONTRACT,
         },
       }),
+    ...options,
   });
 };
 
 // 8.12 (유학생) 표준 근로계약서 수정 api 통신 커스텀 훅
-export const usePutStandardLaborContracts = (id: number) => {
+export const usePutStandardLaborContracts = (
+  id: number,
+  options?: UseMutationOptions<
+    RESTYPE<null>,
+    Error,
+    { id: number; document: LaborContractEmployeeInfo }
+  >,
+) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: putStandardLaborContracts,
@@ -132,11 +149,19 @@ export const usePutStandardLaborContracts = (id: number) => {
           type: DocumentType.LABOR_CONTRACT,
         },
       }),
+    ...options,
   });
 };
 
 // 8.13 (고용주) 표준 근로계약서 수정 api 통신 커스텀 훅
-export const usePutLaborContractEmployer = (id: number) => {
+export const usePutLaborContractEmployer = (
+  id: number,
+  options?: UseMutationOptions<
+    RESTYPE<null>,
+    Error,
+    { id: number; document: LaborContractEmployerInfo }
+  >,
+) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: putLaborContractEmployer,
@@ -149,6 +174,7 @@ export const usePutLaborContractEmployer = (id: number) => {
           type: DocumentType.LABOR_CONTRACT,
         },
       }),
+    ...options,
   });
 };
 
