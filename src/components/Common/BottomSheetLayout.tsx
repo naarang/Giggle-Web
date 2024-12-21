@@ -6,7 +6,7 @@ type BottomSheetLayoutProps = {
   hasHandlebar: boolean; // 최상단의 바 모양 존재 여부
   isAvailableHidden: boolean; // 아래로 내렸을 때 사라지도록 하는 여부
   isShowBottomsheet: boolean; // BottomSheet 보이기
-  setIsShowBottomSheet?: React.Dispatch<React.SetStateAction<boolean>>; // isShowBottomsheet 값 동기화하기 위한 함수
+  setIsShowBottomSheet?: (isShowBottomsheet: boolean) => void; // isShowBottomsheet 값 동기화하기 위한 함수
   children: ReactNode;
   isFixedBackground?: boolean;
 };

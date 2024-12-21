@@ -650,7 +650,7 @@ const EmployerLaborContractForm = ({
         </InputLayout>
         {/* 서명 입력 */}
         <InputLayout title="서명" isEssential>
-        <SignaturePad
+          <SignaturePad
             onSave={(signature: string) =>
               setNewDocumentData({
                 ...newDocumentData,
@@ -700,6 +700,7 @@ const EmployerLaborContractForm = ({
             setIsModal(false);
           }}
           isShowBottomsheet={isModal}
+          setIsShowBottomSheet={setIsModal}
         />
       )}
     </div>

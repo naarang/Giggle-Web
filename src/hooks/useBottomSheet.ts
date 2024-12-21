@@ -5,7 +5,7 @@ import usePreviousValue from '@/hooks/usePreviousValue';
 const VIEW_HEIGHT = window.innerHeight;
 
 const useBottomSheet = (
-  setIsShowBottomSheet?: React.Dispatch<React.SetStateAction<boolean>>,
+  setIsShowBottomSheet?: (isShowBottomsheet: boolean) => void,
 ) => {
   const [isOpen, setIsOpen] = useState(false);
   const controls = useAnimation();
