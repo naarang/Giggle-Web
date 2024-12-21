@@ -269,7 +269,13 @@ export const usePatchStatusSubmission = () => {
 };
 
 // 8.16 (고용주) 서류 (근로계약서, 시간제 취업허가서, 통합 신청서) 제출하기 api hook
-export const usePatchStatusSubmissionEmployer = () => {
+export const usePatchStatusSubmissionEmployer = (
+  options?: UseMutationOptions<
+    RESTYPE<null>,
+    Error,
+    number
+  >,
+) => {
   return useMutation({
     mutationFn: patchStatusSubmissionEmployer,
     onSuccess: () => {
@@ -278,6 +284,7 @@ export const usePatchStatusSubmissionEmployer = () => {
     onError: (error) => {
       console.error('고용주의 서류 제출 실패', error);
     },
+    ...options
   });
 };
 

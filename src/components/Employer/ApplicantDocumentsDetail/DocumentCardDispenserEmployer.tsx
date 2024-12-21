@@ -17,7 +17,7 @@ type DocumentCardProps = {
   title: string;
   type: string;
   reason?: string;
-  onNext?: () => void;
+  setIsLoading: (loadingStatus: boolean) => void;
 };
 
 const NullCard = ({ title }: { title: string }) => {
@@ -288,7 +288,7 @@ const ConfirmationCard = ({
 }: {
   title: string;
   document: EmployDocumentInfo;
-  
+
   onDownload: (url: string) => void;
 }) => {
   return (
@@ -358,13 +358,21 @@ const DocumentCardDispenserEmployer = ({
   title,
   type,
   reason,
+  setIsLoading,
 }: DocumentCardProps) => {
   const navigate = useNavigate();
   const handleDownload = (url: string) => {
     window.open(url, '_blank');
   };
   const { updateCurrentDocumentId } = useCurrentDocumentIdStore();
-  const { mutate: submitDocument } = usePatchStatusSubmissionEmployer();
+  const { mutate: submitDocument } = usePatchStatusSubmissionEmployer({
+    onMutate: () => {
+      setIsLoading(true);
+    },
+    onSettled: () => {
+      setIsLoading(false);
+    },
+  });
   if (!document.status) return <NullCard title={title} />;
   switch (document.status) {
     case DocumentStatusEmployer.TEMPORARY_SAVE:
