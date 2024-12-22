@@ -10,6 +10,7 @@ import {
   getSearchSchools,
   getWorkExperience,
   patchEducation,
+  patchEtcLanguageLevel,
   patchIntroduction,
   patchLanguagesLevel,
   patchWorkExperience,
@@ -17,7 +18,10 @@ import {
   postEtcLanguageLevel,
   postWorkExperience,
 } from '@/api/resumes';
-import { LanguagesLevelType } from '@/types/api/resumes';
+import {
+  AdditionalLanguageRequest,
+  LanguagesLevelType,
+} from '@/types/api/resumes';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
@@ -57,15 +61,15 @@ export const useGetLanguagesSummaries = () => {
 // 7.11 (유학생) 언어 - TOPIK 레벨 수정하기
 // 7.12 (유학생) 언어 - SOCIAL INTEGRATION PROGRAM 레벨 수정하기
 // 7.13 (유학생) 언어 - SEJONG INSTITUTE 레벨 수정하기
-export const usePatchLanguagesLevel = ({
-  type,
-  level,
-}: {
-  type: LanguagesLevelType;
-  level: number;
-}) => {
+export const usePatchLanguagesLevel = () => {
   return useMutation({
-    mutationFn: () => patchLanguagesLevel({ type, level }),
+    mutationFn: ({
+      type,
+      level,
+    }: {
+      type: LanguagesLevelType;
+      level: number;
+    }) => patchLanguagesLevel({ type, level }),
     onSuccess: () => {
       window.location.reload();
     },
@@ -156,6 +160,25 @@ export const usePatchEducation = () => {
     },
     onError: (error) => {
       console.error('학력 수정 실패', error);
+    },
+  });
+};
+
+// 7.14 (유학생) 언어 - ETC 수정하기
+export const usePatchEtcLanguageLevel = () => {
+  return useMutation({
+    mutationFn: ({
+      id,
+      data,
+    }: {
+      id: number;
+      data: AdditionalLanguageRequest;
+    }) => patchEtcLanguageLevel(id, data),
+    onSuccess: () => {
+      window.location.reload();
+    },
+    onError: (error) => {
+      console.error('기타 언어 수정 실패', error);
     },
   });
 };
