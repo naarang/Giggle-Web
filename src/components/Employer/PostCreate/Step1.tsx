@@ -104,10 +104,7 @@ const Step1 = ({
             <div className="w-full h-full overflow-x-auto flex items-center gap-2">
               {newPostInfo.body.work_day_times.length > 0 &&
                 newPostInfo.body.work_day_times.map((workdaytime, index) => (
-                  <div
-                    key={index}
-                    className="flex-shrink-0"
-                  >
+                  <div key={index} className="flex-shrink-0">
                     <div className="w-full h-6 flex items-center justify-center px-3 py-1 bg-[#FEF387] button-2 rounded-[1.125rem] whitespace-nowrap">
                       {workDayTimeToString(workdaytime)}
                     </div>
@@ -234,6 +231,7 @@ const Step1 = ({
             setIsModal(false);
           }}
           isShowBottomsheet={isModal}
+          setIsShowBottomSheet={setIsModal}
         />
       )}
     </div>

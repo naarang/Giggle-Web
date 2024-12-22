@@ -5,7 +5,7 @@ import { buttonTypeKeys } from '@/constants/components';
 
 type ApplicationDetailBottomSheetType = {
   isShowBottomsheet: boolean;
-  setIsShowBottomSheet: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsShowBottomSheet: (isShowBottomsheet: boolean) => void;
   blackButtonTitle: string;
   onClickBlackButton: () => void;
   yellowButtonTitle: string;

@@ -739,6 +739,7 @@ const EmployerLaborContractForm = ({
               setIsModal(false);
             }}
             isShowBottomsheet={isModal}
+            setIsShowBottomSheet={setIsModal}
           />
         )}
       </div>

@@ -13,9 +13,11 @@ type DayType = (typeof DAYS)[keyof typeof DAYS];
 const WorkDayTimeWithRestBottomSheet = ({
   onClose,
   isShowBottomsheet,
+  setIsShowBottomSheet,
 }: {
   onClose: (value: WorkDayTimeWithRest[]) => void;
   isShowBottomsheet: boolean;
+  setIsShowBottomSheet: (isShowBottomsheet: boolean) => void;
 }) => {
   const [dayOfWeek, setDayOfWeek] = useState<DayType[]>([]);
   const [workStartTime, setWorkStartTime] = useState<string | null>(null);
@@ -53,8 +55,8 @@ const WorkDayTimeWithRestBottomSheet = ({
         break_start_time: breakStartTime!,
         break_end_time: breakEndTime!,
       };
-    })
-    onClose(result)
+    });
+    onClose(result);
   };
 
   return (
@@ -62,6 +64,7 @@ const WorkDayTimeWithRestBottomSheet = ({
       hasHandlebar={true}
       isAvailableHidden={true}
       isShowBottomsheet={isShowBottomsheet}
+      setIsShowBottomSheet={setIsShowBottomSheet}
     >
       <div className="w-full">
         <div className="w-full py-[0.75rem] px-[3.125rem] flex flex-col items-center gap-[0.75rem]">
