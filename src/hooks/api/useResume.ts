@@ -109,7 +109,7 @@ export const usePostEtcLanguageLevel = () => {
   return useMutation({
     mutationFn: postEtcLanguageLevel,
     onSuccess: () => {
-      navigate('/resume/language');
+      navigate('/resume/language', { state: { from: location.pathname } });
     },
     onError: (error) => {
       alert('이미 존재하는 언어입니다');
