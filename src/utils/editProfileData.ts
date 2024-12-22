@@ -78,18 +78,16 @@ export const validateChanges = (
   userData: UserEditRequestBody,
   phoneNum: { start: string; middle: string; end: string },
 ) => {
-  if (
-    originalData.birth == userData.birth &&
-    originalData.first_name == userData.first_name &&
-    originalData.last_name == userData.last_name &&
-    originalData.gender == userData.gender &&
-    originalData.is_profile_img_changed == userData.is_profile_img_changed &&
-    originalData.nationality == userData.nationality &&
-    originalData.phone_number == userData.phone_number &&
-    originalData.phone_number ==
-      `${phoneNum.start}-${phoneNum.middle}-${phoneNum.end}` &&
-    originalData.visa == userData.visa
-  ) {
-    return false; // 동일함
-  } else return true; // 변경됨
+  const formattedPhoneNumber = `${phoneNum.start}-${phoneNum.middle}-${phoneNum.end}`;
+
+  return Object.entries(userData).some(([key, value]) => {
+    const typedKey = key as keyof UserEditRequestBody;
+    if (typedKey === 'phone_number') {
+      return (
+        originalData[typedKey] !== formattedPhoneNumber || // input 필드에서 입력받은 데이터
+        originalData[typedKey] !== value // api 수정 요청으로 포맷팅된 데이터
+      );
+    }
+    return value !== originalData[typedKey];
+  });
 };
