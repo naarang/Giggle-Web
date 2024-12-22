@@ -24,7 +24,7 @@ const LanguageManageDetail = ({ data }: LanguageManageDetailProps) => {
             key={lang.id}
             className="bg-[#FEF387] rounded-md px-4 py-1.5 text-[#1E1926] caption-1"
           >
-            {lang.laguage_name} Level {lang.level}
+            {lang.language_name} Level {lang.level}
           </p>
         ))}
     </div>

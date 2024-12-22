@@ -10,13 +10,13 @@ const LanguageSection = () => {
   const navigage = useNavigate();
 
   // 언어 레벨 리스트 상태 관리
-  const [languageData, SetLanguageData] =
+  const [languageData, setLanguageData] =
     useState<LanguagesSummariesResponse>();
 
   // 7.4 (유학생) 언어 요약 조회하기
   useEffect(() => {
     if (data) {
-      SetLanguageData(data.data);
+      setLanguageData(data.data);
     }
   }, [data]);
 

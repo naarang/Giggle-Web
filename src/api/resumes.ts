@@ -127,16 +127,13 @@ export const patchLanguagesLevel = async ({
 };
 
 // 7.14 (유학생) 언어 - ETC 수정하기
-export const patchaEtcLanguageLevel = async ({
-  id,
-  language,
-}: {
-  id: number;
-  language: AdditionalLanguageRequest;
-}) => {
+export const patchEtcLanguageLevel = async (
+  id: number,
+  data: AdditionalLanguageRequest,
+) => {
   const response = await api.patch(
     `/users/resumes/languages/additional-languages/${id}`,
-    language,
+    data,
   );
   return response.data;
 };
