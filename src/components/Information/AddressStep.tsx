@@ -6,14 +6,13 @@ import {
   initialAddress,
   UserInfoRequestBody,
 } from '@/types/api/users';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
-import { useGetGeoInfo, useSearchAddress } from '@/hooks/api/useKaKaoMap';
-import { Document } from '@/types/api/map';
+import { useGetGeoInfo} from '@/hooks/api/useKaKaoMap';
 import { DropdownModal } from '@/components/Common/Dropdown';
 import { AddressType } from '@/types/api/map';
-import { pick } from '@/utils/map';
 import Button from '@/components/Common/Button';
+import { useAddressSearch } from '@/hooks/api/useAddressSearch';
 
 type AddressStepProps = {
   userInfo: UserInfoRequestBody;
@@ -22,19 +21,16 @@ type AddressStepProps = {
 
 const AddressStep = ({ userInfo, onNext }: AddressStepProps) => {
   const [newAddress, setNewAddress] = useState<Address>(initialAddress);
-  const [addressInput, setAddressInput] = useState('');
-  const [addressSearchResult, setAddressSearchResult] = useState<Document[]>(
-    [],
-  );
-  const [currentGeoInfo, setCurrentGeoInfo] = useState({
-    lat: 0,
-    lon: 0,
-  });
+  const {
+    addressInput, // 주소 검색용 input 저장하는 state
+    addressSearchResult, // 주소 검색 결과를 저장하는 array
+    currentGeoInfo, // 지도에 표시할 핀에 사용되는 위/경도 좌표
+    setCurrentGeoInfo,
+    handleAddressSearch, // 검색할 주소 입력 시 실시간 검색
+    handleAddressSelect, // 검색 결과 중 원하는 주소를 선택할 시 state에 입력
+    setAddressInput,
+  } = useAddressSearch();
   const { data, isSuccess } = useGetGeoInfo(setCurrentGeoInfo); // 현재 좌표 기준 주소 획득
-  // 키워드로 주소 검색
-  const { searchAddress } = useSearchAddress({
-    onSuccess: (data) => setAddressSearchResult(data),
-  });
 
   // 첫 로딩 시 현재 사용자의 위치 파악 해 지도에 표기
   useEffect(() => {
@@ -47,61 +43,15 @@ const AddressStep = ({ userInfo, onNext }: AddressStepProps) => {
     });
   }, [isSuccess]);
 
-  // 검색할 주소 입력 시 실시간 검색
-  const handleAddressSearch = useCallback(
-    (address: string) => {
-      setAddressInput(address);
-      if (address !== '') {
-        searchAddress(address);
-      } else {
-        setAddressSearchResult([]);
-      }
-    },
-    [searchAddress],
-  );
+  // 검색된 주소 선택 시 state에 반영
+  const handleAddressSelection = (selectedAddressName: string) => {
+    const result = handleAddressSelect(selectedAddressName);
+    if (!result) return;
 
-  // 검색 결과 중 원하는 주소를 선택할 시 state에 입력
-  const handleAddressSelect = (selectedAddressName: string) => {
-    const selectedAddress = addressSearchResult.find(
-      (address) => address.address_name === selectedAddressName,
-    ) as Document | undefined;
-
-    if (!selectedAddress) return;
-
-    const isRegionAddr =
-      selectedAddress.address_type === AddressType.REGION_ADDR;
-    const addressData = isRegionAddr
-      ? selectedAddress.address
-      : selectedAddress.road_address;
-
-    const selectedProperties = pick(addressData, [
-      'address_name',
-      'region_1depth_name',
-      'region_2depth_name',
-      'region_3depth_name',
-    ]);
-
-    let region4DepthName = '';
-    if (isRegionAddr) {
-      region4DepthName = selectedAddress.address.region_3depth_h_name || '';
-    } else {
-      region4DepthName = selectedAddress.road_address.road_name || '';
-    }
-
-    setNewAddress({
-      ...newAddress,
-      ...selectedProperties,
-      region_4depth_name: region4DepthName,
-      longitude: Number(addressData.x),
-      latitude: Number(addressData.y),
-    });
-    setAddressInput(selectedAddress.address_name);
-    setCurrentGeoInfo({
-      lon: Number(selectedAddress.x),
-      lat: Number(selectedAddress.y),
-    });
-    setAddressSearchResult([]);
+    setNewAddress({...newAddress, ...result});
+    setAddressInput(result.selectedAddressName);
   };
+
   return (
     <div className="w-full mx-auto">
       <div className="w-full flex flex-col gap-[1.125rem]">
@@ -131,7 +81,7 @@ const AddressStep = ({ userInfo, onNext }: AddressStepProps) => {
                 ),
                 (address) => address.address_name,
               )}
-              onSelect={handleAddressSelect}
+              onSelect={handleAddressSelection}
             />
           )}
         </div>

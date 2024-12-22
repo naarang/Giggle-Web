@@ -20,12 +20,20 @@ import {
 } from '@/api/document';
 import {
   DocumentType,
+  EmployerInformation,
   IntegratedApplicationData,
   LaborContractDataResponse,
+  LaborContractEmployeeInfo,
+  LaborContractEmployerInfo,
   PartTimePermitData,
+  PartTimePermitFormRequest,
   SearchSchoolResponse,
 } from '@/types/api/document';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import {
+  useMutation,
+  UseMutationOptions,
+  useQuery,
+} from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { RESTYPE } from '../../types/api/common';
 
@@ -46,7 +54,14 @@ export const useGetDocumentsEmployer = (id: number) => {
 };
 
 // 시간제취업허가서 작성 api 통신 커스텀 훅
-export const usePostPartTimeEmployPermit = (id: number) => {
+export const usePostPartTimeEmployPermit = (
+  id: number,
+  options?: UseMutationOptions<
+    RESTYPE<{ id: number }>,
+    Error,
+    { id: number; document: PartTimePermitFormRequest }
+  >,
+) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: postPartTimeEmployPermit,
@@ -59,12 +74,20 @@ export const usePostPartTimeEmployPermit = (id: number) => {
           type: DocumentType.PART_TIME_PERMIT,
         },
       }),
+    ...options,
   });
 };
 
 // 8.10 (유학생)시간제취업허가서 수정 api 통신 커스텀 훅
 //TODO: ID값 사용해 redirect 해야
-export const usePutPartTimeEmployPermit = (id: number) => {
+export const usePutPartTimeEmployPermit = (
+  id: number,
+  options?: UseMutationOptions<
+    RESTYPE<null>,
+    Error,
+    { id: number; document: PartTimePermitFormRequest }
+  >,
+) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: putPartTimeEmployPermit,
@@ -77,11 +100,19 @@ export const usePutPartTimeEmployPermit = (id: number) => {
           type: DocumentType.PART_TIME_PERMIT,
         },
       }),
+    ...options,
   });
 };
 
 // 8.11 (고용주)시간제취업허가서 수정 api 통신 커스텀 훅
-export const usePutPartTimeEmployPermitEmployer = (id: number) => {
+export const usePutPartTimeEmployPermitEmployer = (
+  id: number,
+  options?: UseMutationOptions<
+    RESTYPE<null>,
+    Error,
+    { id: number; document: EmployerInformation }
+  >,
+) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: putPartTimeEmployPermitEmployer,
@@ -94,11 +125,19 @@ export const usePutPartTimeEmployPermitEmployer = (id: number) => {
           type: DocumentType.PART_TIME_PERMIT,
         },
       }),
+    ...options,
   });
 };
 
 //표준 근로계약서 작성 api 통신 커스텀 훅
-export const usePostStandardLaborContracts = (id: number) => {
+export const usePostStandardLaborContracts = (
+  id: number,
+  options?: UseMutationOptions<
+    RESTYPE<{ id: number }>,
+    Error,
+    { id: number; document: LaborContractEmployeeInfo }
+  >,
+) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: postStandardLaborContracts,
@@ -111,11 +150,19 @@ export const usePostStandardLaborContracts = (id: number) => {
           type: DocumentType.LABOR_CONTRACT,
         },
       }),
+    ...options,
   });
 };
 
 // 8.12 (유학생) 표준 근로계약서 수정 api 통신 커스텀 훅
-export const usePutStandardLaborContracts = (id: number) => {
+export const usePutStandardLaborContracts = (
+  id: number,
+  options?: UseMutationOptions<
+    RESTYPE<null>,
+    Error,
+    { id: number; document: LaborContractEmployeeInfo }
+  >,
+) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: putStandardLaborContracts,
@@ -128,11 +175,19 @@ export const usePutStandardLaborContracts = (id: number) => {
           type: DocumentType.LABOR_CONTRACT,
         },
       }),
+    ...options,
   });
 };
 
 // 8.13 (고용주) 표준 근로계약서 수정 api 통신 커스텀 훅
-export const usePutLaborContractEmployer = (id: number) => {
+export const usePutLaborContractEmployer = (
+  id: number,
+  options?: UseMutationOptions<
+    RESTYPE<null>,
+    Error,
+    { id: number; document: LaborContractEmployerInfo }
+  >,
+) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: putLaborContractEmployer,
@@ -145,16 +200,25 @@ export const usePutLaborContractEmployer = (id: number) => {
           type: DocumentType.LABOR_CONTRACT,
         },
       }),
+    ...options,
   });
 };
 
 // 8.8 통합신청서 생성 api 통신 커스텀 훅
-export const usePostIntegratedApplicants = (id: number) => {
+export const usePostIntegratedApplicants = (
+  postId: number,
+  options?: UseMutationOptions<
+    RESTYPE<{ id: number }>,
+    Error,
+    { id: number; document: IntegratedApplicationData }
+  >,
+) => {
   const navigate = useNavigate();
+
   return useMutation({
     mutationFn: postIntegratedApplications,
     onSuccess: () => {
-      navigate(`/application-documents/${id}`);
+      navigate(`/application-documents/${postId}`);
     },
     onError: () =>
       navigate('/write-documents', {
@@ -162,11 +226,19 @@ export const usePostIntegratedApplicants = (id: number) => {
           type: DocumentType.INTEGRATED_APPLICATION,
         },
       }),
+    ...options,
   });
 };
 
 // 8.14 (유학생) 통합신청서 수정 api 통신 커스텀 훅
-export const usePutIntegratedApplicants = (id: number) => {
+export const usePutIntegratedApplicants = (
+  id: number,
+  options?: UseMutationOptions<
+    RESTYPE<null>,
+    Error,
+    { id: number; document: IntegratedApplicationData }
+  >,
+) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: putIntegratedApplications,
@@ -179,6 +251,7 @@ export const usePutIntegratedApplicants = (id: number) => {
           type: DocumentType.INTEGRATED_APPLICATION,
         },
       }),
+    ...options,
   });
 };
 
@@ -196,7 +269,13 @@ export const usePatchStatusSubmission = () => {
 };
 
 // 8.16 (고용주) 서류 (근로계약서, 시간제 취업허가서, 통합 신청서) 제출하기 api hook
-export const usePatchStatusSubmissionEmployer = () => {
+export const usePatchStatusSubmissionEmployer = (
+  options?: UseMutationOptions<
+    RESTYPE<null>,
+    Error,
+    number
+  >,
+) => {
   return useMutation({
     mutationFn: patchStatusSubmissionEmployer,
     onSuccess: () => {
@@ -205,6 +284,7 @@ export const usePatchStatusSubmissionEmployer = () => {
     onError: (error) => {
       console.error('고용주의 서류 제출 실패', error);
     },
+    ...options
   });
 };
 

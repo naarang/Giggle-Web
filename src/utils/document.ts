@@ -8,6 +8,7 @@ import {
 import { Address } from '@/types/api/users';
 import { extractNumbersAsNumber } from './post';
 import { InsuranceInfo } from '@/constants/documents';
+import { isValidPhoneNumber, parsePhoneNumber } from './information';
 
 // 객체의 모든 프로퍼티가 공백이 아닌지 확인하는 함수
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -176,8 +177,10 @@ export const validateLaborContractEmployerInformation = (
 // number만 가능한 필드에서 NaN 입력으로 input이 멈추지 않게 값 검증
 export const parseStringToSafeNumber = (value: string): number => {
   const numberValue = Number(value);
+  const minimumWage2025 = 10030;
 
   if (isNaN(numberValue)) return 0;
+  if (!isNaN(numberValue) && numberValue < minimumWage2025) return 0;
   else return numberValue;
 };
 
@@ -210,6 +213,7 @@ export const getImageType = (base64String: string) => {
   return 'jpeg';
 };
 
+// 통합신청서 유효성 검사
 export const validateIntegratedApplication = (
   data: IntegratedApplicationData,
 ): boolean => {
@@ -233,9 +237,16 @@ export const validateIntegratedApplication = (
   ) {
     return false;
   }
+
+  // 전화번호 필드들 검사
+  const isPhoneValid =
+    isValidPhoneNumber(parsePhoneNumber(data.tele_phone_number)) &&
+    isValidPhoneNumber(parsePhoneNumber(data.cell_phone_number)) &&
+    isValidPhoneNumber(parsePhoneNumber(data.school_phone_number)) &&
+    isValidPhoneNumber(parsePhoneNumber(data.new_work_place_phone_number));
   // 나머지 필드 검사
   const otherFieldsValid = Object.entries(data).every(([key, value]) => {
-    // address와 annual_income_amount는 이미 위에서 검사했으므로 스킵
+    // 앞서 검사한 필드들은 스킵
     if (
       key === 'address' ||
       key === 'annual_income_amount' ||
@@ -248,7 +259,7 @@ export const validateIntegratedApplication = (
     return value !== '';
   });
 
-  return isAddressValid && isIncomeValid && otherFieldsValid;
+  return isAddressValid && isIncomeValid && isPhoneValid && otherFieldsValid;
 };
 
 // 보험 이름과 enum 매핑 함수

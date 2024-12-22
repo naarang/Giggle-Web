@@ -181,9 +181,9 @@ const SignaturePad: React.FC<SignaturePadProps> = ({
         >
           {(() => {
             if (signatureData !== '' && isKorean) return '저장됨';
-            if (signatureData !== '' && !isKorean) return 'Saved';
+            if (signatureData !== '' && !isKorean) return 'Done';
             if (signatureData === '' && isKorean) return '저장';
-            return 'Saving';
+            return 'Save';
           })()}
         </button>
       </div>
