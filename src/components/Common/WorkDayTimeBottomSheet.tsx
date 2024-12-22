@@ -23,9 +23,11 @@ type DayType = (typeof DAYS)[keyof typeof DAYS];
 const WorkDayTimeBottomSheet = ({
   onClose,
   isShowBottomsheet,
+  setIsShowBottomSheet,
 }: {
   onClose: (value: WorkDayTime[]) => void;
   isShowBottomsheet: boolean;
+  setIsShowBottomSheet: (isShowBottomsheet: boolean) => void;
 }) => {
   const [isCheckAllWeek, setIsCheckAllWeek] = useState<boolean>(false);
   const [isCheckAllTime, setIsCheckAllTime] = useState<boolean>(false);
@@ -86,6 +88,7 @@ const WorkDayTimeBottomSheet = ({
       hasHandlebar={true}
       isAvailableHidden={true}
       isShowBottomsheet={isShowBottomsheet}
+      setIsShowBottomSheet={setIsShowBottomSheet}
     >
       <div className="w-full">
         <div className="w-full py-[0.75rem] px-[3.125rem] flex flex-col items-center gap-[0.75rem]">
@@ -111,7 +114,7 @@ const WorkDayTimeBottomSheet = ({
             <div className="flex flex-wrap gap-[0.5rem] w-full">
               {Object.keys(DAYS).map((value, index) => (
                 <button
-                  className={`py-[0.375rem] px-[0.875rem] body-3 border border-[#EFEFEF] rounded-[1.125rem] ${isCheckAllWeek ? 'bg-[#F4F4F9] text-[#BDBDBD]' : (dayOfWeek.includes(value as DayType) ? 'bg-[#FEF387] text-[#1E1926]' : 'bg-white text-[#656565]')}`}
+                  className={`py-[0.375rem] px-[0.875rem] body-3 border border-[#EFEFEF] rounded-[1.125rem] ${isCheckAllWeek ? 'bg-[#F4F4F9] text-[#BDBDBD]' : dayOfWeek.includes(value as DayType) ? 'bg-[#FEF387] text-[#1E1926]' : 'bg-white text-[#656565]'}`}
                   key={`${value}_${index}`}
                   onClick={() => onClickDayOfWeek(value as DayType)}
                   disabled={isCheckAllWeek}
