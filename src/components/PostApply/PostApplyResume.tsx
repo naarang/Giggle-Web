@@ -170,7 +170,7 @@ const PostApplyResume = () => {
               className="flex justify-between items-center w-full py-[1rem] px-[0.75rem] rounded-[0.75rem] bg-[#F4F4F980]"
             >
               <h5 className="pb-[0.125rem] button-2 text-[#464646]">
-                {data.laguage_name}
+                {data.language_name}
               </h5>
               <div className="px-[0.5rem] py-[0.25rem] rounded-[0.188rem] border-[0.031rem] border-[#7872ED] text-[#7872ED] bg-[#2801E81F] caption-2">
                 Level {data.level}
