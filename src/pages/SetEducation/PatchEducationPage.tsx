@@ -48,7 +48,7 @@ const PatchEducationPage = () => {
     if (initialData) setEducationData(initialData);
   };
 
-  // TODO: API - 7.3 학력 상세 조회하기
+  // API - 7.3 학력 상세 조회하기
   const { data: getEducationData } = useGetEducation(id!);
   useEffect(() => {
     if (getEducationData) {
@@ -78,7 +78,7 @@ const PatchEducationPage = () => {
 
   return (
     <>
-      {fetchData && (
+      {fetchData && initialData && (
         <>
           <div className="mb-24">
             <BaseHeader

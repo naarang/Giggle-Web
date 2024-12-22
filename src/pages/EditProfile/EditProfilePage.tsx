@@ -14,6 +14,7 @@ import { InputType } from '@/types/common/input';
 import {
   changeValidData,
   transformToProfileRequest,
+  validateChanges,
 } from '@/utils/editProfileData';
 import { useEffect, useState } from 'react';
 import { country, phone, visa } from '@/constants/information';
@@ -84,10 +85,12 @@ const EditProfilePage = () => {
 
   // 수정 여부를 확인(프로필 사진만 변경했을 경우 포함)
   useEffect(() => {
-    if (profileImage || userProfile === originalData) {
+    if (originalData && validateChanges(originalData, userData, phoneNum)) {
       setIsChanged(true);
+    } else {
+      setIsChanged(false);
     }
-  }, [userProfile, profileImage]);
+  }, [userData, originalData, phoneNum]);
 
   return (
     <>

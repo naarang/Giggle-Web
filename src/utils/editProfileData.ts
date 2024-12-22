@@ -72,3 +72,24 @@ export const transformToEmployerProfileRequest = (
     is_icon_img_changed: false,
   };
 };
+
+export const validateChanges = (
+  originalData: UserEditRequestBody,
+  userData: UserEditRequestBody,
+  phoneNum: { start: string; middle: string; end: string },
+) => {
+  if (
+    originalData.birth == userData.birth &&
+    originalData.first_name == userData.first_name &&
+    originalData.last_name == userData.last_name &&
+    originalData.gender == userData.gender &&
+    originalData.is_profile_img_changed == userData.is_profile_img_changed &&
+    originalData.nationality == userData.nationality &&
+    originalData.phone_number == userData.phone_number &&
+    originalData.phone_number ==
+      `${phoneNum.start}-${phoneNum.middle}-${phoneNum.end}` &&
+    originalData.visa == userData.visa
+  ) {
+    return false; // 동일함
+  } else return true; // 변경됨
+};
