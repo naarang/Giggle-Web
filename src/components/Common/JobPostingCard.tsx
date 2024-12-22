@@ -13,6 +13,7 @@ import { useUserStore } from '@/store/user';
 import { UserType } from '@/constants/user';
 import { useCurrentPostIdStore } from '@/store/url';
 import { useEffect, useState } from 'react';
+import { formatMoney } from '@/utils/formatMoney';
 
 type JobPostingCardProps = {
   jobPostingData: JobPostingItemType;
@@ -152,7 +153,7 @@ const JobPostingCard = ({ jobPostingData }: JobPostingCardProps) => {
         </p>
         <p className="text-[#656565] body-3">
           <span className="text-[#1E1926] button-1">
-            {jobPostingData.hourly_rate}KRW
+            {formatMoney(jobPostingData.hourly_rate)}KRW
           </span>
           /Hr
         </p>
