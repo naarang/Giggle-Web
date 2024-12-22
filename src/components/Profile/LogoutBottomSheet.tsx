@@ -7,11 +7,15 @@ import { isEmployer } from '@/utils/signup';
 type LogoutBottomSheetProps = {
   handleLogout: () => void;
   handleLogoutCancel: () => void;
+  isShowBottomsheet: boolean;
+  setIsShowBottomSheet: (isShowBottomsheet: boolean) => void;
 };
 
 const LogoutBottomSheet = ({
   handleLogout,
   handleLogoutCancel,
+  isShowBottomsheet,
+  setIsShowBottomSheet,
 }: LogoutBottomSheetProps) => {
   const { pathname } = useLocation();
 
@@ -19,7 +23,8 @@ const LogoutBottomSheet = ({
     <BottomSheetLayout
       hasHandlebar={true}
       isAvailableHidden={true}
-      isShowBottomsheet={true}
+      isShowBottomsheet={isShowBottomsheet}
+      setIsShowBottomSheet={setIsShowBottomSheet}
     >
       <div className="w-full flex flex-col py-10">
         <div className="head-2 text-[#1E1926] py-3 px-12 text-center">
