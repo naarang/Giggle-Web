@@ -46,6 +46,8 @@ const EmployerProfilePage = () => {
         <LogoutBottomSheet
           handleLogout={handleLogout} // 로그아웃 버튼
           handleLogoutCancel={() => setLogoutBottomSheet(false)} // 취소 버튼
+          isShowBottomsheet={logoutBottomSheet}
+          setIsShowBottomSheet={setLogoutBottomSheet}
         />
       )}
       <div>

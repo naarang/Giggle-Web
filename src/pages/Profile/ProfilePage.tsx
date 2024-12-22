@@ -63,6 +63,8 @@ const ProfilePage = () => {
             <LogoutBottomSheet
               handleLogout={handleLogout}
               handleLogoutCancel={handleLogoutCancel}
+              isShowBottomsheet={bottomSheetOpen}
+              setIsShowBottomSheet={setBottomSheetOpen}
             />
           )}
           <div className="w-full h-full min-h-[100vh] bg-profilePageGradient">
