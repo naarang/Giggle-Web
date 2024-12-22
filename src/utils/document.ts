@@ -177,8 +177,10 @@ export const validateLaborContractEmployerInformation = (
 // number만 가능한 필드에서 NaN 입력으로 input이 멈추지 않게 값 검증
 export const parseStringToSafeNumber = (value: string): number => {
   const numberValue = Number(value);
+  const minimumWage2025 = 10030;
 
   if (isNaN(numberValue)) return 0;
+  if (!isNaN(numberValue) && numberValue < minimumWage2025) return 0;
   else return numberValue;
 };
 
