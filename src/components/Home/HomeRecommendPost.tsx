@@ -31,13 +31,16 @@ const HomeRecommendPost = () => {
             className="flex flex-col justify-between min-w-[11.25rem] w-[11.25rem] h-[8.75rem] pt-[0.75rem] pb-[1.125rem] px-[1.125rem] rounded-[1.5rem] border-[0.031rem] border-[#F4F4F9] shadow-cardShadow bg-cover bg-center bg-[url('/src/assets/images/blueGradient.png')]"
             onClick={() => navigate('/profile/manage-resume')}
           >
-            <MessageIcon />
+            <div className="min-h-[1.875rem]">
+              <MessageIcon />
+            </div>
             <div>
               <p className="pb-[0.5rem] caption-1 text-[#656565]">
-              Filling your resume
+                Filling your resume
               </p>
               <div className="button-2 text-[#1E1926] break-keep whitespace-normal">
-              If you fill out your resume, you can browse the recommendation notice!
+                If you fill out your resume, you can browse the recommendation
+                notice!
               </div>
             </div>
           </article>
@@ -45,13 +48,15 @@ const HomeRecommendPost = () => {
             className="flex flex-col justify-between min-w-[11.25rem] w-[11.25rem] h-[8.75rem] pt-[0.75rem] pb-[1.125rem] px-[1.125rem] rounded-[1.5rem] border-[0.031rem] border-[#F4F4F9] shadow-cardShadow bg-cover bg-center bg-[url('/src/assets/images/yellowGradient.png')]"
             onClick={() => navigate('/search')}
           >
-            <MessageIcon />
+            <div className="min-h-[1.875rem]">
+              <MessageIcon />
+            </div>
             <div>
               <p className="pb-[0.5rem] caption-1 text-[#656565]">
-              Search for job postings
+                Search for job postings
               </p>
               <div className="button-2 text-[#1E1926] break-keep whitespace-normal">
-              Save your favorite job posting!
+                Save your favorite job posting!
               </div>
             </div>
           </article>
