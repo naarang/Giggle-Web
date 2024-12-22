@@ -9,7 +9,7 @@ const LanguagePage = () => {
     <div>
       <BaseHeader
         hasBackButton={true}
-        onClickBackButton={() => navigate('/profile/manage-resume')}
+        onClickBackButton={() => navigate(-1)}
         hasMenuButton={false}
         title="Language"
       />
