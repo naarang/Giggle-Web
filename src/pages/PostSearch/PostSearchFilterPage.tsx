@@ -6,22 +6,27 @@ import { FILTER_CATEGORY_OPTIONS } from '@/constants/postSearch';
 import PostSearchFilterList from '@/components/PostSearchFilter/PostSearchFilterList';
 import { PostSearchFilterItemType } from '@/types/PostSearchFilter/PostSearchFilterItem';
 import PostSearchFilterArea from '@/components/PostSearchFilter/PostSearchFilterArea';
-import { useNavigate } from 'react-router-dom';
-import { usePostSearchStore } from '@/store/postSearch';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { usePostSearch } from '@/hooks/usePostSearch';
 
 const PostSearchFilterPage = () => {
-  const { filterList: currentFilterList, updateFilterList } =
-    usePostSearchStore();
-
   const navigate = useNavigate();
+  const { state } = useLocation();
 
-  const [filterList, setFilterList] =
-    useState<PostSearchFilterItemType>(currentFilterList);
+  const { searchOption, updateFilterList } = usePostSearch(state);
+
+  const [filterList, setFilterList] = useState<PostSearchFilterItemType>(
+    searchOption.filterList,
+  );
   const [isOpenAreaFilter, setIsOpenAreaFilter] = useState<boolean>(false);
+
+  const goToPostSearchPage = () => {
+    navigate(`/search`, { state: searchOption });
+  };
 
   const onClickApply = () => {
     updateFilterList(filterList);
-    navigate('/search');
+    navigate(`/search`, { state: { ...searchOption, filterList: filterList } });
   };
 
   return (
@@ -38,7 +43,7 @@ const PostSearchFilterPage = () => {
         <>
           <BaseHeader
             hasBackButton={true}
-            onClickBackButton={() => navigate('/search')}
+            onClickBackButton={goToPostSearchPage}
             hasMenuButton={false}
             title="Filter"
           />
