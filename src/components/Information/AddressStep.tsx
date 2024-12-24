@@ -47,8 +47,7 @@ const AddressStep = ({ userInfo, onNext }: AddressStepProps) => {
   const handleAddressSelection = (selectedAddressName: string) => {
     const result = handleAddressSelect(selectedAddressName);
     if (!result) return;
-
-    setNewAddress({...newAddress, ...result});
+    setNewAddress({...newAddress, ...result.addressData});
     setAddressInput(result.selectedAddressName);
   };
 
