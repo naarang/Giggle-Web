@@ -14,7 +14,7 @@ const Navbar = () => {
 
   return (
     <div className="flex justify-center items-center z-50">
-      <section className="fixed bottom-0 w-full py-6 px-12 bg-navbarGradient rounded-t-[2rem]">
+      <section className="fixed bottom-0 w-full pt-6 pb-10 px-12 bg-navbarGradient rounded-t-[2rem]">
         <div className="flex justify-between items-center">
           {/* 유학생 유저일 경우 nav bar */}
           {account_type === UserType.USER &&
