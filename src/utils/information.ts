@@ -45,3 +45,17 @@ export const parsePhoneNumber = (phoneNumber: string) => {
     end,
   };
 };
+
+// 사업자 등록번호 입력 시 000/00/00000 형태로 슬래시 추가하기
+export const formatCompanyRegistrationNumber = (value: string) => {
+  const numberValue = value.replace(/\D/g, '').slice(0, 10);
+
+  const formatValue =
+    numberValue
+      .match(/(\d{1,3})(\d{1,2})?(\d{1,5})?/)
+      ?.slice(1)
+      .filter(Boolean)
+      .join('/') || '';
+
+  return formatValue;
+};
