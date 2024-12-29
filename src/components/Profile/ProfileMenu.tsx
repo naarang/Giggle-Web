@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { IconType } from '@/constants/profile';
 import ProfileIcon from '@/assets/icons/Profile/ProfileIcon.svg?react';
 import ManageIcon from '@/assets/icons/Profile/ManageIcon.svg?react';
-import ScrappedIcon from '@/assets/icons/Profile/ScrappedIcon.svg?react';
+import ScrappedIcon from '@/assets/icons/Scrap.svg?react';
 import NotificationIcon from '@/assets/icons/Profile/NotificationIcon.svg?react';
 import LanguageIcon from '@/assets/icons/Profile/LanguageIcon.svg?react';
 import LogoutIcon from '@/assets/icons/Profile/LogoutIcon.svg?react';
@@ -54,7 +54,7 @@ const ProfileMenu = ({
       case IconType.MANAGE:
         return <ManageIcon />;
       case IconType.SCRAPPED:
-        return <ScrappedIcon />;
+        return <ScrappedIcon width={18} height={18} />;
       case IconType.NOTIFICATION:
         return <NotificationIcon />;
       case IconType.LANGUAGE:

@@ -5,15 +5,14 @@ import {
   LaborContractEmployeeInfo,
 } from '@/types/api/document';
 import { formatPhoneNumber, parsePhoneNumber } from '@/utils/information';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Input from '@/components/Common/Input';
 import { InputType } from '@/types/common/input';
 import Dropdown, { DropdownModal } from '@/components/Common/Dropdown';
 import { phone } from '@/constants/information';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import { useGetGeoInfo, useSearchAddress } from '@/hooks/api/useKaKaoMap';
-import { AddressType, Document } from '@/types/api/map';
-import { pick } from '@/utils/map';
+import { useGetGeoInfo } from '@/hooks/api/useKaKaoMap';
+import { AddressType } from '@/types/api/map';
 import { isNotEmpty } from '@/utils/document';
 import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
@@ -24,6 +23,8 @@ import {
   usePutStandardLaborContracts,
 } from '@/hooks/api/useDocument';
 import { useCurrentPostIdEmployeeStore } from '@/store/url';
+import LoadingItem from '../Common/LoadingItem';
+import { useAddressSearch } from '@/hooks/api/useAddressSearch';
 
 type LaborContractFormProps = {
   document?: LaborContractDataResponse;
@@ -34,6 +35,7 @@ const LaborContractWriteForm = ({
   document,
   isEdit,
 }: LaborContractFormProps) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [newDocumentData, setNewDocumentData] =
     useState<LaborContractEmployeeInfo>(initialLaborContractEmployeeInfo);
   const { currentPostId } = useCurrentPostIdEmployeeStore();
@@ -43,28 +45,37 @@ const LaborContractWriteForm = ({
     middle: '',
     end: '',
   });
-  // 주소 검색용 input 저장하는 state
-  const [addressInput, setAddressInput] = useState('');
-  // 주소 검색 결과를 저장하는 array
-  const [addressSearchResult, setAddressSearchResult] = useState<Document[]>(
-    [],
-  );
-  // 지도에 표시할 핀에 사용되는 위/경도 좌표
-  const [currentGeoInfo, setCurrentGeoInfo] = useState({
-    lat: 0,
-    lon: 0,
-  });
+  const {
+    addressInput, // 주소 검색용 input 저장하는 state
+    addressSearchResult, // 주소 검색 결과를 저장하는 array
+    currentGeoInfo, // 지도에 표시할 핀에 사용되는 위/경도 좌표
+    setCurrentGeoInfo,
+    handleAddressSearch, // 검색할 주소 입력 시 실시간 검색
+    handleAddressSelect, // 검색 결과 중 원하는 주소를 선택할 시 state에 입력
+    setAddressInput,
+  } = useAddressSearch();
   const { data, isSuccess } = useGetGeoInfo(setCurrentGeoInfo); // 현재 좌표 기준 주소 획득
-  // 키워드로 주소 검색
-  const { searchAddress } = useSearchAddress({
-    onSuccess: (data) => setAddressSearchResult(data),
-  });
-
   const { mutate: postDocument } = usePostStandardLaborContracts(
     Number(currentPostId),
+    {
+      onMutate: () => {
+        setIsLoading(true);
+      },
+      onSettled: () => {
+        setIsLoading(false);
+      },
+    },
   ); // 작성된 근로계약서 제출 훅
   const { mutate: updateDocument } = usePutStandardLaborContracts(
     Number(currentPostId),
+    {
+      onMutate: () => {
+        setIsLoading(true);
+      },
+      onSettled: () => {
+        setIsLoading(false);
+      },
+    },
   ); // 수정된 근로계약서 제출 훅
   // 문서 편집일 시 페이지 진입과 동시에 기존 내용 자동 입력
   useEffect(() => {
@@ -96,68 +107,19 @@ const LaborContractWriteForm = ({
     });
   }, [isSuccess]);
 
-  // 검색할 주소 입력 시 실시간 검색
-  const handleAddressSearch = useCallback(
-    (address: string) => {
-      setAddressInput(address);
-      if (address !== '') {
-        searchAddress(address);
-      } else {
-        setAddressSearchResult([]);
-      }
-    },
-    [searchAddress],
-  );
+  // 검색된 주소 선택 시 state에 반영
+  const handleAddressSelection = (selectedAddressName: string) => {
+    const result = handleAddressSelect(selectedAddressName);
+    if (!result) return;
 
-  // 검색 결과 중 원하는 주소를 선택할 시 state에 입력
-  const handleAddressSelect = (selectedAddressName: string) => {
-    // 사용자가 선택한 주소와 일치하는 결과를 검색 결과를 저장하는 array에서 탐색
-    const selectedAddress = addressSearchResult.find(
-      (address) => address.address_name === selectedAddressName,
-    ) as Document | undefined;
-
-    if (!selectedAddress) return;
-
-    // 구 주소와 도로명 주소를 구분하기 위한 플래그(카카오에서 반환하는 속성 명이 달라짐)
-    const isRegionAddr =
-      selectedAddress.address_type === AddressType.REGION_ADDR;
-    const addressData = isRegionAddr
-      ? selectedAddress.address
-      : selectedAddress.road_address;
-
-    // 카카오에서 반환하는 데이터 중 필요한 속성들만 선택
-    const selectedProperties = pick(addressData, [
-      'address_name',
-      'region_1depth_name',
-      'region_2depth_name',
-      'region_3depth_name',
-    ]);
-
-    let region4DepthName = ''; // optional property인 region4DeptName
-    if (isRegionAddr) {
-      region4DepthName = selectedAddress.address.region_3depth_h_name || '';
-    } else {
-      region4DepthName = selectedAddress.road_address.road_name || '';
-    }
-
-    // 선택한 데이터들을 state에 update
     setNewDocumentData({
       ...newDocumentData,
       address: {
         ...newDocumentData.address,
-        ...selectedProperties,
-        region_4depth_name: region4DepthName,
-        longitude: Number(addressData.x),
-        latitude: Number(addressData.y),
+        ...result.addressData,
       },
     });
-    setAddressInput(selectedAddress.address_name);
-    setCurrentGeoInfo({
-      lon: Number(selectedAddress.x),
-      lat: Number(selectedAddress.y),
-    });
-    // 검색 결과 초기화
-    setAddressSearchResult([]);
+    setAddressInput(result.selectedAddressName);
   };
 
   // 문서 작성 완료 핸들러 함수
@@ -178,98 +140,25 @@ const LaborContractWriteForm = ({
     postDocument(payload);
   };
   return (
-    <div className="w-full p-6 flex flex-col">
-      <div className="[&>*:last-child]:mb-40 flex flex-col gap-4">
-        {/* 이름 입력 */}
-        <div className="w-full">
-          <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
-            <div className="relative">
-              First Name
-              <div className="w-1.5 absolute !m-0 top-[0rem] right-[-0.5rem] rounded-full text-[#ff6f61] h-1.5 z-[1]">
-                *
-              </div>
-            </div>
-          </div>
-          <Input
-            inputType={InputType.TEXT}
-            placeholder="First Name"
-            value={newDocumentData.first_name}
-            onChange={(value) =>
-              setNewDocumentData({ ...newDocumentData, first_name: value })
-            }
-            canDelete={false}
-          />
+    <>
+      {isLoading && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-50 overflow-hidden"
+          style={{ touchAction: 'none' }}
+          onClick={(e) => e.preventDefault()}
+        >
+          <LoadingItem />
         </div>
-        {/* 성 입력 */}
-        <div className="w-full">
-          <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
-            <div className="relative">
-              Last Name
-              <div className="w-1.5 absolute !m-0 top-[0rem] right-[-0.5rem] rounded-full text-[#ff6f61] h-1.5 z-[1]">
-                *
-              </div>
-            </div>
-          </div>
-          <Input
-            inputType={InputType.TEXT}
-            placeholder="Last Name"
-            value={newDocumentData.last_name}
-            onChange={(value) =>
-              setNewDocumentData({ ...newDocumentData, last_name: value })
-            }
-            canDelete={false}
-          />
-        </div>
-        <div className="w-full flex flex-col gap-[1.125rem]">
-          {/* 주소 검색 입력 input */}
+      )}
+      <div
+        className={`w-full p-6 flex flex-col ${isLoading ? 'overflow-hidden pointer-events-none' : ''}`}
+      >
+        <div className="[&>*:last-child]:mb-40 flex flex-col gap-4">
+          {/* 이름 입력 */}
           <div className="w-full">
             <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
               <div className="relative">
-                Address in Korea
-                <div className="w-1.5 absolute !m-0 top-[0rem] right-[-0.5rem] rounded-full text-[#ff6f61] h-1.5 z-[1]">
-                  *
-                </div>
-              </div>
-            </div>
-            <Input
-              inputType={InputType.SEARCH}
-              placeholder="Search Your Address"
-              value={addressInput}
-              onChange={(value) => handleAddressSearch(value)}
-              canDelete={false}
-            />
-            {/* 주소 검색 결과 보여주는 dropdown modal */}
-            {addressSearchResult && addressSearchResult.length !== 0 && (
-              <DropdownModal
-                value={newDocumentData.address.address_name}
-                options={Array.from(
-                  addressSearchResult.filter(
-                    (address) =>
-                      address.address_type !==
-                      (AddressType.REGION_ADDR || AddressType.ROAD_ADDR),
-                  ),
-                  (address) => address.address_name,
-                )}
-                onSelect={handleAddressSelect}
-              />
-            )}
-          </div>
-          {/* 검색한 위치를 보여주는 지도 */}
-          <div className="w-full rounded-xl">
-            <Map
-              center={{ lat: currentGeoInfo.lat, lng: currentGeoInfo.lon }}
-              style={{ width: '100%', height: '200px' }}
-              className="rounded-xl"
-            >
-              <MapMarker
-                position={{ lat: currentGeoInfo.lat, lng: currentGeoInfo.lon }}
-              ></MapMarker>
-            </Map>
-          </div>
-          <div className="w-full">
-            <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
-              <div className="relative">
-                Detailed Address
+                First Name
                 <div className="w-1.5 absolute !m-0 top-[0rem] right-[-0.5rem] rounded-full text-[#ff6f61] h-1.5 z-[1]">
                   *
                 </div>
@@ -277,114 +166,207 @@ const LaborContractWriteForm = ({
             </div>
             <Input
               inputType={InputType.TEXT}
-              placeholder="ex) 101-dong"
-              value={newDocumentData.address.address_detail}
+              placeholder="First Name"
+              value={newDocumentData.first_name}
               onChange={(value) =>
-                setNewDocumentData({
-                  ...newDocumentData,
-                  address: {
-                    ...newDocumentData.address,
-                    address_detail: value,
-                  },
-                })
+                setNewDocumentData({ ...newDocumentData, first_name: value })
               }
               canDelete={false}
             />
           </div>
-        </div>
-        {/* 전화번호 입력 */}
-        <div className="w-full">
-          <div className="w-full flex flex-row items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
-            <div className="relative">
-              Telephone No.
-              <div className="w-1.5 absolute !m-0 top-[0rem] right-[-0.5rem] rounded-full text-[#ff6f61] h-1.5 z-[1]">
-                *
+          {/* 성 입력 */}
+          <div className="w-full">
+            <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
+              <div className="relative">
+                Last Name
+                <div className="w-1.5 absolute !m-0 top-[0rem] right-[-0.5rem] rounded-full text-[#ff6f61] h-1.5 z-[1]">
+                  *
+                </div>
               </div>
             </div>
+            <Input
+              inputType={InputType.TEXT}
+              placeholder="Last Name"
+              value={newDocumentData.last_name}
+              onChange={(value) =>
+                setNewDocumentData({ ...newDocumentData, last_name: value })
+              }
+              canDelete={false}
+            />
           </div>
-          <div className="w-full flex flex-row gap-2 justify-between mb-[0rem]">
-            <div className="w-full h-[2.75rem]">
-              <Dropdown
-                value={phoneNum.start}
-                placeholder="+82"
-                options={phone}
-                setValue={(value) => setPhoneNum({ ...phoneNum, start: value })}
+          <div className="w-full flex flex-col gap-[1.125rem]">
+            {/* 주소 검색 입력 input */}
+            <div className="w-full">
+              <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
+                <div className="relative">
+                  Address in Korea
+                  <div className="w-1.5 absolute !m-0 top-[0rem] right-[-0.5rem] rounded-full text-[#ff6f61] h-1.5 z-[1]">
+                    *
+                  </div>
+                </div>
+              </div>
+              <Input
+                inputType={InputType.SEARCH}
+                placeholder="Search Your Address"
+                value={addressInput}
+                onChange={(value) => handleAddressSearch(value)}
+                canDelete={false}
+              />
+              {/* 주소 검색 결과 보여주는 dropdown modal */}
+              {addressSearchResult && addressSearchResult.length !== 0 && (
+                <DropdownModal
+                  value={newDocumentData.address.address_name}
+                  options={Array.from(
+                    addressSearchResult.filter(
+                      (address) =>
+                        address.address_type !==
+                        (AddressType.REGION_ADDR || AddressType.ROAD_ADDR),
+                    ),
+                    (address) => address.address_name,
+                  )}
+                  onSelect={handleAddressSelection}
+                />
+              )}
+            </div>
+            {/* 검색한 위치를 보여주는 지도 */}
+            <div className="w-full rounded-xl">
+              <Map
+                center={{ lat: currentGeoInfo.lat, lng: currentGeoInfo.lon }}
+                style={{ width: '100%', height: '200px' }}
+                className="rounded-xl"
+              >
+                <MapMarker
+                  position={{
+                    lat: currentGeoInfo.lat,
+                    lng: currentGeoInfo.lon,
+                  }}
+                ></MapMarker>
+              </Map>
+            </div>
+            <div className="w-full">
+              <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
+                <div className="relative">
+                  Detailed Address
+                  <div className="w-1.5 absolute !m-0 top-[0rem] right-[-0.5rem] rounded-full text-[#ff6f61] h-1.5 z-[1]">
+                    *
+                  </div>
+                </div>
+              </div>
+              <Input
+                inputType={InputType.TEXT}
+                placeholder="ex) 101-dong"
+                value={newDocumentData.address.address_detail}
+                onChange={(value) =>
+                  setNewDocumentData({
+                    ...newDocumentData,
+                    address: {
+                      ...newDocumentData.address,
+                      address_detail: value,
+                    },
+                  })
+                }
+                canDelete={false}
               />
             </div>
-            <Input
-              inputType={InputType.TEXT}
-              placeholder="0000"
-              value={phoneNum.middle}
-              onChange={(value) => setPhoneNum({ ...phoneNum, middle: value })}
-              canDelete={false}
-            />
-            <Input
-              inputType={InputType.TEXT}
-              placeholder="0000"
-              value={phoneNum.end}
-              onChange={(value) => setPhoneNum({ ...phoneNum, end: value })}
-              canDelete={false}
-            />
           </div>
-        </div>
-        {/* 서명 입력 */}
-        <div className="w-full">
-          <div className="w-full flex flex-row items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
-            <div className="relative">
-              Applicant Signature
-              <div className="w-1.5 absolute !m-0 top-[0rem] right-[-0.5rem] rounded-full text-[#ff6f61] h-1.5 z-[1]">
-                *
+          {/* 전화번호 입력 */}
+          <div className="w-full">
+            <div className="w-full flex flex-row items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
+              <div className="relative">
+                Telephone No.
+                <div className="w-1.5 absolute !m-0 top-[0rem] right-[-0.5rem] rounded-full text-[#ff6f61] h-1.5 z-[1]">
+                  *
+                </div>
               </div>
             </div>
+            <div className="w-full flex flex-row gap-2 justify-between mb-[0rem]">
+              <div className="w-full h-[2.75rem]">
+                <Dropdown
+                  value={phoneNum.start}
+                  placeholder="+82"
+                  options={phone}
+                  setValue={(value) =>
+                    setPhoneNum({ ...phoneNum, start: value })
+                  }
+                />
+              </div>
+              <Input
+                inputType={InputType.TEXT}
+                placeholder="0000"
+                value={phoneNum.middle}
+                onChange={(value) =>
+                  setPhoneNum({ ...phoneNum, middle: value })
+                }
+                canDelete={false}
+              />
+              <Input
+                inputType={InputType.TEXT}
+                placeholder="0000"
+                value={phoneNum.end}
+                onChange={(value) => setPhoneNum({ ...phoneNum, end: value })}
+                canDelete={false}
+              />
+            </div>
           </div>
-          <div className="w-full relative shadow rounded-xl box-border h-[120px] mb-16">
-            <SignaturePad
-              onSave={(signature: string) =>
-                setNewDocumentData({
-                  ...newDocumentData,
-                  signature_base64: signature,
-                })
-              }
-              onReset={() =>
-                setNewDocumentData({
-                  ...newDocumentData,
-                  signature_base64: '',
-                })
-              }
-              previewImg={newDocumentData.signature_base64}
+          {/* 서명 입력 */}
+          <div className="w-full">
+            <div className="w-full flex flex-row items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
+              <div className="relative">
+                Applicant Signature
+                <div className="w-1.5 absolute !m-0 top-[0rem] right-[-0.5rem] rounded-full text-[#ff6f61] h-1.5 z-[1]">
+                  *
+                </div>
+              </div>
+            </div>
+            <div className="w-full relative shadow rounded-xl box-border h-[120px] mb-16">
+              <SignaturePad
+                onSave={(signature: string) =>
+                  setNewDocumentData({
+                    ...newDocumentData,
+                    signature_base64: signature,
+                  })
+                }
+                onReset={() =>
+                  setNewDocumentData({
+                    ...newDocumentData,
+                    signature_base64: '',
+                  })
+                }
+                previewImg={newDocumentData.signature_base64}
+              />
+            </div>
+          </div>
+          {/* 고용주 정보가 있다면 표시 */}
+          {document?.employer_information && (
+            <EmployerInfoSection
+              employ={document.employer_information}
+              type={DocumentType.LABOR_CONTRACT}
             />
-          </div>
+          )}
         </div>
-        {/* 고용주 정보가 있다면 표시 */}
-        {document?.employer_information && (
-          <EmployerInfoSection
-            employ={document.employer_information}
-            type={DocumentType.LABOR_CONTRACT}
-          />
-        )}
+        <BottomButtonPanel>
+          {/* 입력된 정보 중 빈 칸이 없다면 활성화 */}
+          {isNotEmpty(newDocumentData) && isNotEmpty(phoneNum) ? (
+            <Button
+              type="large"
+              bgColor="bg-[#fef387]"
+              fontColor="text-[#222]"
+              isBorder={false}
+              title={isEdit ? 'Modify' : 'Create'}
+              onClick={handleNext}
+            />
+          ) : (
+            <Button
+              type="large"
+              bgColor="bg-[#F4F4F9]"
+              fontColor=""
+              isBorder={false}
+              title={isEdit ? 'Modify' : 'Create'}
+            />
+          )}
+        </BottomButtonPanel>
       </div>
-      <BottomButtonPanel>
-        {/* 입력된 정보 중 빈 칸이 없다면 활성화 */}
-        {isNotEmpty(newDocumentData) && isNotEmpty(phoneNum) ? (
-          <Button
-            type="large"
-            bgColor="bg-[#fef387]"
-            fontColor="text-[#222]"
-            isBorder={false}
-            title={isEdit ? 'Modify' : 'Create'}
-            onClick={handleNext}
-          />
-        ) : (
-          <Button
-            type="large"
-            bgColor="bg-[#F4F4F9]"
-            fontColor=""
-            isBorder={false}
-            title={isEdit ? 'Modify' : 'Create'}
-          />
-        )}
-      </BottomButtonPanel>
-    </div>
+    </>
   );
 };
 

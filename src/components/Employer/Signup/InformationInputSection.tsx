@@ -2,12 +2,11 @@ import Dropdown, { DropdownModal } from '@/components/Common/Dropdown';
 import Input from '@/components/Common/Input';
 import InputLayout from '@/components/WorkExperience/InputLayout';
 import { phone } from '@/constants/information';
-import { useGetGeoInfo, useSearchAddress } from '@/hooks/api/useKaKaoMap';
+import { useGetGeoInfo } from '@/hooks/api/useKaKaoMap';
 import { EmployerRegistrationRequestBody } from '@/types/api/employ';
-import { AddressType, Document } from '@/types/api/map';
+import { AddressType } from '@/types/api/map';
 import { InputType } from '@/types/common/input';
-import { pick } from '@/utils/map';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import FileAddIcon from '@/assets/icons/FileAddIcon.svg?react';
 import CheckIcon from '@/assets/icons/CheckOfBoxIcon.svg?react';
@@ -17,6 +16,7 @@ import {
   formatCompanyRegistrationNumber,
   formatPhoneNumber,
 } from '@/utils/information';
+import { useAddressSearch } from '@/hooks/api/useAddressSearch';
 
 type InformationInputSectionProps = {
   newEmployData: EmployerRegistrationRequestBody;
@@ -35,17 +35,15 @@ const InformationInputSection = ({
   setNewEmployData,
   setLogoFile,
 }: InformationInputSectionProps) => {
-  // 주소 검색용 input 저장하는 state
-  const [addressInput, setAddressInput] = useState('');
-  // 주소 검색 결과를 저장하는 array
-  const [addressSearchResult, setAddressSearchResult] = useState<Document[]>(
-    [],
-  );
-  // 지도에 표시할 핀에 사용되는 위/경도 좌표
-  const [currentGeoInfo, setCurrentGeoInfo] = useState({
-    lat: 0,
-    lon: 0,
-  });
+  const {
+    addressInput, // 주소 검색용 input 저장하는 state
+    addressSearchResult, // 주소 검색 결과를 저장하는 array
+    currentGeoInfo, // 지도에 표시할 핀에 사용되는 위/경도 좌표
+    setCurrentGeoInfo,
+    handleAddressSearch, // 검색할 주소 입력 시 실시간 검색
+    handleAddressSelect, // 검색 결과 중 원하는 주소를 선택할 시 state에 입력
+    setAddressInput,
+  } = useAddressSearch();
   // 세 부분으로 나누어 입력받는 방식을 위해 전화번호만 별도의 state로 분리, 추후 유효성 검사 단에서 통합
   const [phoneNum, setPhoneNum] = useState({
     start: '',
@@ -56,10 +54,22 @@ const InformationInputSection = ({
   const [selectedImage, setSelectedImage] = useState<string>();
   // 현재 좌표 기준 주소 획득
   const { data, isSuccess } = useGetGeoInfo(setCurrentGeoInfo);
-  // 키워드로 주소 검색
-  const { searchAddress } = useSearchAddress({
-    onSuccess: (data) => setAddressSearchResult(data),
-  });
+
+  // 검색된 주소 선택 시 state에 반영
+  const handleAddressSelection = (selectedAddressName: string) => {
+    const result = handleAddressSelect(selectedAddressName);
+    if (!result) return;
+
+    setNewEmployData({
+      ...newEmployData,
+      address: {
+        ...newEmployData.address,
+        ...result.addressData,
+      },
+    });
+    setAddressInput(result.selectedAddressName);
+  };
+
   // 첫 로딩 시 현재 사용자의 위치 파악 해 지도에 표기
   useEffect(() => {
     setNewEmployData({
@@ -81,68 +91,6 @@ const InformationInputSection = ({
     });
   }, [phoneNum]);
 
-  // 검색할 주소 입력 시 실시간 검색
-  const handleAddressSearch = useCallback(
-    (address: string) => {
-      setAddressInput(address);
-      if (address !== '') {
-        searchAddress(address);
-      } else {
-        setAddressSearchResult([]);
-      }
-    },
-    [searchAddress],
-  );
-  // 검색 결과 중 원하는 주소를 선택할 시 state에 입력
-  const handleAddressSelect = (selectedAddressName: string) => {
-    // 사용자가 선택한 주소와 일치하는 결과를 검색 결과를 저장하는 array에서 탐색
-    const selectedAddress = addressSearchResult.find(
-      (address) => address.address_name === selectedAddressName,
-    ) as Document | undefined;
-
-    if (!selectedAddress) return;
-
-    // 구 주소와 도로명 주소를 구분하기 위한 플래그(카카오에서 반환하는 속성 명이 달라짐)
-    const isRegionAddr =
-      selectedAddress.address_type === AddressType.REGION_ADDR;
-    const addressData = isRegionAddr
-      ? selectedAddress.address
-      : selectedAddress.road_address;
-
-    // 카카오에서 반환하는 데이터 중 필요한 속성들만 선택
-    const selectedProperties = pick(addressData, [
-      'address_name',
-      'region_1depth_name',
-      'region_2depth_name',
-      'region_3depth_name',
-    ]);
-
-    let region4DepthName = ''; // optional property인 region4DeptName
-    if (isRegionAddr) {
-      region4DepthName = selectedAddress.address.region_3depth_h_name || '';
-    } else {
-      region4DepthName = selectedAddress.road_address.road_name || '';
-    }
-
-    // 선택한 데이터들을 state에 update
-    setNewEmployData({
-      ...newEmployData,
-      address: {
-        ...newEmployData.address,
-        ...selectedProperties,
-        region_4depth_name: region4DepthName,
-        longitude: Number(addressData.x),
-        latitude: Number(addressData.y),
-      },
-    });
-    setAddressInput(selectedAddress.address_name);
-    setCurrentGeoInfo({
-      lon: Number(selectedAddress.x),
-      lat: Number(selectedAddress.y),
-    });
-    // 검색 결과 초기화
-    setAddressSearchResult([]);
-  };
   // 로고 선택
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -243,7 +191,7 @@ const InformationInputSection = ({
                     ),
                     (address) => address.address_name,
                   )}
-                  onSelect={handleAddressSelect}
+                  onSelect={handleAddressSelection}
                 />
               )}
             </InputLayout>

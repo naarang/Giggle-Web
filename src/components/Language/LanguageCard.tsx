@@ -7,6 +7,7 @@ import { useState } from 'react';
 import Button from '@/components/Common/Button';
 import {
   useDeleteEtcLanguageLevel,
+  usePatchEtcLanguageLevel,
   usePatchLanguagesLevel,
 } from '@/hooks/api/useResume';
 import NumberRadioButton from '@/components/Language/NumberRadioButton';
@@ -34,13 +35,26 @@ const LanguageCard = ({
   const [selectedLevel, setSelectedLevel] = useState(level);
 
   const { mutate: deleteEtcLanguage } = useDeleteEtcLanguageLevel();
-  const { mutate: patchLanguagesLevel } = usePatchLanguagesLevel({
-    type: title.toLowerCase().replace(/\s+/g, '-') as LanguagesLevelType,
-    level: selectedLevel,
-  });
+  const { mutate: patchLanguagesLevel } = usePatchLanguagesLevel();
+  const { mutate: patchEtcLanguageLevel } = usePatchEtcLanguageLevel();
 
   const handleLevelChange = () => {
-    patchLanguagesLevel();
+    // 기타 언어 수정
+    if (etcLanguageId) {
+      patchEtcLanguageLevel({
+        id: etcLanguageId,
+        data: {
+          language_name: title,
+          level: selectedLevel,
+        },
+      });
+    }
+    // 기본 언어 수정
+    else
+      patchLanguagesLevel({
+        type: title.toLowerCase().replace(/\s+/g, '-') as LanguagesLevelType,
+        level: selectedLevel,
+      });
     setLevelBottomSheet(false);
   };
 

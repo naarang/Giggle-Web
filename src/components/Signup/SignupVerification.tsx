@@ -138,7 +138,7 @@ const SignupVerification = ({
           {Array.from({ length: 6 }).map((_, index) => (
             <input
               key={index}
-              type="text"
+              type="number"
               maxLength={1}
               className="title-2 bg-[#F4F4F9] text-center flex justify-center items-center w-11 h-14 rounded-2xl"
               ref={(el) => (inputRefs.current[index] = el)}

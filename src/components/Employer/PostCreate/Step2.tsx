@@ -3,16 +3,15 @@ import Button from '@/components/Common/Button';
 import Dropdown, { DropdownModal } from '@/components/Common/Dropdown';
 import Input from '@/components/Common/Input';
 import InputLayout from '@/components/WorkExperience/InputLayout';
-import { useSearchAddress } from '@/hooks/api/useKaKaoMap';
-import { AddressType, Document } from '@/types/api/map';
+import { AddressType } from '@/types/api/map';
 import { InputType } from '@/types/common/input';
 import { JobPostingForm } from '@/types/postCreate/postCreate';
-import { pick } from '@/utils/map';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import CheckIcon from '@/assets/icons/CheckOfBoxIcon.svg?react';
 import { buttonTypeKeys } from '@/constants/components';
 import { formatDateToDash } from '@/utils/editResume';
+import { useAddressSearch } from '@/hooks/api/useAddressSearch';
 
 const Step2 = ({
   postInfo,
@@ -27,96 +26,36 @@ const Step2 = ({
   const [newPostInfo, setNewPostInfo] = useState<JobPostingForm>(postInfo);
   // 버튼 활성화 여부를 위한 플래그
   const [isInvalid, setIsInvalid] = useState(true);
-  // 주소 검색용 input 저장하는 state
-  const [addressInput, setAddressInput] = useState(
-    newPostInfo.body.address.address_name
-      ? newPostInfo.body.address.address_name
-      : '',
-  );
-  // 주소 검색 결과를 저장하는 array
-  const [addressSearchResult, setAddressSearchResult] = useState<Document[]>(
-    [],
-  );
-  // 지도에 표시할 핀에 사용되는 위/경도 좌표
-  const [currentGeoInfo, setCurrentGeoInfo] = useState({
-    lat: 0,
-    lon: 0,
-  });
+  const {
+    addressInput, // 주소 검색용 input 저장하는 state
+    addressSearchResult, // 주소 검색 결과를 저장하는 array
+    currentGeoInfo, // 지도에 표시할 핀에 사용되는 위/경도 좌표
+    handleAddressSearch, // 검색할 주소 입력 시 실시간 검색
+    handleAddressSelect, // 검색 결과 중 원하는 주소를 선택할 시 state에 입력
+    setAddressInput,
+  } = useAddressSearch();
 
-  // 키워드로 주소 검색
-  const { searchAddress } = useSearchAddress({
-    onSuccess: (data) => setAddressSearchResult(data),
-  });
-  // 검색할 주소 입력 시 실시간 검색
-  const handleAddressSearch = useCallback(
-    (address: string) => {
-      setAddressInput(address);
-      if (address !== '') {
-        searchAddress(address);
-      } else {
-        setAddressSearchResult([]);
-      }
-    },
-    [searchAddress],
-  );
+  const handleAddressSelection = (selectedAddressName: string) => {
+    const result = handleAddressSelect(selectedAddressName);
+    if (!result) return;
 
-  useEffect(() => {
-    if(addressInput !== '') handleAddressSearch(addressInput);
-  }, []);
-
-  // 검색 결과 중 원하는 주소를 선택할 시 state에 입력
-  const handleAddressSelect = (selectedAddressName: string) => {
-    // 사용자가 선택한 주소와 일치하는 결과를 검색 결과를 저장하는 array에서 탐색
-    const selectedAddress = addressSearchResult.find(
-      (address) => address.address_name === selectedAddressName,
-    ) as Document | undefined;
-
-    if (!selectedAddress) return;
-
-    // 구 주소와 도로명 주소를 구분하기 위한 플래그(카카오에서 반환하는 속성 명이 달라짐)
-    const isRegionAddr =
-      selectedAddress.address_type === AddressType.REGION_ADDR;
-    const addressData = isRegionAddr
-      ? selectedAddress.address
-      : selectedAddress.road_address;
-
-    // 카카오에서 반환하는 데이터 중 필요한 속성들만 선택
-    const selectedProperties = pick(addressData, [
-      'address_name',
-      'region_1depth_name',
-      'region_2depth_name',
-      'region_3depth_name',
-    ]);
-
-    let region4DepthName = ''; // optional property인 region4DeptName
-    if (isRegionAddr) {
-      region4DepthName = selectedAddress.address.region_3depth_h_name || '';
-    } else {
-      region4DepthName = selectedAddress.road_address.road_name || '';
-    }
-
-    // 선택한 데이터들을 state에 update
     setNewPostInfo({
       ...newPostInfo,
       body: {
         ...newPostInfo.body,
         address: {
           ...newPostInfo.body.address,
-          ...selectedProperties,
-          region_4depth_name: region4DepthName,
-          longitude: Number(addressData.x),
-          latitude: Number(addressData.y),
+          ...result.addressData,
         },
       },
     });
-    setAddressInput(selectedAddress.address_name);
-    setCurrentGeoInfo({
-      lon: Number(selectedAddress.x),
-      lat: Number(selectedAddress.y),
-    });
-    // 검색 결과 초기화
-    setAddressSearchResult([]);
+    setAddressInput(result.selectedAddressName);
   };
+
+  useEffect(() => {
+    if (addressInput !== '') handleAddressSearch(addressInput);
+  }, []);
+
   /* 정보 입력 시마다 유효성을 검사해 모든 값이 유효하면 버튼이 활성화 */
   useEffect(() => {
     const { address } = newPostInfo.body;
@@ -150,7 +89,7 @@ const Step2 = ({
                   ),
                   (address) => address.address_name,
                 )}
-                onSelect={handleAddressSelect}
+                onSelect={handleAddressSelection}
               />
             )}
           </InputLayout>
