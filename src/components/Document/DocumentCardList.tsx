@@ -36,7 +36,7 @@ const DocumentCardList = ({
         documents[property] ? (
           <DocumentCardDispenser
             key={`${index}_${property}`}
-            document={documents[property]}
+            documentInfo={documents[property]}
             title={DocumentTypeInfo[property].name}
             type={property}
             // null 체크 추가
