@@ -1,6 +1,7 @@
 import Tag from '@/components/Common/Tag';
 import { useCurrentPostIdStore } from '@/store/url';
 import { EmployerPostItemType } from '@/types/post/employerPostItem';
+import { formatMoney } from '@/utils/formatMoney';
 import { useNavigate } from 'react-router-dom';
 
 type EmployerPostCardType = {
@@ -33,7 +34,7 @@ const EmployerPostCard = ({ postData }: EmployerPostCardType) => {
         </div>
         <div className="flex justify-between items-end pt-[0.25rem]">
           <Tag
-            value={`${postData.hourly_rate} KRW`}
+            value={`${formatMoney(postData.hourly_rate)} KRW`}
             padding="0.375rem 0.75rem"
             isRounded={true}
             hasCheckIcon={false}
@@ -52,8 +53,8 @@ const EmployerPostCard = ({ postData }: EmployerPostCardType) => {
           className="flex-1 py-[0.75rem] caption-1-sb text-[#464646] bg-[#F4F4F9]  text-center"
           onClick={() => {
             updateCurrentPostId(postData.id);
-            navigate(`/employer/post/${postData.id}`)}
-          }
+            navigate(`/employer/post/${postData.id}`);
+          }}
         >
           공고 상세보기
         </button>
@@ -61,8 +62,9 @@ const EmployerPostCard = ({ postData }: EmployerPostCardType) => {
           className="flex-1 py-[0.75rem] caption-1-sb text-[#1E1926] bg-[#FEF387]  text-center"
           onClick={() => {
             updateCurrentPostId(postData.id);
-            navigate(`/employer/post/${postData.id}/applicant`)}
-          }>
+            navigate(`/employer/post/${postData.id}/applicant`);
+          }}
+        >
           지원자 확인
         </button>
       </div>

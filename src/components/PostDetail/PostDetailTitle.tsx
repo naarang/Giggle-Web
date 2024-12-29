@@ -3,6 +3,7 @@ import LocationIcon from '@/assets/icons/LocationIcon.svg?react';
 import ClockIcon from '@/assets/icons/ClockIcon.svg?react';
 import MoneyIcon from '@/assets/icons/MoneyIcon.svg?react';
 import { PostDetailItemType } from '@/types/postDetail/postDetailItem';
+import { formatMoney } from '@/utils/formatMoney';
 
 type PostDetailTitleProps = {
   postDetailData: PostDetailItemType;
@@ -72,7 +73,7 @@ const PostDetailTitle = ({ postDetailData }: PostDetailTitleProps) => {
         <div className="flex justify-end gap-[0.5rem] px-[0.5rem]">
           <MoneyIcon className="min-w-[0.5rem]" />
           <p className="text-[#464646] caption-1">
-            ${postDetailData.summaries.hourly_rate}
+            ${formatMoney(postDetailData.summaries.hourly_rate)}
           </p>
         </div>
         <div className="flex gap-[0.5rem] px-[0.5rem]">

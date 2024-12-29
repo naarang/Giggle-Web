@@ -1,23 +1,24 @@
 import Tag from '@/components/Common/Tag';
 import FilterIcon from '@/assets/icons/FilterIcon.svg?react';
 import { FILTER_CATEGORY } from '@/constants/postSearch';
-import { useNavigate } from 'react-router-dom';
-import { usePostSearchStore } from '@/store/postSearch';
+import { PostSearchFilterItemType } from '@/types/PostSearchFilter/PostSearchFilterItem';
 
 type TagType = {
   category: string;
   value: string;
 };
 
-const PostSearchFilterList = () => {
-  const { filterList, updateFilterList } = usePostSearchStore();
+type PostSearchFilterListProps = {
+  openFilter: () => void;
+  filterList: PostSearchFilterItemType;
+  updateFilterList: (value: PostSearchFilterItemType) => void;
+};
 
-  const navigate = useNavigate();
-
-  const goToPostSearchFilterPage = () => {
-    navigate('/search/filter');
-  };
-
+const PostSearchFilterList = ({
+  openFilter,
+  filterList,
+  updateFilterList,
+}: PostSearchFilterListProps) => {
   const formatFilterListToTag = () => {
     const excludedCategories = [
       FILTER_CATEGORY.REGION_1DEPTH,
@@ -131,7 +132,7 @@ const PostSearchFilterList = () => {
       </div>
       <button
         className="absolute top-0 right-0 px-2 pr-6 py-3 bg-white"
-        onClick={goToPostSearchFilterPage}
+        onClick={openFilter}
       >
         <FilterIcon />
       </button>

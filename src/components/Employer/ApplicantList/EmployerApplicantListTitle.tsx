@@ -6,6 +6,7 @@ import TopRightArrowIcons from '@/assets/icons/Home/TopRightArrowIcon.svg?react'
 import { PostSummaryItemType } from '@/types/post/postSummaryItem';
 
 import { useNavigate, useParams } from 'react-router-dom';
+import { formatMoney } from '@/utils/formatMoney';
 
 type EmployerApplicantListTitlePropsType = {
   postData: PostSummaryItemType;
@@ -78,7 +79,7 @@ const EmployerApplicantListTitle = ({
         <div className="flex justify-end gap-[0.5rem] px-[0.5rem]">
           <MoneyIcon className="min-w-[0.5rem]" />
           <p className="text-[#464646] caption-1">
-            ${postData.summaries.hourly_rate}
+            ${formatMoney(postData.summaries.hourly_rate)}
           </p>
         </div>
         <div className="flex gap-[0.5rem] px-[0.5rem]">
