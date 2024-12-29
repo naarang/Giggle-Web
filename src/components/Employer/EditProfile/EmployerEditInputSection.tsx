@@ -11,7 +11,10 @@ import FileAddIcon from '@/assets/icons/FileAddIcon.svg?react';
 import CheckIcon from '@/assets/icons/CheckOfBoxIcon.svg?react';
 import GiggleLogo from '@/assets/icons/GiggleLogo.svg?react';
 import giggleLogoPng from '@/assets/images/GiggleLogo.png';
-import { formatPhoneNumber } from '@/utils/information';
+import {
+  formatCompanyRegistrationNumber,
+  formatPhoneNumber,
+} from '@/utils/information';
 import { EmployerProfileRequestBody } from '@/types/api/profile';
 import { useAddressSearch } from '@/hooks/api/useAddressSearch';
 
@@ -85,7 +88,7 @@ const EmployerEditInputSection = ({
       },
     });
   }, [phoneNum]);
-  
+
   // 검색된 주소 선택 시 state에 반영
   const handleAddressSelection = (selectedAddressName: string) => {
     const result = handleAddressSelect(selectedAddressName);
@@ -242,14 +245,15 @@ const EmployerEditInputSection = ({
           <InputLayout title="사업자 등록번호" isEssential>
             <Input
               inputType={InputType.TEXT}
-              placeholder="000/00/00000"
+              placeholder="X X X / X X / X X X X X"
               value={newEmployData.owner_info.company_registration_number}
               onChange={(value) =>
                 setNewEmployData({
                   ...newEmployData,
                   owner_info: {
                     ...newEmployData.owner_info,
-                    company_registration_number: value,
+                    company_registration_number:
+                      formatCompanyRegistrationNumber(value),
                   },
                 })
               }

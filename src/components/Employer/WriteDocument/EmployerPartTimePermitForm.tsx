@@ -25,7 +25,11 @@ import {
   parseStringToSafeNumber,
   validateEmployerInformation,
 } from '@/utils/document';
-import { formatPhoneNumber, parsePhoneNumber } from '@/utils/information';
+import {
+  formatCompanyRegistrationNumber,
+  formatPhoneNumber,
+  parsePhoneNumber,
+} from '@/utils/information';
 import { phone } from '@/constants/information';
 import LoadingItem from '@/components/Common/LoadingItem';
 import { useAddressSearch } from '@/hooks/api/useAddressSearch';
@@ -166,12 +170,13 @@ const EmployerPartTimePermitForm = ({
           <InputLayout title="사업자등록번호" isEssential>
             <Input
               inputType={InputType.TEXT}
-              placeholder="000/00/00000"
+              placeholder="X X X / X X / X X X X X"
               value={newDocumentData.company_registration_number}
               onChange={(value) =>
                 setNewDocumentData({
                   ...newDocumentData,
-                  company_registration_number: value,
+                  company_registration_number:
+                    formatCompanyRegistrationNumber(value),
                 })
               }
               canDelete={false}

@@ -7,23 +7,31 @@ import {
   useInfiniteGetPostList,
 } from '@/hooks/api/usePost';
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
-import { usePostSearchStore } from '@/store/postSearch';
+import { usePostSearch } from '@/hooks/usePostSearch';
 import { useUserStore } from '@/store/user';
 import { GetPostListReqType } from '@/types/api/post';
 import { JobPostingItemType } from '@/types/common/jobPostingItem';
 import { PostSortingType } from '@/types/PostSearchFilter/PostSearchFilterItem';
 import { formatSearchFilter } from '@/utils/formatSearchFilter';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const PostSearchPage = () => {
   const navigate = useNavigate();
+  const { state } = useLocation();
+
+  const { searchOption, updateSearchText, updateFilterList, updateSortType } =
+    usePostSearch(state);
 
   const { account_type } = useUserStore();
-  const { searchText, updateSearchText, filterList, sortType, updateSortType } =
-    usePostSearchStore();
-  const [searchParams, setSearchParams] =
-    useState<GetPostListReqType>(formatSearchFilter());
+
+  const [searchParams, setSearchParams] = useState<GetPostListReqType>(
+    formatSearchFilter(
+      searchOption.searchText,
+      searchOption.sortType,
+      searchOption.filterList,
+    ),
+  );
 
   const [postData, setPostData] = useState<JobPostingItemType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -51,13 +59,21 @@ const PostSearchPage = () => {
 
   const onClickSearch = (text: string) => {
     updateSearchText(text);
-    const newSearchParams = formatSearchFilter(text, sortType, filterList);
+    const newSearchParams = formatSearchFilter(
+      text,
+      searchOption.sortType,
+      searchOption.filterList,
+    );
     setSearchParams(newSearchParams);
   };
 
   const onChangeSortType = (selectedSortType: PostSortingType) => {
     updateSortType(selectedSortType);
-    setSearchParams({ ...searchParams, sorting: selectedSortType });
+    setSearchParams((prev) => ({ ...prev, sorting: selectedSortType }));
+  };
+
+  const goToPostSearchFilterPage = () => {
+    navigate(`/search/filter`, { state: searchOption });
   };
 
   const targetRef = useInfiniteScroll(() => {
@@ -84,11 +100,16 @@ const PostSearchPage = () => {
             ? '이름으로 검색'
             : 'Search for job posting name'
         }
-        initialValue={searchText}
+        initialValue={searchOption.searchText}
       />
-      <PostSearchFilterList />
+      <PostSearchFilterList
+        openFilter={goToPostSearchFilterPage}
+        filterList={searchOption.filterList}
+        updateFilterList={updateFilterList}
+      />
       <PostSearchResult
         postData={postData}
+        sortType={searchOption.sortType}
         onChangeSortType={onChangeSortType}
         isLoading={isLoading}
       />

@@ -3,17 +3,20 @@ import {
   initialFilterList,
   POST_SEARCH_MENU,
 } from '@/constants/postSearch';
-import { PostSearchFilterItemType } from '@/types/PostSearchFilter/PostSearchFilterItem';
+import {
+  PostSearchFilterItemType,
+  PostSortingType,
+} from '@/types/PostSearchFilter/PostSearchFilterItem';
 
 export const formatSearchFilter = (
   searchText: string = '',
-  sortType: 'POPULAR' | 'RECENT' | POST_SEARCH_MENU = 'POPULAR',
+  sortType: string = 'POPULAR',
   filterList: PostSearchFilterItemType = initialFilterList,
 ) => {
   const newSearchFilter = {
     size: 5,
     search: searchText ?? null,
-    sorting: sortType,
+    sorting: sortType as PostSortingType | POST_SEARCH_MENU,
     region_1depth: filterList[FILTER_CATEGORY.REGION_1DEPTH].join(','),
     region_2depth: filterList[FILTER_CATEGORY.REGION_2DEPTH]
       .map((value) => (value === '전체' ? 'none' : value))
