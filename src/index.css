@@ -10,6 +10,7 @@
   font-display: 'fallback';
 }
 
+html,
 body {
   font-family:
     'Pretendard Variable',
@@ -27,6 +28,7 @@ body {
     'Segoe UI Emoji',
     'Segoe UI Symbol',
     sans-serif;
+  font-synthesis: none;
 }
 
 @layer components {
