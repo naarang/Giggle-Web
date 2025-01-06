@@ -96,7 +96,7 @@ const SigninInputSection = () => {
         */}
       </div>
       <BottomButtonPanel>
-        <div className="w-full flex flex-col items-center gap-2">
+        <div className="w-full flex flex-col items-center gap-6">
           <div className="flex items-center justify-center gap-2">
             <p className="text-[#7D8A95] text-sm font-normal">
               Don't have an account?
