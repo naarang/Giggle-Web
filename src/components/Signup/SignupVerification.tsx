@@ -174,17 +174,19 @@ const SignupVerification = ({
         </div>
         {/* 5회 이내 이메일 재발송 가능 */}
         {!resendDisabled && (
-          <div className="absolute top-[-1.125rem] flex items-center justify-center gap-2">
-            <p className="text-[#7D8A95] text-sm font-normal">
-              {signInputTranclation.requestResend[isEmployer(pathname)]}
-            </p>
-            <button
-              className="text-[#7872ED] text-sm font-semibold"
-              onClick={handleResendClick} // 이메일 인증코드 재전송 API 호출
-            >
-              {signInputTranclation.resend[isEmployer(pathname)]}
-            </button>
-          </div>
+          <>
+            <div className="absolute top-[-1.125rem] flex items-center justify-center gap-2">
+              <p className="text-[#7D8A95] text-sm font-normal">
+                {signInputTranclation.requestResend[isEmployer(pathname)]}
+              </p>
+              <button
+                className="text-[#7872ED] text-sm font-semibold"
+                onClick={handleResendClick} // 이메일 인증코드 재전송 API 호출
+              >
+                {signInputTranclation.resend[isEmployer(pathname)]}
+              </button>
+            </div>
+          </>
         )}
       </BottomButtonPanel>
     </div>
