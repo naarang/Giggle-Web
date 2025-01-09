@@ -138,7 +138,7 @@ const SignupVerification = ({
         {signInputTranclation.enterCode[isEmployer(pathname)]}
       </div>
       <div className="py-[3.125rem] flex flex-col gap-8">
-        <div className="flex gap-3">
+        <div className="flex gap-3 justify-center">
           {Array.from({ length: 6 }).map((_, index) => (
             <input
               key={index}
