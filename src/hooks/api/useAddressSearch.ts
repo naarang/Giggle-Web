@@ -29,7 +29,9 @@ interface UseAddressSearchReturn {
 
 export const useAddressSearch = (): UseAddressSearchReturn => {
   const [addressInput, setAddressInput] = useState('');
-  const [addressSearchResult, setAddressSearchResult] = useState<Document[]>([]);
+  const [addressSearchResult, setAddressSearchResult] = useState<Document[]>(
+    [],
+  );
   const [currentGeoInfo, setCurrentGeoInfo] = useState({
     lat: 0,
     lon: 0,
@@ -58,7 +60,7 @@ export const useAddressSearch = (): UseAddressSearchReturn => {
 
     if (!selectedAddress) return;
 
-    const isRoadAddr = selectedAddress.address_type === AddressType.ROAD_ADDR;
+    const isRoadAddr = selectedAddress.address_type === AddressType.ROAD;
     const addressData = isRoadAddr
       ? selectedAddress.road_address
       : selectedAddress.address;
