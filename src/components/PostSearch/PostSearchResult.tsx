@@ -3,7 +3,6 @@ import { JobPostingItemType } from '@/types/common/jobPostingItem';
 import JobPostingCard from '@/components/Common/JobPostingCard';
 import SearchSortDropdown from '@/components/Common/SearchSortDropdown';
 import { POST_SORTING } from '@/constants/postSearch';
-import { usePostSearchStore } from '@/store/postSearch';
 import { PostSortingType } from '@/types/PostSearchFilter/PostSearchFilterItem';
 import { useUserStore } from '@/store/user';
 import { UserType } from '@/constants/user';
@@ -11,17 +10,17 @@ import LoadingItem from '@/components/Common/LoadingItem';
 
 type PostSearchResultProps = {
   postData: JobPostingItemType[];
+  sortType: string;
   onChangeSortType: (sort: PostSortingType) => void;
   isLoading: boolean;
 };
 
 const PostSearchResult = ({
   postData,
+  sortType,
   onChangeSortType,
   isLoading,
 }: PostSearchResultProps) => {
-  const { sortType } = usePostSearchStore();
-
   const { account_type } = useUserStore();
 
   return (

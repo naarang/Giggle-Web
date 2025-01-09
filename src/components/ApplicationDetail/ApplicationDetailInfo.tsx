@@ -1,4 +1,5 @@
 import { ApplicationDetailItemType } from '@/types/application/applicationItem';
+import { formatMoney } from '@/utils/formatMoney';
 
 type ApplicationDetailCardProps = {
   applicationData: ApplicationDetailItemType;
@@ -13,7 +14,7 @@ const ApplicationDetailInfo = ({
         <div className="px-[0.75rem] py-[0.5rem] bg-[#F4F4F9] rounded-[0.5rem] text-center">
           <h5 className="pb-[0.25rem] caption-1-sb text-black">Hourly wage</h5>
           <p className="caption-1 text-[#656565]">
-            {applicationData.job_info.hourly_rate} KRW
+            {formatMoney(applicationData.job_info.hourly_rate)} KRW
           </p>
         </div>
         <div className="px-[0.75rem] py-[0.5rem] bg-[#F4F4F9] rounded-[0.5rem] text-center">

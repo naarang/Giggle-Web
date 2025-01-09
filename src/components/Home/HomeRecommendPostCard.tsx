@@ -30,12 +30,14 @@ const HomeRecommendPostCard = ({
           {jobPostingData.job_category.replace(/_/g, ' ').toLowerCase()}
         </div>
       </div>
-      <MessageIcon />
+      <div className="min-h-[1.875rem]">
+        <MessageIcon />
+      </div>
       <div>
         <p className="pb-[0.5rem] caption-1 text-[#656565] break-words whitespace-normal">
           The recommendation notice for {name.replace(/-/g, ' ')} has arrived !
         </p>
-        <div className="button-2 text-[#1E1926] break-words whitespace-normal">
+        <div className="button-2 text-[#1E1926] break-words whitespace-normal line-clamp-2">
           Job Title {')'} {jobPostingData.title}
         </div>
       </div>

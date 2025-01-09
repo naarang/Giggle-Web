@@ -5,7 +5,6 @@ import Tag from '@/components/Common/Tag';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { POST_SEARCH_MENU, POST_SORTING } from '@/constants/postSearch';
-import { usePostSearchStore } from '@/store/postSearch';
 import { useUserStore } from '@/store/user';
 import { UserType } from '@/constants/user';
 import { useGetPostGuestList, useGetPostList } from '@/hooks/api/usePost';
@@ -13,7 +12,6 @@ import { PostSortingType } from '@/types/PostSearchFilter/PostSearchFilterItem';
 
 const HomeJobPostingList = () => {
   const { account_type } = useUserStore();
-  const { updateSortType } = usePostSearchStore();
 
   const isGuest = !account_type;
 
@@ -78,8 +76,7 @@ const HomeJobPostingList = () => {
   };
 
   const goToSearchPage = (type: PostSortingType) => {
-    updateSortType(type);
-    navigate('/search');
+    navigate(`/search`, { state: { sortType: type } });
   };
 
   return (

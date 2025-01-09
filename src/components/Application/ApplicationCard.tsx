@@ -6,6 +6,7 @@ import {
   AppicationItemType,
   ApplicationStepType,
 } from '@/types/application/applicationItem';
+import { formatMoney } from '@/utils/formatMoney';
 import { useNavigate } from 'react-router-dom';
 
 const statusStyler = (status: ApplicationStepType) => {
@@ -73,7 +74,7 @@ const ApplicationCard = ({ applicationData }: ApplicationCardPropsType) => {
         </div>
         <div className="flex justify-between items-end pt-[0.25rem]">
           <Tag
-            value={`${applicationData.hourly_rate} KRW`}
+            value={`${formatMoney(applicationData.hourly_rate)} KRW`}
             padding="0.375rem 0.75rem"
             isRounded={true}
             hasCheckIcon={false}

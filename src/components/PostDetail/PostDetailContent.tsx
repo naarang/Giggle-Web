@@ -4,6 +4,7 @@ import { PostDetailContentMenu } from '@/constants/postDetail';
 import Tag from '@/components/Common/Tag';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { PostDetailItemType } from '@/types/postDetail/postDetailItem';
+import { formatMoney } from '@/utils/formatMoney';
 
 type PostDetailContentProps = {
   postDetailData: PostDetailItemType;
@@ -150,7 +151,7 @@ const PostDetailContent = ({ postDetailData }: PostDetailContentProps) => {
             <div>
               <h5 className="pb-[0.5rem] text-[#656565] button-2">Salary</h5>
               <p className="text-[#656565] caption-1">
-                {postDetailData.working_conditions.hourly_rate} KRW
+                {formatMoney(postDetailData.working_conditions.hourly_rate)} KRW
               </p>
             </div>
             <div>

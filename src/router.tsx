@@ -11,7 +11,6 @@ import SignupPage from '@/pages/Signup/SignupPage';
 import InformationPage from '@/pages/Information/InformationPage';
 import ApplicationDocumentsPage from '@/pages/ApplicationDocuments/ApplicationDocumentsPage';
 import PostSearchPage from '@/pages/PostSearch/PostSearchPage';
-import PostSearchFilterPage from '@/pages/PostSearchFilter/PostSearchFilterPage';
 import ProfilePage from '@/pages/Profile/ProfilePage';
 import LanguageSettingPage from '@/pages/LanguageSetting/LanguageSettingPage';
 import EditProfilePage from '@/pages/EditProfile/EditProfilePage';
@@ -50,6 +49,7 @@ import ApplicantDocumentsDetailPage from '@/pages/Employer/WriteDocuments/Applic
 import EmployerWriteDocumentsPage from '@/pages/Employer/WriteDocuments/EmployerWriteDocumentsPage';
 import EmployerEditPostPage from './pages/Employer/Post/EmployerEditPostPage';
 import DocumentViewerPage from './pages/WriteDocuments/DocumentViewerPage';
+import PostSearchFilterPage from '@/pages/PostSearch/PostSearchFilterPage';
 
 const Layout = () => {
   const location = useLocation();
@@ -90,8 +90,8 @@ const Router = () => {
             element={<ApplicationDocumentsPage />}
           />
 
-          <Route path="/search" element={<PostSearchPage />} />
           <Route path="/search/filter" element={<PostSearchFilterPage />} />
+          <Route path="/search" element={<PostSearchPage />} />
 
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/profile/edit" element={<EditProfilePage />} />
