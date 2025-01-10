@@ -10,6 +10,7 @@ import {
   EmployerRegistrationRequestBody,
   initialEmployerRegistration,
 } from '@/types/api/employ';
+import { TermType } from '@/types/api/users';
 import { getTemporaryToken } from '@/utils/auth';
 import { isValidEmployerRegistration } from '@/utils/signup';
 import { useEffect, useState } from 'react';
@@ -38,6 +39,11 @@ const EmployerSignupInfoPage = () => {
       const requestData = {
         ...newEmployData,
         temporary_token: String(getTemporaryToken()), // temporary_token 추가
+        term_types: [
+          TermType.ENTERPRISE_SERVICE_TERMS,
+          TermType.LOCATION_BASED_TERMS,
+          TermType.PRIVACY_POLICY,
+        ],
       };
 
       // 이미지 파일이 있는 경우에만 추가

@@ -10,6 +10,7 @@ import { useSignUp } from '@/hooks/api/useAuth';
 import {
   initialUserInfoRequestBody,
   Language,
+  TermType,
   UserInfoRequestBody,
 } from '@/types/api/users';
 import { getTemporaryToken } from '@/utils/auth';
@@ -35,13 +36,28 @@ const InformationPage = () => {
   };
   // 최종 완료 시 호출, 서버 api 호출 및 완료 modal 표시
   const handleSubmit = (language: Language) => {
+    const termTypes = [
+      TermType.PERSONAL_SERVICE_TERMS,
+      TermType.LOCATION_BASED_TERMS,
+      TermType.PRIVACY_POLICY,
+    ];
+    console.log({
+      ...userInfo,
+      marketing_allowed: marketingAllowed,
+      notification_allowed: false,
+      temporary_token: String(getTemporaryToken()),
+      language: language,
+      term_types: termTypes,
+    })
     mutate({
       ...userInfo,
       marketing_allowed: marketingAllowed,
       notification_allowed: false,
       temporary_token: String(getTemporaryToken()),
       language: language,
+      term_types: termTypes,
     });
+
   };
   return (
     <div className="m-auto max-w-[500px] relative h-screen flex flex-col items-center justify-start border border-black overflow-y-scroll scrollbar-hide">
