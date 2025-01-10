@@ -66,3 +66,7 @@ export type ReIssueAuthenticationRequest = {
   id: string;
   email: string;
 };
+
+export type PolicyResponse = {
+  content: string;
+};

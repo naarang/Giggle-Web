@@ -11,9 +11,11 @@ import {
   tempSignUp,
   withdraw,
   signUpEmployer,
+  getPolicy,
 } from '@/api/auth';
 import {
   AuthenticationResponse,
+  PolicyResponse,
   SignInResponse,
   SignUpResponse,
   TempSignUpResponse,
@@ -261,4 +263,23 @@ export const useWithdraw = () => {
       navigate('/splash');
     },
   });
+};
+
+// 11.1 약관 종류별 상세 조회하기
+export const useGetPolicy = ({
+  onSuccess,
+  onError,
+}: {
+  onSuccess?: (data: RESTYPE<PolicyResponse>) => void;
+  onError?: (error: unknown) => void;
+}) => {
+  const { mutate, ...rest } = useMutation({
+    mutationFn: getPolicy,
+    onSuccess,
+    onError: (error) => {
+      console.error('약관 조회 중 에러 발생:', error);
+      onError?.(error);
+    },
+  });
+  return { mutate, ...rest };
 };
