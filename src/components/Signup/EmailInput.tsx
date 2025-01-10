@@ -60,7 +60,7 @@ const EmailInput = ({ email, onEmailChange, onSubmit }: EmailInputProps) => {
       <div className="title-1 pb-12">
         {signInputTranclation.enterEmail[isEmployer(pathname)]}
       </div>
-      <div className="w-[20.5rem] flex flex-col py-6">
+      <div className="flex flex-col py-6">
         <div>
           <p className="py-2 px-1 text-sm font-normal text-[#171719]">
             {signInputTranclation.email[isEmployer(pathname)]}
