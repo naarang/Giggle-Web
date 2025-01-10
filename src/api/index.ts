@@ -87,7 +87,6 @@ function setInterceptors(instance: AxiosInstance, type: string) {
           try {
             // 토큰 재발급 시작
             isTokenRefreshing = true;
-
             // 1. Refresh Token을 사용하여 새로운 Access Token 발급
             const response = await reIssueToken(refreshToken);
             const access_token = response.data.access_token;
@@ -115,6 +114,9 @@ function setInterceptors(instance: AxiosInstance, type: string) {
             failedRequestsQueue.forEach((request: any) => request.reject(e)); // 실패한 요청들에 대해 에러 처리
             failedRequestsQueue = [];
             return Promise.reject(e);
+          } finally {
+            // 토큰 재발급 프로세스 완료
+            isTokenRefreshing = false;
           }
         }
       }
