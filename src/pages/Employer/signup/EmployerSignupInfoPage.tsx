@@ -3,9 +3,11 @@ import BottomSheetLayout from '@/components/Common/BottomSheetLayout';
 import Button from '@/components/Common/Button';
 import CompleteModal from '@/components/Common/CompleteModal';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
+import LoadingItem from '@/components/Common/LoadingItem';
 import AgreeModalInner from '@/components/Employer/Signup/AgreeModalInner';
 import InformationInputSection from '@/components/Employer/Signup/InformationInputSection';
-import { useSignupEmployer } from '@/hooks/api/useAuth';
+import PolicyViewer from '@/components/Information/PolicyViewer';
+import { useGetPolicy, useSignupEmployer } from '@/hooks/api/useAuth';
 import {
   EmployerRegistrationRequestBody,
   initialEmployerRegistration,
@@ -22,7 +24,22 @@ const EmployerSignupInfoPage = () => {
   const [logoFile, setLogoFile] = useState<File | undefined>(undefined);
   const [devIsModal, setDevIsModal] = useState(false);
   const [isAgreeModal, setIsAgreeModal] = useState(true);
+  const [isPolicyPreview, setIsPolicyPreview] = useState(false);
+  const [policy, setPolicy] = useState('');
   const [isValid, setIsValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { mutate: getPolicy } = useGetPolicy({
+    onSuccess: (data) => {
+      setPolicy(data.data.content);
+      setIsPolicyPreview(true);
+    },
+    onMutate: () => {
+      setIsLoading(true);
+    },
+    onSettled: () => {
+      setIsLoading(false);
+    },
+  });
   const { mutate } = useSignupEmployer(() => setDevIsModal(true));
   const navigate = useNavigate();
 
@@ -118,9 +135,28 @@ const EmployerSignupInfoPage = () => {
                 marketing_allowed: value,
               })
             }
+            onPolicyPreview={(policy: TermType) => {
+              getPolicy(policy);
+            }}
             onNext={setIsAgreeModal}
+            accountType="EMPLOYER"
           />
         </BottomSheetLayout>
+      )}
+      {isPolicyPreview === true && (
+        <PolicyViewer
+          content={policy}
+          onBack={() => setIsPolicyPreview(false)}
+        />
+      )}
+      {isLoading && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-50 overflow-hidden"
+          style={{ touchAction: 'none' }}
+          onClick={(e) => e.preventDefault()}
+        >
+          <LoadingItem />
+        </div>
       )}
     </div>
   );
