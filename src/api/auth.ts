@@ -1,6 +1,7 @@
 import {
   AuthenticationRequest,
   AuthenticationResponse,
+  PolicyResponse,
   ReIssueAuthenticationRequest,
   SignInRequest,
   SignInResponse,
@@ -14,6 +15,8 @@ import {
 import { api } from '@/api/index.ts';
 import { apiWithoutAuth } from '@/api/index.ts';
 import { RESTYPE } from '@/types/api/common';
+import axios from 'axios';
+import { TermType } from '@/types/api/users';
 
 /**
  * 사용자 로그인을 처리하는 함수
@@ -50,8 +53,24 @@ export const logout = async (): Promise<RESTYPE<null>> => {
 };
 
 // 1.3 JWT 재발급
-export const reIssueToken = async (): Promise<RESTYPE<SignInResponse>> => {
-  const response = await api.post('/auth/reissue/token');
+// (1) refresh token을 헤더에 포함하여 axios instance 생성
+const apiWithRefreshToken = axios.create({
+  baseURL: import.meta.env.VITE_APP_API_GIGGLE_API_BASE_URL, // 기본 URL을 api와 동일하게 설정
+});
+// (2) 재발급 api 호출
+export const reIssueToken = async (
+  refreshToken: string,
+): Promise<RESTYPE<SignInResponse>> => {
+  //
+  const response = await apiWithRefreshToken.post(
+    '/auth/reissue/token',
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${refreshToken}`,
+      },
+    },
+  );
   return response.data;
 };
 
@@ -130,5 +149,13 @@ export const signUpEmployer = async (
   signupInfo: FormData,
 ): Promise<RESTYPE<SignUpResponse>> => {
   const response = await api.post(`/auth/owners`, signupInfo);
+  return response.data;
+};
+
+// 11.1 약관 상세조회
+export const getPolicy = async (
+  termType: TermType,
+): Promise<RESTYPE<PolicyResponse>> => {
+  const response = await api.get(`/terms/${termType}/details`);
   return response.data;
 };
