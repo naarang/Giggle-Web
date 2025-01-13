@@ -24,7 +24,7 @@ import {
   usePostIntegratedApplicants,
   usePutIntegratedApplicants,
 } from '@/hooks/api/useDocument';
-import { formatPhoneNumber, parsePhoneNumber } from '@/utils/information';
+import { formatCompanyRegistrationNumber, formatPhoneNumber, parsePhoneNumber } from '@/utils/information';
 import { useCurrentPostIdEmployeeStore } from '@/store/url';
 import LoadingItem from '../Common/LoadingItem';
 import { useAddressSearch } from '@/hooks/api/useAddressSearch';
@@ -493,19 +493,20 @@ const IntegratedApplicationWriteForm = ({
               canDelete={false}
             />
           </InputLayout>
-          {/* 사업등록번호 입력 */}
+          {/* 사업자등록번호 입력 */}
           <InputLayout
             title="Business Registration No. Of New Workplace"
             isEssential
           >
             <Input
               inputType={InputType.TEXT}
-              placeholder="000/00/00000"
+              placeholder="X X X / X X / X X X X X"
               value={newDocumentData.new_work_place_registration_number}
               onChange={(value) =>
                 setNewDocumentData({
                   ...newDocumentData,
-                  new_work_place_registration_number: value,
+                  new_work_place_registration_number:
+                    formatCompanyRegistrationNumber(value),
                 })
               }
               canDelete={false}

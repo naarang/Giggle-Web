@@ -142,7 +142,7 @@ const IntegratedApplicationPreview = ({
             </div>
           </div>
         </InputLayout>
-        {/* 사업등록번호 입력 */}
+        {/* 사업자 등록번호 입력 */}
         <InputLayout
           title="Business Registration No. Of New Workplace"
           isEssential
