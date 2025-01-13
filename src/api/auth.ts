@@ -1,6 +1,7 @@
 import {
   AuthenticationRequest,
   AuthenticationResponse,
+  PolicyResponse,
   ReIssueAuthenticationRequest,
   SignInRequest,
   SignInResponse,
@@ -15,6 +16,7 @@ import { api } from '@/api/index.ts';
 import { apiWithoutAuth } from '@/api/index.ts';
 import { RESTYPE } from '@/types/api/common';
 import axios from 'axios';
+import { TermType } from '@/types/api/users';
 
 /**
  * 사용자 로그인을 처리하는 함수
@@ -147,5 +149,13 @@ export const signUpEmployer = async (
   signupInfo: FormData,
 ): Promise<RESTYPE<SignUpResponse>> => {
   const response = await api.post(`/auth/owners`, signupInfo);
+  return response.data;
+};
+
+// 11.1 약관 상세조회
+export const getPolicy = async (
+  termType: TermType,
+): Promise<RESTYPE<PolicyResponse>> => {
+  const response = await api.get(`/terms/${termType}/details`);
   return response.data;
 };

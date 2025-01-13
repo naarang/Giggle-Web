@@ -1,5 +1,5 @@
 import { UserType } from '@/constants/user';
-import { Address, Language, UserInfo } from '@/types/api/users';
+import { Address, Language, TermType, UserInfo } from '@/types/api/users';
 
 export type SignInRequest = FormData;
 
@@ -31,6 +31,7 @@ export type SignUpRequest = {
   marketing_allowed: boolean;
   notification_allowed: boolean;
   language: Language;
+  term_types: TermType[];
 };
 /*
 export type OwnerSignUpRequest = {
@@ -64,4 +65,8 @@ export type AuthenticationResponse = {
 export type ReIssueAuthenticationRequest = {
   id: string;
   email: string;
+};
+
+export type PolicyResponse = {
+  content: string;
 };
