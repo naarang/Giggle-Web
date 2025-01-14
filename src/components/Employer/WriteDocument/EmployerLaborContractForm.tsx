@@ -24,6 +24,7 @@ import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
 import { usePutLaborContractEmployer } from '@/hooks/api/useDocument';
 import {
+  handleHourlyRateBlur,
   parseStringToSafeNumber,
   validateLaborContractEmployerInformation,
 } from '@/utils/document';
@@ -77,6 +78,8 @@ const EmployerLaborContractForm = ({
 
   const [isLoading, setIsLoading] = useState(false);
   const [isInvalid, setIsInvalid] = useState(false);
+  // 시급 10030원 미만일 경우 경고 표시
+  const [warning, setWarning] = useState(false);
   // 근무시간, 요일 선택 모달 활성화 플래그
   const [isModal, setIsModal] = useState(false);
   // 입력 완료 시 제출
@@ -432,6 +435,13 @@ const EmployerLaborContractForm = ({
                   hourly_rate: parseStringToSafeNumber(value),
                 })
               }
+              onBlur={() =>
+                handleHourlyRateBlur({
+                  value: String(newDocumentData.hourly_rate),
+                  setWarning,
+                })
+              }
+              isInvalid={warning}
               canDelete={false}
               isUnit
               unit="원"

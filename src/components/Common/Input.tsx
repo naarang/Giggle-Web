@@ -18,6 +18,7 @@ type InputProps = {
   placeholder: string; // 플레이스홀더 텍스트
   value: string | null; // 입력 필드의 현재 값
   onChange: (value: string) => void; // 입력값 변경 시 호출될 함수
+  onBlur?: (value: string) => void; // 입력 필드에서 포커스가 빠져나갈 때 호출될 함수 (선택적)
   canDelete: boolean; // 삭제 버튼 표시 여부
   clearInvalid?: () => void; // 토글 시 invalid 상태를 해제할 함수 (선택적)
   isInvalid?: boolean; // 유효하지 않은 입력 상태 여부 (선택적)
@@ -45,6 +46,7 @@ const Input = ({
   inputType,
   placeholder,
   onChange,
+  onBlur,
   canDelete,
   onDelete,
   clearInvalid,
@@ -83,6 +85,11 @@ const Input = ({
     setCurrentStatus(INPUT_STATUS.DISABLED);
   };
 
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (onBlur) onBlur(e.target.value);
+    handleFocus('blur');
+  };
+
   return (
     <div
       className={`w-full flex gap-2 whitespace-nowrap items-center justify-between text-left body-2 border rounded-xl ${inputStyler(currentStatus)} bg-white py-[10px] pl-4 pr-[14px]`}
@@ -96,7 +103,7 @@ const Input = ({
         value={value ?? ''}
         className={'w-full outline-none placeholder:text-[var(--input-color)]'}
         onClick={() => handleFocus('click')}
-        onBlur={() => handleFocus('blur')}
+        onBlur={handleBlur}
         onChange={handleInputChange}
         type={
           inputType === 'PASSWORD'
@@ -114,7 +121,11 @@ const Input = ({
       {/* 입력값 삭제 가능한 경우 삭제 아이콘을 표시합니다. */}
       {canDelete && <CloseIcon onClick={onDelete} />}
       {/* 단위가 존재할 경우 표시합니다. */}
-      {isUnit && <div className="text-right w-full body-2 text-[#464646]"><div className='w-full'>{unit}</div></div>}
+      {isUnit && (
+        <div className="text-right w-full body-2 text-[#464646]">
+          <div className="w-full">{unit}</div>
+        </div>
+      )}
     </div>
   );
 };

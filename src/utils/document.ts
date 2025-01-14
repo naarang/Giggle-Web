@@ -10,6 +10,8 @@ import { extractNumbersAsNumber } from './post';
 import { InsuranceInfo } from '@/constants/documents';
 import { isValidPhoneNumber, parsePhoneNumber } from './information';
 
+export const MINIMUM_HOURLY_RATE = 10030;
+
 // 객체의 모든 프로퍼티가 공백이 아닌지 확인하는 함수
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const isNotEmpty = (obj: Record<string, any>): boolean => {
@@ -86,7 +88,7 @@ export const validateEmployerInformation = (
   // 시급 유효성 검사(0이 아닌지)
   if (
     !info.hourly_rate ||
-    extractNumbersAsNumber(String(info.hourly_rate)) === 0
+    extractNumbersAsNumber(String(info.hourly_rate)) >= MINIMUM_HOURLY_RATE
   ) {
     return false;
   }
@@ -131,7 +133,7 @@ export const validateLaborContractEmployerInformation = (
   // 시급 유효성 검사(0이 아닌지)
   if (
     !info.hourly_rate ||
-    extractNumbersAsNumber(String(info.hourly_rate)) === 0
+    extractNumbersAsNumber(String(info.hourly_rate)) >= MINIMUM_HOURLY_RATE
   ) {
     console.log('시급');
     return false;
@@ -177,9 +179,24 @@ export const validateLaborContractEmployerInformation = (
 // number만 가능한 필드에서 NaN 입력으로 input이 멈추지 않게 값 검증
 export const parseStringToSafeNumber = (value: string): number => {
   const numberValue = Number(value);
-
   if (isNaN(numberValue)) return 0;
   else return numberValue;
+};
+
+// 시급 필드 onBlur 이벤트 핸들러
+export const handleHourlyRateBlur = ({
+  value,
+  setWarning,
+}: {
+  value: string;
+  setWarning: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const parsedValue = parseStringToSafeNumber(value);
+  if (parsedValue < MINIMUM_HOURLY_RATE) {
+    setWarning(true);
+  } else {
+    setWarning(false);
+  }
 };
 
 // base64 데이터를 디코딩해 이미지 타입을 추론하는 함수

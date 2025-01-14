@@ -22,6 +22,7 @@ import Button from '@/components/Common/Button';
 import { usePutPartTimeEmployPermitEmployer } from '@/hooks/api/useDocument';
 import { useParams } from 'react-router-dom';
 import {
+  handleHourlyRateBlur,
   parseStringToSafeNumber,
   validateEmployerInformation,
 } from '@/utils/document';
@@ -69,6 +70,8 @@ const EmployerPartTimePermitForm = ({
   } = useAddressSearch();
   const [isLoading, setIsLoading] = useState(false);
   const [isInvalid, setIsInvalid] = useState(false);
+  // 시급 10030원 미만일 경우 경고 표시
+  const [warning, setWarning] = useState(false);
   // 입력 완료 시 제출
   const { mutate: putDocument } = usePutPartTimeEmployPermitEmployer(
     Number(id),
@@ -352,6 +355,13 @@ const EmployerPartTimePermitForm = ({
                   hourly_rate: parseStringToSafeNumber(value),
                 })
               }
+              onBlur={() =>
+                handleHourlyRateBlur({
+                  value: String(newDocumentData.hourly_rate),
+                  setWarning,
+                })
+              }
+              isInvalid={warning}
               canDelete={false}
               isUnit
               unit="원"
