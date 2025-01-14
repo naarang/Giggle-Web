@@ -32,7 +32,8 @@ const ApplicationDocumentsPage = () => {
             {data?.data.part_time_employment_permits?.status ===
               'CONFIRMATION' &&
             data?.data.standard_labor_contract?.status === 'CONFIRMATION' &&
-            data?.data.integrated_application?.hwp_url ? (
+            data?.data.integrated_application?.hwp_url &&
+            data?.data.is_completed === false ? (
               <Button
                 type="large"
                 bgColor={'bg-[#FEF387]'}

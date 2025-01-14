@@ -37,6 +37,7 @@ export type DocumentsSummaryResponse = {
   part_time_employment_permits: DocumentInfo | null;
   standard_labor_contract: DocumentInfo | null;
   integrated_application: DocumentInfo | null;
+  is_completed: boolean;
 };
 
 export type EmployDocumentsSummaryResponse = {
