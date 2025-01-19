@@ -11,9 +11,11 @@ import {
   tempSignUp,
   withdraw,
   signUpEmployer,
+  getPolicy,
 } from '@/api/auth';
 import {
   AuthenticationResponse,
+  PolicyResponse,
   SignInResponse,
   SignUpResponse,
   TempSignUpResponse,
@@ -27,11 +29,16 @@ import {
   setTemporaryToken,
 } from '@/utils/auth';
 import { useNavigate } from 'react-router-dom';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import {
+  useMutation,
+  UseMutationOptions,
+  useQuery,
+} from '@tanstack/react-query';
 import { useUserInfoforSigninStore } from '@/store/signup';
 import { useEmailTryCountStore } from '@/store/signup';
 import { RESTYPE } from '@/types/api/common';
 import { clearAllStore } from '@/utils/clearAllStore';
+import { TermType } from '@/types/api/users';
 
 /**
  * 로그인 프로세스를 처리하는 커스텀 훅
@@ -260,5 +267,26 @@ export const useWithdraw = () => {
       alert('탈퇴에 실패하였습니다.');
       navigate('/splash');
     },
+  });
+};
+
+// 11.1 약관 종류별 상세 조회하기
+export const useGetPolicy = (
+  options?: UseMutationOptions<
+    RESTYPE<PolicyResponse>,
+    Error,
+    TermType // mutationFn의 parameter 타입
+  >,
+) => {
+  return useMutation({
+    mutationFn: getPolicy,
+    onSuccess: (data, variables, context) => {
+      options?.onSuccess?.(data, variables, context);
+    },
+    onError: (error, variables, context) => {
+      console.error('약관 조회 중 에러 발생:', error);
+      options?.onError?.(error, variables, context);
+    },
+    ...options,
   });
 };

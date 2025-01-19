@@ -34,9 +34,15 @@ export const enum Language {
   ENGLISH = 'ENGLISH',
 }
 
+export const enum TermType {
+  PERSONAL_SERVICE_TERMS = 'personal-service-terms',
+  ENTERPRISE_SERVICE_TERMS = 'enterprise-service-terms',
+  LOCATION_BASED_TERMS = 'location-based-terms',
+  PRIVACY_POLICY = 'privacy-policy',
+}
+
 // Type for user info with nullable fields
 export type UserInfo = {
-  marketing_allow: boolean | null;
   first_name: string | null;
   last_name: string | null;
   gender: string | null;
@@ -68,7 +74,6 @@ export type UserInfoRequestBody = {
 
 // Initial state for UserInfo
 export const initialUserInfo: UserInfo = {
-  marketing_allow: null,
   first_name: '',
   last_name: '',
   gender: 'MALE',

@@ -1,16 +1,21 @@
 import CheckIcon from '@/assets/icons/CheckOfBoxIcon.svg?react';
 import ArrowIcon from '@/assets/icons/RightArrowIcon.svg?react';
 import Button from '@/components/Common/Button';
+import { TermType } from '@/types/api/users';
 import { Dispatch, SetStateAction, useState } from 'react';
 
 type AgreeModalInnerProps = {
   setMarketingAllowed: (value: boolean) => void;
+  onPolicyPreview: (termType: TermType) => void;
   onNext: Dispatch<SetStateAction<boolean>>;
+  accountType: 'USER' | 'EMPLOYER';
 };
 
 const AgreeModalInner = ({
   setMarketingAllowed,
+  onPolicyPreview,
   onNext,
+  accountType,
 }: AgreeModalInnerProps) => {
   const [essentialAgreeList, setEssentialAgreeList] = useState<boolean[]>([
     false,
@@ -76,7 +81,17 @@ const AgreeModalInner = ({
               <div className="w-full flex items-center">
                 (필수) 서비스 이용약관동의
               </div>
-              <ArrowIcon />
+              <div
+                onClick={() =>
+                  onPolicyPreview(
+                    accountType === 'USER'
+                      ? TermType.PERSONAL_SERVICE_TERMS
+                      : TermType.ENTERPRISE_SERVICE_TERMS,
+                  )
+                }
+              >
+                <ArrowIcon />
+              </div>
             </div>
           </div>
           <div className="w-full flex items-center justify-center gap-3">
@@ -92,7 +107,9 @@ const AgreeModalInner = ({
               <div className="w-full flex items-center">
                 (필수) 개인정보 수집 및 이용 동의
               </div>
-              <ArrowIcon />
+              <div onClick={() => onPolicyPreview(TermType.PRIVACY_POLICY)}>
+                <ArrowIcon />
+              </div>
             </div>
           </div>
           <div className="w-full flex items-center justify-center gap-3">
@@ -108,7 +125,11 @@ const AgreeModalInner = ({
               <div className="w-full flex items-center">
                 (필수) 위치정보 이용동의
               </div>
-              <ArrowIcon />
+              <div
+                onClick={() => onPolicyPreview(TermType.LOCATION_BASED_TERMS)}
+              >
+                <ArrowIcon />
+              </div>
             </div>
           </div>
         </div>
