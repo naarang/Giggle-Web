@@ -156,6 +156,6 @@ export const signUpEmployer = async (
 export const getPolicy = async (
   termType: TermType,
 ): Promise<RESTYPE<PolicyResponse>> => {
-  const response = await api.get(`/terms/${termType}/details`);
+  const response = await apiWithoutAuth.get(`/terms/${termType}/details`);
   return response.data;
 };
