@@ -12,10 +12,7 @@ import {
   usePatchDocumentsStatusConfirmation,
   usePatchStatusSubmission,
 } from '@/hooks/api/useDocument';
-import {
-  useCurrentDocumentIdStore,
-  useCurrentPostIdEmployeeStore,
-} from '@/store/url';
+import { useCurrentDocumentIdStore } from '@/store/url';
 
 const enum DocumentStatus {
   TEMPORARY_SAVE = 'TEMPORARY_SAVE',
@@ -26,7 +23,7 @@ const enum DocumentStatus {
 }
 
 type DocumentCardProps = {
-  document: DocumentInfo;
+  documentInfo: DocumentInfo;
   title: string;
   type: string;
   onNext?: () => void;
@@ -261,13 +258,13 @@ const RequestedCard = ({ title }: { title: string }) => {
 };
 
 const ConfirmationCard = ({
-  document,
+  documentInfo,
   title,
   onDownload,
   onPreview,
 }: {
   title: string;
-  document: DocumentInfo;
+  documentInfo: DocumentInfo;
   onDownload: (url: string) => void;
   onPreview: () => void;
 }) => {
@@ -291,7 +288,7 @@ const ConfirmationCard = ({
             <div className="relative head-3">{title}</div>
           </div>
           <div className="overflow-hidden flex items-center justify-center p-2">
-            {!document.hwp_url && !document.word_url ? (
+            {!documentInfo.hwp_url && !documentInfo.word_url ? (
               <WriteIcon />
             ) : (
               <CheckIconGreen />
@@ -310,7 +307,7 @@ const ConfirmationCard = ({
       </div>
 
       <div className="flex flex-col gap-2 w-full items-start justify-start py-2 px-4 text-[#464646]">
-        {document.word_url && (
+        {documentInfo.word_url && (
           <div className="w-full rounded-3xl bg-[#f4f4f9] flex items-center justify-between border border-[#dcdcdc] px-4 py-2 pl-2.5">
             <div className="flex items-center justify-start gap-2">
               <div className="w-[1.375rem] h-[1.375rem] flex items-center justify-center rounded-full bg-[#1e1926]">
@@ -320,12 +317,12 @@ const ConfirmationCard = ({
                 word file download
               </div>
             </div>
-            <div onClick={() => onDownload(document.word_url as string)}>
+            <div onClick={() => onDownload(documentInfo.word_url as string)}>
               <DownloadIcon />
             </div>
           </div>
         )}
-        {document.hwp_url && (
+        {documentInfo.hwp_url && (
           <div className="w-full rounded-3xl bg-[#f4f4f9] flex items-center justify-between border border-[#dcdcdc] px-4 py-2 pl-2.5">
             <div className="flex items-center justify-start gap-2">
               <div className="w-[1.375rem] h-[1.375rem] flex items-center justify-center rounded-full bg-[#1e1926]">
@@ -335,7 +332,7 @@ const ConfirmationCard = ({
                 smth file download
               </div>
             </div>
-            <div onClick={() => onDownload(document.hwp_url as string)}>
+            <div onClick={() => onDownload(documentInfo.hwp_url as string)}>
               <DownloadIcon />
             </div>
           </div>
@@ -346,7 +343,7 @@ const ConfirmationCard = ({
 };
 
 const DocumentCardDispenser = ({
-  document,
+  documentInfo,
   title,
   type,
 }: DocumentCardProps) => {
@@ -354,20 +351,38 @@ const DocumentCardDispenser = ({
   const { mutate: confirmDocument } = usePatchDocumentsStatusConfirmation();
   const navigate = useNavigate();
   const { updateCurrentDocumentId } = useCurrentDocumentIdStore();
-  const { currentPostId } = useCurrentPostIdEmployeeStore();
-  console.log(`current: ${currentPostId}`); // 지원자 조회 - 지원자 상세 - 서류 상세 간 뒤로가기 문제 관련
   const handleDownload = (url: string) => {
-    window.open(url, '_blank');
+    // 웹뷰 환경인지 체크
+    const isWebView = Boolean(window.ReactNativeWebView);
+
+    if (isWebView) {
+      // 웹뷰에서는 DocumentViewer로 이동
+      navigate('/document-view/123', {
+        state: {
+          url,
+          filename: url.split('/').pop(), // URL에서 파일명 추출
+        },
+      });
+    } else {
+      // 웹 환경에서는 직접 다운로드
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = url.split('/').pop() || 'download';
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
   };
   if (title === 'Integrated Application Form')
     return (
       <ConfirmationCard
         title={title}
-        document={document}
+        documentInfo={documentInfo}
         onDownload={handleDownload}
         onPreview={() => {
-          updateCurrentDocumentId(document.id);
-          navigate(`/document-preview/${document.id}`, {
+          updateCurrentDocumentId(documentInfo.id);
+          navigate(`/document-preview/${documentInfo.id}`, {
             state: {
               type: type,
             },
@@ -375,15 +390,15 @@ const DocumentCardDispenser = ({
         }}
       />
     );
-  switch (document.status) {
+  switch (documentInfo.status) {
     case DocumentStatus.TEMPORARY_SAVE:
       return (
         <TemporarySaveCard
           title={title}
-          onNext={() => submitDocument(Number(document.id))}
+          onNext={() => submitDocument(Number(documentInfo.id))}
           onEdit={() => {
-            updateCurrentDocumentId(document.id);
-            navigate(`/write-documents/${document.id}`, {
+            updateCurrentDocumentId(documentInfo.id);
+            navigate(`/write-documents/${documentInfo.id}`, {
               state: {
                 type: type,
                 isEdit: true,
@@ -391,8 +406,8 @@ const DocumentCardDispenser = ({
             });
           }}
           onPreview={() => {
-            updateCurrentDocumentId(document.id);
-            navigate(`/document-preview/${document.id}`, {
+            updateCurrentDocumentId(documentInfo.id);
+            navigate(`/document-preview/${documentInfo.id}`, {
               state: {
                 type: type,
               },
@@ -406,18 +421,18 @@ const DocumentCardDispenser = ({
       return (
         <BeforeConfirmationCard
           title={title}
-          onNext={() => confirmDocument(Number(document.id))}
+          onNext={() => confirmDocument(Number(documentInfo.id))}
           onRequest={() => {
-            updateCurrentDocumentId(document.id);
-            navigate(`/request-modify/${document.id}`, {
+            updateCurrentDocumentId(documentInfo.id);
+            navigate(`/request-modify/${documentInfo.id}`, {
               state: {
                 type: type,
               },
             });
           }}
           onPreview={() => {
-            updateCurrentDocumentId(document.id);
-            navigate(`/document-preview/${document.id}`, {
+            updateCurrentDocumentId(documentInfo.id);
+            navigate(`/document-preview/${documentInfo.id}`, {
               state: {
                 type: type,
               },
@@ -431,11 +446,11 @@ const DocumentCardDispenser = ({
       return (
         <ConfirmationCard
           title={title}
-          document={document}
+          documentInfo={documentInfo}
           onDownload={handleDownload}
           onPreview={() => {
-            updateCurrentDocumentId(document.id);
-            navigate(`/document-preview/${document.id}`, {
+            updateCurrentDocumentId(documentInfo.id);
+            navigate(`/document-preview/${documentInfo.id}`, {
               state: {
                 type: type,
               },

@@ -48,6 +48,7 @@ import Splash from '@/components/Splash/Splash';
 import ApplicantDocumentsDetailPage from '@/pages/Employer/WriteDocuments/ApplicantDocumentsDetailPage';
 import EmployerWriteDocumentsPage from '@/pages/Employer/WriteDocuments/EmployerWriteDocumentsPage';
 import EmployerEditPostPage from './pages/Employer/Post/EmployerEditPostPage';
+import DocumentViewerPage from './pages/WriteDocuments/DocumentViewerPage';
 import PostSearchFilterPage from '@/pages/PostSearch/PostSearchFilterPage';
 import { useEffect } from 'react';
 import { setRedirectToLogin } from '@/api';
@@ -133,6 +134,8 @@ const Router = () => {
           <Route path="/write-documents/:id" element={<WriteDocumentsPage />} />
 
           <Route path="/document-preview/:id" element={<DocumentPreview />} />
+          <Route path="/document-view/:id" element={<DocumentViewerPage />} />
+
           <Route path="/request-modify/:id" element={<RequestModifyPage />} />
 
           <Route path="/application" element={<ApplicationPage />} />

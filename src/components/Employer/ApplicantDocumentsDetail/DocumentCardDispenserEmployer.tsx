@@ -13,7 +13,7 @@ import { usePatchStatusSubmissionEmployer } from '@/hooks/api/useDocument';
 import { useCurrentDocumentIdStore } from '@/store/url';
 
 type DocumentCardProps = {
-  document: EmployDocumentInfo;
+  documentInfo: EmployDocumentInfo;
   title: string;
   type: string;
   reason?: string;
@@ -282,12 +282,12 @@ const RewritingCard = ({
 };
 
 const ConfirmationCard = ({
-  document,
+  documentInfo,
   title,
   onDownload,
 }: {
   title: string;
-  document: EmployDocumentInfo;
+  documentInfo: EmployDocumentInfo;
 
   onDownload: (url: string) => void;
 }) => {
@@ -304,7 +304,7 @@ const ConfirmationCard = ({
             <div className="relative head-3">{title}</div>
           </div>
           <div className="overflow-hidden flex items-center justify-center p-2">
-            {!document.hwp_url && !document.word_url ? (
+            {!documentInfo.hwp_url && !documentInfo.word_url ? (
               <WriteIcon />
             ) : (
               <CheckIconGreen />
@@ -322,7 +322,7 @@ const ConfirmationCard = ({
       </div>
 
       <div className="flex flex-col gap-2 w-full items-start justify-start py-2 px-4 text-[#464646]">
-        {document.word_url && (
+        {documentInfo.word_url && (
           <div className="w-full rounded-3xl bg-[#f4f4f9] flex items-center justify-between border border-[#dcdcdc] px-4 py-2 pl-2.5">
             <div className="flex items-center justify-start gap-2">
               <div className="w-[1.375rem] h-[1.375rem] flex items-center justify-center rounded-full bg-[#1e1926]">
@@ -330,12 +330,12 @@ const ConfirmationCard = ({
               </div>
               <div className="relative body-3 opacity-75">word로 다운로드</div>
             </div>
-            <div onClick={() => onDownload(document.word_url as string)}>
+            <div onClick={() => onDownload(documentInfo.word_url as string)}>
               <DownloadIcon />
             </div>
           </div>
         )}
-        {document.hwp_url && (
+        {documentInfo.hwp_url && (
           <div className="w-full rounded-3xl bg-[#f4f4f9] flex items-center justify-between border border-[#dcdcdc] px-4 py-2 pl-2.5">
             <div className="flex items-center justify-start gap-2">
               <div className="w-[1.375rem] h-[1.375rem] flex items-center justify-center rounded-full bg-[#1e1926]">
@@ -343,7 +343,7 @@ const ConfirmationCard = ({
               </div>
               <div className="relative body-3 opacity-75">hwp로 다운로드</div>
             </div>
-            <div onClick={() => onDownload(document.hwp_url as string)}>
+            <div onClick={() => onDownload(documentInfo.hwp_url as string)}>
               <DownloadIcon />
             </div>
           </div>
@@ -354,7 +354,7 @@ const ConfirmationCard = ({
 };
 
 const DocumentCardDispenserEmployer = ({
-  document,
+  documentInfo,
   title,
   type,
   reason,
@@ -362,7 +362,27 @@ const DocumentCardDispenserEmployer = ({
 }: DocumentCardProps) => {
   const navigate = useNavigate();
   const handleDownload = (url: string) => {
-    window.open(url, '_blank');
+    // 웹뷰 환경인지 체크
+    const isWebView = Boolean(window.ReactNativeWebView);
+    
+    if (isWebView) {
+      // 웹뷰에서는 DocumentViewer로 이동
+      navigate('/document-view/123', {
+        state: {
+          url,
+          filename: url.split('/').pop() // URL에서 파일명 추출
+        }
+      });
+    } else {
+      // 웹 환경에서는 직접 다운로드
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = url.split('/').pop() || 'download';
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
   };
   const { updateCurrentDocumentId } = useCurrentDocumentIdStore();
   const { mutate: submitDocument } = usePatchStatusSubmissionEmployer({
@@ -373,16 +393,16 @@ const DocumentCardDispenserEmployer = ({
       setIsLoading(false);
     },
   });
-  if (!document.status) return <NullCard title={title} />;
-  switch (document.status) {
+  if (!documentInfo.status) return <NullCard title={title} />;
+  switch (documentInfo.status) {
     case DocumentStatusEmployer.TEMPORARY_SAVE:
       return (
         <TemporarySaveCard
           title={title}
-          onNext={() => submitDocument(Number(document.id))} // 고용주가 서류 제출
+          onNext={() => submitDocument(Number(documentInfo.id))} // 고용주가 서류 제출
           onEdit={() => {
-            updateCurrentDocumentId(document.id);
-            navigate(`/employer/write-documents/${document.id}`, {
+            updateCurrentDocumentId(documentInfo.id);
+            navigate(`/employer/write-documents/${documentInfo.id}`, {
               state: {
                 type: type,
                 isEdit: true,
@@ -390,8 +410,8 @@ const DocumentCardDispenserEmployer = ({
             });
           }}
           onPreview={() => {
-            updateCurrentDocumentId(document.id);
-            navigate(`/document-preview/${document.id}`, {
+            updateCurrentDocumentId(documentInfo.id);
+            navigate(`/document-preview/${documentInfo.id}`, {
               state: {
                 type: type,
               },
@@ -407,10 +427,10 @@ const DocumentCardDispenserEmployer = ({
           <RewritingCard
             title={title}
             reason={reason}
-            onNext={() => submitDocument(Number(document.id))} // 고용주가 서류 제출
+            onNext={() => submitDocument(Number(documentInfo.id))} // 고용주가 서류 제출
             onEdit={() => {
-              updateCurrentDocumentId(document.id);
-              navigate(`/employer/write-documents/${document.id}`, {
+              updateCurrentDocumentId(documentInfo.id);
+              navigate(`/employer/write-documents/${documentInfo.id}`, {
                 state: {
                   type: type,
                   isEdit: true,
@@ -418,8 +438,8 @@ const DocumentCardDispenserEmployer = ({
               });
             }}
             onPreview={() => {
-              updateCurrentDocumentId(document.id);
-              navigate(`/document-preview/${document.id}`, {
+              updateCurrentDocumentId(documentInfo.id);
+              navigate(`/document-preview/${documentInfo.id}`, {
                 state: {
                   type: type,
                 },
@@ -432,7 +452,7 @@ const DocumentCardDispenserEmployer = ({
       return (
         <ConfirmationCard
           title={title}
-          document={document}
+          documentInfo={documentInfo}
           onDownload={handleDownload}
         />
       );

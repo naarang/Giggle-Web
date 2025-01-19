@@ -46,7 +46,7 @@ const ApplicantDocumentsDetailPage = () => {
         <div className="flex flex-col gap-2 p-6">
           {data && data?.data[DocumentType.PART_TIME_PERMIT] ? (
             <DocumentCardDispenserEmployer
-              document={
+            documentInfo={
                 data.data[DocumentType.PART_TIME_PERMIT] as EmployDocumentInfo
               }
               title={DocumentTypeInfo[DocumentType.PART_TIME_PERMIT].name}
@@ -69,7 +69,7 @@ const ApplicantDocumentsDetailPage = () => {
           )}
           {data && data?.data[DocumentType.LABOR_CONTRACT] ? (
             <DocumentCardDispenserEmployer
-              document={
+            documentInfo={
                 data.data[DocumentType.LABOR_CONTRACT] as EmployDocumentInfo
               }
               title={DocumentTypeInfo[DocumentType.LABOR_CONTRACT].name}
