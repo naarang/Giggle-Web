@@ -187,7 +187,7 @@ export type WorkDayTimeWithRest = {
 export type LaborContractEmployerInfo = {
   company_name: string;
   company_registration_number: string | null;
-  phone_number : string;
+  phone_number: string;
   name: string;
   start_date: string; // yyyy-MM-dd 형식
   end_date: string; // yyyy-MM-dd 형식

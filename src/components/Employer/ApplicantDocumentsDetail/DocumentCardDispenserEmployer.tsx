@@ -20,6 +20,7 @@ import {
   usePatchStatusSubmissionEmployer,
 } from '@/hooks/api/useDocument';
 import { useCurrentDocumentIdStore } from '@/store/url';
+import { useEffect, useState } from 'react';
 
 type DocumentCardProps = {
   documentInfo: EmployDocumentInfo;
@@ -83,6 +84,14 @@ const TemporarySaveCard = ({
   onEdit: () => void;
   onPreview: () => void;
 }) => {
+  const [isEmployerWrote, setIsEmployerWrote] = useState<boolean | null>(null);
+  useEffect(() => {
+    const checkDocuments = async () => {
+      const result = await onCheck();
+      setIsEmployerWrote(result !== null);
+    };
+    checkDocuments();
+  }, []);
   return (
     <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-center justify-center gap-2 caption-2 text-left text-[#1e1926]">
       <div className="self-stretch rounded-t-[1.125rem] bg-[#fef387] h-7 flex items-center justify-between px-4 pl-6 py-2 relative">
@@ -123,7 +132,7 @@ const TemporarySaveCard = ({
       <div className="flex self-stretch items-center justify-center p-4 gap-1 text-[#464646]">
         <Button
           type="large"
-          bgColor="bg-[#f4f4f9]"
+          bgColor={isEmployerWrote ? 'bg-[#f4f4f9]' : 'bg-[#fef387]'}
           fontColor="text-[#222]"
           isBorder={false}
           title="수정"
@@ -131,12 +140,12 @@ const TemporarySaveCard = ({
         />
         <Button
           type="large"
-          bgColor={onCheck() !== null ? 'bg-[#fef387]' : 'bg-[#f4f4f9]'}
+          bgColor={isEmployerWrote ? 'bg-[#fef387]' : 'bg-[#f4f4f9]'}
           fontColor="text-[#222]"
           isBorder={false}
           title="제출"
           onClick={() => {
-            if (onCheck() !== null) {
+            if (isEmployerWrote) {
               onSubmit();
             }
           }}
@@ -202,6 +211,14 @@ const RewritingCard = ({
   onPreview: () => void;
   reason: string;
 }) => {
+  const [isEmployerWrote, setIsEmployerWrote] = useState<boolean | null>(null);
+  useEffect(() => {
+    const checkDocuments = async () => {
+      const result = await onCheck();
+      setIsEmployerWrote(result !== null);
+    };
+    checkDocuments();
+  }, []);
   return (
     <div className="w-full relative rounded-[1.125rem] bg-white border border-[#dcdcdc] flex flex-col items-center justify-center gap-2 caption-2 text-left text-[#1e1926]">
       <div className="self-stretch rounded-t-[1.125rem] bg-[#fef387] h-7 flex items-center justify-between px-4 pl-6 py-2 relative">
@@ -240,20 +257,20 @@ const RewritingCard = ({
       <div className="flex self-stretch items-center justify-center p-4 gap-1 text-[#464646]">
         <Button
           type="large"
-          bgColor="bg-[#f4f4f9]"
+          bgColor={isEmployerWrote ? 'bg-[#f4f4f9]' : 'bg-[#fef387]'}
           fontColor="text-[#222]"
           isBorder={false}
-          title={onCheck() !== null ? '수정' : '작성'}
+          title={isEmployerWrote ? '수정' : '작성'}
           onClick={onEdit}
         />
         <Button
           type="large"
-          bgColor={onCheck() !== null ? 'bg-[#fef387]' : 'bg-[#f4f4f9]'}
+          bgColor={isEmployerWrote ? 'bg-[#fef387]' : 'bg-[#f4f4f9]'}
           fontColor="text-[#222]"
           isBorder={false}
           title="제출"
           onClick={() => {
-            if (onCheck() !== null) {
+            if (isEmployerWrote) {
               onSubmit();
             }
           }}
@@ -286,11 +303,7 @@ const ConfirmationCard = ({
             <div className="relative head-3">{title}</div>
           </div>
           <div className="overflow-hidden flex items-center justify-center p-2">
-            {!documentInfo.word_url ? (
-              <WriteIcon />
-            ) : (
-              <CheckIconGreen />
-            )}
+            {!documentInfo.word_url ? <WriteIcon /> : <CheckIconGreen />}
           </div>
         </div>
 
@@ -375,13 +388,13 @@ const DocumentCardDispenserEmployer = ({
   );
 
   const checkEmployerWriteDocuments = async () => {
-    const isEmployerWrote =
-      type === DocumentType.PART_TIME_PERMIT
-        ? (await getPartTimeDocument(Number(documentInfo.id))).data
-            .employer_information
-        : (await getLaborContractDocument(Number(documentInfo.id))).data
-            .employer_information;
-    return isEmployerWrote;
+    if (type === DocumentType.PART_TIME_PERMIT) {
+      const result = await getPartTimeDocument(documentInfo.id);
+      return result?.data.employer_information || null;
+    } else {
+      const result = await getLaborContractDocument(documentInfo.id);
+      return result?.data.employer_information || null;
+    }
   };
 
   if (!documentInfo.status) return <NullCard title={title} />;
