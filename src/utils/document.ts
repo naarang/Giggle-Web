@@ -88,7 +88,7 @@ export const validateEmployerInformation = (
   // 시급 유효성 검사(0이 아닌지)
   if (
     !info.hourly_rate ||
-    extractNumbersAsNumber(String(info.hourly_rate)) >= MINIMUM_HOURLY_RATE
+    extractNumbersAsNumber(String(info.hourly_rate)) < MINIMUM_HOURLY_RATE
   ) {
     return false;
   }
@@ -133,9 +133,8 @@ export const validateLaborContractEmployerInformation = (
   // 시급 유효성 검사(0이 아닌지)
   if (
     !info.hourly_rate ||
-    extractNumbersAsNumber(String(info.hourly_rate)) >= MINIMUM_HOURLY_RATE
+    extractNumbersAsNumber(String(info.hourly_rate)) < MINIMUM_HOURLY_RATE
   ) {
-    console.log('시급');
     return false;
   }
 
@@ -145,31 +144,26 @@ export const validateLaborContractEmployerInformation = (
     Number(info.payment_day) > 31 ||
     Number(info.payment_day) < 1
   ) {
-    console.log('급료지급일');
     return false;
   }
 
   // 근무일 체크
   if (!info.work_day_time_list || info.work_day_time_list.length === 0) {
-    console.log('근무일');
     return false;
   }
 
   // 주휴일 체크
   if (!info.weekly_last_days || info.weekly_last_days.length === 0) {
-    console.log('주휴일');
     return false;
   }
 
   // 서명 체크
   if (!info.signature_base64 || info.signature_base64 === '') {
-    console.log('서명');
     return false;
   }
 
   // 주소 체크
   if (!info.address?.region_1depth_name) {
-    console.log('주소');
     return false;
   }
 
