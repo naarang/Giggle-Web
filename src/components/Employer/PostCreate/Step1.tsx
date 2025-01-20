@@ -37,8 +37,6 @@ const Step1 = ({
 }) => {
   // 현재 step내에서 입력받는 정보를 따로 관리할 state, 추후 다음 step으로 넘어갈 때 funnel 관리 페이지의 state로 통합된다.
   const [newPostInfo, setNewPostInfo] = useState<JobPostingForm>(postInfo);
-  // 시급이 10030원 미만일 경우 경고 메시지를 표시
-  const [warning, setWarning] = useState(false);
   // 버튼 활성화 여부를 위한 플래그
   const [isInvalid, setIsInvalid] = useState(true);
   // 근무 시간 모달 활성화 여부 위한 플래그
@@ -140,12 +138,8 @@ const Step1 = ({
               })
             }
             onBlur={() =>
-              handleHourlyRateBlur({
-                value: String(newPostInfo.body.hourly_rate),
-                setWarning,
-              })
+              handleHourlyRateBlur(String(newPostInfo.body.hourly_rate))
             }
-            isInvalid={warning}
             canDelete={false}
             isUnit
             unit="원"

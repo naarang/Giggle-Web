@@ -70,8 +70,6 @@ const EmployerPartTimePermitForm = ({
   } = useAddressSearch();
   const [isLoading, setIsLoading] = useState(false);
   const [isInvalid, setIsInvalid] = useState(false);
-  // 시급 10030원 미만일 경우 경고 표시
-  const [warning, setWarning] = useState(false);
   // 입력 완료 시 제출
   const { mutate: putDocument } = usePutPartTimeEmployPermitEmployer(
     Number(id),
@@ -356,12 +354,8 @@ const EmployerPartTimePermitForm = ({
                 })
               }
               onBlur={() =>
-                handleHourlyRateBlur({
-                  value: String(newDocumentData.hourly_rate),
-                  setWarning,
-                })
+                handleHourlyRateBlur(String(newDocumentData.hourly_rate))
               }
-              isInvalid={warning}
               canDelete={false}
               isUnit
               unit="원"

@@ -178,19 +178,9 @@ export const parseStringToSafeNumber = (value: string): number => {
 };
 
 // 시급 필드 onBlur 이벤트 핸들러
-export const handleHourlyRateBlur = ({
-  value,
-  setWarning,
-}: {
-  value: string;
-  setWarning: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+export const handleHourlyRateBlur = (value: string) => {
   const parsedValue = parseStringToSafeNumber(value);
-  if (parsedValue < MINIMUM_HOURLY_RATE) {
-    setWarning(true);
-  } else {
-    setWarning(false);
-  }
+  return parsedValue < MINIMUM_HOURLY_RATE;
 };
 
 // base64 데이터를 디코딩해 이미지 타입을 추론하는 함수

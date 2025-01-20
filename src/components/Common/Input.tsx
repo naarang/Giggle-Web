@@ -18,7 +18,7 @@ type InputProps = {
   placeholder: string; // 플레이스홀더 텍스트
   value: string | null; // 입력 필드의 현재 값
   onChange: (value: string) => void; // 입력값 변경 시 호출될 함수
-  onBlur?: (value: string) => void; // 입력 필드에서 포커스가 빠져나갈 때 호출될 함수 (선택적)
+  onBlur?: (value: string) => boolean; // 입력 필드에서 포커스가 빠져나갈 때 호출될 함수 (선택적)
   canDelete: boolean; // 삭제 버튼 표시 여부
   clearInvalid?: () => void; // 토글 시 invalid 상태를 해제할 함수 (선택적)
   isInvalid?: boolean; // 유효하지 않은 입력 상태 여부 (선택적)
@@ -86,8 +86,11 @@ const Input = ({
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    if (onBlur) onBlur(e.target.value);
-    handleFocus('blur');
+    if (onBlur && onBlur(e.target.value) === true) {
+      setCurrentStatus(INPUT_STATUS.INVALID);
+      return;
+    }
+    setCurrentStatus(INPUT_STATUS.DISABLED);
   };
 
   return (

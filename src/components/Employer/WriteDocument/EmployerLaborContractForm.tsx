@@ -78,8 +78,6 @@ const EmployerLaborContractForm = ({
 
   const [isLoading, setIsLoading] = useState(false);
   const [isInvalid, setIsInvalid] = useState(false);
-  // 시급 10030원 미만일 경우 경고 표시
-  const [warning, setWarning] = useState(false);
   // 근무시간, 요일 선택 모달 활성화 플래그
   const [isModal, setIsModal] = useState(false);
   // 입력 완료 시 제출
@@ -436,12 +434,8 @@ const EmployerLaborContractForm = ({
                 })
               }
               onBlur={() =>
-                handleHourlyRateBlur({
-                  value: String(newDocumentData.hourly_rate),
-                  setWarning,
-                })
+                handleHourlyRateBlur(String(newDocumentData.hourly_rate))
               }
-              isInvalid={warning}
               canDelete={false}
               isUnit
               unit="원"
