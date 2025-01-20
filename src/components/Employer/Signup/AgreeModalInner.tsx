@@ -147,7 +147,6 @@ const AgreeModalInner = ({
               <div className="w-full flex items-center">
                 (선택) 마케팅 이용동의
               </div>
-              <ArrowIcon />
             </div>
           </div>
         </div>
