@@ -21,7 +21,11 @@ import {
 } from '@/utils/post';
 import WorkDayTimeBottomSheet from '@/components/Common/WorkDayTimeBottomSheet';
 import { WorkDayTime, WorkPeriod } from '@/types/api/document';
-import { parseStringToSafeNumber } from '@/utils/document';
+import {
+  handleHourlyRateBlur,
+  MINIMUM_HOURLY_RATE,
+  parseStringToSafeNumber,
+} from '@/utils/document';
 import { WorkPeriodInfo, WorkPeriodNames } from '@/constants/documents';
 
 const Step1 = ({
@@ -33,7 +37,6 @@ const Step1 = ({
 }) => {
   // 현재 step내에서 입력받는 정보를 따로 관리할 state, 추후 다음 step으로 넘어갈 때 funnel 관리 페이지의 state로 통합된다.
   const [newPostInfo, setNewPostInfo] = useState<JobPostingForm>(postInfo);
-
   // 버튼 활성화 여부를 위한 플래그
   const [isInvalid, setIsInvalid] = useState(true);
   // 근무 시간 모달 활성화 여부 위한 플래그
@@ -49,7 +52,7 @@ const Step1 = ({
       job_category !== '' &&
       work_day_times.length &&
       work_period !== '' &&
-      hourly_rate !== 0;
+      hourly_rate >= MINIMUM_HOURLY_RATE;
     setIsInvalid(!isFormValid);
   }, [newPostInfo]);
 
@@ -134,12 +137,15 @@ const Step1 = ({
                 },
               })
             }
+            onBlur={() =>
+              handleHourlyRateBlur(String(newPostInfo.body.hourly_rate))
+            }
             canDelete={false}
             isUnit
             unit="원"
           />
           <div className="w-full relative body-3 px-1 py-1.5 text-[#222] text-left">
-            2024년 기준 최저시급은 9,860원입니다.
+            2025년 기준 최저시급은 10,030원입니다.
           </div>
         </InputLayout>
         {/* 타입 선택 */}

@@ -12,14 +12,12 @@ export type DocumentStatus =
 // 통합 신청서 외 문서 타입
 export type DocumentInfo = {
   id: number;
-  hwp_url: string | null;
   word_url: string | null;
   status: DocumentStatus | null;
 };
 
 export type EmployDocumentInfo = {
   id: number;
-  hwp_url: string | null;
   word_url: string | null;
   reason: string | null;
   status: DocumentStatusEmployer | null;
@@ -28,7 +26,6 @@ export type EmployDocumentInfo = {
 // 통합 신청서 타입
 export type IntegratedApplicationInfo = {
   id: number;
-  hwp_url: string | null;
   word_url: string | null;
 };
 
@@ -37,6 +34,7 @@ export type DocumentsSummaryResponse = {
   part_time_employment_permits: DocumentInfo | null;
   standard_labor_contract: DocumentInfo | null;
   integrated_application: DocumentInfo | null;
+  is_completed: boolean;
 };
 
 export type EmployDocumentsSummaryResponse = {
@@ -189,7 +187,7 @@ export type WorkDayTimeWithRest = {
 export type LaborContractEmployerInfo = {
   company_name: string;
   company_registration_number: string | null;
-  phone_number : string;
+  phone_number: string;
   name: string;
   start_date: string; // yyyy-MM-dd 형식
   end_date: string; // yyyy-MM-dd 형식

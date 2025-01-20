@@ -22,6 +22,7 @@ import Button from '@/components/Common/Button';
 import { usePutPartTimeEmployPermitEmployer } from '@/hooks/api/useDocument';
 import { useParams } from 'react-router-dom';
 import {
+  handleHourlyRateBlur,
   parseStringToSafeNumber,
   validateEmployerInformation,
 } from '@/utils/document';
@@ -352,12 +353,15 @@ const EmployerPartTimePermitForm = ({
                   hourly_rate: parseStringToSafeNumber(value),
                 })
               }
+              onBlur={() =>
+                handleHourlyRateBlur(String(newDocumentData.hourly_rate))
+              }
               canDelete={false}
               isUnit
               unit="원"
             />
             <div className="w-full relative body-3 px-1 py-1.5 text-[#222] text-left">
-              2024년 기준 최저시급은 9,860원입니다.
+              2025년 기준 최저시급은 10,030원입니다.
             </div>
           </InputLayout>
           {/* 근무 시간(평일) 입력 */}

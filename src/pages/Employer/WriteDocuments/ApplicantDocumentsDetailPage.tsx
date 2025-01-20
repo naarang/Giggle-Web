@@ -14,15 +14,6 @@ const ApplicantDocumentsDetailPage = () => {
   const { data } = useGetDocumentsEmployer(Number(currentApplicantId));
   const navigate = useNavigate();
 
-  {
-    /*
-  integrated_application: {
-    id: 3001,
-    hwp_url: 'https://example.com/applications/integrated_3001.hwp',
-    word_url: 'https://example.com/applications/integrated_3001.docx',
-  },
-    */
-  }
   return (
     <>
       {isLoading && (

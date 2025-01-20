@@ -44,7 +44,7 @@ const RequestModifyPage = () => {
           fontColor="text-[#1E1926]"
           title="Request"
           onClick={() => {
-            sendRequest({ id: 1, reason: reasonInput });
+            sendRequest({ id: Number(id), reason: reasonInput });
           }}
         />
       </BottomButtonPanel>
