@@ -24,6 +24,7 @@ import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
 import { usePutLaborContractEmployer } from '@/hooks/api/useDocument';
 import {
+  handleHourlyRateBlur,
   parseStringToSafeNumber,
   validateLaborContractEmployerInformation,
 } from '@/utils/document';
@@ -431,6 +432,9 @@ const EmployerLaborContractForm = ({
                   ...newDocumentData,
                   hourly_rate: parseStringToSafeNumber(value),
                 })
+              }
+              onBlur={() =>
+                handleHourlyRateBlur(String(newDocumentData.hourly_rate))
               }
               canDelete={false}
               isUnit
