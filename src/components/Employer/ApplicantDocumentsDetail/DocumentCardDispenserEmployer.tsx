@@ -135,7 +135,7 @@ const TemporarySaveCard = ({
           bgColor={isEmployerWrote ? 'bg-[#f4f4f9]' : 'bg-[#fef387]'}
           fontColor="text-[#222]"
           isBorder={false}
-          title="수정"
+          title={isEmployerWrote ? '수정' : '작성'}
           onClick={onEdit}
         />
         <Button
