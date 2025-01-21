@@ -12,7 +12,7 @@ import { phone } from '@/constants/information';
 import EmployerInfoSection from '@/components/Document/write/EmployerInfoSection';
 import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
-import { isNotEmpty } from '@/utils/document';
+import { validatePartTimePermit } from '@/utils/document';
 import { formatPhoneNumber, parsePhoneNumber } from '@/utils/information';
 import {
   usePostPartTimeEmployPermit,
@@ -265,8 +265,11 @@ const PartTimePermitWriteForm = ({
         </div>
 
         <BottomButtonPanel>
-          {/* 입력된 정보 중 빈 칸이 없다면 활성화 */}
-          {isNotEmpty(newDocumentData) && isNotEmpty(phoneNum) ? (
+          {/* 입력된 정보의 유효성 검사 통과 시 활성화 */}
+          {validatePartTimePermit({
+            ...newDocumentData,
+            phone_number: formatPhoneNumber(phoneNum),
+          }) ? (
             <Button
               type="large"
               bgColor="bg-[#fef387]"
