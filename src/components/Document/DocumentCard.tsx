@@ -27,6 +27,7 @@ type DocumentCardProps = {
   title: string;
   type: string;
   onNext?: () => void;
+  setIsLoading: (value: boolean) => void;
 };
 
 const TemporarySaveCard = ({
@@ -331,9 +332,24 @@ const DocumentCardDispenser = ({
   documentInfo,
   title,
   type,
+  setIsLoading,
 }: DocumentCardProps) => {
-  const { mutate: submitDocument } = usePatchStatusSubmission();
-  const { mutate: confirmDocument } = usePatchDocumentsStatusConfirmation();
+  const { mutate: submitDocument } = usePatchStatusSubmission({
+    onMutate: () => {
+      setIsLoading(true);
+    },
+    onSettled: () => {
+      setIsLoading(false);
+    },
+  });
+  const { mutate: confirmDocument } = usePatchDocumentsStatusConfirmation({
+    onMutate: () => {
+      setIsLoading(true);
+    },
+    onSettled: () => {
+      setIsLoading(false);
+    },
+  });
   const navigate = useNavigate();
   const { updateCurrentDocumentId } = useCurrentDocumentIdStore();
   const handleDownload = (url: string) => {

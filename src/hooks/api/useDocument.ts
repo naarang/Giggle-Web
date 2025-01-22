@@ -256,7 +256,9 @@ export const usePutIntegratedApplicants = (
 };
 
 // 8.15 (유학생) 서류 (근로계약서, 시간제 취업허가서, 통합 신청서) 제출하기 api hook
-export const usePatchStatusSubmission = () => {
+export const usePatchStatusSubmission = (
+  options?: UseMutationOptions<RESTYPE<null>, Error, number>,
+) => {
   return useMutation({
     mutationFn: patchStatusSubmission,
     onSuccess: () => {
@@ -265,16 +267,13 @@ export const usePatchStatusSubmission = () => {
     onError: (error) => {
       console.error('유학생의 서류 제출 실패', error);
     },
+    ...options,
   });
 };
 
 // 8.16 (고용주) 서류 (근로계약서, 시간제 취업허가서, 통합 신청서) 제출하기 api hook
 export const usePatchStatusSubmissionEmployer = (
-  options?: UseMutationOptions<
-    RESTYPE<null>,
-    Error,
-    number
-  >,
+  options?: UseMutationOptions<RESTYPE<null>, Error, number>,
 ) => {
   return useMutation({
     mutationFn: patchStatusSubmissionEmployer,
@@ -284,12 +283,14 @@ export const usePatchStatusSubmissionEmployer = (
     onError: (error) => {
       console.error('고용주의 서류 제출 실패', error);
     },
-    ...options
+    ...options,
   });
 };
 
-// 8.17 (유학생) 서류 (근로계약서, 시간제 취업허가서) 컴펌하기
-export const usePatchDocumentsStatusConfirmation = () => {
+// 8.17 (유학생) 서류 (근로계약서, 시간제 취업허가서) 컨펌하기
+export const usePatchDocumentsStatusConfirmation = (
+  options?: UseMutationOptions<RESTYPE<null>, Error, number>,
+) => {
   return useMutation({
     mutationFn: patchDocumentsStatusConfirmation,
     onSuccess: () => {
@@ -298,6 +299,7 @@ export const usePatchDocumentsStatusConfirmation = () => {
     onError: (error) => {
       console.error('유학생의 서류 컨펌 실패', error);
     },
+    ...options,
   });
 };
 
