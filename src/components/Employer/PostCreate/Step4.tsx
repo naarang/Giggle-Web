@@ -239,6 +239,7 @@ const Step4 = ({
                         ...newPostInfo.body,
                         recruiter_phone_number: formatPhoneNumber(phoneNum),
                       },
+                      images: newPostInfo.images,
                     })
             }
           />

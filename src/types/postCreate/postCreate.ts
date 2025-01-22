@@ -73,7 +73,7 @@ export type Image = {
 }
 
 export type JobPostingForm = {
-  images: File[] | Image[];
+  images: (File | Image)[];
   body: {
     title: string;
     job_category: JobCategory | string;
