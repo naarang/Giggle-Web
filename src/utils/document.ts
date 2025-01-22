@@ -3,12 +3,13 @@ import {
   Insurance,
   IntegratedApplicationData,
   LaborContractEmployerInfo,
+  PartTimePermitFormRequest,
   WorkDayTime,
 } from '@/types/api/document';
 import { Address } from '@/types/api/users';
 import { extractNumbersAsNumber } from './post';
 import { InsuranceInfo } from '@/constants/documents';
-import { isValidPhoneNumber, parsePhoneNumber } from './information';
+import { parsePhoneNumber } from './information';
 
 export const MINIMUM_HOURLY_RATE = 10030;
 
@@ -29,6 +30,51 @@ export const isNotEmpty = (obj: Record<string, any>): boolean => {
     // 숫자나 불리언 등 다른 타입은 true 반환
     return true;
   });
+};
+
+// string data의 공백 여부를 확인하는 함수
+const hasStringValue = (value: string): boolean => {
+  return value.trim().length > 0;
+};
+
+// 이메일 유효성 검사 함수
+const isEmailValid = (email: string): boolean => {
+  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+  return emailRegex.test(email);
+};
+
+// 전화번호 유효성 검사 함수
+const isValidPhoneNumber = (phone: string) => {
+  const phoneNum = parsePhoneNumber(phone);
+  return (
+    phoneNum.start !== '' &&
+    /^[0-9]{4}$/.test(phoneNum.middle) &&
+    /^[0-9]{4}$/.test(phoneNum.end)
+  );
+};
+
+// 이수학기 유효성 검사 함수
+const isValidTermOfCompletion = (term: number): boolean => {
+  return !isNaN(term) && term > 0;
+};
+
+// (유학생) 시간제 근로 허가서 유효성 검사 함수
+export const validatePartTimePermit = (
+  data: PartTimePermitFormRequest,
+): boolean => {
+  // 필수 입력 항목 체크(이름, 성, 전화번호, 이메일, 이수학기, 전화번호)
+  if (
+    hasStringValue(data.first_name) &&
+    hasStringValue(data.last_name) &&
+    hasStringValue(data.phone_number) &&
+    isEmailValid(data.email) &&
+    isValidPhoneNumber(data.phone_number) &&
+    isValidTermOfCompletion(data.term_of_completion)
+  ) {
+    return true;
+  }
+
+  return false;
 };
 
 export const workDayTimeToString = (workDayTimes: WorkDayTime[]): string => {
@@ -239,10 +285,10 @@ export const validateIntegratedApplication = (
 
   // 전화번호 필드들 검사
   const isPhoneValid =
-    isValidPhoneNumber(parsePhoneNumber(data.tele_phone_number)) &&
-    isValidPhoneNumber(parsePhoneNumber(data.cell_phone_number)) &&
-    isValidPhoneNumber(parsePhoneNumber(data.school_phone_number)) &&
-    isValidPhoneNumber(parsePhoneNumber(data.new_work_place_phone_number));
+    isValidPhoneNumber(data.tele_phone_number) &&
+    isValidPhoneNumber(data.cell_phone_number) &&
+    isValidPhoneNumber(data.school_phone_number) &&
+    isValidPhoneNumber(data.new_work_place_phone_number);
   // 나머지 필드 검사
   const otherFieldsValid = Object.entries(data).every(([key, value]) => {
     // 앞서 검사한 필드들은 스킵
