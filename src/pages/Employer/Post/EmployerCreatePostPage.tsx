@@ -61,6 +61,7 @@ const EmployerCreatePostPage = () => {
               length={5}
               currentStep={currentStep}
               mainColor="#1E1926"
+              textColor='#FFFFFF'
             />
           </div>
           <div className="w-full flex justify-center px-6">

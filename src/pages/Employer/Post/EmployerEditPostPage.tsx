@@ -90,7 +90,7 @@ const EmployerEditPostPage = () => {
         hasBackButton
         onClickBackButton={() => navigate(-1)}
         hasMenuButton={false}
-        title="공고등록"
+        title="공고수정"
       />
       {devIsModal ? (
         <CompleteModal
@@ -107,6 +107,7 @@ const EmployerEditPostPage = () => {
               length={5}
               currentStep={currentStep}
               mainColor="#1E1926"
+              textColor='#FFFFFF'
             />
           </div>
           <div className="w-full flex justify-center px-6">
