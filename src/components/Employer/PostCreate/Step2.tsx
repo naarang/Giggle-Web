@@ -33,7 +33,7 @@ const Step2 = ({
     handleAddressSearch, // 검색할 주소 입력 시 실시간 검색
     handleAddressSelect, // 검색 결과 중 원하는 주소를 선택할 시 state에 입력
     setAddressInput,
-  } = useAddressSearch();
+  } = useAddressSearch(postInfo.body.address);
 
   const handleAddressSelection = (selectedAddressName: string) => {
     const result = handleAddressSelect(selectedAddressName);
