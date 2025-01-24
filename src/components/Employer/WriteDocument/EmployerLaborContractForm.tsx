@@ -76,21 +76,12 @@ const EmployerLaborContractForm = ({
     setAddressInput,
   } = useAddressSearch();
 
-  const [isLoading, setIsLoading] = useState(false);
   const [isInvalid, setIsInvalid] = useState(false);
   // 근무시간, 요일 선택 모달 활성화 플래그
   const [isModal, setIsModal] = useState(false);
   // 입력 완료 시 제출
-  const { mutate: putDocument } = usePutLaborContractEmployer(
+  const { mutate: putDocument, isPending } = usePutLaborContractEmployer(
     Number(currentDocumentId),
-    {
-      onMutate: () => {
-        setIsLoading(true);
-      },
-      onSettled: () => {
-        setIsLoading(false);
-      },
-    },
   );
   useEffect(() => {
     if (isEdit && document?.employer_information) {
@@ -162,7 +153,7 @@ const EmployerLaborContractForm = ({
 
   return (
     <>
-      {isLoading && (
+      {isPending && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-50 overflow-hidden"
           style={{ touchAction: 'none' }}
@@ -172,7 +163,7 @@ const EmployerLaborContractForm = ({
         </div>
       )}
       <div
-        className={`w-full p-6 flex flex-col ${isLoading ? 'overflow-hidden pointer-events-none' : ''}`}
+        className={`w-full p-6 flex flex-col ${isPending ? 'overflow-hidden pointer-events-none' : ''}`}
       >
         <div className="[&>*:last-child]:mb-40 flex flex-col gap-4">
           {/* 회사/점포명 입력 */}

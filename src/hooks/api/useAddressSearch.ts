@@ -1,5 +1,6 @@
 import { useSearchAddress } from '@/hooks/api/useKaKaoMap';
 import { Document, AddressType, GeoPosition } from '@/types/api/map';
+import { Address } from '@/types/postCreate/postCreate';
 import { pick } from '@/utils/map';
 import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 
@@ -27,14 +28,18 @@ interface UseAddressSearchReturn {
   setCurrentGeoInfo: Dispatch<SetStateAction<GeoPosition>>;
 }
 
-export const useAddressSearch = (): UseAddressSearchReturn => {
-  const [addressInput, setAddressInput] = useState('');
+export const useAddressSearch = (
+  addressBeforeEdit?: Address,
+): UseAddressSearchReturn => {
+  const [addressInput, setAddressInput] = useState(
+    addressBeforeEdit?.address_name || '',
+  );
   const [addressSearchResult, setAddressSearchResult] = useState<Document[]>(
     [],
   );
   const [currentGeoInfo, setCurrentGeoInfo] = useState({
-    lat: 0,
-    lon: 0,
+    lat: addressBeforeEdit?.latitude || 0,
+    lon: addressBeforeEdit?.longitude || 0,
   });
 
   const { searchAddress } = useSearchAddress({

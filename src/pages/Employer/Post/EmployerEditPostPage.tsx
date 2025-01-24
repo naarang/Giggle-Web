@@ -20,7 +20,7 @@ const EmployerEditPostPage = () => {
   const { isEdit } = location.state || {};
   const { id } = useParams();
   const { currentPostId } = useCurrentPostIdStore();
-  console.log(currentPostId)
+  console.log(currentPostId);
   const [currentStep, setCurrentStep] = useState(1);
   const [postInfo, setPostInfo] = useState<JobPostingForm>(
     initialJobPostingState,
@@ -56,8 +56,15 @@ const EmployerEditPostPage = () => {
       work_period: serverData.working_conditions.work_period,
       hourly_rate: serverData.working_conditions.hourly_rate,
       employment_type: serverData.working_conditions.employment_type,
-      address: {...postInfo.body.address, address_name: serverData.company_information.company_address},
-      recruitment_dead_line: serverData.recruitment_conditions.recruitment_deadline,
+      address: {
+        ...postInfo.body.address,
+        address_name: serverData.workplace_information.main_address,
+        latitude: serverData.workplace_information.latitude,
+        longitude: serverData.workplace_information.longitude,
+        address_detail: serverData.workplace_information.detailed_address,
+      },
+      recruitment_dead_line:
+        serverData.recruitment_conditions.recruitment_deadline,
       recruitment_number: serverData.recruitment_conditions.number_of_recruits,
       gender: serverData.recruitment_conditions.gender,
       age_restriction: initialJobPostingState.body.age_restriction,
@@ -90,7 +97,7 @@ const EmployerEditPostPage = () => {
         hasBackButton
         onClickBackButton={() => navigate(-1)}
         hasMenuButton={false}
-        title="공고등록"
+        title="공고수정"
       />
       {devIsModal ? (
         <CompleteModal
@@ -107,6 +114,7 @@ const EmployerEditPostPage = () => {
               length={5}
               currentStep={currentStep}
               mainColor="#1E1926"
+              textColor="#FFFFFF"
             />
           </div>
           <div className="w-full flex justify-center px-6">

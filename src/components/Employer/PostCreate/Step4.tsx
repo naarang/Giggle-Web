@@ -6,7 +6,7 @@ import InputLayout from '@/components/WorkExperience/InputLayout';
 import { buttonTypeKeys } from '@/constants/components';
 import { phone } from '@/constants/information';
 import { InputType } from '@/types/common/input';
-import { Image, JobPostingForm } from '@/types/postCreate/postCreate';
+import type { Image, JobPostingForm } from '@/types/postCreate/postCreate';
 import { useEffect, useState } from 'react';
 import AddFileIcon from '@/assets/icons/FileAddIcon.svg?react';
 import {
@@ -29,11 +29,16 @@ const Step4 = ({
 }) => {
   // 현재 step내에서 입력받는 정보를 따로 관리할 state, 추후 다음 step으로 넘어갈 때 funnel 관리 페이지의 state로 통합된다.
   const [newPostInfo, setNewPostInfo] = useState<JobPostingForm>({
-    images: [],
+    images: postInfo.images.filter(
+      (image): image is File => image instanceof File,
+    ),
     body: { ...postInfo.body },
   });
   const [storedImageUrls, setStoredImageUrls] = useState<Image[]>(
-    isEdit ? (postInfo.images as Image[]) : [],
+    // 이미지 수정 시 기존 이미지를 불러와 저장 (id, img_url이 있는 경우 기존 이미지)
+    isEdit
+      ? postInfo.images.filter((image) => 'id' in image && 'img_url' in image)
+      : [],
   );
   // 세 부분으로 나누어 입력받는 방식을 위해 전화번호만 별도의 state로 분리, 추후 유효성 검사 단에서 통합
   const [phoneNum, setPhoneNum] = useState({
@@ -56,10 +61,11 @@ const Step4 = ({
     const { recruiter_name, recruiter_email } = newPostInfo.body;
 
     const isFormValid =
-      recruiter_name !== '' &&
-      basicEmailRegex.test(recruiter_email) &&
-      isValidPhoneNumber(phoneNum) &&
-      newPostInfo.images.length > 0 || storedImageUrls.length > 0;
+      (recruiter_name !== '' &&
+        basicEmailRegex.test(recruiter_email) &&
+        isValidPhoneNumber(phoneNum) &&
+        newPostInfo.images.length > 0) ||
+      storedImageUrls.length > 0;
     setIsInvalid(!isFormValid);
   }, [newPostInfo, phoneNum]);
 
@@ -153,6 +159,7 @@ const Step4 = ({
                 />
               </label>
             )}
+            {/* 기존 이미지들(cdn 링크를 반환 받으므로 신규로 추가한 이미지와 분리해 처리) */}
             {storedImageUrls[0] &&
               storedImageUrls.map((image, idx) => (
                 <div className="w-[7.5rem] h-[7.5rem] relative rounded-lg flex flex-row items-center justify-center  bg-no-repeat bg-top text-left text-gray-400">
@@ -239,6 +246,7 @@ const Step4 = ({
                         ...newPostInfo.body,
                         recruiter_phone_number: formatPhoneNumber(phoneNum),
                       },
+                      images: [...newPostInfo.images, ...storedImageUrls],
                     })
             }
           />
