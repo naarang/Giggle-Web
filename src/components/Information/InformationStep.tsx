@@ -87,6 +87,36 @@ const InformationStep = ({
             canDelete={false}
           />
         </div>
+        {/* 전화번호 선택, dropdown으로 앞 번호를, 중간 번호와 뒷 번호는 각각 input으로 입력 받음 */}
+        <div className="w-full">
+          <div className="w-full flex flex-row items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
+            Telephone No.
+          </div>
+          <div className="w-full flex flex-row gap-2 justify-between">
+            <div className="w-full h-[2.75rem]">
+              <Dropdown
+                value={phoneNum.start}
+                placeholder="+82"
+                options={phone}
+                setValue={(value) => setPhoneNum({ ...phoneNum, start: value })}
+              />
+            </div>
+            <Input
+              inputType={InputType.TEXT}
+              placeholder="0000"
+              value={phoneNum.middle}
+              onChange={(value) => setPhoneNum({ ...phoneNum, middle: value })}
+              canDelete={false}
+            />
+            <Input
+              inputType={InputType.TEXT}
+              placeholder="0000"
+              value={phoneNum.end}
+              onChange={(value) => setPhoneNum({ ...phoneNum, end: value })}
+              canDelete={false}
+            />
+          </div>
+        </div>
         <div className="w-full">
           <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
             Gender
@@ -136,7 +166,7 @@ const InformationStep = ({
           />
         </div>
         {/* 비자 선택 */}
-        <div className="w-full">
+        <div className="w-full mb-[7.125rem]">
           <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
             Visa Status
           </div>
@@ -148,36 +178,6 @@ const InformationStep = ({
               setNewUserInfo({ ...newUserInfo, visa: value })
             }
           />
-        </div>
-        {/* 전화번호 선택, dropdown으로 앞 번호를, 중간 번호와 뒷 번호는 각각 input으로 입력 받음 */}
-        <div className="w-full">
-          <div className="w-full flex flex-row items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
-            Telephone No.
-          </div>
-          <div className="w-full flex flex-row gap-2 justify-between mb-[30rem]">
-            <div className="w-full h-[2.75rem]">
-              <Dropdown
-                value={phoneNum.start}
-                placeholder="+82"
-                options={phone}
-                setValue={(value) => setPhoneNum({ ...phoneNum, start: value })}
-              />
-            </div>
-            <Input
-              inputType={InputType.TEXT}
-              placeholder="0000"
-              value={phoneNum.middle}
-              onChange={(value) => setPhoneNum({ ...phoneNum, middle: value })}
-              canDelete={false}
-            />
-            <Input
-              inputType={InputType.TEXT}
-              placeholder="0000"
-              value={phoneNum.end}
-              onChange={(value) => setPhoneNum({ ...phoneNum, end: value })}
-              canDelete={false}
-            />
-          </div>
         </div>
       </div>
       {/* 정보 입력 시마다 유효성을 검사해 모든 값이 유효하면 버튼이 활성화 */}
