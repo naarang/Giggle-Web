@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import ApplicationDetailBottomSheet from '@/components/ApplicationDetail/ApplicationDetailBottomSheet';
 import { usePatchApplyHiKorea } from '@/hooks/api/useApplication';
+import { sendReactNativeMessage } from '@/utils/reactNativeMessage';
 
 const ApplicationDetailStep5 = () => {
   const navigate = useNavigate();
@@ -14,8 +15,12 @@ const ApplicationDetailStep5 = () => {
   const [isShowBottomsheet, setIsShowBottomSheet] = useState<boolean>(false);
 
   const onClickBlackButton = () => {
-    window.location.href =
-      'https://www.hikorea.go.kr/cvlappl/CvlapplStep1.pt#this';
+    const isWebView = Boolean(window.ReactNativeWebView);
+    if (isWebView) sendReactNativeMessage({ type: 'GO_HIKOREA' });
+    else {
+      window.location.href =
+        'https://www.hikorea.go.kr/cvlappl/CvlapplStep1.pt#this';
+    }
   };
 
   const onClickYellowButton = () => {
