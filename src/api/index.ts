@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   getAccessToken,
   getRefreshToken,
@@ -62,7 +63,10 @@ function setInterceptors(instance: AxiosInstance, type: string) {
     (response) => response,
     async (error) => {
       if (error.response && error.response.status === 401) {
-        if (error.response.data.error.code === 40101) {
+        if (
+          error.response.data.error.code === 40101 ||
+          error.response.data.error.code === 40102
+        ) {
           console.log('401');
 
           const refreshToken = getRefreshToken();
