@@ -55,21 +55,24 @@ const ContactCoordinatorModal = ({
             <p className="pb-[0.75rem] px-[0.5rem] caption-1 text-[##656565]">
               {coordinatorData?.address?.address_detail}
             </p>
-            <Map
-              center={{
-                lat: coordinatorData.address.latitude,
-                lng: coordinatorData.address.longitude,
-              }}
-              style={{ width: '100%', height: '99px' }}
-              className="rounded-xl"
-            >
-              <MapMarker
-                position={{
-                  lat: coordinatorData.address.latitude,
-                  lng: coordinatorData.address.longitude,
-                }}
-              ></MapMarker>
-            </Map>
+            {coordinatorData?.address?.latitude &&
+              coordinatorData?.address?.longitude && (
+                <Map
+                  center={{
+                    lat: coordinatorData.address.latitude,
+                    lng: coordinatorData.address.longitude,
+                  }}
+                  style={{ width: '100%', height: '99px' }}
+                  className="rounded-xl"
+                >
+                  <MapMarker
+                    position={{
+                      lat: coordinatorData.address.latitude,
+                      lng: coordinatorData.address.longitude,
+                    }}
+                  ></MapMarker>
+                </Map>
+              )}
           </div>
         </div>
         <div className="flex items-center justify-center">
