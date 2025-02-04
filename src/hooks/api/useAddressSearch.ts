@@ -1,6 +1,6 @@
+import { Address } from '@/types/api/users';
 import { useSearchAddress } from '@/hooks/api/useKaKaoMap';
 import { Document, AddressType, GeoPosition } from '@/types/api/map';
-import { Address } from '@/types/postCreate/postCreate';
 import { pick } from '@/utils/map';
 import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 

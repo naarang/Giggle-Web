@@ -24,6 +24,7 @@ export const changeValidData = (
     // phone_number 통합
     phone_number: `${phoneNum.start}-${phoneNum.middle}-${phoneNum.end}`,
     is_profile_img_changed: isProfileImgChanged,
+    address: userData.address,
   };
 };
 
@@ -45,6 +46,7 @@ export const transformToProfileRequest = (
     visa: data.visa.replace(/_/g, '-'),
     phone_number: data.phone_number,
     is_profile_img_changed: false,
+    address: data.address,
   };
 };
 
