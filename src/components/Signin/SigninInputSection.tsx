@@ -5,7 +5,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { validateId, validatePassword } from '@/utils/signin';
 import { useSignIn } from '@/hooks/api/useAuth';
 import { useUserInfoforSigninStore } from '@/store/signup';
-import BottomButtonPanel from '../Common/BottomButtonPanel';
 
 const SigninInputSection = () => {
   const navigate = useNavigate();
@@ -58,7 +57,7 @@ const SigninInputSection = () => {
   }, [idValue, passwordValue]);
 
   return (
-    <div className="w-full px-6 flex flex-col gap-2">
+    <div className="w-full px-6 flex flex-grow flex-col justify-between">
       <div className="flex flex-col gap-4">
         <div>
           <p className="py-2 px-1 text-sm font-normal text-[#171719]">ID</p>
@@ -95,30 +94,32 @@ const SigninInputSection = () => {
         </button>
         */}
       </div>
-      <BottomButtonPanel>
-        <div className="w-full flex flex-col items-center gap-6">
-          <div className="flex items-center justify-center gap-2">
-            <p className="text-[#7D8A95] text-sm font-normal">
-              Don't have an account?
-            </p>
-            {/* 회원가입 화면 이동 */}
-            <button
-              className="text-[#000] text-sm font-semibold"
-              onClick={() => navigate('/signup')}
-            >
-              Create Account
-            </button>
+      <div className="w-full bg-gradient-to-b from-white/80 to-white flex flex-row items-start justify-start px-6 pb-[3.125rem] pt-3 box-border text-center button-1 text-[#1e1926] z-10">
+        <div className="w-full flex items-center justify-center">
+          <div className="w-full flex flex-col items-center gap-6">
+            <div className="flex items-center justify-center gap-2">
+              <p className="text-[#7D8A95] text-sm font-normal">
+                Don't have an account?
+              </p>
+              {/* 회원가입 화면 이동 */}
+              <button
+                className="text-[#000] text-sm font-semibold"
+                onClick={() => navigate('/signup')}
+              >
+                Create Account
+              </button>
+            </div>
+            <Button
+              type="large"
+              bgColor={isValid ? 'bg-[#000]' : 'bg-[#F4F4F9]'}
+              fontColor={isValid ? 'text-[#FEF387]' : 'text-[#BDBDBD]'}
+              isBorder={false}
+              title="Sign In"
+              onClick={isValid ? handleSubmit : undefined}
+            />
           </div>
-          <Button
-            type="large"
-            bgColor={isValid ? 'bg-[#000]' : 'bg-[#F4F4F9]'}
-            fontColor={isValid ? 'text-[#FEF387]' : 'text-[#BDBDBD]'}
-            isBorder={false}
-            title="Sign In"
-            onClick={isValid ? handleSubmit : undefined}
-          />
         </div>
-      </BottomButtonPanel>
+      </div>
     </div>
   );
 };
