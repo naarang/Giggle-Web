@@ -28,7 +28,7 @@ const SigninPage = () => {
       />
       <div className="w-full flex-grow flex flex-col">
         <div className="flex items-start mx-6 my-[3.125rem] h-[5rem] text-[#1E1926] text-[1.75rem] font-semibold">
-          이메일로 로그인
+          아이디로 로그인
         </div>
         <SigninInputSection />
         {/* <SigninSocialButtons /> */}
