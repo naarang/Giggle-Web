@@ -65,8 +65,7 @@ export const useAddressSearch = (
 
     if (!selectedAddress) return;
 
-    const isRoadAddr = selectedAddress.address_type === AddressType.ROAD;
-    const addressData = isRoadAddr
+    const isRoadAddr = [AddressType.ROAD_ADDR, AddressType.ROAD].includes(selectedAddress.address_type);    const addressData = isRoadAddr
       ? selectedAddress.road_address
       : selectedAddress.address;
 
