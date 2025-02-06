@@ -15,6 +15,7 @@ import {
   changeValidData,
   transformToProfileRequest,
   validateChanges,
+  validateFieldValues,
 } from '@/utils/editProfileData';
 import { useEffect, useState } from 'react';
 import { country, phone, visa } from '@/constants/information';
@@ -117,7 +118,11 @@ const EditProfilePage = () => {
 
   // 수정 여부를 확인(프로필 사진만 변경했을 경우 포함)
   useEffect(() => {
-    if (originalData && validateChanges(originalData, userData, phoneNum)) {
+    if (
+      originalData &&
+      validateChanges(originalData, userData, phoneNum) &&
+      validateFieldValues(userData, phoneNum)
+    ) {
       setIsChanged(true);
     } else {
       setIsChanged(false);
@@ -256,8 +261,8 @@ const EditProfilePage = () => {
                     value={userData.address.address_name}
                     options={Array.from(
                       addressSearchResult.map(
-                        (address) => address.address_name
-                      )
+                        (address) => address.address_name,
+                      ),
                     )}
                     onSelect={handleAddressSelection}
                   />
@@ -284,6 +289,8 @@ const EditProfilePage = () => {
                   placeholder="ex) 101dong"
                   value={userData.address.address_detail}
                   onChange={(value) =>
+                    userData.address.address_detail &&
+                    userData.address.address_detail.trim().length < 100 &&
                     setUserData({
                       ...userData,
                       address: {
