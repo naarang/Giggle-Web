@@ -269,7 +269,7 @@ const EditProfilePage = () => {
                 )}
               </InputLayout>
               {/* 검색한 위치를 보여주는 지도 */}
-              <div className="w-full rounded-xl">
+              <div className="w-full rounded-xl z-0">
                 <Map
                   center={{ lat: currentGeoInfo.lat, lng: currentGeoInfo.lon }}
                   style={{ width: '100%', height: '200px' }}
