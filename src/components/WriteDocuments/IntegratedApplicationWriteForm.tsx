@@ -23,7 +23,11 @@ import {
   usePostIntegratedApplicants,
   usePutIntegratedApplicants,
 } from '@/hooks/api/useDocument';
-import { formatCompanyRegistrationNumber, formatPhoneNumber, parsePhoneNumber } from '@/utils/information';
+import {
+  formatCompanyRegistrationNumber,
+  formatPhoneNumber,
+  parsePhoneNumber,
+} from '@/utils/information';
 import { useCurrentPostIdEmployeeStore } from '@/store/url';
 import LoadingItem from '../Common/LoadingItem';
 import { useAddressSearch } from '@/hooks/api/useAddressSearch';
@@ -309,6 +313,8 @@ const IntegratedApplicationWriteForm = ({
                 placeholder="ex) 101-dong"
                 value={newDocumentData.address.address_detail}
                 onChange={(value) =>
+                  newDocumentData.address.address_detail &&
+                  newDocumentData.address.address_detail.trim().length < 100 &&
                   setNewDocumentData({
                     ...newDocumentData,
                     address: {
