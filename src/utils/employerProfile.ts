@@ -7,17 +7,21 @@ const isValidString = (value: string): boolean => {
 export const isValidEmployerProfile = (
   data: EmployerProfileRequestBody,
 ): boolean => {
+  const nameRegex = /^[a-zA-Z가-힣\s]+$/;
+  const companyRegistrationNumPattern = /^\d{3}\/\d{2}\/\d{5}$/;
   const phonePattern = /.*-\d{4}-\d{4}$/;
   // owner_info의 모든 필드 체크
   const { owner_info } = data;
   if (
     !isValidString(owner_info.company_name) ||
     !isValidString(owner_info.owner_name) ||
+    !nameRegex.test(owner_info.owner_name) ||
     !isValidString(owner_info.company_registration_number) ||
+    !companyRegistrationNumPattern.test(owner_info.company_registration_number) ||
     !phonePattern.test(owner_info.phone_number)
-  ) {
+) {
     return false;
-  }
+}
 
   // address의 필수 필드 체크
   const { address } = data;
