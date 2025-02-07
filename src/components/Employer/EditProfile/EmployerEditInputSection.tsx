@@ -74,9 +74,7 @@ const EmployerEditInputSection = ({
     }
   }, [initialPhonNum]);
 
-  const [logoStatus, setLogoStatus] = useState<LogoType>(
-    logo ? LogoType.EXISTING : LogoType.NONE,
-  );
+  const [logoStatus, setLogoStatus] = useState<LogoType>(LogoType.EXISTING);
   const [selectedImage, setSelectedImage] = useState<string>();
   useEffect(() => {
     setAddressInput(String(newEmployData.address.address_name));
