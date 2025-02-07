@@ -45,6 +45,7 @@ const EditProfilePage = () => {
     addressInput, // 주소 검색용 input 저장하는 state
     addressSearchResult, // 주소 검색 결과를 저장하는 array
     currentGeoInfo, // 지도에 표시할 핀에 사용되는 위/경도 좌표
+    setCurrentGeoInfo,
     handleAddressSearch, // 검색할 주소 입력 시 실시간 검색
     handleAddressSelect, // 검색 결과 중 원하는 주소를 선택할 시 state에 입력
     setAddressInput,
@@ -109,6 +110,10 @@ const EditProfilePage = () => {
       setOriginalData(initailData);
       setUserData(initailData);
       setAddressInput(userProfile.data.address.address_name ?? '');
+      setCurrentGeoInfo({
+        lat: userProfile.data.address.latitude as number,
+        lon: userProfile.data.address.longitude as number,
+      });
     }
   }, [userProfile]);
 
@@ -247,7 +252,7 @@ const EditProfilePage = () => {
             </div>
             <div className="w-full flex flex-col gap-[1.125rem]">
               {/* 주소 검색 입력 input */}
-              <InputLayout title="Address" isEssential>
+              <InputLayout title="Address" isEssential={false}>
                 <Input
                   inputType={InputType.SEARCH}
                   placeholder="Search Your Address"

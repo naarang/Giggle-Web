@@ -2,7 +2,6 @@ import Dropdown, { DropdownModal } from '@/components/Common/Dropdown';
 import Input from '@/components/Common/Input';
 import InputLayout from '@/components/WorkExperience/InputLayout';
 import { phone } from '@/constants/information';
-import { useGetGeoInfo } from '@/hooks/api/useKaKaoMap';
 import { InputType } from '@/types/common/input';
 import { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
@@ -54,6 +53,15 @@ const EmployerEditInputSection = ({
     middle: '',
     end: '',
   });
+
+  useEffect(() => {
+    if (newEmployData.address.latitude && newEmployData.address.longitude) {
+      setCurrentGeoInfo({
+        lat: newEmployData.address.latitude,
+        lon: newEmployData.address.longitude,
+      });
+    }
+  }, [newEmployData.address.latitude, newEmployData.address.longitude]);
 
   useEffect(() => {
     if (initialPhonNum) {

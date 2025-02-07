@@ -92,6 +92,10 @@ const LaborContractWriteForm = ({
         end: parsePhoneNumber(newDocumentData.phone_number).end,
       });
       setAddressInput(newDocumentData.address.address_name as string);
+      setCurrentGeoInfo({
+        lat: newDocumentData.address.latitude as number,
+        lon: newDocumentData.address.longitude as number,
+      });
     }
   }, [document, isEdit]);
 
