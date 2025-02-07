@@ -111,8 +111,8 @@ const EditProfilePage = () => {
       setUserData(initailData);
       setAddressInput(userProfile.data.address.address_name ?? '');
       setCurrentGeoInfo({
-        lat: userProfile.data.address.latitude as number,
-        lon: userProfile.data.address.longitude as number,
+        lat: userProfile.data.address.latitude ?? 0,
+        lon: userProfile.data.address.longitude ?? 0,
       });
     }
   }, [userProfile]);

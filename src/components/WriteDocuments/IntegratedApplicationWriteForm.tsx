@@ -122,8 +122,8 @@ const IntegratedApplicationWriteForm = ({
       });
       setAddressInput(newDocumentData.address.address_name as string);
       setCurrentGeoInfo({
-        lat: document.address.latitude as number,
-        lon: document.address.longitude as number,
+        lat: document.address.latitude ?? 0,
+        lon: document.address.longitude ?? 0,
       });
     }
   }, [document, isEdit]);

@@ -93,8 +93,8 @@ const LaborContractWriteForm = ({
       });
       setAddressInput(newDocumentData.address.address_name as string);
       setCurrentGeoInfo({
-        lat: newDocumentData.address.latitude as number,
-        lon: newDocumentData.address.longitude as number,
+        lat: newDocumentData.address.latitude ?? 0,
+        lon: newDocumentData.address.longitude ?? 0,
       });
     }
   }, [document, isEdit]);

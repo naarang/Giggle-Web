@@ -99,8 +99,8 @@ const EmployerPartTimePermitForm = ({
       });
       setAddressInput(document.employer_information.address.address_name ?? '');
       setCurrentGeoInfo({
-        lat: document.employer_information.address.latitude as number,
-        lon: document.employer_information.address.longitude as number,
+        lat: document.employer_information.address.latitude ?? 0,
+        lon: document.employer_information.address.longitude ?? 0,
       });
     }
   }, [document, isEdit]);
