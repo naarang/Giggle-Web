@@ -12,7 +12,6 @@ import Dropdown, { DropdownModal } from '@/components/Common/Dropdown';
 import { phone } from '@/constants/information';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useGetGeoInfo } from '@/hooks/api/useKaKaoMap';
-import { AddressType } from '@/types/api/map';
 import { isNotEmpty } from '@/utils/document';
 import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
@@ -93,6 +92,10 @@ const LaborContractWriteForm = ({
         end: parsePhoneNumber(newDocumentData.phone_number).end,
       });
       setAddressInput(newDocumentData.address.address_name as string);
+      setCurrentGeoInfo({
+        lat: newDocumentData.address.latitude ?? 0,
+        lon: newDocumentData.address.longitude ?? 0,
+      });
     }
   }, [document, isEdit]);
 
@@ -217,12 +220,7 @@ const LaborContractWriteForm = ({
                 <DropdownModal
                   value={newDocumentData.address.address_name}
                   options={Array.from(
-                    addressSearchResult.filter(
-                      (address) =>
-                        address.address_type !==
-                        (AddressType.REGION_ADDR || AddressType.ROAD_ADDR),
-                    ),
-                    (address) => address.address_name,
+                    addressSearchResult.map((address) => address.address_name),
                   )}
                   onSelect={handleAddressSelection}
                 />
@@ -257,6 +255,8 @@ const LaborContractWriteForm = ({
                 placeholder="ex) 101-dong"
                 value={newDocumentData.address.address_detail}
                 onChange={(value) =>
+                  newDocumentData.address.address_detail &&
+                  newDocumentData.address.address_detail.trim().length < 100 &&
                   setNewDocumentData({
                     ...newDocumentData,
                     address: {

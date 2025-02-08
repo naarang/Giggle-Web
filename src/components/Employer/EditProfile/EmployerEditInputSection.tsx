@@ -2,8 +2,6 @@ import Dropdown, { DropdownModal } from '@/components/Common/Dropdown';
 import Input from '@/components/Common/Input';
 import InputLayout from '@/components/WorkExperience/InputLayout';
 import { phone } from '@/constants/information';
-import { useGetGeoInfo } from '@/hooks/api/useKaKaoMap';
-import { AddressType } from '@/types/api/map';
 import { InputType } from '@/types/common/input';
 import { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
@@ -21,6 +19,7 @@ import { useAddressSearch } from '@/hooks/api/useAddressSearch';
 type EmployerEditInputSectionProps = {
   newEmployData: EmployerProfileRequestBody;
   setNewEmployData: (newData: EmployerProfileRequestBody) => void;
+  logo?: string;
   setLogoFile: (file: File | undefined) => void;
   initialPhonNum: string;
 };
@@ -28,12 +27,14 @@ type EmployerEditInputSectionProps = {
 const enum LogoType {
   DEFAULT = 'default',
   NONE = 'none',
+  EXISTING = 'existing',
   SELECTED = 'selected',
 }
 
 const EmployerEditInputSection = ({
   newEmployData,
   setNewEmployData,
+  logo,
   setLogoFile,
   initialPhonNum,
 }: EmployerEditInputSectionProps) => {
@@ -54,6 +55,15 @@ const EmployerEditInputSection = ({
   });
 
   useEffect(() => {
+    if (newEmployData.address.latitude && newEmployData.address.longitude) {
+      setCurrentGeoInfo({
+        lat: newEmployData.address.latitude,
+        lon: newEmployData.address.longitude,
+      });
+    }
+  }, [newEmployData.address.latitude, newEmployData.address.longitude]);
+
+  useEffect(() => {
     if (initialPhonNum) {
       const splitPhoneNum = initialPhonNum.split('-');
       setPhoneNum({
@@ -64,20 +74,11 @@ const EmployerEditInputSection = ({
     }
   }, [initialPhonNum]);
 
-  const [logoStatus, setLogoStatus] = useState<LogoType>(LogoType.NONE);
+  const [logoStatus, setLogoStatus] = useState<LogoType>(LogoType.EXISTING);
   const [selectedImage, setSelectedImage] = useState<string>();
-  // 현재 좌표 기준 주소 획득
-  const { data, isSuccess } = useGetGeoInfo(setCurrentGeoInfo);
-  // 첫 로딩 시 현재 사용자의 위치 파악 해 지도에 표기
   useEffect(() => {
-    setNewEmployData({
-      ...newEmployData,
-      address: {
-        ...newEmployData.address,
-        address_name: String(data?.address.address_name),
-      },
-    });
-  }, [isSuccess]);
+    setAddressInput(String(newEmployData.address.address_name));
+  }, [newEmployData.address.address_name]);
 
   useEffect(() => {
     setNewEmployData({
@@ -197,12 +198,7 @@ const EmployerEditInputSection = ({
                 <DropdownModal
                   value={newEmployData.address.address_name}
                   options={Array.from(
-                    addressSearchResult.filter(
-                      (address) =>
-                        address.address_type !==
-                        (AddressType.REGION_ADDR || AddressType.ROAD_ADDR),
-                    ),
-                    (address) => address.address_name,
+                    addressSearchResult.map((address) => address.address_name),
                   )}
                   onSelect={handleAddressSelection}
                 />
@@ -311,6 +307,19 @@ const EmployerEditInputSection = ({
                       <div className="relative w-full h-full group">
                         <img
                           src={selectedImage}
+                          alt="Selected logo"
+                          className="w-full h-full object-cover rounded-lg"
+                        />
+                        {/* Hover overlay */}
+                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-opacity rounded-lg flex items-center justify-center">
+                          <FileAddIcon className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </div>
+                      </div>
+                    )}
+                    {logoStatus === LogoType.EXISTING && logo && (
+                      <div className="relative w-full h-full group">
+                        <img
+                          src={logo}
                           alt="Selected logo"
                           className="w-full h-full object-cover rounded-lg"
                         />

@@ -1,6 +1,5 @@
 import { initialIntegratedApplication } from '@/constants/documents';
 import { IntegratedApplicationData } from '@/types/api/document';
-import { AddressType } from '@/types/api/map';
 import { useEffect, useState } from 'react';
 import Input from '@/components/Common/Input';
 import { InputType } from '@/types/common/input';
@@ -24,7 +23,11 @@ import {
   usePostIntegratedApplicants,
   usePutIntegratedApplicants,
 } from '@/hooks/api/useDocument';
-import { formatCompanyRegistrationNumber, formatPhoneNumber, parsePhoneNumber } from '@/utils/information';
+import {
+  formatCompanyRegistrationNumber,
+  formatPhoneNumber,
+  parsePhoneNumber,
+} from '@/utils/information';
 import { useCurrentPostIdEmployeeStore } from '@/store/url';
 import LoadingItem from '../Common/LoadingItem';
 import { useAddressSearch } from '@/hooks/api/useAddressSearch';
@@ -69,6 +72,7 @@ const IntegratedApplicationWriteForm = ({
     addressInput, // 주소 검색용 input 저장하는 state
     addressSearchResult, // 주소 검색 결과를 저장하는 array
     currentGeoInfo, // 지도에 표시할 핀에 사용되는 위/경도 좌표
+    setCurrentGeoInfo,
     handleAddressSearch, // 검색할 주소 입력 시 실시간 검색
     handleAddressSelect, // 검색 결과 중 원하는 주소를 선택할 시 state에 입력
     setAddressInput,
@@ -117,6 +121,10 @@ const IntegratedApplicationWriteForm = ({
         end: parsePhoneNumber(newDocumentData.school_phone_number).end,
       });
       setAddressInput(newDocumentData.address.address_name as string);
+      setCurrentGeoInfo({
+        lat: document.address.latitude ?? 0,
+        lon: document.address.longitude ?? 0,
+      });
     }
   }, [document, isEdit]);
   // 데이터 입력 시 실시간으로 유효성 검사
@@ -283,12 +291,7 @@ const IntegratedApplicationWriteForm = ({
                 <DropdownModal
                   value={newDocumentData.address.address_name}
                   options={Array.from(
-                    addressSearchResult.filter(
-                      (address) =>
-                        address.address_type !==
-                        (AddressType.REGION_ADDR || AddressType.ROAD_ADDR),
-                    ),
-                    (address) => address.address_name,
+                    addressSearchResult.map((address) => address.address_name),
                   )}
                   onSelect={handleAddressSelection}
                 />
@@ -315,6 +318,8 @@ const IntegratedApplicationWriteForm = ({
                 placeholder="ex) 101-dong"
                 value={newDocumentData.address.address_detail}
                 onChange={(value) =>
+                  newDocumentData.address.address_detail &&
+                  newDocumentData.address.address_detail.trim().length < 100 &&
                   setNewDocumentData({
                     ...newDocumentData,
                     address: {
