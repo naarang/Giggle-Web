@@ -11,7 +11,6 @@ import {
   PartTimePermitData,
   WorkPeriod,
 } from '@/types/api/document';
-import { AddressType } from '@/types/api/map';
 import { InputType } from '@/types/common/input';
 import { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
@@ -64,6 +63,7 @@ const EmployerPartTimePermitForm = ({
     addressInput, // 주소 검색용 input 저장하는 state
     addressSearchResult, // 주소 검색 결과를 저장하는 array
     currentGeoInfo, // 지도에 표시할 핀에 사용되는 위/경도 좌표
+    setCurrentGeoInfo,
     handleAddressSearch, // 검색할 주소 입력 시 실시간 검색
     handleAddressSelect, // 검색 결과 중 원하는 주소를 선택할 시 state에 입력
     setAddressInput,
@@ -98,6 +98,10 @@ const EmployerPartTimePermitForm = ({
         end: parsePhoneNumber(document?.employee_information.phone_number).end,
       });
       setAddressInput(document.employer_information.address.address_name ?? '');
+      setCurrentGeoInfo({
+        lat: document.employer_information.address.latitude ?? 0,
+        lon: document.employer_information.address.longitude ?? 0,
+      });
     }
   }, [document, isEdit]);
 
@@ -213,12 +217,7 @@ const EmployerPartTimePermitForm = ({
                 <DropdownModal
                   value={newDocumentData.address.address_name}
                   options={Array.from(
-                    addressSearchResult.filter(
-                      (address) =>
-                        address.address_type !==
-                        (AddressType.REGION_ADDR || AddressType.ROAD_ADDR),
-                    ),
-                    (address) => address.address_name,
+                    addressSearchResult.map((address) => address.address_name),
                   )}
                   onSelect={handleAddressSelection}
                 />

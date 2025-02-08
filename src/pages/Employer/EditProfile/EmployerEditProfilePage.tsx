@@ -75,6 +75,7 @@ const EmployerEditProfilePage = () => {
       />
       <EmployerEditInputSection
         newEmployData={newEmployData}
+        logo={data?.data.logo_img_url}
         setNewEmployData={setNewEmployData}
         setLogoFile={(file: File | undefined) => setLogoFile(file)}
         initialPhonNum={newEmployData.owner_info.phone_number}
