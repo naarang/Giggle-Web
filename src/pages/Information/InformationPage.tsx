@@ -69,7 +69,7 @@ const InformationPage = () => {
     });
   };
   return (
-    <div className="m-auto max-w-[500px] relative h-screen flex flex-col items-center justify-start border border-black overflow-y-scroll scrollbar-hide">
+    <div className="m-auto max-w-[500px] relative h-screen flex flex-col items-center justify-start overflow-y-scroll scrollbar-hide">
       {devIsModal ? (
         <CompleteModal
           title="Registration has been successfully completed"
