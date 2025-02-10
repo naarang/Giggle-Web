@@ -11,7 +11,6 @@ type BottomSheetLayoutProps = {
   isFixedBackground?: boolean;
 };
 
-const VIEW_HEIGHT = window.innerHeight;
 const LAYOUT_MARGIN = 64;
 
 const BottomSheetLayout = ({
@@ -27,6 +26,7 @@ const BottomSheetLayout = ({
   const { setIsOpen, onDragEnd, controls } =
     useBottomSheet(setIsShowBottomSheet);
   const [contentHeight, setContentHeight] = useState<number>(0);
+  const [viewHeight, setViewHeight] = useState<number>(window.innerHeight);
 
   useEffect(() => {
     setIsOpen(isShowBottomsheet);
@@ -37,6 +37,7 @@ const BottomSheetLayout = ({
     if (contentRef.current) {
       const height = contentRef.current.offsetHeight;
       setContentHeight(height);
+      setViewHeight(window.innerHeight);
     }
   }, [contentRef]);
 
@@ -76,7 +77,7 @@ const BottomSheetLayout = ({
         dragElastic={0.2}
         className={`fixed left-0 bottom-0 w-full h-[90vh] p-[1.5rem] pb-[2.5rem] rounded-t-[2.5rem] bg-white shadow-bottomSheetShadow z-40`}
         style={{
-          top: `${VIEW_HEIGHT - contentHeight - LAYOUT_MARGIN}px`,
+          top: `${viewHeight - contentHeight - LAYOUT_MARGIN}px`,
         }}
       >
         {hasHandlebar && (
