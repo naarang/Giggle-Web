@@ -14,6 +14,7 @@ import { InputType } from '@/types/common/input';
 import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
 import { formatDateToDash } from '@/utils/editResume';
+import InputLayout from '../WorkExperience/InputLayout';
 const InformationStep = ({
   userInfo,
   onNext,
@@ -55,13 +56,10 @@ const InformationStep = ({
   }, [newUserInfo, phoneNum]);
 
   return (
-    <div className="w-full mx-auto">
-      <div className="w-full flex flex-col gap-[1.125rem]">
+    <div className="w-full mx-auto mb-[7rem]">
+      <div className="w-full flex flex-col gap-[1rem]">
         {/* 이름 작성 */}
-        <div className="w-full">
-          <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
-            First Name
-          </div>
+        <InputLayout title="First Name" isEssential={true}>
           <Input
             inputType={InputType.TEXT}
             placeholder="First Name"
@@ -71,12 +69,9 @@ const InformationStep = ({
             }
             canDelete={false}
           />
-        </div>
+        </InputLayout>
         {/* 성 작성 */}
-        <div className="w-full">
-          <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
-            Last Name
-          </div>
+        <InputLayout title="Last Name" isEssential={true}>
           <Input
             inputType={InputType.TEXT}
             placeholder="Last Name"
@@ -86,12 +81,9 @@ const InformationStep = ({
             }
             canDelete={false}
           />
-        </div>
+        </InputLayout>
         {/* 전화번호 선택, dropdown으로 앞 번호를, 중간 번호와 뒷 번호는 각각 input으로 입력 받음 */}
-        <div className="w-full">
-          <div className="w-full flex flex-row items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
-            Telephone No.
-          </div>
+        <InputLayout title="Cell phone No." isEssential={true}>
           <div className="w-full flex flex-row gap-2 justify-between">
             <div className="w-full h-[2.75rem]">
               <Dropdown
@@ -116,11 +108,9 @@ const InformationStep = ({
               canDelete={false}
             />
           </div>
-        </div>
-        <div className="w-full">
-          <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
-            Gender
-          </div>
+        </InputLayout>
+        {/* 성별 선택 */}
+        <InputLayout title="Gender" isEssential={true}>
           <div className="w-full flex flex-row gap-[1.75rem]">
             {gender.map((gender) => (
               <RadioButton
@@ -135,12 +125,9 @@ const InformationStep = ({
               />
             ))}
           </div>
-        </div>
+        </InputLayout>
         {/* 생년월일 선택 */}
-        <div className="w-full">
-          <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
-            Date of birth
-          </div>
+        <InputLayout title="Date of birth" isEssential={false} isOptional>
           <Dropdown
             value={newUserInfo.birth}
             placeholder="Select Date"
@@ -150,12 +137,9 @@ const InformationStep = ({
               setNewUserInfo({ ...newUserInfo, birth: value })
             }
           />
-        </div>
+        </InputLayout>
         {/* 국적 선택 */}
-        <div className="w-full">
-          <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
-            Nationality
-          </div>
+        <InputLayout title="Nationality" isEssential={false} isOptional>
           <Dropdown
             value={newUserInfo.nationality}
             placeholder="Select Nationality"
@@ -164,12 +148,9 @@ const InformationStep = ({
               setNewUserInfo({ ...newUserInfo, nationality: value })
             }
           />
-        </div>
+        </InputLayout>
         {/* 비자 선택 */}
-        <div className="w-full mb-[7.125rem]">
-          <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
-            Visa Status
-          </div>
+        <InputLayout title="Visa Status" isEssential>
           <Dropdown
             value={newUserInfo.visa}
             placeholder="Select Visa Status"
@@ -178,7 +159,7 @@ const InformationStep = ({
               setNewUserInfo({ ...newUserInfo, visa: value })
             }
           />
-        </div>
+        </InputLayout>
       </div>
       {/* 정보 입력 시마다 유효성을 검사해 모든 값이 유효하면 버튼이 활성화 */}
       <BottomButtonPanel>

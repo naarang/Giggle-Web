@@ -1,5 +1,6 @@
 import BottomSheetLayout from '@/components/Common/BottomSheetLayout';
 import CompleteModal from '@/components/Common/CompleteModal';
+import BaseHeader from '@/components/Common/Header/BaseHeader';
 import LoadingItem from '@/components/Common/LoadingItem';
 import AgreeModalInner from '@/components/Employer/Signup/AgreeModalInner';
 import AddressStep from '@/components/Information/AddressStep';
@@ -77,16 +78,22 @@ const InformationPage = () => {
         />
       ) : (
         <>
-          <div className="w-full flex flex-row py-6 items-center justify-between">
+          <BaseHeader
+            hasBackButton={true}
+            hasMenuButton={false}
+            title="Information"
+            onClickBackButton={() => navigate('/signup')}
+          />
+          <div className="w-full flex flex-row px-4 py-8 items-center justify-between">
             <div
-              className="relative w-full flex items-center justify-center title-1 text-[#1e1926] text-left"
+              className="relative w-full flex items-center justify-start head-2 text-[#1e1926]"
               onClick={() => setCurrentStep(currentStep + 1)}
             >
               Information
             </div>
             <StepIndicator length={3} currentStep={currentStep} />
           </div>
-          <div className="w-full flex justify-center px-6">
+          <div className="w-full flex justify-center px-4 pt-4">
             {currentStep === 1 && (
               <InformationStep userInfo={userInfo} onNext={handleNext} />
             )}
