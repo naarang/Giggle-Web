@@ -1,11 +1,12 @@
 import { usegetOwnerSummaries } from '@/hooks/api/useProfile';
 import { EmployerProfileResponse } from '@/types/api/profile';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const EmployerProfileCard = () => {
   const { data } = usegetOwnerSummaries();
+  const navigate = useNavigate();
   const [profileData, setProfileData] = useState<EmployerProfileResponse>();
-
   useEffect(() => {
     if (data) {
       setProfileData(data.data);
@@ -14,11 +15,21 @@ const EmployerProfileCard = () => {
   return (
     <>
       {profileData && (
-        <div className="pt-5 pb-4 flex items-center gap-4">
-          <div className="w-20 h-20 rounded-full overflow-hidden">
-            <img src={profileData.icon_img_url} alt="profile image" />
+        <div className="flex flex-col px-[1.125rem] mt-4 py-5 rounded-[0.5rem] gap-4 bg-[#fff]">
+          <div className="flex items-center gap-6">
+            <div className="w-16 h-16 rounded-full overflow-hidden">
+              <img src={profileData.icon_img_url} alt="profile image" />
+            </div>
+            <h1 className="head-2 text-[#1E1926]">
+              {profileData.company_name}
+            </h1>
           </div>
-          <h1 className="head-3 text-[#1E1926]">{profileData.company_name}</h1>
+          <button
+            className="grow w-full bg-[#FEF387] rounded-md px-5 py-3 text-center button-2 text-[#1E1926]"
+            onClick={() => navigate('/employer/profile/edit')}
+          >
+            회사 정보 수정
+          </button>
         </div>
       )}
     </>

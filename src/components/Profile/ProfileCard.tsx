@@ -19,7 +19,7 @@ const ProfileCard = ({ data }: ProfileCardProps) => {
       </div>
       <div className="flex items-center gap-4">
         {/* 프로필 사진 */}
-        <div className="w-20 h-20 rounded-full overflow-hidden">
+        <div className="w-16 h-16 rounded-full overflow-hidden">
           <img
             src={data.profile_img_url}
             alt="profile"
