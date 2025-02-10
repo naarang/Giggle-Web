@@ -16,7 +16,6 @@ const ProfilePage = () => {
 
   const { data } = useGetUserSummaries();
 
-
   // 로그아웃 바텀시트 핸들러
   const handleLogoutClick = () => {
     setBottomSheetOpen(true);
@@ -52,7 +51,7 @@ const ProfilePage = () => {
               hasMenuButton={false}
               title={headerTranslation.profile[isEmployer(pathname)]}
             />
-            <div className="flex flex-col px-6 gap-4 pb-12">
+            <div className="flex flex-col px-6 gap-4 pb-24">
               <ProfileCard data={data.data.user_information} />
               <ApplicationStatus />
               <ProfileMenuList onLogoutClick={handleLogoutClick} />
