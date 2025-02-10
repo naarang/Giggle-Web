@@ -11,7 +11,7 @@ import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import { DropdownModal } from '@/components/Common/Dropdown';
 import Button from '@/components/Common/Button';
 import { useAddressSearch } from '@/hooks/api/useAddressSearch';
-import InputLayout from '../WorkExperience/InputLayout';
+import InputLayout from '@/components/WorkExperience/InputLayout';
 
 type AddressStepProps = {
   userInfo: UserInfoRequestBody;
