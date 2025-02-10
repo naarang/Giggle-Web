@@ -48,7 +48,7 @@ const PolicyViewer = ({
     );
   };
   return (
-    <div className="fixed top-0 w-full h-full space-y-8 z-40 bg-white">
+    <div className="fixed top-0 w-full h-full space-y-8 z-50 bg-white">
       <div>
         <BaseHeader
           hasBackButton
