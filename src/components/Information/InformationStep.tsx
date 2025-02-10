@@ -35,24 +35,33 @@ const InformationStep = ({
 
   /* 정보 입력 시마다 유효성을 검사해 모든 값이 유효하면 버튼이 활성화 */
   useEffect(() => {
-    const { first_name, last_name, birth, nationality, visa } = newUserInfo;
+    const { first_name, last_name, visa, birth } = newUserInfo;
 
-    const isFormValid =
+    // 1. 필수 요소들 검증
+    const isEssentialValid =
       isValidName(String(first_name)) &&
       isValidName(String(last_name)) &&
-      birth !== '' &&
-      nationality !== '' &&
       visa !== '' &&
       isValidPhoneNumber(phoneNum);
 
-    if (isFormValid) {
-      setNewUserInfo((prevInfo) => ({
-        ...prevInfo,
-        phone_number: formatPhoneNumber(phoneNum),
-      }));
+    // 필수 요소가 하나라도 유효하지 않으면 여기서 종료
+    if (!isEssentialValid) {
+      setIsInvalid(true);
+      return;
     }
 
-    setIsInvalid(!isFormValid);
+    // 2. 선택 요소들 검증
+    const isOptionalValid =
+      // 빈칸이거나 유효한 값인 경우 true
+      birth === '' || Date.parse(birth as string) < Date.now();
+
+    if (!isOptionalValid) {
+      setIsInvalid(false);
+      return;
+    }
+
+    // 3. 모든 검증을 통과했을 때만 state 업데이트
+    setIsInvalid(false);
   }, [newUserInfo, phoneNum]);
 
   return (
@@ -184,6 +193,7 @@ const InformationStep = ({
                               .toUpperCase()
                               .replace(/\s/g, '_'),
                       birth: formatDateToDash(newUserInfo.birth as string),
+                      phone_number: formatPhoneNumber(phoneNum),
                       visa:
                         newUserInfo.visa !== null
                           ? newUserInfo.visa.replace(/-/g, '_')
