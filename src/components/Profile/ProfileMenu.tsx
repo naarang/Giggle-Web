@@ -75,7 +75,7 @@ const ProfileMenu = ({
     >
       <div className="flex justify-center items-center gap-4">
         {Icon}
-        <div className="head-2 text-[#1E1926]">{title}</div>
+        <div className="head-3 text-[#1E1926]">{title}</div>
       </div>
       {isToggle && (
         <div className="relative flex items-center">
