@@ -54,7 +54,7 @@ const BottomSheetLayout = ({
   return (
     <>
       {isShowBottomsheet && isFixedBackground && (
-        <div className="fixed w-screen h-screen top-0 bottom-0 left-0 right-0 bg-[rgba(0,0,0,0.3)] z-30"></div>
+        <div className="fixed w-screen h-screen top-0 bottom-0 left-0 right-0 bg-[rgba(0,0,0,0.3)] z-40"></div>
       )}
       <motion.div
         drag="y"
@@ -75,7 +75,7 @@ const BottomSheetLayout = ({
           bottom: contentHeight,
         }} // 상단과 하단 드래그 제한 설정
         dragElastic={0.2}
-        className={`fixed left-0 bottom-0 w-full h-[90vh] p-[1.5rem] pb-[2.5rem] rounded-t-[2.5rem] bg-white shadow-bottomSheetShadow z-30`}
+        className={`fixed left-0 bottom-0 w-full h-[90vh] p-[1.5rem] pb-[2.5rem] rounded-t-[2.5rem] bg-white shadow-bottomSheetShadow z-40`}
         style={{
           top: `${viewHeight - contentHeight - LAYOUT_MARGIN}px`,
         }}

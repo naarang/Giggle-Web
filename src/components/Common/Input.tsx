@@ -33,11 +33,11 @@ type InputProps = {
 const inputStyler = (status: InputStatus) => {
   switch (status) {
     case INPUT_STATUS.DISABLED:
-      return 'shadow-sm border-[#eae9f6] [--input-color:#bdbdbd]';
+      return 'border-[#eae9f6] [--input-color:#bdbdbd]';
     case INPUT_STATUS.TYPING:
-      return 'shadow-sm border-black text-black';
+      return 'border-black text-black';
     case INPUT_STATUS.INVALID:
-      return 'shadow-sm border-[#FF6F61] text-[#FF6F61] [--input-color:#FF6F61]';
+      return 'border-[#FF6F61] text-[#FF6F61] [--input-color:#FF6F61]';
   }
 };
 

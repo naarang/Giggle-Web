@@ -17,10 +17,10 @@ const BaseHeader = ({
   title,
 }: HeaderProps) => {
   return (
-    <section className="w-full h-[3.5rem] px-[0.75rem] py-[0.5rem] flex justify-between items-center bg-white sticky top-0 z-40">
+    <section className="w-full h-[3.75rem] px-[0.75rem] py-[0.75rem] flex justify-between items-center bg-white sticky top-0 z-40 border-b border-solid border-[#ECECEC]">
       {hasBackButton ? (
         <button
-          className="p-[0.5rem] rounded-[0.75rem] border border-solid border-[#ECECEC]"
+          className="p-[0.5rem] border-white"
           onClick={onClickBackButton}
         >
           <BackButtonIcon />
