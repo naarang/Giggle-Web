@@ -9,7 +9,6 @@ import LanguageStep from '@/components/Information/LanguageStep';
 import PolicyViewer from '@/components/Information/PolicyViewer';
 import StepIndicator from '@/components/Information/StepIndicator';
 import { useGetPolicy, useSignUp } from '@/hooks/api/useAuth';
-//import { useSignUp } from '@/hooks/api/useAuth';
 import {
   initialUserInfoRequestBody,
   Language,
@@ -82,7 +81,11 @@ const InformationPage = () => {
             hasBackButton={true}
             hasMenuButton={false}
             title="Information"
-            onClickBackButton={() => navigate('/signup')}
+            onClickBackButton={() =>
+              currentStep === 1
+                ? navigate('/signup')
+                : setCurrentStep((prev) => prev - 1)
+            }
           />
           <div className="w-full flex flex-row px-4 py-8 items-center justify-between">
             <div
