@@ -49,7 +49,11 @@ const AboutPage = () => {
       )}
       <BaseHeader
         hasBackButton
-        onClickBackButton={() => navigate('/profile')}
+        onClickBackButton={() =>
+          navigate(
+            account_type === UserType.USER ? '/profile' : '/employer/profile',
+          )
+        }
         hasMenuButton={false}
         title={account_type === UserType.USER ? 'Account' : '계정'}
       />

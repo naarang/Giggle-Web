@@ -39,7 +39,11 @@ const AccountPage = () => {
       )}
       <BaseHeader
         hasBackButton
-        onClickBackButton={() => navigate('/profile')}
+        onClickBackButton={() =>
+          navigate(
+            account_type === UserType.USER ? '/profile' : '/employer/profile',
+          )
+        }
         hasMenuButton={false}
         title={account_type === UserType.USER ? 'Account' : '계정'}
       />
@@ -50,7 +54,7 @@ const AccountPage = () => {
               title={
                 account_type === UserType.USER
                   ? profileTranslation.deleteAccount.en
-                  : profileTranslation.deleteAccount.en
+                  : profileTranslation.deleteAccount.ko
               }
               iconType={IconType.LOGOUT}
               onClick={() => handleDeleteButton(true)}

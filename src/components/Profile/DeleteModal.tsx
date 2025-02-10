@@ -1,15 +1,15 @@
 import { profileTranslation } from '@/constants/translation';
+import { UserType } from '@/constants/user';
 import { useWithdraw } from '@/hooks/api/useAuth';
-import { isEmployer } from '@/utils/signup';
-import { useLocation } from 'react-router-dom';
+import { useUserStore } from '@/store/user';
 
 type DeleteModalProps = {
   onDeleteButton: (value: boolean) => void;
 };
 
 const DeleteModal = ({ onDeleteButton }: DeleteModalProps) => {
-  const { pathname } = useLocation();
   const { mutate: withdraw } = useWithdraw();
+  const { account_type } = useUserStore();
 
   // 계정 삭제 훅
   const handleAccountDelete = () => {
@@ -21,10 +21,18 @@ const DeleteModal = ({ onDeleteButton }: DeleteModalProps) => {
       <div className="w-[90%] max-w-[22rem] flex flex-col gap-8 bg-white rounded-[1.125rem] overflow-hidden">
         <div>
           <h1 className="pt-[1.125rem] pb-4 border-b-[0.5px] border-solid border-[#DCDCDC] text-center head-3 text-[#464646]">
-            {profileTranslation.wantDeleteAccount[isEmployer(pathname)]}
+            {
+              profileTranslation.wantDeleteAccount[
+                account_type === UserType.USER ? 'en' : 'ko'
+              ]
+            }
           </h1>
           <p className="pt-7 body-3 text-[#656565] text-center px-14 break-keep">
-            {profileTranslation.descriptionDelet[isEmployer(pathname)]}
+            {
+              profileTranslation.descriptionDelet[
+                account_type === UserType.USER ? 'en' : 'ko'
+              ]
+            }
           </p>
         </div>
         <div className="flex items-center justify-center">
@@ -32,13 +40,21 @@ const DeleteModal = ({ onDeleteButton }: DeleteModalProps) => {
             className="bg=[#F4F4F9] py-[1.125rem] w-[50%] flex justify-center items-center button-1 text-[#656565]"
             onClick={() => onDeleteButton(false)}
           >
-            {profileTranslation.cancel[isEmployer(pathname)]}
+            {
+              profileTranslation.cancel[
+                account_type === UserType.USER ? 'en' : 'ko'
+              ]
+            }
           </button>
           <button
             className="bg-[#FEF387] py-[1.125rem] w-[50%] flex justify-center items-center button-1 text-[#1E1926]"
             onClick={handleAccountDelete}
           >
-            {profileTranslation.delete[isEmployer(pathname)]}
+            {
+              profileTranslation.delete[
+                account_type === UserType.USER ? 'en' : 'ko'
+              ]
+            }
           </button>
         </div>
       </div>
