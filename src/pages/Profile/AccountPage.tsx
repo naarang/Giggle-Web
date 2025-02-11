@@ -4,7 +4,7 @@ import ProfileMenu from '@/components/Profile/ProfileMenu';
 import { IconType } from '@/constants/profile';
 import { profileTranslation } from '@/constants/translation';
 import { useUserStore } from '@/store/user';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserType } from '@/constants/user';
 
@@ -16,18 +16,6 @@ const AccountPage = () => {
   const handleDeleteButton = (value: boolean) => {
     setModalOpen(value);
   };
-  useEffect(() => {
-    // 모달 열려있을 때 스크롤 비활성화
-    if (modalOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-    // 컴포넌트 언마운트 시에도 원래 상태로 복원
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [modalOpen]);
 
   return (
     <>

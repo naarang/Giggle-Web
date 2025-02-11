@@ -55,7 +55,7 @@ const AboutPage = () => {
           )
         }
         hasMenuButton={false}
-        title={account_type === UserType.USER ? 'Account' : '계정'}
+        title={account_type === UserType.USER ? 'About' : '정보'}
       />
       <div className="w-full h-full min-h-[100vh] bg-[#f4f4f9]">
         <div className="flex flex-col gap-4 px-4 pb-4 bg-white rounded-md">
