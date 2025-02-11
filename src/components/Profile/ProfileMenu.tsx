@@ -71,11 +71,11 @@ const ProfileMenu = ({
   return (
     <div
       onClick={onClick}
-      className="flex items-center justify-between cursor-pointer p-6 rounded-[1.375rem] bg-profileMenuGradient  bg-cover bg-no-repeat bg-center"
+      className="flex items-center justify-between cursor-pointer py-4 bg-white  bg-cover bg-no-repeat bg-center"
     >
       <div className="flex justify-center items-center gap-4">
         {Icon}
-        <div className="body-2 text-[#1E1926]">{title}</div>
+        <div className="head-3 text-[#1E1926]">{title}</div>
       </div>
       {isToggle && (
         <div className="relative flex items-center">

@@ -109,10 +109,10 @@ const EditProfilePage = () => {
       const initailData = transformToProfileRequest(userProfile.data);
       setOriginalData(initailData);
       setUserData(initailData);
-      setAddressInput(userProfile.data.address.address_name ?? '');
+      setAddressInput(userProfile.data.address?.address_name ?? '');
       setCurrentGeoInfo({
-        lat: userProfile.data.address.latitude ?? 0,
-        lon: userProfile.data.address.longitude ?? 0,
+        lat: userProfile.data.address?.latitude ?? 0,
+        lon: userProfile.data.address?.longitude ?? 0,
       });
     }
   }, [userProfile]);
@@ -144,17 +144,13 @@ const EditProfilePage = () => {
             hasMenuButton={false}
             title="Edit Profile"
           />
-          <div className="flex flex-col px-6 gap-9 mb-32">
+          <div className="flex flex-col px-6 gap-4 mb-32">
             <EditProfilePicture
               profileImgUrl={userProfile.data.profile_img_url}
               onImageUpdate={setProfileImage}
             />
-
-            <div className="w-full">
-              {/* 이름 작성 */}
-              <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
-                First Name
-              </div>
+            {/* 이름 작성 */}
+            <InputLayout title="First Name" isEssential={true}>
               <Input
                 inputType={InputType.TEXT}
                 placeholder="First Name"
@@ -167,12 +163,9 @@ const EditProfilePage = () => {
                 }
                 canDelete={false}
               />
-            </div>
+            </InputLayout>
             {/* 성 작성 */}
-            <div className="w-full">
-              <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
-                Last Name
-              </div>
+            <InputLayout title="Last Name" isEssential={true}>
               <Input
                 inputType={InputType.TEXT}
                 placeholder="Last Name"
@@ -185,22 +178,9 @@ const EditProfilePage = () => {
                 }
                 canDelete={false}
               />
-            </div>
-            <div className="w-full">
-              <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
-                Gender
-              </div>
+            </InputLayout>
+            <InputLayout title="Gender" isEssential={true}>
               <div className="w-full flex flex-row gap-[1.75rem]">
-                <RadioButton
-                  value={GenderType.FEMALE as string}
-                  setValue={(value: string) =>
-                    setUserData({
-                      ...userData,
-                      gender: value as GenderType,
-                    })
-                  }
-                  isOn={userData.gender === GenderType.FEMALE}
-                />
                 <RadioButton
                   value={GenderType.MALE as string}
                   setValue={(value: string) =>
@@ -210,6 +190,16 @@ const EditProfilePage = () => {
                     })
                   }
                   isOn={userData.gender === GenderType.MALE}
+                />
+                <RadioButton
+                  value={GenderType.FEMALE as string}
+                  setValue={(value: string) =>
+                    setUserData({
+                      ...userData,
+                      gender: value as GenderType,
+                    })
+                  }
+                  isOn={userData.gender === GenderType.FEMALE}
                 />
                 <RadioButton
                   value={GenderType.NONE as string}
@@ -222,12 +212,9 @@ const EditProfilePage = () => {
                   isOn={userData.gender === GenderType.NONE}
                 />
               </div>
-            </div>
+            </InputLayout>
             {/* 생년월일 선택 */}
-            <div className="w-full">
-              <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
-                Date of birth
-              </div>
+            <InputLayout title="Date of birth" isEssential={false} isOptional>
               <Dropdown
                 value={userData.birth.replace(/-/g, '/')}
                 placeholder="Select Date"
@@ -235,12 +222,9 @@ const EditProfilePage = () => {
                 isCalendar={true}
                 setValue={(value) => setUserData({ ...userData, birth: value })}
               />
-            </div>
+            </InputLayout>
             {/* 국적 선택 */}
-            <div className="w-full">
-              <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
-                Nationality
-              </div>
+            <InputLayout title="Nationality" isEssential={false} isOptional>
               <Dropdown
                 value={userData.nationality}
                 placeholder="Select Nationality"
@@ -249,10 +233,10 @@ const EditProfilePage = () => {
                   setUserData({ ...userData, nationality: value })
                 }
               />
-            </div>
+            </InputLayout>
             <div className="w-full flex flex-col gap-[1.125rem]">
               {/* 주소 검색 입력 input */}
-              <InputLayout title="Address" isEssential={false}>
+              <InputLayout title="Address" isEssential={false} isOptional>
                 <Input
                   inputType={InputType.SEARCH}
                   placeholder="Search Your Address"
@@ -274,45 +258,53 @@ const EditProfilePage = () => {
                 )}
               </InputLayout>
               {/* 검색한 위치를 보여주는 지도 */}
-              <div className="w-full rounded-xl z-0">
-                <Map
-                  center={{ lat: currentGeoInfo.lat, lng: currentGeoInfo.lon }}
-                  style={{ width: '100%', height: '200px' }}
-                  className="rounded-xl"
-                >
-                  <MapMarker
-                    position={{
-                      lat: currentGeoInfo.lat,
-                      lng: currentGeoInfo.lon,
-                    }}
-                  ></MapMarker>
-                </Map>
-              </div>
-              <InputLayout title="Detailed Address" isEssential={false}>
-                <Input
-                  inputType={InputType.TEXT}
-                  placeholder="ex) 101dong"
-                  value={userData.address.address_detail}
-                  onChange={(value) =>
-                    userData.address.address_detail &&
-                    userData.address.address_detail.trim().length < 100 &&
-                    setUserData({
-                      ...userData,
-                      address: {
-                        ...userData.address,
-                        address_detail: value,
-                      },
-                    })
-                  }
-                  canDelete={false}
-                />
-              </InputLayout>
+              {userData.address.address_name !== '' && (
+                <>
+                  <div className="w-full rounded-xl z-0">
+                    <Map
+                      center={{
+                        lat: currentGeoInfo.lat,
+                        lng: currentGeoInfo.lon,
+                      }}
+                      style={{ width: '100%', height: '200px' }}
+                      className="rounded-xl"
+                    >
+                      <MapMarker
+                        position={{
+                          lat: currentGeoInfo.lat,
+                          lng: currentGeoInfo.lon,
+                        }}
+                      ></MapMarker>
+                    </Map>
+                  </div>
+                  <InputLayout
+                    title="Detailed Address"
+                    isEssential={false}
+                    isOptional
+                  >
+                    <Input
+                      inputType={InputType.TEXT}
+                      placeholder="ex) 101dong"
+                      value={userData.address.address_detail}
+                      onChange={(value) =>
+                        userData.address.address_detail &&
+                        userData.address.address_detail.trim().length < 100 &&
+                        setUserData({
+                          ...userData,
+                          address: {
+                            ...userData.address,
+                            address_detail: value,
+                          },
+                        })
+                      }
+                      canDelete={false}
+                    />
+                  </InputLayout>
+                </>
+              )}
             </div>
             {/* 비자 선택 */}
-            <div className="w-full">
-              <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
-                Visa Status
-              </div>
+            <InputLayout title="Visa Status" isEssential={true}>
               <Dropdown
                 value={userData.visa}
                 placeholder="Select Visa Status"
@@ -321,12 +313,9 @@ const EditProfilePage = () => {
                   setUserData({ ...userData, visa: value })
                 }
               />
-            </div>
+            </InputLayout>
             {/* 전화번호 선택, dropdown으로 앞 번호를, 중간 번호와 뒷 번호는 각각 input으로 입력 받음 */}
-            <div className="w-full">
-              <div className="w-full flex flex-row items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
-                Telephone No.
-              </div>
+            <InputLayout title="Telephone No." isEssential={true}>
               <div className="w-full flex flex-row gap-2 justify-between">
                 <div className="w-full h-[2.75rem]">
                   <Dropdown
@@ -355,7 +344,7 @@ const EditProfilePage = () => {
                   canDelete={false}
                 />
               </div>
-            </div>
+            </InputLayout>
           </div>
           <div className="pb-[2.5rem] px-6 w-full fixed bottom-0 bg-grayGradient">
             <Button

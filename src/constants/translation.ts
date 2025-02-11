@@ -146,11 +146,27 @@ export const profileTranslation = {
     ko: '삭제',
     en: 'Delete',
   },
+  companyServiceTerm: {
+    ko: '기업 서비스 이용약관',
+    en: 'Company Condition Service',
+  },
+  personalServiceTerm: {
+    ko: '개인 서비스 이용약관',
+    en: 'Personal Condition Service',
+  },
+  personalInfoPolicy: {
+    ko: '개인정보 이용약관',
+    en: 'Personal Information Service',
+  },
+  locationInfoTerm: {
+    ko: '위치정보 이용약관',
+    en: 'Location Information Service',
+  },
 };
 
 export const headerTranslation = {
   profile: {
-    ko: '프로필',
-    en: 'Profile',
+    ko: '마이페이지',
+    en: 'My Page',
   },
 };

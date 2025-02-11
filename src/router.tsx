@@ -47,11 +47,13 @@ import ChatBotPage from '@/pages/ChatBot/ChatBotPage';
 import Splash from '@/components/Splash/Splash';
 import ApplicantDocumentsDetailPage from '@/pages/Employer/WriteDocuments/ApplicantDocumentsDetailPage';
 import EmployerWriteDocumentsPage from '@/pages/Employer/WriteDocuments/EmployerWriteDocumentsPage';
-import EmployerEditPostPage from './pages/Employer/Post/EmployerEditPostPage';
-import DocumentViewerPage from './pages/WriteDocuments/DocumentViewerPage';
+import EmployerEditPostPage from '@/pages/Employer/Post/EmployerEditPostPage';
+import DocumentViewerPage from '@/pages/WriteDocuments/DocumentViewerPage';
 import PostSearchFilterPage from '@/pages/PostSearch/PostSearchFilterPage';
 import { useEffect } from 'react';
 import { setRedirectToLogin } from '@/api';
+import AccountPage from '@/pages/Profile/AccountPage';
+import AboutPage from '@/pages/Profile/AboutPage';
 
 const Layout = () => {
   // -- 1. 토큰의 만료, 혹은 토큰이 없을 경우의 트리거 --
@@ -107,6 +109,8 @@ const Router = () => {
           <Route path="/search" element={<PostSearchPage />} />
 
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile/about" element={<AboutPage />} />
+          <Route path="/profile/account" element={<AccountPage />} />
           <Route path="/profile/edit" element={<EditProfilePage />} />
           <Route path="/profile/manage-resume" element={<ManageResumePage />} />
           <Route path="/profile/language" element={<LanguageSettingPage />} />
