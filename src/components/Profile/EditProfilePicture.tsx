@@ -53,7 +53,7 @@ const EditProfilePicture = ({
       </div>
 
       <button
-        className="text-center w-[8.5rem] py-2 caption-1 text-[#1E1926] bg-[#FEF387] rounded-md"
+        className="text-center w-full py-3 button-2 text-[#1E1926] bg-[#f4f4f9] rounded-md"
         onClick={handleChangeButtonClick}
       >
         Change Picture

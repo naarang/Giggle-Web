@@ -1,10 +1,10 @@
 // Regular expression for first name validation
 // Allows 1-50 characters, only letters (no numbers or special characters)
-export const firstNameRegex = /^[A-Za-z]{1,50}$/;
+export const firstNameRegex = /^[A-Za-z가-힣]{1,50}$/;
 
 // Regular expression for last name validation
 // Allows 1-100 characters, only letters (no numbers or special characters)
-export const lastNameRegex = /^[A-Za-z]{1,100}$/;
+export const lastNameRegex = /^[A-Za-z가-힣]{1,50}$/;
 
 // Function to test if a string matches the first name criteria
 export const isValidFirstName = (name: string): boolean => {

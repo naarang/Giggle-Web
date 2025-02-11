@@ -6,6 +6,7 @@ import {
   UserProfileDetailResponse,
 } from '@/types/api/profile';
 import { isValidPhoneNumber } from './information';
+import { initialAddress } from '../types/api/users';
 
 // GET 데이터를 PATCH 요청 데이터로 변환
 export const changeValidData = (
@@ -36,7 +37,7 @@ export const transformToProfileRequest = (
   return {
     first_name: data.first_name,
     last_name: data.last_name,
-    birth: data.birth.replace(/-/g, '/'),
+    birth: data.birth ? data.birth.replace(/-/g, '/') : '',
     gender:
       data.gender.charAt(0).toUpperCase() + data.gender.slice(1).toLowerCase(),
     nationality: data.nationality
@@ -47,7 +48,7 @@ export const transformToProfileRequest = (
     visa: data.visa.replace(/_/g, '-'),
     phone_number: data.phone_number,
     is_profile_img_changed: false,
-    address: data.address,
+    address: data.address ? data.address : initialAddress,
   };
 };
 
@@ -111,18 +112,10 @@ export const validateFieldValues = (
         );
       case 'birth':
         // 생일이 현재 날짜보다 이전인지 확인
-        return Date.parse(value as string) < Date.now();
+        if (value) return Date.parse(value as string) < Date.now();
+        return true;
       case 'phone_number':
         return isValidPhoneNumber(phoneNum);
-      case 'address':
-        // 주소 필드는 address_name이 존재하고, 길이가 0보다 큰지 확인
-        return (
-          typeof value !== 'string' &&
-          typeof value !== 'boolean' &&
-          'address_name' in value &&
-          value.address_name !== null &&
-          value.address_name.length > 0
-        );
     }
     return true;
   });

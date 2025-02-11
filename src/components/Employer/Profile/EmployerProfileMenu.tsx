@@ -60,7 +60,7 @@ const EmployerProfileMenu = ({
   return (
     <div
       onClick={onClick}
-      className="flex items-center justify-between cursor-pointer p-6 rounded-[1.375rem] bg-EmployerProfileMenuGradient  bg-cover bg-no-repeat bg-center"
+      className="flex items-center justify-between cursor-pointer py-4  bg-cover bg-no-repeat bg-center"
     >
       <div className="flex justify-center items-center gap-4">
         {Icon}
