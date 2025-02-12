@@ -170,3 +170,10 @@ export const headerTranslation = {
     en: 'My Page',
   },
 };
+
+export const infoTranslation = {
+  notEntered: {
+    ko: '미입력',
+    en: 'Not Entered',
+  },
+};
