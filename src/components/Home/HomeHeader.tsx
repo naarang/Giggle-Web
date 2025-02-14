@@ -1,5 +1,5 @@
 import AlarmIcon from '@/assets/icons/Home/AlarmIcon.svg?react';
-import { UserType } from '@/constants/user';
+import HeaderLogoIcon from '@/assets/icons/Home/HeaderLogoIcon.svg?react';
 import { useGetAlarms } from '@/hooks/api/useAlarm';
 import { useUserStore } from '@/store/user';
 import { AlarmItemType } from '@/types/api/alarm';
@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 const HomeHeader = () => {
   const navigate = useNavigate();
-  const { account_type, name } = useUserStore();
+  const { account_type } = useUserStore();
   const { data } = useGetAlarms(1, 50, account_type ? true : false);
 
   const isReadAlarms = (alarms: AlarmItemType[]) => {
@@ -16,37 +16,19 @@ const HomeHeader = () => {
   };
 
   return (
-    <section className="w-full pt-[3.125rem] pb-[1rem] px-[1.5rem] bg-[#FEF387]">
-      <p className="pb-[0.375rem] body-2 text-[#37383C9C]">
-        {account_type === UserType.OWNER ? '환영합니다!' : 'Welcome!'}{' '}
-        {name.replace(/-/g, ' ')}{' '}
-        {account_type === UserType.OWNER ? '고용주님' : ''}
-      </p>
-      <div className="w-full flex">
-        <h1 className="flex-1 title-1 text-[#0A0909]">
-          {account_type === UserType.OWNER ? '최고의 근로자를' : 'Find your'}{' '}
-          <br />
-          {account_type === UserType.OWNER
-            ? '찾을 수 있습니다.'
-            : 'perfect job'}
-        </h1>
-        {/* 로그인 시에만 표시하기 */}
-        {account_type && (
-          <button
-            className="w-[2rem] h-[2rem] flex justify-center items-center relative bg-[#FFFAEDCC] rounded-[1.25rem]"
-            onClick={() => navigate('/alarm')}
-          >
-            <AlarmIcon />
-            {/* 알람이 있을 때만 표시하기 */}
-            {data?.success && isReadAlarms(data?.data?.notification_list) ? (
-              <div className="absolute top-[0.3rem] right-[0.4rem] w-[0.438rem] h-[0.438rem] rounded-full bg-[#FF6F61]"></div>
-            ) : (
-              <></>
-            )}
-          </button>
+    <header className="w-full h-[3.75rem] px-4 py-2 flex justify-between items-center border-b border-[#E2E5EB]">
+      <HeaderLogoIcon />
+      <button
+        className="w-[2rem] h-[2rem] flex justify-center items-center relative  rounded-[1.25rem]"
+        onClick={() => account_type && navigate('/alarm')}
+      >
+        <AlarmIcon />
+        {/* 알람이 있을 때만 표시하기 */}
+        {data?.success && isReadAlarms(data?.data?.notification_list) && (
+          <div className="absolute top-[0.2rem] right-[0.4rem] w-[0.438rem] h-[0.438rem] rounded-full bg-[#FF6F61]"></div>
         )}
-      </div>
-    </section>
+      </button>
+    </header>
   );
 };
 
