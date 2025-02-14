@@ -161,7 +161,7 @@ export const useTempSignUp = () => {
     mutationFn: tempSignUp,
     onSuccess: (data: RESTYPE<TempSignUpResponse>) => {
       if (data.success) {
-        updateTryCnt(data.data.try_cnt);
+        updateTryCnt(data.data.tryCnt);
       }
     },
     onError: (error) => {
@@ -237,7 +237,7 @@ export const useReIssueAuthentication = () => {
     onSuccess: (data: RESTYPE<TempSignUpResponse>) => {
       if (data.success) {
         // 이메일 재발송 횟수 업데이트
-        updateTryCnt(data.data.try_cnt);
+        updateTryCnt(data.data.tryCnt);
       }
     },
     onError: () => {
