@@ -20,7 +20,6 @@ import ApplicationPage from '@/pages/Application/ApplicationPage';
 import ManageResumePage from '@/pages/ManageResumePage/ManageResumePage';
 import WriteDocumentsPage from '@/pages/WriteDocuments/WriteDocumentsPage';
 import ScrappedJobPostsPage from '@/pages/ScrappedJobPosts/ScrappedJobPostsPage';
-import LanguagePage from '@/pages/Language/LanguagePage';
 import PostEducationPage from '@/pages/SetEducation/PostEducationPage';
 import PatchEducationPage from '@/pages/SetEducation/PatchEducationPage';
 import PostWorkExperiencePage from '@/pages/SetWorkExperience/PostWorkExperiencePage';
@@ -118,7 +117,6 @@ const Router = () => {
           <Route path="/profile/language" element={<LanguageSettingPage />} />
 
           <Route path="/resume/introduction" element={<IntroductionPage />} />
-          <Route path="/resume/language" element={<LanguagePage />} />
           <Route path="/resume/language/add" element={<PostLanguagePage />} />
           <Route path="/resume/scrapped" element={<ScrappedJobPostsPage />} />
           <Route path="/resume/education" element={<PostEducationPage />} />
