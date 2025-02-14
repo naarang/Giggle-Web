@@ -11,15 +11,11 @@ import { UserType } from '@/constants/user';
 import { useCurrentApplicantIdStore } from '@/store/url';
 import LoadingItem from '@/components/Common/LoadingItem';
 import YellowDocumentIcon from '@/assets/icons/YellowDocumentIcon.svg?react';
-import { infoTranslation } from '@/constants/translation';
+import { infoTranslation, profileTranslation } from '@/constants/translation';
 import { isEmployer } from '@/utils/signup';
 import { useLocation } from 'react-router-dom';
-
-const EDUCATION_PERIOD = {
-  BACHELOR: 4,
-  ASSOCIATE: 2,
-  HIGHSCHOOL: 3,
-} as const;
+import { formatDate } from '@/utils/editResume';
+import { EDUCATION_PERIOD } from '@/constants/profile';
 
 const PostApplyResume = () => {
   const { pathname } = useLocation();
@@ -78,7 +74,7 @@ const PostApplyResume = () => {
                 Gender
               </h4>
               <p className="px-[0.25rem] body-3 text-[#252525]">
-                {data?.data?.personal_information.main_address}
+                {data?.data?.personal_information.gender}
               </p>
             </div>
             <div className="w-full p-4 rounded-lg bg-[#F4F4F9]">
@@ -86,7 +82,7 @@ const PostApplyResume = () => {
                 Date of birth
               </h4>
               <p className="px-[0.25rem] body-3 text-[#252525]">
-                {data?.data?.personal_information?.main_address ??
+                {data?.data?.personal_information?.birth ??
                   infoTranslation.notEntered[isEmployer(pathname)]}
               </p>
             </div>
@@ -95,7 +91,7 @@ const PostApplyResume = () => {
                 Nationality
               </h4>
               <p className="px-[0.25rem] body-3 text-[#252525]">
-                {data?.data?.personal_information.main_address ??
+                {data?.data?.personal_information.nationality ??
                   infoTranslation.notEntered[isEmployer(pathname)]}
               </p>
             </div>
@@ -128,7 +124,9 @@ const PostApplyResume = () => {
           </div>
         </InfoCardLayout>
         <InfoCardLayout icon={<YellowDocumentIcon />} title="Introduction">
-          <p className="pb-2 body-3 text-[#9397A1]">나를 한 줄로 표현한다면?</p>
+          <p className="pb-2 body-3 text-[#9397A1]">
+            {profileTranslation.introductionQuestion[isEmployer(pathname)]}
+          </p>
           <p className="pb-2 body-3 text-[#252525]">
             {data?.data?.introduction?.length > 0
               ? data.data.introduction
@@ -147,11 +145,13 @@ const PostApplyResume = () => {
                     {data.title}
                   </h5>
                   <p className="pb-2 caption-1 text-[#252525]">
-                    {data.description}
+                    {data?.description ??
+                      infoTranslation.notEntered[isEmployer(pathname)]}
                   </p>
                   <div className="flex gap-[0.5rem] caption-1">
                     <p className="text-[#656565]">
-                      {data.start_date}~{data.end_date ?? ''}
+                      {formatDate(data.start_date)}~
+                      {data.end_date ? formatDate(data.end_date) : ''}
                     </p>
                     <p className="text-[#5592FC]">{data.duration} months</p>
                   </div>
@@ -168,7 +168,10 @@ const PostApplyResume = () => {
           <div className="flex flex-col gap-2">
             {data?.data?.education?.length > 0 ? (
               data?.data?.education?.map((data: EducationType) => (
-                <div key={data.id} className="p-4">
+                <div
+                  key={data.id}
+                  className="w-full p-4 rounded-lg bg-[#F4F4F9]"
+                >
                   <div className="flex justify-between items-center pb-[0.125rem]">
                     <h5 className="button-2 text-[#252525]">
                       {data.school_name}
@@ -180,7 +183,7 @@ const PostApplyResume = () => {
                   <p className="pb-2 caption-1 text-[#252525]">{data.major}</p>
                   <div className="flex gap-[0.5rem] caption-1">
                     <p className="text-[#656565]">
-                      {data.start_date}~{data.end_date}
+                      {formatDate(data.start_date)}~{formatDate(data.end_date)}
                     </p>
                     <p className="text-[#5592FC]">{data.grade}th grade</p>
                   </div>
