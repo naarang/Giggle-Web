@@ -170,3 +170,10 @@ export const headerTranslation = {
     en: 'My Page',
   },
 };
+
+export const postTranslation = {
+  dDay: {
+    ko: '상시모집',
+    en: 'always',
+  },
+};

@@ -23,9 +23,7 @@ const LoginBottomSheet = ({
           Hold up! Let’s get you signed in 😊
         </h3>
         <p className="body-2 text-[#252525]">
-          This feature isn’t available yet,
-          <br />
-          but it’s coming soon!
+          Log in is required to use that menu!
         </p>
       </div>
       <div className="w-full pt-3">
