@@ -190,7 +190,6 @@ const SignupInput = ({
                 value={email}
                 onChange={handleEmailInput}
                 canDelete={false}
-                isInvalid={!isValid}
               />
               <button
                 className={`flex items-center justify-center button-2 min-w-[4.25rem] px-5 py-3 rounded-md ${

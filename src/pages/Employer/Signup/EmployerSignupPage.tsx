@@ -44,8 +44,11 @@ const EmployerSignupPage = () => {
 
   // back 버튼 핸들러
   const handleBackButtonClick = () => {
-    if (currentStep <= 1) navigate('/signin');
-    if (currentStep > 1 && currentStep < 5) setCurrentStep(currentStep - 1);
+    if (currentStep <= 1) {
+      navigate('/signin');
+      return;
+    }
+    setCurrentStep(currentStep - 1);
   };
 
   // API 정의
