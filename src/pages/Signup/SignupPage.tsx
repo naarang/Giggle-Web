@@ -87,7 +87,7 @@ const SignupPage = () => {
       {currentStep === 3 ? (
         <VerificationSuccessful />
       ) : (
-        <div className="w-screen flex justify-center items-center pt-6 pb-[3.125rem]">
+        <div className="w-screen flex justify-center items-center pb-[3.125rem]">
           <hr
             className={`w-[25%] h-1 border-0 ${
               currentStep >= 1 ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'
@@ -95,7 +95,7 @@ const SignupPage = () => {
           />
           <hr
             className={`w-[25%] h-1 border-0 ${
-              currentStep >= 2 ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'
+              currentStep >= 1 ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'
             }`}
           />
           <hr
@@ -111,7 +111,7 @@ const SignupPage = () => {
         </div>
       )}
       {/* 회원가입 STEP 별 랜딩 컴포넌트 */}
-      <div className="grow px-6 flex flex-col items-center">
+      <div className="grow px-4 flex flex-col items-center">
         {currentStep === 1 && (
           <FindJourney
             onSignUpClick={handleSignUpClick}

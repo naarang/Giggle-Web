@@ -172,7 +172,7 @@ const SignupInput = ({
 
   return (
     <div className="w-full">
-      <div className="max-w-[230px] title-1 pb-12">
+      <div className="max-w-[260px] title-1 pb-12 break-keep">
         {signInputTranclation.signup[isEmployer(pathname)]}
       </div>
       <div className="flex flex-col gap-2">
@@ -309,7 +309,7 @@ const SignupInput = ({
               bgColor={isValid ? 'bg-[#1E1926]' : 'bg-[#F4F4F9]'}
               fontColor={isValid ? 'text-[#FEF387]' : 'text-[#BDBDBD]'}
               isBorder={false}
-              title={signInputTranclation.signupTitle[isEmployer(pathname)]}
+              title={signInputTranclation.continue[isEmployer(pathname)]}
               onClick={isValid ? onSignUpClick : undefined}
             />
           </div>

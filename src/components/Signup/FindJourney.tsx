@@ -19,27 +19,30 @@ const FindJourney = ({
 
   return (
     <div className="w-full h-full flex flex-col items-center">
-      <div className="flex flex-col w-full gap-1">
+      <div className="flex flex-col w-full gap-1 pb-10">
         <div className="title-1">
-          기글에 오신 것을 <br />
-          환영해요!
+          어떤 역할로
+          <br />
+          가입하시겠어요? 🙌
         </div>
-        <div className="body-1">당신에게 알맞는 정보를 드릴게요!</div>
+        <div className="body-2 text-text-alternative">
+          먼저, 어떤 역할로 가입할지 선택해 주세요!
+        </div>
       </div>
-      <div className="w-full flex flex-col gap-2.5 py-6">
+      <div className="w-full flex flex-col gap-2.5 pb-6">
         {/* 유학생, 고용주 타입 선택 카드 */}
         {cardData.map((card) => (
           <div
             key={card.accountType}
-            className={`w-full py-6 px-[1.125rem] flex flex-col justify-end gap-1.5 rounded-[1.25rem] ${
+            className={`w-full py-6 px-[1.125rem] flex flex-col justify-end gap-1.5 rounded-lg ${
               accountType === card.accountType
-                ? 'bg-[#FEF387] shadow-md'
-                : 'bg-yellow-100'
+                ? 'bg-surface-primary text-text-normal border-border-primary border'
+                : 'bg-surface-base border-border-alternative border text-text-alternative'
             }`}
             onClick={() => handleClick(card.accountType)}
           >
-            <p className="text-[#464646] head-3">{card.title}</p>
-            <p className="text-[#464646] body-3">{card.description}</p>
+            <p className="head-3">{card.title}</p>
+            <p className="body-3">{card.description}</p>
           </div>
         ))}
       </div>
@@ -51,7 +54,7 @@ const FindJourney = ({
             bgColor={accountType ? 'bg-[#1E1926]' : 'bg-[#F4F4F9]'}
             fontColor={accountType ? 'text-[#FEF387]' : 'text-[#BDBDBD]'}
             isBorder={false}
-            title="Sign Up"
+            title="다음으로"
             onClick={accountType ? onSignUpClick : undefined}
           />
         </BottomButtonPanel>
