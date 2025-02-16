@@ -26,7 +26,13 @@ const PostWorkExperiencePage = () => {
 
   const handleSubmit = () => {
     // API - 7.5 경력 생성하기
-    mutate(workExperienceData);
+    // NOTE: optional 값은 "-"으로 전달
+    const submitData =
+      workExperienceData?.description === ''
+        ? { ...workExperienceData, description: '-' }
+        : workExperienceData;
+
+    mutate(submitData);
   };
 
   useEffect(() => {
