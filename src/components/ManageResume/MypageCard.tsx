@@ -63,31 +63,38 @@ const MypageCard = ({
     if (path) navigate(path);
   };
 
+  const contentMap = {
+    [ManageResumeType.VISA]: {
+      isValidRender: () => false,
+      component: () => <></>,
+    },
+    [ManageResumeType.PERSONALINFORMATION]: {
+      isValidRender: () => false,
+      component: () => <></>,
+    },
+    [ManageResumeType.INTRODUCTION]: {
+      isValidRender: () => introductionData !== null,
+      component: () => <IntroductionDetail data={introductionData!} />,
+    },
+    [ManageResumeType.WORKEXPERIENCE]: {
+      isValidRender: () => workExperienceData && workExperienceData.length > 0,
+      component: () => <WorkExperienceDetail data={workExperienceData!} />,
+    },
+    [ManageResumeType.EDUCATION]: {
+      isValidRender: () => educationData && educationData.length > 0,
+      component: () => <EducationDetail data={educationData!} />,
+    },
+    [ManageResumeType.LANGUAGE]: {
+      isValidRender: () => !!languageData,
+      component: () => <LanguageManageDetail data={languageData!} />,
+    },
+  };
+
   const renderContent = () => {
-    if (type === ManageResumeType.INTRODUCTION && introductionData !== null) {
-      return <IntroductionDetail data={introductionData!} />;
+    const content = contentMap[type];
+    if (content?.isValidRender()) {
+      return content.component();
     }
-
-    if (
-      type === ManageResumeType.WORKEXPERIENCE &&
-      workExperienceData &&
-      workExperienceData.length > 0
-    ) {
-      return <WorkExperienceDetail data={workExperienceData!} />;
-    }
-
-    if (
-      type === ManageResumeType.EDUCATION &&
-      educationData &&
-      educationData.length > 0
-    ) {
-      return <EducationDetail data={educationData!} />;
-    }
-
-    if (type === ManageResumeType.LANGUAGE && languageData) {
-      return <LanguageManageDetail data={languageData!} />;
-    }
-
     return null;
   };
 
