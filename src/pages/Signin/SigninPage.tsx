@@ -23,12 +23,15 @@ const SigninPage = () => {
       <BaseHeader
         hasBackButton={true}
         hasMenuButton={false}
-        title="Sign In"
+        title="로그인"
         onClickBackButton={() => navigate('/')}
       />
       <div className="w-full flex-grow flex flex-col">
-        <div className="flex items-start mx-6 my-[3.125rem] h-[5rem] text-[#1E1926] text-[1.75rem] font-semibold">
-          아이디로 로그인
+        <div className="flex flex-col w-full gap-1 py-[3.125rem] px-4">
+          <div className="title-1">이미 계정이 있으신가요?</div>
+          <div className="body-2 text-text-alternative">
+            외국인 유학생을 지금 채용해 보세요!
+          </div>
         </div>
         <SigninInputSection />
         {/* <SigninSocialButtons /> */}
