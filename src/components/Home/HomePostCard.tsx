@@ -33,26 +33,24 @@ const HomePostCard = ({ jobPostingData }: HomePostCardProps) => {
       className="flex flex-col gap-2 w-[9.063rem] m-2 rounded-lg"
       onClick={goToPostDetailPage}
     >
-      {/* TODO: 회사 배경 이미지 api 응답값 보여주기 */}
-      {jobPostingData?.icon_img_url ? (
+      {jobPostingData?.representative_img_url ? (
         <div
           className="w-full h-[6.75rem] min-w-[9.063rem] rounded-lg border border-[#E2E5EB] bg-cover bg-center"
           style={{
-            backgroundImage: `url(${jobPostingData.icon_img_url})`,
+            backgroundImage: `url(${jobPostingData.representative_img_url})`,
           }}
         ></div>
       ) : (
         <div className="w-full h-[6.75rem] rounded-lg border border-[#E2E5EB] bg-[#F4F4F9]"></div>
       )}
       <div>
-        {/* TODO: 회사명 api 응답값 보여주기 */}
-        <p className="caption-1 text-[#252525]">여기에 회사명</p>
+        <p className="caption-1 text-[#252525]">
+          {jobPostingData.company_name}
+        </p>
         <h3 className="button-1 text-[#191919]">{jobPostingData.title}</h3>
         <div className="py-2 flex items-center flex-wrap gap-1">
           <Tag
-            value={jobPostingData.tags.job_category
-              .replace(/_/g, ' ')
-              .toLowerCase()}
+            value={jobPostingData.tags.employment_type.toLowerCase()}
             padding="0.188rem 0.25rem"
             isRounded={false}
             hasCheckIcon={false}

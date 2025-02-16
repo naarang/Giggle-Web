@@ -12,46 +12,46 @@ const HomeJobPostingList = () => {
 
   const { account_type } = useUserStore();
 
-  const isGuest = !account_type;
+  const isLogin = !!account_type;
 
   // 인기 공고
   const trendingDataRequest = {
-    size: 2,
+    size: 5,
     type: POST_SEARCH_MENU.TRENDING,
   };
   const { data: guestTrendData } = useGetPostGuestList(
     trendingDataRequest,
-    isGuest,
+    !isLogin,
   );
 
-  const { data: userTrendData } = useGetPostList(trendingDataRequest, !isGuest);
+  const { data: userTrendData } = useGetPostList(trendingDataRequest, isLogin);
 
   const trendData = account_type ? userTrendData : guestTrendData;
 
   // 최신 공고
   const recentlyDataRequest = {
-    size: 2,
+    size: 5,
     type: POST_SEARCH_MENU.RECENTLY,
   };
   const { data: guestRecentlyData } = useGetPostGuestList(
     recentlyDataRequest,
-    isGuest,
+    !isLogin,
   );
   const { data: userRecentlyData } = useGetPostList(
     recentlyDataRequest,
-    !isGuest,
+    isLogin,
   );
 
   const recentlyData = account_type ? userRecentlyData : guestRecentlyData;
 
   // 관심 공고
   const bookmarkedDataRequest = {
-    size: 2,
+    size: 5,
     type: POST_SEARCH_MENU.BOOKMARKED,
   };
   const { data: userBookmarkedData } = useGetPostList(
     bookmarkedDataRequest,
-    !isGuest,
+    isLogin,
   );
 
   const goToSearchPage = (type: PostSortingType) => {
@@ -74,7 +74,7 @@ const HomeJobPostingList = () => {
             {account_type === UserType.OWNER ? '더보기' : 'See more'}
           </button>
         </div>
-        <div className="flex gap-2 overflow-x-scroll whitespace-nowrap no-scrollbar">
+        <div className="flex overflow-x-scroll whitespace-nowrap no-scrollbar">
           {trendData?.data?.job_posting_list?.map(
             (value: JobPostingItemType) => (
               <HomePostCard key={value.id} jobPostingData={value} />
@@ -96,7 +96,7 @@ const HomeJobPostingList = () => {
             {account_type === UserType.OWNER ? '더보기' : 'See more'}
           </button>
         </div>
-        <div className="flex gap-2 overflow-x-scroll whitespace-nowrap no-scrollbar">
+        <div className="flex overflow-x-scroll whitespace-nowrap no-scrollbar">
           {recentlyData?.data?.job_posting_list?.map(
             (value: JobPostingItemType) => (
               <HomePostCard key={value.id} jobPostingData={value} />
@@ -115,7 +115,7 @@ const HomeJobPostingList = () => {
               See more
             </button>
           </div>
-          <div className="flex gap-2 overflow-x-scroll whitespace-nowrap no-scrollbar">
+          <div className="flex overflow-x-scroll whitespace-nowrap no-scrollbar">
             {userBookmarkedData?.data?.job_posting_list?.map(
               (value: JobPostingItemType) => (
                 <HomePostCard key={value.id} jobPostingData={value} />
