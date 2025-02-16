@@ -162,6 +162,50 @@ export const profileTranslation = {
     ko: '위치정보 이용약관',
     en: 'Location Information Service',
   },
+  changePassword: {
+    ko: '비밀번호 재설정',
+    en: 'Change Password',
+  },
+  enterYourPassword: {
+    ko: '현재 비밀번호를 입력해주세요',
+    en: 'Enter your password',
+  },
+  currentPassword: {
+    ko: '현재 비밀번호',
+    en: 'Current Password',
+  },
+  enterCurrentPassword: {
+    ko: '비밀번호를 입력해주세요',
+    en: 'Enter current password',
+  },
+  newPassword: {
+    ko: '비밀번호 입력',
+    en: 'New Password',
+  },
+  enterNewPassword: {
+    ko: '새로운 비밀번호를 입력해주세요',
+    en: 'Enter new password',
+  },
+  confirmPassword: {
+    ko: '비밀번호 확인',
+    en: 'Confirm New Password',
+  },
+  enterConfirmPassword: {
+    ko: '비밀번호를 확인해주세요',
+    en: 'Confirm new password',
+  },
+  completeTitle: {
+    ko: '비밀번호 변경이 완료되었어요!',
+    en: 'Your password has been changed!',
+  },
+  completeContent: {
+    ko: '이제 새로운 비밀번호로 로그인해보세요',
+    en: 'You can now sign in with your new password.',
+  },
+  completeBtnText: {
+    ko: '알겠어요',
+    en: 'Okay',
+  }
 };
 
 export const headerTranslation = {
