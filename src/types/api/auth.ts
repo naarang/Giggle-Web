@@ -14,7 +14,6 @@ export type UserTypeResponse = {
 };
 
 export type TempSignUpRequest = {
-  id: string;
   password: string;
   email: string;
   account_type: string;
@@ -53,7 +52,6 @@ export type ValidationResponse = {
 };
 
 export type AuthenticationRequest = {
-  id: string;
   email: string;
   authentication_code: string;
 };
@@ -63,7 +61,6 @@ export type AuthenticationResponse = {
 };
 
 export type ReIssueAuthenticationRequest = {
-  id: string;
   email: string;
 };
 

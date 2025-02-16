@@ -110,7 +110,7 @@ const SignupVerification = ({
     try {
       // 5회 이내 재발송 가능
       reIssueAuthentication(
-        { id: id, email: email },
+        { email: email },
         {
           onSuccess: () => {
             onAuthCodeChange('');

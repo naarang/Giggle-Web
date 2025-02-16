@@ -129,7 +129,7 @@ const SignupInput = ({
   const handleVerifyClick = () => {
     verifyAuthCode(
       //TODO: id가 이메일 형태로 받게되면 id를 email로 변경
-      { id: 'goorm', email: email, authentication_code: authenticationCode },
+      { email: email, authentication_code: authenticationCode },
       {
         onSuccess: () => setEmailVerifyStatus('verified'),
         onError: () => {
@@ -155,7 +155,7 @@ const SignupInput = ({
     try {
       // 5회 이내 재발송 가능
       reIssueAuthentication(
-        { id: email, email: email },
+        { email: email },
         {
           onSuccess: () => {
             onAuthCodeChange('');

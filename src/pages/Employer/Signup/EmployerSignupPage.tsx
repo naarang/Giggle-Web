@@ -56,7 +56,6 @@ const EmployerSignupPage = () => {
   const handleSignUp = () => {
     tempSignUp(
       {
-        id: 'goorm', // TODO: 이메일로 통합되면 제거
         password: password,
         email: email,
         account_type: UserType.OWNER,
