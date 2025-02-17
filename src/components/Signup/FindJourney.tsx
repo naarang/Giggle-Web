@@ -46,8 +46,8 @@ const FindJourney = ({
         <BottomButtonPanel>
           <Button
             type="large"
-            bgColor={accountType ? 'bg-[#1E1926]' : 'bg-[#F4F4F9]'}
-            fontColor={accountType ? 'text-[#FEF387]' : 'text-[#BDBDBD]'}
+            bgColor={accountType ? 'bg-surface-primary' : 'bg-surface-secondary'}
+            fontColor={accountType ? 'text-text-normal' : 'text-text-disabled'}
             isBorder={false}
             title="다음으로"
             onClick={accountType ? onSignUpClick : undefined}
