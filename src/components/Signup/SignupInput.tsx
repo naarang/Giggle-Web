@@ -74,7 +74,6 @@ const SignupInput = ({
 
       // 이메일 형식 유효성 검사
       if (!validateEmail(email, setEmailError, pathname)) {
-        setIsValid(false); // 유효성 검사 실패 시 버튼 비활성화
         return;
       }
 
@@ -83,12 +82,8 @@ const SignupInput = ({
         setEmailError(
           signInputTranclation.emailAvailability[isEmployer(pathname)],
         );
-        setIsValid(false); // 중복 검사 실패 시 버튼 비활성화
       } else if (ValidationResponse && ValidationResponse.data.is_valid) {
         setEmailError(null); // email 중복 오류 메시지 초기화
-        setIsValid(true); // 중복 검사 통과 시 버튼 활성화
-      } else {
-        setIsValid(false); // 예외처리
       }
     };
 
@@ -160,7 +155,6 @@ const SignupInput = ({
         {
           onSuccess: () => {
             onAuthCodeChange('');
-            setIsValid(false);
             const status = try_cnt > 1 ? 'resent' : 'sent';
             setEmailVerifyStatus(status);
           },
@@ -178,7 +172,7 @@ const SignupInput = ({
         content={signInputTranclation.signupContent[isEmployer(pathname)]}
       />
       <div className="flex flex-col gap-2">
-        <div className="flex flex-col">
+        <div className="flex flex-col mb-[7.125rem]">
           <InputLayout
             isEssential
             title={signInputTranclation.email[isEmployer(pathname)]}
