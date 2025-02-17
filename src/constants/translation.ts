@@ -4,8 +4,16 @@ export const signInputTranclation = {
     en: 'Sign In',
   },
   signup: {
-    ko: '아이디와 비밀번호를 입력해주세요',
-    en: 'Enter your ID and Password',
+    ko: '이메일과 비밀번호를 입력해주세요 ✍️',
+    en: 'Please enter\nyour email and password',
+  },
+  signupContent: {
+    ko: '필요한 정보만 입력하고, 바로 시작하세요!',
+    en: "Just a few deatils and you're all set to find your job.",
+  },
+  signupTitle: {
+    ko: '가입하기',
+    en: 'Sign Up',
   },
   id: {
     ko: '아이디',
@@ -32,7 +40,7 @@ export const signInputTranclation = {
     en: 'Enter password',
   },
   invalidPassword: {
-    ko: '소문자, 대문자, 숫자, 특수문자를 포함하여 8자 이상 입력해주세요.',
+    ko: '소문자, 숫자, 특수문자를 포함하여 8자 이상 입력해주세요.',
     en: 'Password must be at least 8 characters, including numbers, letters, and symbols.',
   },
   confirmPassword: {
@@ -63,6 +71,18 @@ export const signInputTranclation = {
     ko: '인증을 위해 이메일을 입력해주세요',
     en: 'Enter email address',
   },
+  sendEmail: {
+    ko: '전송',
+    en: 'Send',
+  },
+  emailSentBtnText: {
+    ko: '완료',
+    en: 'Sent',
+  },
+  verifyConfirmBtnText: {
+    ko: '완료',
+    en: 'Confirmed',
+  },
   invalidEmail: {
     ko: '이메일 형식을 확인해주세요',
     en: 'Invalid email format',
@@ -73,15 +93,19 @@ export const signInputTranclation = {
   },
   verification: {
     ko: '인증번호',
-    en: 'Verification',
+    en: 'Verification code',
   },
   almost: {
     ko: '거의 다했어요!',
     en: 'Almost done!',
   },
   enterCode: {
-    ko: '입력하신 이메일로 인증번호를 전송하였습니다.',
+    ko: '인증번호를 보내드렸어요. (5분)',
     en: 'Enter the code from the email we sent you',
+  },
+  verifyFailed: {
+    ko: '인증에 실패했습니다. 인증번호 재발급 후 다시 시도해주세요. ',
+    en: 'Verification failed. Please try again after reissuing the verification code. ',
   },
   availabilityTime: {
     ko: '5분 후에 코드를 재전송 하겠습니다.',
@@ -108,8 +132,52 @@ export const signInputTranclation = {
     en: 'Resend',
   },
   successVerify: {
-    ko: '인증 완료되었습니다.',
-    en: 'Verification successful',
+    ko: '가입 완료!\n이제 채용을 시작해 볼까요?',
+    en: "You're in!\nReady to find your next job?",
+  },
+  successVerifyContent: {
+    ko: '공고를 등록하고, 조건에 맞는 유학생을\n바로 만나보세요!',
+    en: 'Complete your profile\nand start applying today!',
+  },
+  successVerifyBtn: {
+    ko: '추가 정보 입력하기',
+    en: 'Complete My Profile',
+  },
+  infoStepTitle: {
+    ko: '추가 정보를 입력하고 \n더 정밀한 채용을 시작해보세요! 💬',
+    en: "Let's personalize \nyour job search! 💬",
+  },
+  infoStepContent: {
+    ko: '필요한 정보 몇 가지만 추가하면,\n조건에 맞는 유학생을 빠르게 추천해 드릴게요!',
+    en: 'The more we know about you,\nthe better jobs we can recommend.',
+  },
+  addressStepTitle: {
+    ko: '채용 지역을 알려주세요!🏢',
+    en: 'Where do you want to work?🏢',
+  },
+  addressStepContent: {
+    ko: '이 정보를 바탕으로, Giggle이 해당 지역에서\n일할 수 있는 유학생을 추천해 드릴게요.',
+    en: 'The more specific,\nthe better the job recommendations!',
+  },
+  languageStepTitle: {
+    ko: '거의 다 왔어요! 🚀',
+    en: "You're almost there! 🚀",
+  },
+  languageStepContent: {
+    ko: '선호하는 언어를 설정하고, 바로 채용을 시작하세요!',
+    en: "Tell us your prefer language, and we'll do the rest!",
+  },
+  signupComplete: {
+    ko: '모든 준비 완료!\n이제 딱 맞는 지원자를 찾아볼까요?',
+    en: "You're all set!\nReady to find our job?",
+  },
+  signupCompleteContent: {
+    ko: '입력한 정보를 바탕으로,\nGiggle이 맞춤형 지원자를 추천해 드릴게요!',
+    en: "We've got everything we need\nLet's start matching ou with the best jobs!",
+  },
+  signupCompleteBtn: {
+    ko: '시작하기',
+    en: 'Browse Jobs',
   },
 };
 
@@ -162,6 +230,10 @@ export const profileTranslation = {
     ko: '위치정보 이용약관',
     en: 'Location Information Service',
   },
+  introductionQuestion: {
+    ko: '나를 한 줄로 표현한다면?',
+    en: 'If you were to express yourself in one line?',
+  },
 };
 
 export const headerTranslation = {
@@ -175,5 +247,12 @@ export const postTranslation = {
   dDay: {
     ko: '상시모집',
     en: 'always',
+  },
+};
+
+export const infoTranslation = {
+  notEntered: {
+    ko: '미입력',
+    en: 'Not Entered',
   },
 };
