@@ -40,7 +40,7 @@ export const signInputTranclation = {
     en: 'Enter password',
   },
   invalidPassword: {
-    ko: '소문자, 대문자, 숫자, 특수문자를 포함하여 8자 이상 입력해주세요.',
+    ko: '소문자, 숫자, 특수문자를 포함하여 8자 이상 입력해주세요.',
     en: 'Password must be at least 8 characters, including numbers, letters, and symbols.',
   },
   confirmPassword: {
