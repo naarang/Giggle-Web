@@ -23,7 +23,7 @@ const ProfileMenuList = ({ onLogoutClick }: ProfileMenuListProps) => {
   };
 //TODO: 아이콘 에셋 나오면 추가
   return (
-    <div className="flex flex-col gap-4 px-4 pb-4 bg-white rounded-md">
+    <div className="flex flex-col gap-4 px-4 pb-4 bg-white rounded-lg">
       <div className="flex flex-col divide-y divide-gray-200">
         <ProfileMenu
           title="Scrapped Job Posts"
@@ -52,7 +52,7 @@ const ProfileMenuList = ({ onLogoutClick }: ProfileMenuListProps) => {
         />
       </div>
       <button
-        className="grow w-full bg-[#ebeef1] rounded-md px-5 py-3 text-center button-2 text-[#1E1926]"
+        className="grow w-full bg-[#ebeef1] rounded-lg px-5 py-3 text-center button-2 text-[#1E1926]"
         onClick={onLogoutClick}
       >
         Log Out

@@ -188,7 +188,7 @@ const SignupInput = ({
                 canDelete={false}
               />
               <button
-                className={`flex items-center justify-center button-2 min-w-[4.25rem] px-5 py-3 rounded-md ${
+                className={`flex items-center justify-center button-2 min-w-[4.25rem] px-5 py-3 rounded-lg ${
                   emailVerifyStatus === null
                     ? 'bg-surface-primary text-text-normal'
                     : 'bg-surface-secondary text-text-disabled'
@@ -223,7 +223,7 @@ const SignupInput = ({
                   )}
                 </div>
                 <button
-                  className={`flex items-center justify-center min-w-[5.5rem] button-2 px-5 py-3 rounded-md ${
+                  className={`flex items-center justify-center min-w-[5.5rem] button-2 px-5 py-3 rounded-lg ${
                     emailVerifyStatus === 'verified'
                       ? 'bg-surface-secondary text-text-disabled'
                       : 'bg-surface-primary text-text-normal'
