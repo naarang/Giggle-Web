@@ -5,10 +5,14 @@ export const signInputTranclation = {
   },
   signup: {
     ko: '이메일과 비밀번호를 입력해주세요 ✍️',
-    en: 'Please enter your email and password',
+    en: 'Please enter\nyour email and password',
+  },
+  signupContent: {
+    ko: '필요한 정보만 입력하고, 바로 시작하세요!',
+    en: "Just a few deatils and you're all set to find your job.",
   },
   signupTitle: {
-    ko: '회원가입',
+    ko: '가입하기',
     en: 'Sign Up',
   },
   id: {

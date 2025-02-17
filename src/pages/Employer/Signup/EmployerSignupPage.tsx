@@ -84,11 +84,11 @@ const EmployerSignupPage = () => {
       {currentStep === 2 ? (
         <VerificationSuccessful />
       ) : (
-        <div className="flex justify-center items-center pb-[3.125rem]">
+        <div className="flex justify-center items-center sticky top-[3.75rem]">
           <div className={`h-1 w-full bg-[#fef387]`} />
         </div>
       )}
-      <div className="grow px-6 flex flex-col items-center">
+      <div className="grow px-4 flex flex-col items-center">
         {currentStep === 1 && (
           <SignupInput
             onSignUpClick={handleSignUp}

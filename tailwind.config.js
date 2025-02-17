@@ -41,7 +41,7 @@ export default {
           invert: '#ffffff',
           error: '#ff5252',
           success: '#2196f3',
-          priamry: '#fff32b',
+          priamry: '#FEF387',
         },
         border: {
           normal: '#c5c8ce',
@@ -49,7 +49,7 @@ export default {
           disabled: '#ebeef1',
           error: '#ff5252',
           success: '#2196f3',
-          primary: '#fff32b',
+          primary: '#FEF387',
         },
         surfaceDim: {
           normal: 'rgba(0,0,0, 30%)',
@@ -61,10 +61,10 @@ export default {
           tertiary: '#ebeef1',
           disabled: '#e2e5eb',
           invert: '#000000',
-          primary: '#fff32b',
+          primary: '#FEF387',
         },
         primary: {
-          normal: '#fff32b',
+          normal: '#FEF387',
           dark: '#252525',
           neutral: '#f4f4f9',
         },

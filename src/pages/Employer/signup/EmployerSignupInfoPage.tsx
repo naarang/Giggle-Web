@@ -84,6 +84,7 @@ const EmployerSignupInfoPage = () => {
   return (
     <div className="last:pb-[10rem]">
       <BaseHeader
+        title="추가정보"
         hasBackButton={true}
         hasMenuButton={false}
         onClickBackButton={() => navigate('/signup')}
@@ -94,11 +95,16 @@ const EmployerSignupInfoPage = () => {
           onNext={() => navigate('/')}
         />
       ) : (
-        <InformationInputSection
-          newEmployData={newEmployData}
-          setNewEmployData={setNewEmployData}
-          setLogoFile={(file: File | undefined) => setLogoFile(file)}
-        />
+        <>
+          <div className="flex justify-center items-center sticky top-[3.75rem]">
+            <div className={`h-1 w-full bg-[#fef387]`} />
+          </div>
+          <InformationInputSection
+            newEmployData={newEmployData}
+            setNewEmployData={setNewEmployData}
+            setLogoFile={(file: File | undefined) => setLogoFile(file)}
+          />
+        </>
       )}
       <BottomButtonPanel>
         {isValid ? (

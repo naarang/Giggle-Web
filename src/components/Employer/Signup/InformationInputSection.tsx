@@ -16,6 +16,10 @@ import {
   formatPhoneNumber,
 } from '@/utils/information';
 import { useAddressSearch } from '@/hooks/api/useAddressSearch';
+import PageTitle from '@/components/Common/PageTitle';
+import { signInputTranclation } from '@/constants/translation';
+import { isEmployer } from '@/utils/signup';
+import { useLocation } from 'react-router-dom';
 
 type InformationInputSectionProps = {
   newEmployData: EmployerRegistrationRequestBody;
@@ -34,6 +38,7 @@ const InformationInputSection = ({
   setNewEmployData,
   setLogoFile,
 }: InformationInputSectionProps) => {
+  const { pathname } = useLocation();
   const {
     addressInput, // 주소 검색용 input 저장하는 state
     addressSearchResult, // 주소 검색 결과를 저장하는 array
@@ -126,10 +131,11 @@ const InformationInputSection = ({
   };
   return (
     <>
-      <div className="w-full flex flex-col p-6 items-center justify-between [&>*:last-child]:mb-40">
-        <div className="relative w-full flex items-center justify-center title-1 text-[#1e1926] text-left">
-          추가 정보 입력
-        </div>
+      <div className="w-full flex flex-col px-4 items-center justify-between [&>*:last-child]:mb-40">
+        <PageTitle
+          title={signInputTranclation.infoStepTitle[isEmployer(pathname)]}
+          content={signInputTranclation.infoStepContent[isEmployer(pathname)]}
+        />
         <div className="flex flex-col gap-4">
           {/* 이름 입력 */}
           <InputLayout title="회사/점포명" isEssential>
