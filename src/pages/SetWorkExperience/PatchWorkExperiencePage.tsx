@@ -38,7 +38,7 @@ const PatchWorkExperiencePage = () => {
     if (Object.values(workExperienceData).every((value) => value === ''))
       return;
 
-    // 날짜 형식 서버 데이터와 통일
+    // 날짜 형식 서버 데이터와 통일, optional 값은 "-"으로 전달
     const formattedData = {
       ...workExperienceData,
       start_date: workExperienceData.start_date
@@ -47,6 +47,10 @@ const PatchWorkExperiencePage = () => {
       end_date: workExperienceData.end_date
         ? workExperienceData.end_date.replace(/\//g, '-')
         : '',
+      description:
+        workExperienceData.description === ''
+          ? '-'
+          : workExperienceData.description,
     };
 
     // API - 7.9 경력 수정하기
@@ -61,8 +65,13 @@ const PatchWorkExperiencePage = () => {
   // 7.2 (유학생) 경력 상세 조회하기
   useEffect(() => {
     if (getWorkExperienceData) {
-      setWorkExperienceData(getWorkExperienceData.data);
-      setInitialData(getWorkExperienceData.data);
+      const formattedData =
+        getWorkExperienceData.data?.description === '-'
+          ? { ...getWorkExperienceData.data, description: '' }
+          : getWorkExperienceData.data;
+
+      setWorkExperienceData(formattedData);
+      setInitialData(formattedData);
     }
   }, [getWorkExperienceData]);
 

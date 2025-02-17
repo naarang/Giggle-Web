@@ -15,6 +15,10 @@ import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
 import { formatDateToDash } from '@/utils/editResume';
 import InputLayout from '../WorkExperience/InputLayout';
+import PageTitle from '../Common/PageTitle';
+import { signInputTranclation } from '@/constants/translation';
+import { isEmployer } from '@/utils/signup';
+import { useLocation } from 'react-router-dom';
 const InformationStep = ({
   userInfo,
   onNext,
@@ -22,6 +26,7 @@ const InformationStep = ({
   userInfo: UserInfoRequestBody;
   onNext: (newInfo: UserInfoRequestBody) => void;
 }) => {
+  const { pathname } = useLocation();
   // 현재 step내에서 입력받는 정보를 따로 관리할 state, 추후 다음 step으로 넘어갈 때 funnel 관리 페이지의 state로 통합된다.
   const [newUserInfo, setNewUserInfo] = useState<UserInfo>(initialUserInfo);
   // 버튼 활성화 여부를 위한 플래그
@@ -65,144 +70,156 @@ const InformationStep = ({
   }, [newUserInfo, phoneNum]);
 
   return (
-    <div className="w-full mx-auto mb-[7rem]">
-      <div className="w-full flex flex-col gap-[1rem]">
-        {/* 이름 작성 */}
-        <InputLayout title="First Name" isEssential={true}>
-          <Input
-            inputType={InputType.TEXT}
-            placeholder="First Name"
-            value={newUserInfo.first_name}
-            onChange={(value) =>
-              setNewUserInfo({ ...newUserInfo, first_name: value })
-            }
-            canDelete={false}
-          />
-        </InputLayout>
-        {/* 성 작성 */}
-        <InputLayout title="Last Name" isEssential={true}>
-          <Input
-            inputType={InputType.TEXT}
-            placeholder="Last Name"
-            value={newUserInfo.last_name}
-            onChange={(value) =>
-              setNewUserInfo({ ...newUserInfo, last_name: value })
-            }
-            canDelete={false}
-          />
-        </InputLayout>
-        {/* 전화번호 선택, dropdown으로 앞 번호를, 중간 번호와 뒷 번호는 각각 input으로 입력 받음 */}
-        <InputLayout title="Cell phone No." isEssential={true}>
-          <div className="w-full flex flex-row gap-2 justify-between">
-            <div className="w-full h-[2.75rem]">
-              <Dropdown
-                value={phoneNum.start}
-                placeholder="+82"
-                options={phone}
-                setValue={(value) => setPhoneNum({ ...phoneNum, start: value })}
+    <div className='w-full flex flex-col gap-4'>
+      <div className="w-full flex flex-row items-center justify-between">
+        <PageTitle
+          title={signInputTranclation.infoStepTitle[isEmployer(pathname)]}
+          content={signInputTranclation.infoStepContent[isEmployer(pathname)]}
+        />
+      </div>
+      <div className="w-full mx-auto mb-[7rem]">
+        <div className="w-full flex flex-col gap-[1rem]">
+          {/* 이름 작성 */}
+          <InputLayout title="First Name" isEssential={true}>
+            <Input
+              inputType={InputType.TEXT}
+              placeholder="First Name"
+              value={newUserInfo.first_name}
+              onChange={(value) =>
+                setNewUserInfo({ ...newUserInfo, first_name: value })
+              }
+              canDelete={false}
+            />
+          </InputLayout>
+          {/* 성 작성 */}
+          <InputLayout title="Last Name" isEssential={true}>
+            <Input
+              inputType={InputType.TEXT}
+              placeholder="Last Name"
+              value={newUserInfo.last_name}
+              onChange={(value) =>
+                setNewUserInfo({ ...newUserInfo, last_name: value })
+              }
+              canDelete={false}
+            />
+          </InputLayout>
+          {/* 전화번호 선택, dropdown으로 앞 번호를, 중간 번호와 뒷 번호는 각각 input으로 입력 받음 */}
+          <InputLayout title="Cell phone No." isEssential={true}>
+            <div className="w-full flex flex-row gap-2 justify-between">
+              <div className="w-full h-[2.75rem]">
+                <Dropdown
+                  value={phoneNum.start}
+                  placeholder="+82"
+                  options={phone}
+                  setValue={(value) =>
+                    setPhoneNum({ ...phoneNum, start: value })
+                  }
+                />
+              </div>
+              <Input
+                inputType={InputType.TEXT}
+                placeholder="0000"
+                value={phoneNum.middle}
+                onChange={(value) =>
+                  setPhoneNum({ ...phoneNum, middle: value })
+                }
+                canDelete={false}
+              />
+              <Input
+                inputType={InputType.TEXT}
+                placeholder="0000"
+                value={phoneNum.end}
+                onChange={(value) => setPhoneNum({ ...phoneNum, end: value })}
+                canDelete={false}
               />
             </div>
-            <Input
-              inputType={InputType.TEXT}
-              placeholder="0000"
-              value={phoneNum.middle}
-              onChange={(value) => setPhoneNum({ ...phoneNum, middle: value })}
-              canDelete={false}
-            />
-            <Input
-              inputType={InputType.TEXT}
-              placeholder="0000"
-              value={phoneNum.end}
-              onChange={(value) => setPhoneNum({ ...phoneNum, end: value })}
-              canDelete={false}
-            />
-          </div>
-        </InputLayout>
-        {/* 성별 선택 */}
-        <InputLayout title="Gender" isEssential={true}>
-          <div className="w-full flex flex-row gap-[1.75rem]">
-            {gender.map((gender) => (
-              <RadioButton
-                value={gender}
-                setValue={(value: string) =>
-                  setNewUserInfo({
-                    ...newUserInfo,
-                    gender: value.toUpperCase(),
-                  })
-                }
-                isOn={gender.toUpperCase() === newUserInfo.gender}
-              />
-            ))}
-          </div>
-        </InputLayout>
-        {/* 생년월일 선택 */}
-        <InputLayout title="Date of birth" isEssential={false} isOptional>
-          <Dropdown
-            value={newUserInfo.birth}
-            placeholder="Select Date"
-            options={[]}
-            isCalendar={true}
-            setValue={(value) =>
-              setNewUserInfo({ ...newUserInfo, birth: value })
-            }
-          />
-        </InputLayout>
-        {/* 국적 선택 */}
-        <InputLayout title="Nationality" isEssential={false} isOptional>
-          <Dropdown
-            value={newUserInfo.nationality}
-            placeholder="Select Nationality"
-            options={country} // TODO: 국가명 데이터 받으면 교체해야 함.
-            setValue={(value: string) =>
-              setNewUserInfo({ ...newUserInfo, nationality: value })
-            }
-          />
-        </InputLayout>
-        {/* 비자 선택 */}
-        <InputLayout title="Visa Status" isEssential>
-          <Dropdown
-            value={newUserInfo.visa}
-            placeholder="Select Visa Status"
-            options={visa} // TODO: 비자 데이터 받으면 교체해야
-            setValue={(value: string) =>
-              setNewUserInfo({ ...newUserInfo, visa: value })
-            }
-          />
-        </InputLayout>
-      </div>
-      {/* 정보 입력 시마다 유효성을 검사해 모든 값이 유효하면 버튼이 활성화 */}
-      <BottomButtonPanel>
-        <Button
-          type="large"
-          bgColor={isInvalid ? 'bg-[#F4F4F9]' : 'bg-[#fef387]'}
-          fontColor={isInvalid ? '' : 'text-[#222]'}
-          isBorder={false}
-          title="Next"
-          onClick={
-            isInvalid
-              ? undefined
-              : () =>
-                  onNext({
-                    ...userInfo,
-                    user_info: {
+          </InputLayout>
+          {/* 성별 선택 */}
+          <InputLayout title="Gender" isEssential={true}>
+            <div className="w-full flex flex-row gap-[1.75rem]">
+              {gender.map((gender) => (
+                <RadioButton
+                  value={gender}
+                  setValue={(value: string) =>
+                    setNewUserInfo({
                       ...newUserInfo,
-                      nationality:
-                        newUserInfo.nationality === null
-                          ? null
-                          : newUserInfo.nationality
-                              .toUpperCase()
-                              .replace(/\s/g, '_'),
-                      birth: formatDateToDash(newUserInfo.birth as string),
-                      phone_number: formatPhoneNumber(phoneNum),
-                      visa:
-                        newUserInfo.visa !== null
-                          ? newUserInfo.visa.replace(/-/g, '_')
-                          : '',
-                    },
-                  })
-          }
-        />
-      </BottomButtonPanel>
+                      gender: value.toUpperCase(),
+                    })
+                  }
+                  isOn={gender.toUpperCase() === newUserInfo.gender}
+                />
+              ))}
+            </div>
+          </InputLayout>
+          {/* 생년월일 선택 */}
+          <InputLayout title="Date of birth" isEssential={false} isOptional>
+            <Dropdown
+              value={newUserInfo.birth}
+              placeholder="Select Date"
+              options={[]}
+              isCalendar={true}
+              setValue={(value) =>
+                setNewUserInfo({ ...newUserInfo, birth: value })
+              }
+            />
+          </InputLayout>
+          {/* 국적 선택 */}
+          <InputLayout title="Nationality" isEssential={false} isOptional>
+            <Dropdown
+              value={newUserInfo.nationality}
+              placeholder="Select Nationality"
+              options={country} // TODO: 국가명 데이터 받으면 교체해야 함.
+              setValue={(value: string) =>
+                setNewUserInfo({ ...newUserInfo, nationality: value })
+              }
+            />
+          </InputLayout>
+          {/* 비자 선택 */}
+          <InputLayout title="Visa Status" isEssential>
+            <Dropdown
+              value={newUserInfo.visa}
+              placeholder="Select Visa Status"
+              options={visa} // TODO: 비자 데이터 받으면 교체해야
+              setValue={(value: string) =>
+                setNewUserInfo({ ...newUserInfo, visa: value })
+              }
+            />
+          </InputLayout>
+        </div>
+        {/* 정보 입력 시마다 유효성을 검사해 모든 값이 유효하면 버튼이 활성화 */}
+        <BottomButtonPanel>
+          <Button
+            type="large"
+            bgColor={isInvalid ? 'bg-[#F4F4F9]' : 'bg-[#fef387]'}
+            fontColor={isInvalid ? '' : 'text-[#222]'}
+            isBorder={false}
+            title="Next"
+            onClick={
+              isInvalid
+                ? undefined
+                : () =>
+                    onNext({
+                      ...userInfo,
+                      user_info: {
+                        ...newUserInfo,
+                        nationality:
+                          newUserInfo.nationality === null
+                            ? null
+                            : newUserInfo.nationality
+                                .toUpperCase()
+                                .replace(/\s/g, '_'),
+                        birth: formatDateToDash(newUserInfo.birth as string),
+                        phone_number: formatPhoneNumber(phoneNum),
+                        visa:
+                          newUserInfo.visa !== null
+                            ? newUserInfo.visa.replace(/-/g, '_')
+                            : '',
+                      },
+                    })
+            }
+          />
+        </BottomButtonPanel>
+      </div>
     </div>
   );
 };
