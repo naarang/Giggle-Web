@@ -243,6 +243,13 @@ export const headerTranslation = {
   },
 };
 
+export const postTranslation = {
+  dDay: {
+    ko: '상시모집',
+    en: 'always',
+  },
+};
+
 export const infoTranslation = {
   notEntered: {
     ko: '미입력',
