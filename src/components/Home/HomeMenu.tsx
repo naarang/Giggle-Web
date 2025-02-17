@@ -37,7 +37,7 @@ const HomeMenu = () => {
           onClick: () => navigate('/employer/post'),
         },
       ];
-    else
+    else if (account_type === UserType.USER)
       return [
         {
           icon: <RecommendPostIcon />,
@@ -60,6 +60,7 @@ const HomeMenu = () => {
           onClick: () => navigate('/application'),
         },
       ];
+    else return [];
   }, [navigate, account_type]);
 
   const checkLogin = (fn: () => void) => {
