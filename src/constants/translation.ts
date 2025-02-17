@@ -137,11 +137,11 @@ export const signInputTranclation = {
   },
   successVerifyContent: {
     ko: '공고를 등록하고, 조건에 맞는 유학생을\n바로 만나보세요!',
-    en: "Complete your profile\nand start applying today!",
+    en: 'Complete your profile\nand start applying today!',
   },
   successVerifyBtn: {
-    ko: "추가 정보 입력하기",
-    en: "Complete My Profile",
+    ko: '추가 정보 입력하기',
+    en: 'Complete My Profile',
   },
   infoStepTitle: {
     ko: '추가 정보를 입력하고 \n더 정밀한 채용을 시작해보세요! 💬',
@@ -166,6 +166,18 @@ export const signInputTranclation = {
   languageStepContent: {
     ko: '선호하는 언어를 설정하고, 바로 채용을 시작하세요!',
     en: "Tell us your prefer language, and we'll do the rest!",
+  },
+  signupComplete: {
+    ko: '모든 준비 완료!\n이제 딱 맞는 지원자를 찾아볼까요?',
+    en: "You're all set!\nReady to find our job?",
+  },
+  signupCompleteContent: {
+    ko: '입력한 정보를 바탕으로,\nGiggle이 맞춤형 지원자를 추천해 드릴게요!',
+    en: "We've got everything we need\nLet's start matching ou with the best jobs!",
+  },
+  signupCompleteBtn: {
+    ko: '시작하기',
+    en: 'Browse Jobs',
   },
 };
 

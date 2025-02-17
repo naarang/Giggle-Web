@@ -1,12 +1,13 @@
 import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import BottomSheetLayout from '@/components/Common/BottomSheetLayout';
 import Button from '@/components/Common/Button';
-import CompleteModal from '@/components/Common/CompleteModal';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import LoadingItem from '@/components/Common/LoadingItem';
 import AgreeModalInner from '@/components/Employer/Signup/AgreeModalInner';
 import InformationInputSection from '@/components/Employer/Signup/InformationInputSection';
 import PolicyViewer from '@/components/Information/PolicyViewer';
+import VerificationSuccessful from '@/components/Signup/VerificationSuccessful';
+import { signInputTranclation } from '@/constants/translation';
 import { useGetPolicy, useSignupEmployer } from '@/hooks/api/useAuth';
 import {
   EmployerRegistrationRequestBody,
@@ -14,11 +15,12 @@ import {
 } from '@/types/api/employ';
 import { TermType } from '@/types/api/users';
 import { getTemporaryToken } from '@/utils/auth';
-import { isValidEmployerRegistration } from '@/utils/signup';
+import { isEmployer, isValidEmployerRegistration } from '@/utils/signup';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const EmployerSignupInfoPage = () => {
+  const { pathname } = useLocation();
   const [newEmployData, setNewEmployData] =
     useState<EmployerRegistrationRequestBody>(initialEmployerRegistration);
   const [logoFile, setLogoFile] = useState<File | undefined>(undefined);
@@ -82,20 +84,26 @@ const EmployerSignupInfoPage = () => {
   };
 
   return (
-    <div className="last:pb-[10rem]">
-      <BaseHeader
-        title="추가정보"
-        hasBackButton={true}
-        hasMenuButton={false}
-        onClickBackButton={() => navigate('/signup')}
-      />
+    <div className="w-full h-screen flex items-center justify-center">
       {devIsModal ? (
-        <CompleteModal
-          title="가입이 성공적으로 완료되었습니다"
+        <VerificationSuccessful
+          title={signInputTranclation.signupComplete[isEmployer(pathname)]}
+          content={
+            signInputTranclation.signupCompleteContent[isEmployer(pathname)]
+          }
+          buttonText={
+            signInputTranclation.signupCompleteBtn[isEmployer(pathname)]
+          }
           onNext={() => navigate('/')}
         />
       ) : (
-        <>
+        <div className="m-auto max-w-[500px] relative h-screen flex flex-col items-center justify-start overflow-y-scroll scrollbar-hide">
+          <BaseHeader
+            title="추가정보"
+            hasBackButton={true}
+            hasMenuButton={false}
+            onClickBackButton={() => navigate('/signup')}
+          />
           <div className="flex justify-center items-center sticky top-[3.75rem]">
             <div className={`h-1 w-full bg-[#fef387]`} />
           </div>
@@ -104,30 +112,31 @@ const EmployerSignupInfoPage = () => {
             setNewEmployData={setNewEmployData}
             setLogoFile={(file: File | undefined) => setLogoFile(file)}
           />
-        </>
+          <BottomButtonPanel>
+            {isValid ? (
+              <Button
+                type="large"
+                isBorder={false}
+                bgColor="bg-[#FEF387]"
+                fontColor="text-[#1E1926]"
+                title="완료"
+                onClick={() => {
+                  handleSubmit();
+                }}
+              />
+            ) : (
+              <Button
+                type="large"
+                isBorder={false}
+                bgColor="bg-[#F4F4F9]"
+                fontColor="text-[#1E1926]"
+                title="완료"
+              />
+            )}
+          </BottomButtonPanel>
+        </div>
       )}
-      <BottomButtonPanel>
-        {isValid ? (
-          <Button
-            type="large"
-            isBorder={false}
-            bgColor="bg-[#FEF387]"
-            fontColor="text-[#1E1926]"
-            title="완료"
-            onClick={() => {
-              handleSubmit();
-            }}
-          />
-        ) : (
-          <Button
-            type="large"
-            isBorder={false}
-            bgColor="bg-[#F4F4F9]"
-            fontColor="text-[#1E1926]"
-            title="완료"
-          />
-        )}
-      </BottomButtonPanel>
+
       {isAgreeModal && (
         <BottomSheetLayout
           hasHandlebar={true}

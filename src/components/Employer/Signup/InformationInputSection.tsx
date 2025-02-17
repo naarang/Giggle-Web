@@ -173,6 +173,37 @@ const InformationInputSection = ({
               canDelete={false}
             />
           </InputLayout>
+          {/* 개인 휴대폰 번호 입력 */}
+          <InputLayout title="대표자 전화번호" isEssential>
+            <div className="w-full flex flex-row gap-2 justify-between">
+              <div className="w-full h-[2.75rem]">
+                <Dropdown
+                  value={phoneNum.start}
+                  placeholder="+82"
+                  options={phone}
+                  setValue={(value) =>
+                    setPhoneNum({ ...phoneNum, start: value })
+                  }
+                />
+              </div>
+              <Input
+                inputType={InputType.TEXT}
+                placeholder="0000"
+                value={phoneNum.middle}
+                onChange={(value) =>
+                  setPhoneNum({ ...phoneNum, middle: value })
+                }
+                canDelete={false}
+              />
+              <Input
+                inputType={InputType.TEXT}
+                placeholder="0000"
+                value={phoneNum.end}
+                onChange={(value) => setPhoneNum({ ...phoneNum, end: value })}
+                canDelete={false}
+              />
+            </div>
+          </InputLayout>
           {/* 주소 입력 */}
           <div className="w-full flex flex-col gap-[1.125rem]">
             {/* 주소 검색 입력 input */}
@@ -247,37 +278,7 @@ const InformationInputSection = ({
               canDelete={false}
             />
           </InputLayout>
-          {/* 개인 휴대폰 번호 입력 */}
-          <InputLayout title="대표자 전화번호" isEssential>
-            <div className="w-full flex flex-row gap-2 justify-between">
-              <div className="w-full h-[2.75rem]">
-                <Dropdown
-                  value={phoneNum.start}
-                  placeholder="+82"
-                  options={phone}
-                  setValue={(value) =>
-                    setPhoneNum({ ...phoneNum, start: value })
-                  }
-                />
-              </div>
-              <Input
-                inputType={InputType.TEXT}
-                placeholder="0000"
-                value={phoneNum.middle}
-                onChange={(value) =>
-                  setPhoneNum({ ...phoneNum, middle: value })
-                }
-                canDelete={false}
-              />
-              <Input
-                inputType={InputType.TEXT}
-                placeholder="0000"
-                value={phoneNum.end}
-                onChange={(value) => setPhoneNum({ ...phoneNum, end: value })}
-                canDelete={false}
-              />
-            </div>
-          </InputLayout>
+
           {/* 회사 로고 입력 */}
           <InputLayout title="회사 로고" isEssential={false}>
             <div className="w-full flex flex-col items-center justify-start">

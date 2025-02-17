@@ -3,13 +3,17 @@ import FindJourney from '@/components/Signup/FindJourney';
 import SignupInput from '@/components/Signup/SignupInput';
 import { UserType } from '@/constants/user';
 import VerificationSuccessful from '@/components/Signup/VerificationSuccessful';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useTempSignUp } from '@/hooks/api/useAuth';
 import { deleteAccessToken, deleteRefreshToken } from '@/utils/auth';
 import { useUserStore } from '@/store/user';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
+import { signInputTranclation } from '@/constants/translation';
+import { isEmployer } from '@/utils/signup';
+import { checkEmployerPage } from '@/utils/checkUserPage';
 
 const SignupPage = () => {
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const { updateAccountType, updateName } = useUserStore();
 
@@ -78,7 +82,22 @@ const SignupPage = () => {
   return (
     <div className="flex flex-col w-screen h-screen bg-white">
       {currentStep === 3 ? (
-        <VerificationSuccessful />
+        <VerificationSuccessful
+        title={signInputTranclation.successVerify[isEmployer(pathname)]}
+        content={
+          signInputTranclation.successVerifyContent[isEmployer(pathname)]
+        }
+        buttonText={
+          signInputTranclation.successVerifyBtn[isEmployer(pathname)]
+        }
+        onNext={() => {
+          navigate(
+            checkEmployerPage(pathname)
+              ? '/employer/signup/information'
+              : '/information',
+          );
+        }}
+      />
       ) : (
         <>
           <BaseHeader

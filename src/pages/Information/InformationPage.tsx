@@ -1,5 +1,4 @@
 import BottomSheetLayout from '@/components/Common/BottomSheetLayout';
-import CompleteModal from '@/components/Common/CompleteModal';
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import LoadingItem from '@/components/Common/LoadingItem';
 import AgreeModalInner from '@/components/Employer/Signup/AgreeModalInner';
@@ -7,6 +6,8 @@ import AddressStep from '@/components/Information/AddressStep';
 import InformationStep from '@/components/Information/InformationStep';
 import LanguageStep from '@/components/Information/LanguageStep';
 import PolicyViewer from '@/components/Information/PolicyViewer';
+import VerificationSuccessful from '@/components/Signup/VerificationSuccessful';
+import { signInputTranclation } from '@/constants/translation';
 import { useGetPolicy, useSignUp } from '@/hooks/api/useAuth';
 import {
   initialUserInfoRequestBody,
@@ -15,11 +16,13 @@ import {
   UserInfoRequestBody,
 } from '@/types/api/users';
 import { getTemporaryToken } from '@/utils/auth';
+import { isEmployer } from '@/utils/signup';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 // funnel 패턴으로 구현한 추가정보 입력 페이지. 총 3 step으로 구성
 const InformationPage = () => {
+  const { pathname } = useLocation();
   const [currentStep, setCurrentStep] = useState(1);
   const [userInfo, setUserInfo] = useState<UserInfoRequestBody>(
     initialUserInfoRequestBody,
@@ -69,9 +72,14 @@ const InformationPage = () => {
   return (
     <div className="m-auto max-w-[500px] relative h-screen flex flex-col items-center justify-start overflow-y-scroll scrollbar-hide">
       {devIsModal ? (
-        <CompleteModal
-          title="Registration has been successfully completed"
-          content="From now on, you can upload your resume and receive personalized job recommendations"
+        <VerificationSuccessful
+          title={signInputTranclation.signupComplete[isEmployer(pathname)]}
+          content={
+            signInputTranclation.signupCompleteContent[isEmployer(pathname)]
+          }
+          buttonText={
+            signInputTranclation.signupCompleteBtn[isEmployer(pathname)]
+          }
           onNext={() => navigate('/')}
         />
       ) : (

@@ -9,6 +9,7 @@ import BaseHeader from '@/components/Common/Header/BaseHeader';
 import { signInputTranclation } from '@/constants/translation';
 import { isEmployer } from '@/utils/signup';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { checkEmployerPage } from '@/utils/checkUserPage';
 
 const EmployerSignupPage = () => {
   const { updateAccountType, updateName } = useUserStore();
@@ -76,7 +77,22 @@ const EmployerSignupPage = () => {
   return (
     <div className="flex flex-col w-[100vw] h-[100vh] bg-white">
       {currentStep === 2 ? (
-        <VerificationSuccessful />
+        <VerificationSuccessful
+          title={signInputTranclation.successVerify[isEmployer(pathname)]}
+          content={
+            signInputTranclation.successVerifyContent[isEmployer(pathname)]
+          }
+          buttonText={
+            signInputTranclation.successVerifyBtn[isEmployer(pathname)]
+          }
+          onNext={() => {
+            navigate(
+              checkEmployerPage(pathname)
+                ? '/employer/signup/information'
+                : '/information',
+            );
+          }}
+        />
       ) : (
         <>
           <BaseHeader

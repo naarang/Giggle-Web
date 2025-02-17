@@ -1,23 +1,26 @@
-import { useLocation, useNavigate } from 'react-router-dom';
 import SuccessIcon from '@/assets/icons/Successful.svg?react';
-import { signInputTranclation } from '@/constants/translation';
-import { checkEmployerPage } from '@/utils/checkUserPage';
-import { isEmployer } from '@/utils/signup';
-import BottomButtonPanel from '../Common/BottomButtonPanel';
-import Button from '../Common/Button';
+import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
+import Button from '@/components/Common/Button';
 
-const VerificationSuccessful = () => {
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
+interface VerificationSuccessfulProps {
+  title: string;
+  content: string;
+  buttonText: string;
+  onNext: () => void;
+}
 
+const VerificationSuccessful = ({
+  title,
+  content,
+  buttonText,
+  onNext,
+}: VerificationSuccessfulProps) => {
   return (
     <div className="flex flex-col w-full h-full justify-center items-center gap-4">
       <SuccessIcon />
-      <div className="head-2 whitespace-pre-line text-center">
-        {signInputTranclation.successVerify[isEmployer(pathname)]}
-      </div>
+      <div className="head-2 whitespace-pre-line text-center">{title}</div>
       <p className="body-2 text-text-alternative whitespace-pre-line text-center">
-        {signInputTranclation.successVerifyContent[isEmployer(pathname)]}
+        {content}
       </p>
       <BottomButtonPanel>
         <div className="w-full">
@@ -26,14 +29,8 @@ const VerificationSuccessful = () => {
             bgColor={'bg-surface-primary'}
             fontColor={'text-text-normal'}
             isBorder={false}
-            title={signInputTranclation.successVerifyBtn[isEmployer(pathname)]}
-            onClick={() => {
-              navigate(
-                checkEmployerPage(pathname)
-                  ? '/employer/signup/information'
-                  : '/information',
-              );
-            }}
+            title={buttonText}
+            onClick={onNext}
           />
         </div>
       </BottomButtonPanel>
