@@ -103,7 +103,7 @@ const SigninInputSection = () => {
           </button>
         </div>
       </div>
-      <div className="w-full bg-gradient-to-b from-white/80 to-white flex flex-row items-start justify-start px-6 pb-[3.125rem] pt-3 box-border text-center button-1 text-[#1e1926] z-10">
+      <div className="w-full bg-gradient-to-b from-white/80 to-white flex flex-row items-start justify-start pb-[3.125rem] pt-3 box-border text-center button-1 text-[#1e1926] z-10">
         <div className="w-full flex items-center justify-center">
           <div className="w-full flex flex-col items-center gap-6">
             <Button

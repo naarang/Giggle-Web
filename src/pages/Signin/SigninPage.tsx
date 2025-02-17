@@ -34,7 +34,6 @@ const SigninPage = () => {
           </div>
         </div>
         <SigninInputSection />
-        {/* <SigninSocialButtons /> */}
       </div>
     </div>
   );

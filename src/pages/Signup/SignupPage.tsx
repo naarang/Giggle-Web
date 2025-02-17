@@ -88,23 +88,13 @@ const SignupPage = () => {
       ) : (
         <div className="w-screen flex justify-center items-center pb-[3.125rem]">
           <hr
-            className={`w-[25%] h-1 border-0 ${
+            className={`w-[50%] h-1 border-0 ${
               currentStep >= 1 ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'
             }`}
           />
           <hr
-            className={`w-[25%] h-1 border-0 ${
-              currentStep >= 1 ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'
-            }`}
-          />
-          <hr
-            className={`w-[25%] h-1 border-0 ${
+            className={`w-[50%] h-1 border-0 ${
               currentStep >= 2 ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'
-            }`}
-          />
-          <hr
-            className={`w-[25%] h-1 border-0 ${
-              currentStep === 2 ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'
             }`}
           />
         </div>
