@@ -33,7 +33,7 @@ type InputProps = {
 const inputStyler = (status: InputStatus) => {
   switch (status) {
     case INPUT_STATUS.DISABLED:
-      return 'border-[#eae9f6] [--input-color:#bdbdbd]';
+      return 'border-border-disabled [--input-color:#bdbdbd]';
     case INPUT_STATUS.TYPING:
       return 'border-black text-black';
     case INPUT_STATUS.INVALID:
@@ -95,12 +95,11 @@ const Input = ({
 
   return (
     <div
-      className={`w-full flex gap-2 whitespace-nowrap items-center justify-between text-left body-2 border rounded-md ${inputStyler(currentStatus)} bg-white py-[10px] pl-4 pr-[14px]`}
+      className={`w-full flex gap-2 whitespace-nowrap items-center justify-between text-left body-2 border rounded-lg ${inputStyler(currentStatus)} bg-white py-3 pl-4 pr-[14px]`}
     >
       {/* 접두사가 존재할 경우 표시합니다. */}
       {isPrefix && <div className="w-8 body-2 text-[#464646]">{prefix}</div>}
       {/* 검색 타입일 경우 검색 아이콘을 표시합니다. */}
-      {inputType === 'SEARCH' && <SearchIcon />}
       <input
         placeholder={placeholder}
         value={value ?? ''}
@@ -118,6 +117,7 @@ const Input = ({
       />
       {/* 비밀번호 타입일 경우 표시/숨김 토글 아이콘을 표시합니다. */}
       {/* TODO : 추후 아이콘 추가 되면 비밀번호 가시 여부에 따라서 다른 아이콘 적용*/}
+      {inputType === 'SEARCH' && <SearchIcon />}
       {inputType === 'PASSWORD' && (
         <VisibleIcon onClick={() => setShowPassword(!showPassword)} />
       )}

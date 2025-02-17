@@ -12,6 +12,10 @@ import { DropdownModal } from '@/components/Common/Dropdown';
 import Button from '@/components/Common/Button';
 import { useAddressSearch } from '@/hooks/api/useAddressSearch';
 import InputLayout from '@/components/WorkExperience/InputLayout';
+import PageTitle from '../Common/PageTitle';
+import { signInputTranclation } from '@/constants/translation';
+import { useLocation } from 'react-router-dom';
+import { isEmployer } from '@/utils/signup';
 
 type AddressStepProps = {
   userInfo: UserInfoRequestBody;
@@ -19,6 +23,7 @@ type AddressStepProps = {
 };
 
 const AddressStep = ({ userInfo, onNext }: AddressStepProps) => {
+  const { pathname } = useLocation();
   const [newAddress, setNewAddress] = useState<Address>(initialAddress);
   const {
     addressInput, // 주소 검색용 input 저장하는 state
@@ -39,6 +44,14 @@ const AddressStep = ({ userInfo, onNext }: AddressStepProps) => {
 
   return (
     <div className="w-full mx-auto">
+      <div className="w-full flex flex-row items-center justify-between">
+        <PageTitle
+          title={signInputTranclation.addressStepTitle[isEmployer(pathname)]}
+          content={
+            signInputTranclation.addressStepContent[isEmployer(pathname)]
+          }
+        />
+      </div>
       <div className="w-full flex flex-col gap-[1.125rem]">
         {/* 주소 검색 입력 input */}
         <InputLayout title="Main Address" isEssential={false} isOptional>

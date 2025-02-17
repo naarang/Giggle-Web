@@ -16,6 +16,10 @@ import {
   formatPhoneNumber,
 } from '@/utils/information';
 import { useAddressSearch } from '@/hooks/api/useAddressSearch';
+import PageTitle from '@/components/Common/PageTitle';
+import { signInputTranclation } from '@/constants/translation';
+import { isEmployer } from '@/utils/signup';
+import { useLocation } from 'react-router-dom';
 
 type InformationInputSectionProps = {
   newEmployData: EmployerRegistrationRequestBody;
@@ -34,6 +38,7 @@ const InformationInputSection = ({
   setNewEmployData,
   setLogoFile,
 }: InformationInputSectionProps) => {
+  const { pathname } = useLocation();
   const {
     addressInput, // 주소 검색용 input 저장하는 state
     addressSearchResult, // 주소 검색 결과를 저장하는 array
@@ -126,10 +131,11 @@ const InformationInputSection = ({
   };
   return (
     <>
-      <div className="w-full flex flex-col p-6 items-center justify-between [&>*:last-child]:mb-40">
-        <div className="relative w-full flex items-center justify-center title-1 text-[#1e1926] text-left">
-          추가 정보 입력
-        </div>
+      <div className="w-full flex flex-col px-4 items-center justify-between [&>*:last-child]:mb-40">
+        <PageTitle
+          title={signInputTranclation.infoStepTitle[isEmployer(pathname)]}
+          content={signInputTranclation.infoStepContent[isEmployer(pathname)]}
+        />
         <div className="flex flex-col gap-4">
           {/* 이름 입력 */}
           <InputLayout title="회사/점포명" isEssential>
@@ -166,6 +172,37 @@ const InformationInputSection = ({
               }
               canDelete={false}
             />
+          </InputLayout>
+          {/* 개인 휴대폰 번호 입력 */}
+          <InputLayout title="대표자 전화번호" isEssential>
+            <div className="w-full flex flex-row gap-2 justify-between">
+              <div className="w-full h-[2.75rem]">
+                <Dropdown
+                  value={phoneNum.start}
+                  placeholder="+82"
+                  options={phone}
+                  setValue={(value) =>
+                    setPhoneNum({ ...phoneNum, start: value })
+                  }
+                />
+              </div>
+              <Input
+                inputType={InputType.TEXT}
+                placeholder="0000"
+                value={phoneNum.middle}
+                onChange={(value) =>
+                  setPhoneNum({ ...phoneNum, middle: value })
+                }
+                canDelete={false}
+              />
+              <Input
+                inputType={InputType.TEXT}
+                placeholder="0000"
+                value={phoneNum.end}
+                onChange={(value) => setPhoneNum({ ...phoneNum, end: value })}
+                canDelete={false}
+              />
+            </div>
           </InputLayout>
           {/* 주소 입력 */}
           <div className="w-full flex flex-col gap-[1.125rem]">
@@ -241,37 +278,7 @@ const InformationInputSection = ({
               canDelete={false}
             />
           </InputLayout>
-          {/* 개인 휴대폰 번호 입력 */}
-          <InputLayout title="대표자 전화번호" isEssential>
-            <div className="w-full flex flex-row gap-2 justify-between">
-              <div className="w-full h-[2.75rem]">
-                <Dropdown
-                  value={phoneNum.start}
-                  placeholder="+82"
-                  options={phone}
-                  setValue={(value) =>
-                    setPhoneNum({ ...phoneNum, start: value })
-                  }
-                />
-              </div>
-              <Input
-                inputType={InputType.TEXT}
-                placeholder="0000"
-                value={phoneNum.middle}
-                onChange={(value) =>
-                  setPhoneNum({ ...phoneNum, middle: value })
-                }
-                canDelete={false}
-              />
-              <Input
-                inputType={InputType.TEXT}
-                placeholder="0000"
-                value={phoneNum.end}
-                onChange={(value) => setPhoneNum({ ...phoneNum, end: value })}
-                canDelete={false}
-              />
-            </div>
-          </InputLayout>
+
           {/* 회사 로고 입력 */}
           <InputLayout title="회사 로고" isEssential={false}>
             <div className="w-full flex flex-col items-center justify-start">
