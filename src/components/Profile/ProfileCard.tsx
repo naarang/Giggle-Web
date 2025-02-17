@@ -12,7 +12,7 @@ const ProfileCard = ({ data }: ProfileCardProps) => {
   return (
     <div className="flex flex-col relative px-[1.125rem] mt-4 py-5 rounded-[0.5rem] gap-4 bg-[#fff]">
       <div
-        className="absolute top-5 right-[18px] w-8 h-8 bg-[#f4f4f9] flex items-center justify-center rounded-md"
+        className="absolute top-5 right-[18px] w-8 h-8 bg-[#f4f4f9] flex items-center justify-center rounded-lg"
         onClick={() => navigate('/profile/edit')}
       >
         <ProfileEditIcon />
@@ -65,7 +65,7 @@ const ProfileCard = ({ data }: ProfileCardProps) => {
       </div>
       {data.school_name === ' - ' && (
         <button
-          className="grow w-full bg-[#FEF387] rounded-md px-5 py-3 text-center button-2 text-[#1E1926]"
+          className="grow w-full bg-[#FEF387] rounded-lg px-5 py-3 text-center button-2 text-[#1E1926]"
           onClick={() => navigate('/profile/manage-resume')}
         >
           Manage your Resume

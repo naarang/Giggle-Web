@@ -33,7 +33,7 @@ const LicenseCard = ({ languageData, metaData }: LicenseCardProps) => {
       {/* 모든 언어 레벨이 0인 경우 */}
       {emptyLevel() ? (
         <button
-          className="text-center py-2 bg-[#F4F4F9] rounded-md text-[#656565] caption-1"
+          className="text-center py-2 bg-[#F4F4F9] rounded-lg text-[#656565] caption-1"
           onClick={handleEnterButton}
         >
           Please enter your language level

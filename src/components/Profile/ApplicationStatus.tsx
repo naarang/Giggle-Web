@@ -33,8 +33,8 @@ const ApplicationStatus = () => {
   }, [applcationData, bookmarkData]);
 
   return (
-    <div className="flex gap-4 items-stretch justify-center p-4 bg-white rounded-md">
-      <div className="flex flex-col justify-between w-full p-3 bg-[#F4F4F9] rounded-md">
+    <div className="flex gap-4 items-stretch justify-center p-4 bg-white rounded-lg">
+      <div className="flex flex-col justify-between w-full p-3 bg-[#F4F4F9] rounded-lg">
         <div className="body-3 text-[#1E1926] text-center break-all">
           Applications
         </div>
@@ -42,7 +42,7 @@ const ApplicationStatus = () => {
           {applicationCounts.application_counts}
         </div>
       </div>
-      <div className="flex flex-col justify-between w-full gap-3 p-3 bg-[#F4F4F9] rounded-md">
+      <div className="flex flex-col justify-between w-full gap-3 p-3 bg-[#F4F4F9] rounded-lg">
         <div className="body-3 text-[#1E1926] text-center break-all">
           Successful Hires
         </div>
@@ -50,7 +50,7 @@ const ApplicationStatus = () => {
           {applicationCounts.successful_hire_counts}
         </div>
       </div>
-      <div className="flex flex-col justify-between gap-3 w-full p-3 bg-[#F4F4F9] rounded-md">
+      <div className="flex flex-col justify-between gap-3 w-full p-3 bg-[#F4F4F9] rounded-lg">
         <div className="body-3 text-[#1E1926] text-center break-all">
           Scraps
         </div>

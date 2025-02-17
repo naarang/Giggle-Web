@@ -18,7 +18,7 @@ const EmployerProfileMenuList = ({
   };
 
   return (
-    <div className="flex flex-col gap-4 px-4 pb-4 bg-white rounded-md">
+    <div className="flex flex-col gap-4 px-4 pb-4 bg-white rounded-lg">
       <div className="flex flex-col divide-y divide-gray-200">
         <EmployerProfileMenu
           title="계정"
@@ -36,7 +36,7 @@ const EmployerProfileMenuList = ({
           onClick={handleAboutClick}
         />
         <button
-          className="grow w-full bg-[#ebeef1] rounded-md px-5 py-3 text-center button-2 text-[#1E1926]"
+          className="grow w-full bg-[#ebeef1] rounded-lg px-5 py-3 text-center button-2 text-[#1E1926]"
           onClick={handleBottomSheetOpen}
         >
           로그아웃
