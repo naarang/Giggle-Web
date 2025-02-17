@@ -75,18 +75,20 @@ const EmployerSignupPage = () => {
 
   return (
     <div className="flex flex-col w-[100vw] h-[100vh] bg-white">
-      <BaseHeader
-        hasBackButton
-        hasMenuButton={false}
-        title={signInputTranclation.signupTitle[isEmployer(pathname)]}
-        onClickBackButton={() => handleBackButtonClick()}
-      />
       {currentStep === 2 ? (
         <VerificationSuccessful />
       ) : (
-        <div className="flex justify-center items-center sticky top-[3.75rem]">
-          <div className={`h-1 w-full bg-[#fef387]`} />
-        </div>
+        <>
+          <BaseHeader
+            hasBackButton
+            hasMenuButton={false}
+            title={signInputTranclation.signupTitle[isEmployer(pathname)]}
+            onClickBackButton={() => handleBackButtonClick()}
+          />
+          <div className="flex justify-center items-center sticky top-[3.75rem]">
+            <div className={`h-1 w-full bg-[#fef387]`} />
+          </div>
+        </>
       )}
       <div className="grow px-4 flex flex-col items-center">
         {currentStep === 1 && (

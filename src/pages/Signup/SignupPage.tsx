@@ -77,27 +77,29 @@ const SignupPage = () => {
 
   return (
     <div className="flex flex-col w-screen h-screen bg-white">
-      <BaseHeader
-        hasBackButton={true}
-        onClickBackButton={() => handleBackButtonClick()}
-        hasMenuButton={false}
-        title="Sign Up"
-      />
       {currentStep === 3 ? (
         <VerificationSuccessful />
       ) : (
-        <div className="w-screen flex justify-center items-center">
-          <hr
-            className={`w-[50%] h-1 border-0 ${
-              currentStep >= 1 ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'
-            }`}
+        <>
+          <BaseHeader
+            hasBackButton={true}
+            onClickBackButton={() => handleBackButtonClick()}
+            hasMenuButton={false}
+            title="Sign Up"
           />
-          <hr
-            className={`w-[50%] h-1 border-0 ${
-              currentStep >= 2 ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'
-            }`}
-          />
-        </div>
+          <div className="w-screen flex justify-center items-center">
+            <hr
+              className={`w-[50%] h-1 border-0 ${
+                currentStep >= 1 ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'
+              }`}
+            />
+            <hr
+              className={`w-[50%] h-1 border-0 ${
+                currentStep >= 2 ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'
+              }`}
+            />
+          </div>
+        </>
       )}
       {/* 회원가입 STEP 별 랜딩 컴포넌트 */}
       <div className="grow px-4 flex flex-col items-center">

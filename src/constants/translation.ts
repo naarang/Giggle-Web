@@ -132,8 +132,16 @@ export const signInputTranclation = {
     en: 'Resend',
   },
   successVerify: {
-    ko: '인증 완료되었어요!',
-    en: 'Verification successful',
+    ko: '가입 완료!\n이제 채용을 시작해 볼까요?',
+    en: "You're in!\nReady to find your next job?",
+  },
+  successVerifyContent: {
+    ko: '공고를 등록하고, 조건에 맞는 유학생을\n바로 만나보세요!',
+    en: "Complete your profile\nand start applying today!",
+  },
+  successVerifyBtn: {
+    ko: "추가 정보 입력하기",
+    en: "Complete My Profile",
   },
   infoStepTitle: {
     ko: '추가 정보를 입력하고 \n더 정밀한 채용을 시작해보세요! 💬',
