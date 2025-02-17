@@ -7,7 +7,6 @@ import AddressStep from '@/components/Information/AddressStep';
 import InformationStep from '@/components/Information/InformationStep';
 import LanguageStep from '@/components/Information/LanguageStep';
 import PolicyViewer from '@/components/Information/PolicyViewer';
-import StepIndicator from '@/components/Information/StepIndicator';
 import { useGetPolicy, useSignUp } from '@/hooks/api/useAuth';
 import {
   initialUserInfoRequestBody,
@@ -87,14 +86,22 @@ const InformationPage = () => {
                 : setCurrentStep((prev) => prev - 1)
             }
           />
-          <div className="w-full flex flex-row px-4 py-8 items-center justify-between">
-            <div
-              className="relative w-full flex items-center justify-start head-2 text-[#1e1926]"
-              onClick={() => setCurrentStep(currentStep + 1)}
-            >
-              Information
-            </div>
-            <StepIndicator length={3} currentStep={currentStep} />
+          <div className="w-screen flex justify-center items-center sticky top-[3.75rem]">
+            <hr
+              className={`w-[33%] h-1 border-0 ${
+                currentStep >= 1 ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'
+              }`}
+            />
+            <hr
+              className={`w-[33%] h-1 border-0 ${
+                currentStep >= 2 ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'
+              }`}
+            />
+            <hr
+              className={`w-[34%] h-1 border-0 ${
+                currentStep >= 3 ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'
+              }`}
+            />
           </div>
           <div className="w-full flex justify-center px-4 pt-4">
             {currentStep === 1 && (

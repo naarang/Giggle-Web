@@ -4,28 +4,39 @@ import { useState } from 'react';
 import Dropdown from '@/components/Common/Dropdown';
 import { languageList } from '@/constants/information';
 import Button from '@/components/Common/Button';
+import PageTitle from '../Common/PageTitle';
+import { signInputTranclation } from '@/constants/translation';
+import { isEmployer } from '@/utils/signup';
+import { useLocation } from 'react-router-dom';
+import InputLayout from '../WorkExperience/InputLayout';
 
 type LanguageStepProps = {
   onNext: (language: Language) => void;
 };
 
 const LanguageStep = ({ onNext }: LanguageStepProps) => {
+  const { pathname } = useLocation();
   const [language, setLanguage] = useState('English');
   return (
     <div className="w-full mx-auto">
+      <div className="w-full flex flex-row items-center justify-between">
+        <PageTitle
+          title={signInputTranclation.languageStepTitle[isEmployer(pathname)]}
+          content={
+            signInputTranclation.languageStepContent[isEmployer(pathname)]
+          }
+        />
+      </div>
       <div className="w-full flex flex-col gap-[1.125rem]">
         {/* 언어 선택 작성 */}
-        <div className="w-full">
-          <div className="w-full flex items-center justify-start body-3 color-[#222] px-[0.25rem] py-[0.375rem]">
-            Language
-          </div>
+        <InputLayout title="Language" isEssential={true}>
           <Dropdown
             value={language}
             placeholder="Select Language"
             options={languageList}
             setValue={(value: string) => setLanguage(value)}
           />
-        </div>
+        </InputLayout>
       </div>
       {/* 다음 step 이동 버튼 포함한 Bottom Panel */}
       <BottomButtonPanel>

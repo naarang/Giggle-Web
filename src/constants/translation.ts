@@ -99,9 +99,9 @@ export const signInputTranclation = {
     ko: '인증번호를 보내드렸어요. (5분)',
     en: 'Enter the code from the email we sent you',
   },
-  verifyFailed : {
-    ko: "인증에 실패했습니다. 인증번호 재발급 후 다시 시도해주세요. ",
-    en: "Verification failed. Please try again after reissuing the verification code. "
+  verifyFailed: {
+    ko: '인증에 실패했습니다. 인증번호 재발급 후 다시 시도해주세요. ',
+    en: 'Verification failed. Please try again after reissuing the verification code. ',
   },
   availabilityTime: {
     ko: '5분 후에 코드를 재전송 하겠습니다.',
@@ -130,6 +130,30 @@ export const signInputTranclation = {
   successVerify: {
     ko: '인증 완료되었어요!',
     en: 'Verification successful',
+  },
+  infoStepTitle: {
+    ko: '추가 정보를 입력하고 \n더 정밀한 채용을 시작해보세요! 💬',
+    en: "Let's personalize \nyour job search! 💬",
+  },
+  infoStepContent: {
+    ko: '필요한 정보 몇 가지만 추가하면,\n조건에 맞는 유학생을 빠르게 추천해 드릴게요!',
+    en: 'The more we know about you,\nthe better jobs we can recommend.',
+  },
+  addressStepTitle: {
+    ko: '채용 지역을 알려주세요!🏢',
+    en: 'Where do you want to work?🏢',
+  },
+  addressStepContent: {
+    ko: '이 정보를 바탕으로, Giggle이 해당 지역에서\n일할 수 있는 유학생을 추천해 드릴게요.',
+    en: 'The more specific,\nthe better the job recommendations!',
+  },
+  languageStepTitle: {
+    ko: '거의 다 왔어요! 🚀',
+    en: "You're almost there! 🚀",
+  },
+  languageStepContent: {
+    ko: '선호하는 언어를 설정하고, 바로 채용을 시작하세요!',
+    en: "Tell us your prefer language, and we'll do the rest!",
   },
 };
 
