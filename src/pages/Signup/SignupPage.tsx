@@ -86,7 +86,7 @@ const SignupPage = () => {
       {currentStep === 3 ? (
         <VerificationSuccessful />
       ) : (
-        <div className="w-screen flex justify-center items-center pb-[3.125rem]">
+        <div className="w-screen flex justify-center items-center">
           <hr
             className={`w-[50%] h-1 border-0 ${
               currentStep >= 1 ? 'bg-[#FEF387]' : 'bg-[#F4F4F9]'

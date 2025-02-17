@@ -1,6 +1,7 @@
 import Button from '@/components/Common/Button';
 import { cardData, UserType } from '@/constants/user';
 import BottomButtonPanel from '../Common/BottomButtonPanel';
+import PageTitle from '../Common/PageTitle';
 
 type findJourneyProps = {
   onSignUpClick: () => void;
@@ -19,16 +20,10 @@ const FindJourney = ({
 
   return (
     <div className="w-full h-full flex flex-col items-center">
-      <div className="flex flex-col w-full gap-1 pb-10">
-        <div className="title-1">
-          어떤 역할로
-          <br />
-          가입하시겠어요? 🙌
-        </div>
-        <div className="body-2 text-text-alternative">
-          먼저, 어떤 역할로 가입할지 선택해 주세요!
-        </div>
-      </div>
+      <PageTitle
+        title={'어떤 역할로\n가입하시겠어요? 🙌'}
+        content={'먼저, 어떤 역할로 가입할지 선택해 주세요!'}
+      />
       <div className="w-full flex flex-col gap-2.5 pb-6">
         {/* 유학생, 고용주 타입 선택 카드 */}
         {cardData.map((card) => (

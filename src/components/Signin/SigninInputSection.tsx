@@ -58,7 +58,7 @@ const SigninInputSection = () => {
   }, [emailValue, passwordValue]);
 
   return (
-    <div className="w-full px-6 flex flex-grow flex-col justify-between">
+    <div className="w-full px-4 flex flex-grow flex-col justify-between">
       <div className="flex flex-col gap-4">
         <InputLayout isEssential title="이메일">
           <Input

@@ -17,6 +17,7 @@ import {
 import BottomButtonPanel from '../Common/BottomButtonPanel';
 import InputLayout from '../WorkExperience/InputLayout';
 import { useEmailTryCountStore } from '@/store/signup';
+import PageTitle from '../Common/PageTitle';
 
 type signupInputProps = {
   email: string;
@@ -172,9 +173,10 @@ const SignupInput = ({
 
   return (
     <div className="w-full">
-      <div className="max-w-[260px] title-1 pb-12 break-keep">
-        {signInputTranclation.signup[isEmployer(pathname)]}
-      </div>
+      <PageTitle
+        title={signInputTranclation.signup[isEmployer(pathname)]}
+        content={signInputTranclation.signupContent[isEmployer(pathname)]}
+      />
       <div className="flex flex-col gap-2">
         <div className="flex flex-col">
           <InputLayout
