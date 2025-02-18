@@ -11,7 +11,7 @@ const CompleteModal = ({ title, content, onNext }: CompleteModalProps) => {
   // 2초 뒤에 페이지 이동
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (onNext) onNext();
+      onNext?.();
     }, 2000);
 
     return () => clearTimeout(timer);

@@ -4,10 +4,13 @@ import LoadingItem from '@/components/Common/LoadingItem';
 import CurrentPasswordStep from '@/components/Profile/Password/CurrentPasswordStep';
 import NewPasswordStep from '@/components/Profile/Password/NewPasswordStep';
 import SuccessStep from '@/components/Profile/Password/SuccessStep';
+import { validatedConfirmPassword, validatePassword } from '@/utils/signin';
+import { useLocation } from 'react-router-dom';
 
 type PasswordFieldType = 'currentPassword' | 'newPassword' | 'confirmPassword';
 
 const ChangePasswordPage = () => {
+  const { pathname } = useLocation();
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPassword, setCurrentPassword] = useState('');
@@ -18,6 +21,7 @@ const ChangePasswordPage = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState<
     string | null
   >(null);
+  const [isValid, setIsValid] = useState<boolean>(false);
   const { mutate: changePassword } = usePatchPassword({
     onSuccess: () => {
       setCurrentStep((prev) => prev + 1);
@@ -31,20 +35,50 @@ const ChangePasswordPage = () => {
   });
 
   const handlePasswordChange = (field: PasswordFieldType, value: string) => {
-    // 값 변경
     switch (field) {
       case 'currentPassword':
         setCurrentPassword(value);
         setPasswordError(null);
         break;
-      case 'newPassword':
+
+      case 'newPassword': {
         setNewPassword(value);
-        setNewPasswordError(null);
+        // 새 비밀번호 유효성 검사
+        const isNewPasswordValid = validatePassword(
+          value,
+          setNewPasswordError,
+          pathname,
+        );
+        // 비밀번호 확인 재검증
+        if (confirmPassword) {
+          validatedConfirmPassword(
+            value, // 새로운 비밀번호 값
+            confirmPassword,
+            setConfirmPasswordError,
+            pathname,
+          );
+        }
+        setIsValid(isNewPasswordValid && confirmPassword === value);
         break;
-      case 'confirmPassword':
+      }
+
+      case 'confirmPassword': {
         setConfirmPassword(value);
-        setConfirmPasswordError(null);
+        // 비밀번호 확인 유효성 검사
+        const isConfirmValid = validatedConfirmPassword(
+          newPassword,
+          value,
+          setConfirmPasswordError,
+          pathname,
+        );
+        const isNewPasswordValid = validatePassword(
+          newPassword,
+          setNewPasswordError,
+          pathname,
+        );
+        setIsValid(isNewPasswordValid && isConfirmValid);
         break;
+      }
     }
   };
 
@@ -90,6 +124,7 @@ const ChangePasswordPage = () => {
             setNewPasswordError={setNewPasswordError}
             confirmPasswordError={confirmPasswordError}
             setConfirmPasswordError={setConfirmPasswordError}
+            isValid={isValid}
           />
         );
       case 3:

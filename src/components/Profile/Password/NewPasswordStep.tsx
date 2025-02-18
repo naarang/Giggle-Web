@@ -1,6 +1,6 @@
 import BaseHeader from '@/components/Common/Header/BaseHeader';
 import { useUserStore } from '@/store/user';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { UserType } from '@/constants/user';
 import {
   profileTranslation,
@@ -10,8 +10,6 @@ import InputLayout from '@/components/WorkExperience/InputLayout';
 import Input from '@/components/Common/Input';
 import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
-import { useEffect, useState } from 'react';
-import { validatedConfirmPassword, validatePassword } from '@/utils/signin';
 
 interface NewPasswordStepProps {
   newPassword: string;
@@ -23,6 +21,7 @@ interface NewPasswordStepProps {
   setNewPasswordError: (value: string | null) => void;
   confirmPasswordError: string | null;
   setConfirmPasswordError: (value: string | null) => void;
+  isValid: boolean;
 }
 
 const NewPasswordStep = ({
@@ -32,37 +31,13 @@ const NewPasswordStep = ({
   onConfirmPasswordChange,
   onSubmit,
   newPasswordError,
-  setNewPasswordError,
   confirmPasswordError,
-  setConfirmPasswordError,
+  isValid,
 }: NewPasswordStepProps) => {
-  const { pathname } = useLocation();
   const { account_type } = useUserStore();
   const userLanguage = account_type === UserType.USER ? 'en' : 'ko';
   const navigate = useNavigate();
-  const [isValid, setIsValid] = useState<boolean>(false);
-
   // password 유효성 검사
-  useEffect(() => {
-    if (
-      validatePassword(newPassword, setNewPasswordError, pathname) &&
-      validatedConfirmPassword(
-        newPassword,
-        confirmPassword,
-        setConfirmPasswordError,
-        pathname,
-      )
-    ) {
-      setIsValid(true);
-    }
-  }, [
-    newPassword,
-    confirmPassword,
-    pathname,
-    setNewPasswordError,
-    setConfirmPasswordError,
-  ]);
-
   return (
     <>
       <BaseHeader
