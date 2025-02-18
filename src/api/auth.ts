@@ -1,6 +1,7 @@
 import {
   AuthenticationRequest,
   AuthenticationResponse,
+  ChangePasswordRequest,
   PolicyResponse,
   ReIssueAuthenticationRequest,
   SignInRequest,
@@ -157,6 +158,14 @@ export const reIssuePassword = async (): Promise<RESTYPE<null>> => {
       },
     },
   );
+  return response.data;
+};
+
+// 2.11 비밀번호 변경
+export const patchPassword = async (
+  passwords: ChangePasswordRequest,
+): Promise<RESTYPE<null>> => {
+  const response = await api.patch('/auth/password', passwords);
   return response.data;
 };
 

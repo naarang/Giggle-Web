@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useGetPolicy } from '@/hooks/api/useAuth';
+import { usePatchPassword } from '@/hooks/api/useAuth';
 import LoadingItem from '@/components/Common/LoadingItem';
 import CurrentPasswordStep from '@/components/Profile/Password/CurrentPasswordStep';
 import NewPasswordStep from '@/components/Profile/Password/NewPasswordStep';
@@ -18,8 +18,10 @@ const ChangePasswordPage = () => {
   const [confirmPasswordError, setConfirmPasswordError] = useState<
     string | null
   >(null);
-  const { mutate: getPolicy } = useGetPolicy({
-    onSuccess: () => {},
+  const { mutate: changePassword } = usePatchPassword({
+    onSuccess: () => {
+      setCurrentStep((prev) => prev + 1);
+    },
     onMutate: () => {
       setIsLoading(true);
     },
@@ -53,9 +55,10 @@ const ChangePasswordPage = () => {
   };
 
   const handleChangePasswordSubmit = () => {
-    // 비밀번호 변경 api 호출
-    // onSuccess
-    setCurrentStep(3);
+    changePassword({
+      current_password: currentPassword,
+      new_password: newPassword,
+    });
   };
 
   const renderStep = () => {
@@ -84,7 +87,9 @@ const ChangePasswordPage = () => {
             }
             onSubmit={handleChangePasswordSubmit}
             newPasswordError={newPasswordError}
+            setNewPasswordError={setNewPasswordError}
             confirmPasswordError={confirmPasswordError}
+            setConfirmPasswordError={setConfirmPasswordError}
           />
         );
       case 3:

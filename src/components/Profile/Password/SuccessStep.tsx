@@ -1,5 +1,4 @@
 import { useUserStore } from '@/store/user';
-import { useNavigate } from 'react-router-dom';
 import { UserType } from '@/constants/user';
 import {
   profileTranslation,
@@ -8,11 +7,12 @@ import {
 import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 import Button from '@/components/Common/Button';
 import CompleteModal from '@/components/Common/CompleteModal';
+import { useLogout } from '@/hooks/api/useAuth';
 
 const SuccessStep = () => {
   const { account_type } = useUserStore();
   const userLanguage = account_type === UserType.USER ? 'en' : 'ko';
-  const navigate = useNavigate();
+  const { mutate: signout } = useLogout();
 
   return (
     <>
@@ -25,15 +25,11 @@ const SuccessStep = () => {
           <div className="w-full">
             <Button
               type="large"
-              bgColor={
-                'bg-surface-primary'
-              }
-              fontColor={
-                'text-text-normal'
-              }
+              bgColor={'bg-surface-primary'}
+              fontColor={'text-text-normal'}
               isBorder={false}
               title={signInputTranclation.continue[userLanguage]}
-              onClick={() => navigate('/')}
+              onClick={signout}
             />
           </div>
         </BottomButtonPanel>

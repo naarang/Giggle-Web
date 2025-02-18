@@ -13,9 +13,11 @@ import {
   signUpEmployer,
   getPolicy,
   reIssuePassword,
+  patchPassword,
 } from '@/api/auth';
 import {
   AuthenticationResponse,
+  ChangePasswordRequest,
   PolicyResponse,
   SignInResponse,
   SignUpResponse,
@@ -41,6 +43,8 @@ import { RESTYPE } from '@/types/api/common';
 import { clearAllStore } from '@/utils/clearAllStore';
 import { TermType } from '@/types/api/users';
 import { AxiosError } from 'axios';
+import { useUserStore } from '@/store/user';
+import { UserType } from '@/constants/user';
 
 /**
  * 로그인 프로세스를 처리하는 커스텀 훅
@@ -289,6 +293,29 @@ export const usePostReissuePassword = (
       alert('임시 비밀번호 발급에 실패하였습니다.');
     },
     ...options,
+  });
+};
+
+// 2.11 비밀번호 변경 훅
+export const usePatchPassword = (
+  options?: UseMutationOptions<RESTYPE<null>, Error, ChangePasswordRequest>,
+) => {
+  const navigate = useNavigate();
+  const { account_type } = useUserStore();
+  return useMutation({
+    ...options,
+    mutationFn: (passwords: ChangePasswordRequest) => {
+      return patchPassword(passwords);
+    },
+    onError: () => {
+      if (account_type === UserType.USER) {
+        alert('현재 비밀번호를 다시 확인해주세요.');
+        navigate('/profile/account');
+      } else {
+        alert('Wrong current password input. Try again.');
+        navigate('/employer/profile/account');
+      }
+    },
   });
 };
 
