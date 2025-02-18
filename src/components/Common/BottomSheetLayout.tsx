@@ -37,9 +37,11 @@ const BottomSheetLayout = ({
     if (contentRef.current) {
       const height = contentRef.current.offsetHeight;
       setContentHeight(height);
-      setViewHeight(window.innerHeight);
+      setViewHeight(
+        window?.innerHeight || document.documentElement.clientHeight,
+      );
     }
-  }, [contentRef]);
+  }, [children]);
 
   useEffect(() => {
     if (isShowBottomsheet && isFixedBackground)
