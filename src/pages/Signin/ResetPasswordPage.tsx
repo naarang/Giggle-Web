@@ -191,7 +191,7 @@ const ResetPasswordPage = () => {
                             : handleVerifyClick
                         }
                       >
-                        {signInputTranclation.verify['ko']}
+                        {signInputTranclation.resetPasswordVerifySuccess['ko']}
                       </button>
                     </div>
                   )}

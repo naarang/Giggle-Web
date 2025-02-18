@@ -93,7 +93,7 @@ export const signInputTranclation = {
   },
   emailWrong: {
     ko: '존재하지 않는 이메일입니다.',
-    en: 'Wrong email address'
+    en: 'Wrong email address',
   },
   verification: {
     ko: '인증번호',
@@ -106,6 +106,9 @@ export const signInputTranclation = {
   enterCode: {
     ko: '인증번호를 보내드렸어요. (5분)',
     en: 'Enter the code from the email we sent you',
+  },
+  resetPasswordVerifySuccess: {
+    ko: '인증이 완료되었어요!',
   },
   verifyFailed: {
     ko: '인증에 실패했습니다. 인증번호 재발급 후 다시 시도해주세요. ',
