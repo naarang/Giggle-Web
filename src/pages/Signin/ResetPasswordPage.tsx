@@ -65,10 +65,15 @@ const ResetPasswordPage = () => {
 
   // 모든 필드의 유효성 검사 후, Continue 버튼 활성화
   useEffect(() => {
-    if (validateEmail(email, setEmailError, '/employer/signup')) {
-      setIsValid(true);
-    }
-  }, [email]);
+    const isEmailValid = validateEmail(
+      email,
+      setEmailError,
+      '/employer/signup',
+    );
+    const isVerified = emailVerifyStatus === 'verified';
+
+    setIsValid(isEmailValid && isVerified);
+  }, [email, emailVerifyStatus]);
 
   // API - 2.7 이메일 인증코드 검증
   const handleVerifyClick = () => {
@@ -215,8 +220,12 @@ const ResetPasswordPage = () => {
                 <div className="w-full">
                   <Button
                     type="large"
-                    bgColor={isValid ? 'bg-[#1E1926]' : 'bg-[#F4F4F9]'}
-                    fontColor={isValid ? 'text-[#FEF387]' : 'text-[#BDBDBD]'}
+                    bgColor={
+                      isValid ? 'bg-surface-primary' : 'bg-surface-secondary'
+                    }
+                    fontColor={
+                      isValid ? 'text-text-normal' : 'text-text-disabled'
+                    }
                     isBorder={false}
                     title={'다음'}
                     onClick={isValid ? handleReissuePassword : undefined}
