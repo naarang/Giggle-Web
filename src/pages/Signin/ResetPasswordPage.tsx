@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom';
 
 const ResetPasswordPage = () => {
   const navigate = useNavigate();
-  const [currentStep, setCurrentStep] = useState<number>(2);
+  const [currentStep, setCurrentStep] = useState<number>(1);
   const [email, setEmail] = useState<string>('');
   const [emailVerifyStatus, setEmailVerifyStatus] = useState<string | null>(
     null,
