@@ -144,6 +144,22 @@ export const withdraw = async (): Promise<RESTYPE<null>> => {
   return response.data;
 };
 
+// 2.10 임시 비밀번호 발급 및 메일 전송
+export const reIssuePassword = async (): Promise<RESTYPE<null>> => {
+  const temporaryToken = localStorage.getItem('temporary_token'); // 로컬 스토리지에서 토큰 가져오기
+
+  const response = await apiWithoutAuth.post(
+    '/auth/reissue/password',
+    {}, // 빈 객체로 request body 유지
+    {
+      headers: {
+        Authorization: `Bearer ${temporaryToken}`, // 헤더에 토큰 추가
+      },
+    },
+  );
+  return response.data;
+};
+
 // 고용주 회원가입
 export const signUpEmployer = async (
   signupInfo: FormData,

@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import Input from '@/components/Common/Input';
 import Button from '@/components/Common/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { validateEmail, validatePassword } from '@/utils/signin';
+import { validateEmail } from '@/utils/signin';
 import { useSignIn } from '@/hooks/api/useAuth';
 import { useUserInfoforSigninStore } from '@/store/signup';
-import InputLayout from '../WorkExperience/InputLayout';
+import InputLayout from '@/components/WorkExperience/InputLayout';
 
 const SigninInputSection = () => {
   const navigate = useNavigate();
@@ -15,7 +15,6 @@ const SigninInputSection = () => {
   const [emailValue, setIdValue] = useState<string>('');
   const [passwordValue, setPasswordValue] = useState<string>('');
   const [idError, setIdError] = useState<string | null>(null);
-  const [passwordError, setPasswordError] = useState<string | null>(null);
   const [isValid, setIsValid] = useState(false);
 
   const { mutate: signIn } = useSignIn();
@@ -29,7 +28,6 @@ const SigninInputSection = () => {
 
   const handlePasswordChange = (value: string) => {
     setPasswordValue(value);
-    validatePassword(value, setPasswordError, pathname); // 비밀번호 입력 시 유효성 검사
   };
 
   // ====== Sign in API =======
@@ -49,10 +47,7 @@ const SigninInputSection = () => {
 
   // 모든 필드의 유효성 검사 후, Sign In 버튼 활성화
   useEffect(() => {
-    if (
-      validateEmail(emailValue, setIdError, pathname) &&
-      validatePassword(passwordValue, setPasswordError, pathname)
-    ) {
+    if (validateEmail(emailValue, setIdError, pathname)) {
       setIsValid(true);
     }
   }, [emailValue, passwordValue]);
@@ -78,9 +73,6 @@ const SigninInputSection = () => {
             onChange={handlePasswordChange}
             canDelete={false}
           />
-          {passwordError && (
-            <p className="text-[#FF6F61] text-xs p-2">{passwordError}</p>
-          )}
         </InputLayout>
         <div className="flex w-full justify-center">
           <button

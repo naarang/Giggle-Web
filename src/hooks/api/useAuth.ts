@@ -12,6 +12,7 @@ import {
   withdraw,
   signUpEmployer,
   getPolicy,
+  reIssuePassword,
 } from '@/api/auth';
 import {
   AuthenticationResponse,
@@ -275,6 +276,19 @@ export const useWithdraw = () => {
       alert('탈퇴에 실패하였습니다.');
       navigate('/splash');
     },
+  });
+};
+
+// 2.10 임시 비밀번호 발급 및 메일 전송 훅
+export const usePostReissuePassword = (
+  options?: UseMutationOptions<RESTYPE<null>, Error>,
+) => {
+  return useMutation({
+    mutationFn: reIssuePassword,
+    onError: () => {
+      alert('임시 비밀번호 발급에 실패하였습니다.');
+    },
+    ...options,
   });
 };
 

@@ -55,6 +55,7 @@ import AccountPage from '@/pages/Profile/AccountPage';
 import AboutPage from '@/pages/Profile/AboutPage';
 import ChangePasswordPage from '@/pages/Profile/ChangePasswordPage';
 import EditResumePage from '@/pages/ManageResumePage/EditResumePage';
+import ResetPasswordPage from '@/pages/Signin/ResetPasswordPage';
 
 const Layout = () => {
   // -- 1. 토큰의 만료, 혹은 토큰이 없을 경우의 트리거 --
@@ -98,6 +99,7 @@ const Router = () => {
           <Route path="/chatbot" element={<ChatBotPage />} />
           <Route path="/alarm" element={<AlarmPage />} />
           <Route path="/signin" element={<SigninPage />} />
+          <Route path="/find-password" element={<ResetPasswordPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/information" element={<InformationPage />} />
 
