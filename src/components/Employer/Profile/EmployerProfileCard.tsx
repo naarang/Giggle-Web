@@ -25,7 +25,7 @@ const EmployerProfileCard = () => {
             </h1>
           </div>
           <button
-            className="grow w-full bg-[#FEF387] rounded-md px-5 py-3 text-center button-2 text-[#1E1926]"
+            className="grow w-full bg-[#FEF387] rounded-lg px-5 py-3 text-center button-2 text-[#1E1926]"
             onClick={() => navigate('/employer/profile/edit')}
           >
             회사 정보 수정
