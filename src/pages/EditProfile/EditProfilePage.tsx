@@ -24,6 +24,7 @@ import { useGetUserProfile, usePatchUserProfile } from '@/hooks/api/useProfile';
 import { useAddressSearch } from '@/hooks/api/useAddressSearch';
 import InputLayout from '@/components/WorkExperience/InputLayout';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import BottomButtonPanel from '@/components/Common/BottomButtonPanel';
 
 const EditProfilePage = () => {
   const { data: userProfile } = useGetUserProfile();
@@ -346,7 +347,7 @@ const EditProfilePage = () => {
               </div>
             </InputLayout>
           </div>
-          <div className="pb-[2.5rem] px-6 w-full fixed bottom-0 bg-grayGradient">
+          <BottomButtonPanel>
             <Button
               type={buttonTypeKeys.LARGE}
               title="Save"
@@ -355,7 +356,7 @@ const EditProfilePage = () => {
               onClick={isChanged ? handleSubmit : undefined}
               isBorder={false}
             />
-          </div>
+          </BottomButtonPanel>
         </div>
       )}
     </>
