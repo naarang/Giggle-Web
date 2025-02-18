@@ -91,6 +91,10 @@ export const signInputTranclation = {
     ko: '이미 가입된 이메일입니다',
     en: 'This email already exists',
   },
+  emailWrong: {
+    ko: '존재하지 않는 이메일입니다.',
+    en: 'Wrong email address'
+  },
   verification: {
     ko: '인증번호',
     en: 'Verification code',
